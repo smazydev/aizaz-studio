@@ -1,0 +1,129 @@
+---
+import { caseStudies } from '../data/caseStudies';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Image } from 'astro:assets';
+
+const categories = Array.from(new Set(caseStudies.map(cs => cs.category)));
+const firstCategory = categories[0];
+---
+
+<section class="py-20 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-primary-500 font-medium tracking-wider uppercase text-sm mb-4">Case Studies</h2>
+            <h3 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+                Highlighted Product Stories
+            </h3>
+            <p class="text-zinc-500">Last Updated - 26th December, 2025</p>
+        </div>
+
+        {/* Categories Tabs */}
+        <div class="flex flex-wrap justify-center gap-4 mb-12" id="category-tabs">
+            {categories.map((category, index) => (
+                <button
+                    data-category={category}
+                    class={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                        index === 0
+                            ? 'bg-zinc-800 text-white border border-zinc-700 shadow-lg shadow-primary-500/10 active'
+                            : 'bg-transparent text-zinc-400 hover:text-white hover:bg-zinc-900'
+                    }`}
+                >
+                    {category}
+                </button>
+            ))}
+        </div>
+
+        {/* Featured Cards */}
+        <div class="relative min-h-[600px] lg:min-h-[500px]">
+            {categories.map((category, index) => {
+                const study = caseStudies.find(cs => cs.category === category) || caseStudies[0];
+                return (
+                    <div 
+                        data-category-content={category}
+                        class={`bg-zinc-900/30 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm absolute inset-0 transition-opacity duration-500 ${
+                            index === 0 ? 'opacity-100 z-10 relative' : 'opacity-0 z-0 pointer-events-none absolute'
+                        }`}
+                    >
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 h-full">
+                            {/* Image Section */}
+                            <div class="relative h-64 lg:h-auto overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+                                <Image
+                                    src={study.image}
+                                    alt={study.title}
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <a
+                                    href={`/case-studies/${study.slug}`}
+                                    class="absolute top-6 right-6 z-20 bg-black/50 backdrop-blur-md border border-white/10 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-black/70 transition-colors"
+                                >
+                                    View Case Study <ArrowUpRight size={16} />
+                                </a>
+                            </div>
+
+                            {/* Content Section */}
+                            <div class="p-8 lg:p-12 flex flex-col justify-center">
+                                <div class="mb-6">
+                                    <div class="w-12 h-12 mb-6 text-primary-500">
+                                        {/* Placeholder Icon */}
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
+                                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-4 leading-tight">
+                                        {study.title}
+                                    </h3>
+                                    <p class="text-zinc-400 leading-relaxed mb-8">
+                                        {study.description}
+                                    </p>
+                                </div>
+
+                                <div class="mt-auto">
+                                    <a
+                                        href={`/case-studies/${study.slug}`}
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-600 text-white hover:bg-primary-500 transition-colors shadow-lg shadow-primary-500/20"
+                                    >
+                                        <ArrowRight size={20} />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+</section>
+
+<script>
+    const tabs = document.querySelectorAll('#category-tabs button');
+    const contents = document.querySelectorAll('[data-category-content]');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const category = tab.getAttribute('data-category');
+
+            // Update tabs
+            tabs.forEach(t => {
+                if (t === tab) {
+                    t.classList.remove('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
+                    t.classList.add('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
+                } else {
+                    t.classList.add('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
+                    t.classList.remove('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
+                }
+            });
+
+            // Update content
+            contents.forEach(content => {
+                if (content.getAttribute('data-category-content') === category) {
+                    content.classList.remove('opacity-0', 'z-0', 'pointer-events-none', 'absolute');
+                    content.classList.add('opacity-100', 'z-10', 'relative');
+                } else {
+                    content.classList.add('opacity-0', 'z-0', 'pointer-events-none', 'absolute');
+                    content.classList.remove('opacity-100', 'z-10', 'relative');
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
+import { ArrowRight, MapPin, Clock, DollarSign } from 'lucide-react';
+
+const jobs = [
+  {
+    title: "Senior Full Stack Engineer",
+    department: "Engineering",
+    location: "Remote",
+    type: "Full-time",
+    salary: "$120k - $160k",
+    description: "We are looking for a Senior Full Stack Engineer to join our core product team. You will be responsible for building scalable features and mentoring junior developers."
+  },
+  {
+    title: "Backend Developer (Go/Rust)",
+    department: "Engineering",
+    location: "Remote",
+    type: "Full-time",
+    salary: "$130k - $170k",
+    description: "Join our platform team to build high-performance backend services. Experience with Go or Rust and distributed systems is required."
+  },
+  {
+    title: "Product Designer",
+    department: "Design",
+    location: "London / Remote",
+    type: "Full-time",
+    salary: "$90k - $120k",
+    description: "We need a visionary Product Designer to shape the user experience of our internal tools and client-facing dashboards."
+  }
+];
+---
+
+<Layout title="Careers | Aizaz Studio">
+  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+    <Navbar client:load />
+    
+    <main class="pt-32 pb-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div class="text-center mb-20">
+          <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">Join the Team</div>
+          <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+            Build the future <br />
+            <span class="text-zinc-500">with us</span>
+          </h1>
+          <p class="text-xl text-zinc-400 max-w-2xl mx-auto">
+            We're always looking for exceptional talent to join our distributed team of engineers, designers, and problem solvers.
+          </p>
+        </div>
+
+        {/* Job Listings */}
+        <div class="grid gap-6 max-w-4xl mx-auto">
+          {jobs.map((job) => (
+            <div class="group relative bg-zinc-900/50 border border-white/5 rounded-2xl p-8 hover:border-primary-500/30 transition-all hover:bg-zinc-900">
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+                <div>
+                  <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">
+                    {job.title}
+                  </h3>
+                  <div class="flex flex-wrap gap-4 text-sm text-zinc-400 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <MapPin size={16} />
+                      {job.location}
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <Clock size={16} />
+                      {job.type}
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <DollarSign size={16} />
+                      {job.salary}
+                    </div>
+                  </div>
+                  <p class="text-zinc-400 leading-relaxed max-w-2xl">
+                    {job.description}
+                  </p>
+                </div>
+                <div class="flex items-center">
+                  <button disabled class="bg-zinc-800 text-zinc-500 px-6 py-3 rounded-full font-bold cursor-not-allowed inline-flex items-center gap-2 whitespace-nowrap">
+                    Not Hiring For Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* No Openings Fallback (Optional, but good for UX if list is empty) */}
+        {jobs.length === 0 && (
+          <div class="text-center py-20 bg-zinc-900/30 rounded-3xl border border-white/5">
+            <h3 class="text-2xl font-bold text-white mb-4">No open positions right now</h3>
+            <p class="text-zinc-400">
+              But we're always interested in meeting great people. Send your resume to <a href="mailto:careers@aizaz.studio" class="text-primary-400 hover:underline">careers@aizaz.studio</a>.
+            </p>
+          </div>
+        )}
+
+      </div>
+    </main>
+    <Footer client:visible />
+  </div>
+</Layout>

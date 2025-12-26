@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
+import { TransformationTimeline } from '../components/TransformationTimeline';
+import { ArrowRight } from 'lucide-react';
+
+---
+
+<Layout title="Engineering Transformation | Aizaz Studio">
+  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+    <Navbar client:load />
+    
+    <main class="pt-32 pb-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <div class="text-center mb-24">
+          <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">Our Process</div>
+          <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+            Engineering Transformation <br />
+            <span class="text-zinc-500">Step by Step</span>
+          </h1>
+          <p class="text-xl text-zinc-400 max-w-2xl mx-auto">
+            A transparent, predictable, and high-velocity process designed to take you from bottleneck to breakthrough.
+          </p>
+        </div>
+
+        {/* Steps Timeline */}
+        <TransformationTimeline client:load />
+
+
+      </div>
+    </main>
+    <Footer client:visible />
+  </div>
+</Layout>

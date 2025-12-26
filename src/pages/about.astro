@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { WhyUs } from '../components/WhyUs';
+import { Footer } from '../components/Footer';
+import { CTA } from '../components/CTA';
+---
+
+<Layout>
+  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+    <Navbar client:load />
+    <main class="pt-20">
+      <WhyUs client:visible />
+      <CTA client:visible />
+    </main>
+    <Footer client:visible />
+  </div>
+</Layout>
