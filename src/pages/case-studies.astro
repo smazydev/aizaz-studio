@@ -3,14 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { CTA } from '../components/CTA';
-import { CaseStudyShowcase } from '../components/CaseStudyShowcase';
+import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
 ---
 
 <Layout>
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
     <main class="pt-20">
-      <CaseStudyShowcase client:load />
+      <CaseStudyShowcase />
       <CTA client:visible />
     </main>
     <Footer client:visible />

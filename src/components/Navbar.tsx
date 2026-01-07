@@ -24,9 +24,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-gradient-to-br from-primary-400 to-indigo-600 flex items-center justify-center font-bold text-white font-display text-xl">
-              A
-            </div>
+            <img src="/aizaz-logo-white.png" alt="Aizaz Studio" className="w-8 h-8 object-contain" />
             <span className="text-xl font-display font-bold tracking-tight">
               Aizaz Studio
             </span>
