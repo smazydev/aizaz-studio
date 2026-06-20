@@ -3,86 +3,110 @@ import Layout from '../layouts/Layout.astro';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { CTA } from '../components/CTA';
+import PageHero from '../components/PageHero.astro';
+import BlogCard from '../components/BlogCard.astro';
 import { blogs } from '../data/blogs';
-import { ArrowRight, Calendar, Clock, User } from 'lucide-react';
-import { Image } from 'astro:assets';
 
+const [featured, ...rest] = blogs;
+const categories = ['All', ...Array.from(new Set(blogs.map((b) => b.category)))];
 ---
 
-<Layout title="Blog | Aizaz Studio">
+<Layout
+  title="Blog | AI, Automation & Engineering Insights | Aizaz.studio"
+  description="Practical insights on AI automation, SaaS engineering, NetSuite integrations, and building systems that help businesses scale without operational chaos."
+  canonical="/blog"
+  keywords={['AI automation blog', 'NetSuite integration', 'SaaS engineering', 'business automation']}
+>
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
-    
-    <main class="pt-32 pb-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div class="text-center mb-20">
-          <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">Our Thoughts</div>
-          <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
-            Insights & <br />
-            <span class="text-zinc-500">Perspectives</span>
-          </h1>
-          <p class="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Deep dives into engineering, design, and the future of digital products.
-          </p>
+
+    <main>
+      <PageHero
+        eyebrow="Insights"
+        title="Playbooks for"
+        highlight="smarter operations"
+        description="SEO-friendly deep dives on AI automation, NetSuite integrations, SaaS engineering, and the systems that help businesses scale without hiring an ops army."
+      />
+
+      <section class="pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="p-6 rounded-2xl glass-card flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <div class="text-sm font-semibold text-white mb-1">Want the short version?</div>
+              <p class="text-sm text-zinc-400">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
+            </div>
+            <a href="/ai-systems-sprint" class="inline-flex justify-center px-5 py-2.5 rounded-full bg-primary-600 text-white text-sm font-semibold hover:bg-primary-500 transition-colors shrink-0">
+              AI Systems Sprint →
+            </a>
+          </div>
         </div>
+      </section>
 
-        {/* Blog Grid */}
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogs.map((blog) => (
-            <article class="group relative flex flex-col h-full bg-zinc-900/30 border border-white/5 rounded-2xl overflow-hidden hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-1">
-              {/* Image */}
-              <div class="aspect-video overflow-hidden">
-                <Image 
-                  src={blog.image} 
-                  alt={blog.title}
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+      <section class="pb-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {featured && (
+            <div class="mb-16">
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Featured</h2>
               </div>
-              
-              {/* Content */}
-              <div class="p-8 flex flex-col flex-grow">
-                <div class="flex items-center gap-4 text-xs text-zinc-500 mb-4 font-medium">
-                  <span class="text-primary-400">{blog.category}</span>
-                  <span>•</span>
-                  <div class="flex items-center gap-1">
-                    <Calendar size={12} />
-                    {blog.date}
-                  </div>
-                </div>
+              <BlogCard blog={featured} featured />
+            </div>
+          )}
 
-                <h2 class="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors line-clamp-2">
-                  <a href={`/blog/${blog.slug}`}>
-                    {blog.title}
-                  </a>
-                </h2>
-                
-                <p class="text-zinc-400 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
-                  {blog.excerpt}
-                </p>
+          <div class="flex flex-wrap gap-2 mb-10" id="blog-filters">
+            {categories.map((category, index) => (
+              <button
+                type="button"
+                data-filter={category}
+                class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  index === 0
+                    ? 'bg-white text-black'
+                    : 'bg-zinc-900/60 text-zinc-400 border border-white/5 hover:text-white hover:border-white/15'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
 
-                <div class="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
-                  <div class="flex items-center gap-2 text-xs text-zinc-500">
-                    <User size={12} />
-                    {blog.author}
-                  </div>
-                  <div class="flex items-center gap-2 text-xs text-zinc-500">
-                    <Clock size={12} />
-                    {blog.readTime}
-                  </div>
-                </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid">
+            {rest.map((blog) => (
+              <div data-category={blog.category} class="blog-item">
+                <BlogCard blog={blog} />
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
+      </section>
 
-      </div>
-      
-      <div class="mt-32">
-        <CTA client:visible />
-      </div>
+      <CTA client:visible />
     </main>
     <Footer client:visible />
   </div>
 </Layout>
+
+<script>
+  const filters = document.querySelectorAll('#blog-filters button');
+  const items = document.querySelectorAll('.blog-item');
+
+  filters.forEach((filter) => {
+    filter.addEventListener('click', () => {
+      const category = filter.getAttribute('data-filter');
+
+      filters.forEach((btn) => {
+        const active = btn === filter;
+        btn.classList.toggle('bg-white', active);
+        btn.classList.toggle('text-black', active);
+        btn.classList.toggle('bg-zinc-900/60', !active);
+        btn.classList.toggle('text-zinc-400', !active);
+        btn.classList.toggle('border', !active);
+        btn.classList.toggle('border-white/5', !active);
+      });
+
+      items.forEach((item) => {
+        const match = category === 'All' || item.getAttribute('data-category') === category;
+        item.classList.toggle('hidden', !match);
+      });
+    });
+  });
+</script>

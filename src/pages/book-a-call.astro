@@ -1,0 +1,74 @@
+---
+import SiteShell from '../components/SiteShell.astro';
+import PageHero from '../components/PageHero.astro';
+import FaqSection from '../components/FaqSection.astro';
+import CalendarEmbed from '../components/CalendarEmbed.astro';
+import { bookACall } from '../data/commercialPages';
+
+const c = bookACall;
+const s = c.sections;
+---
+
+<SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/book-a-call">
+  <PageHero eyebrow="Contact" title={c.title} description={c.heroSubtitle} />
+
+  <section class="pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <CalendarEmbed />
+    </div>
+  </section>
+
+  <section class="pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
+      <div class="p-8 rounded-2xl glass-card">
+        <h2 class="text-xl font-display font-bold text-white mb-4">{s.whoFor.heading}</h2>
+        <ul class="space-y-2">
+          {s.whoFor.items.map((item) => (
+            <li class="text-sm text-zinc-400 flex gap-2"><span class="text-primary-500">•</span>{item}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="p-8 rounded-2xl glass-card">
+        <h2 class="text-xl font-display font-bold text-white mb-4">{s.whatWeCover.heading}</h2>
+        <ul class="space-y-2">
+          {s.whatWeCover.items.map((item) => (
+            <li class="text-sm text-zinc-400 flex gap-2"><span class="text-primary-500">•</span>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="p-8 rounded-2xl glass-card mb-8">
+        <h2 class="text-xl font-display font-bold text-white mb-4">{s.whatToPrepare.heading}</h2>
+        <ul class="space-y-2">
+          {s.whatToPrepare.items.map((item) => (
+            <li class="text-sm text-zinc-400 flex gap-2"><span class="text-primary-500">•</span>{item}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="p-8 rounded-2xl glass-card border-emerald-500/20">
+          <h2 class="text-xl font-display font-bold text-white mb-4">{s.goodFit.heading}</h2>
+          <ul class="space-y-2">
+            {s.goodFit.items.map((item) => (
+              <li class="text-sm text-zinc-400 flex gap-2"><span class="text-emerald-400">✓</span>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="p-8 rounded-2xl glass-card border-zinc-700">
+          <h2 class="text-xl font-display font-bold text-white mb-4">{s.notFit.heading}</h2>
+          <ul class="space-y-2">
+            {s.notFit.items.map((item) => (
+              <li class="text-sm text-zinc-400 flex gap-2"><span class="text-zinc-600">×</span>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FaqSection faqs={s.faqs} />
+</SiteShell>

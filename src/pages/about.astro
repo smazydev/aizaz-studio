@@ -4,13 +4,83 @@ import { Navbar } from '../components/Navbar';
 import { WhyUs } from '../components/WhyUs';
 import { Footer } from '../components/Footer';
 import { CTA } from '../components/CTA';
+import { ClientReviews } from '../components/ClientReviews';
+import PageHero from '../components/PageHero.astro';
+import { servicePages } from '../data/seoPages';
+import { deliverySteps, siteStats } from '../data/siteContent';
 ---
 
-<Layout>
+<Layout
+  title="About Aizaz.studio | AI, Cloud & Automation Engineering Studio"
+  description="Learn about Aizaz.studio — an engineering studio helping startups and operations-heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
+  canonical="/about"
+  keywords={['about Aizaz.studio', 'AI automation studio', 'software development agency', 'NetSuite developers']}
+>
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
-    <main class="pt-20">
+    <main>
+      <PageHero
+        eyebrow="About Us"
+        title="We connect your business"
+        highlight="with software that actually runs"
+        description="Aizaz.studio is an AI, cloud, and automation engineering studio. We help founders and operations teams replace manual workflows with production-grade systems — from first AI sprint to full platform builds."
+      />
+
+      <section class="pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid md:grid-cols-4 gap-6 mb-20">
+            {siteStats.map((stat) => (
+              <div class="p-6 rounded-2xl glass-card text-center">
+                <div class="text-3xl font-display font-bold text-white">{stat.value}<span class="text-primary-400">{stat.suffix}</span></div>
+                <div class="text-sm text-zinc-500 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-6 mb-20">
+            <div class="p-8 rounded-2xl glass-card lg:col-span-2">
+              <h2 class="text-2xl font-display font-bold text-white mb-4">Who we work with</h2>
+              <p class="text-zinc-400 leading-relaxed mb-4">
+                SaaS founders, ecommerce operators, clinics, trading businesses, NetSuite users, and agencies that need senior backend, cloud, or automation support. If your team repeats the same work across CRMs, ERPs, spreadsheets, and chat tools — we are probably a fit.
+              </p>
+              <p class="text-zinc-400 leading-relaxed">
+                Unlike traditional agencies that deliver isolated pieces, we think across architecture, automation, deployment, and handoff. One website vendor, another for cloud, another for ERP creates gaps. We build the full technical layer so operations get quieter.
+              </p>
+            </div>
+            <div class="p-8 rounded-2xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20">
+              <div class="text-xs font-bold uppercase tracking-widest text-primary-400 mb-3">Brand Promise</div>
+              <p class="text-white text-lg font-display font-semibold leading-relaxed">
+                Move from manual, scattered, and fragile operations to connected, automated, and scalable systems.
+              </p>
+            </div>
+          </div>
+
+          <h2 class="text-2xl font-display font-bold text-white mb-8">How we work with clients</h2>
+          <div class="grid md:grid-cols-3 gap-4 mb-20">
+            {deliverySteps.map((step) => (
+              <div class="p-6 rounded-2xl glass-card">
+                <div class="text-primary-400 font-display font-bold text-sm mb-3">{step.step}</div>
+                <h3 class="font-bold text-white mb-2">{step.title}</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <h2 class="text-2xl font-display font-bold text-white mb-2">What we build</h2>
+          <p class="text-zinc-400 mb-8">Full-stack delivery across AI, product engineering, ERP, and cloud.</p>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {servicePages.map((service) => (
+              <a href={`/services/${service.slug}`} class="p-5 rounded-xl glass-card hover:border-primary-500/25 transition-colors group">
+                <h3 class="font-semibold text-white mb-2 group-hover:text-primary-400 transition-colors">{service.title}</h3>
+                <p class="text-sm text-zinc-500 line-clamp-2">{service.heroSubtitle}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <WhyUs client:visible />
+      <ClientReviews client:visible />
       <CTA client:visible />
     </main>
     <Footer client:visible />

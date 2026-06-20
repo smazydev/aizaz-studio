@@ -1,0 +1,18 @@
+---
+import SiteShell from '../../components/SiteShell.astro';
+import CompareLanding from '../../components/CompareLanding.astro';
+import { comparePages } from '../../data/comparePages';
+
+export function getStaticPaths() {
+  return comparePages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+---
+
+<SiteShell title={page.metaTitle} description={page.metaDescription} canonical={`/compare/${page.slug}`}>
+  <CompareLanding page={page} />
+</SiteShell>

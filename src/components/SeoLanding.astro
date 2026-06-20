@@ -1,0 +1,211 @@
+---
+import type { SeoPage, IndustryPage } from '../data/seoPages';
+import { getSeoExtras } from '../data/seoExtras';
+import SeoRichContent from './SeoRichContent.astro';
+
+interface Props {
+  page: SeoPage | IndustryPage;
+  breadcrumb: { label: string; href: string }[];
+  badge?: string;
+  relatedServices?: SeoPage[];
+}
+
+const { page, breadcrumb, badge = 'Service', relatedServices = [] } = Astro.props;
+const isIndustry = 'audienceLabel' in page;
+const extras = getSeoExtras(page.slug);
+---
+
+<section class="pt-32 pb-16 relative overflow-hidden page-glow">
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)] pointer-events-none"></div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 mb-8" aria-label="Breadcrumb">
+      {breadcrumb.map((item, index) => (
+        <>
+          {index > 0 && <span>/</span>}
+          <a href={item.href} class="hover:text-primary-400 transition-colors">{item.label}</a>
+        </>
+      ))}
+      <span>/</span>
+      <span class="text-zinc-300">{page.title}</span>
+    </nav>
+
+    <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">
+      {isIndustry ? (page as IndustryPage).audienceLabel : badge}
+    </div>
+    <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+      {page.title}
+    </h1>
+    <p class="text-xl text-zinc-400 max-w-3xl leading-relaxed mb-8">
+      {page.heroSubtitle}
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a
+        href="/book-a-call"
+        class="inline-flex justify-center px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors"
+      >
+        Book a Free Call
+      </a>
+      <a href="/ai-systems-sprint" class="inline-flex justify-center px-6 py-3 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">
+        14 Day Sprint
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="pb-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
+    <div class="p-8 rounded-2xl glass-card">
+      <h2 class="text-2xl font-display font-bold text-white mb-4">The Problem</h2>
+      <p class="text-zinc-400 leading-relaxed">{page.problem}</p>
+    </div>
+    <div class="p-8 rounded-2xl glass-card border-primary-500/20">
+      <h2 class="text-2xl font-display font-bold text-white mb-4">How We Help</h2>
+      <p class="text-zinc-400 leading-relaxed">{page.solution}</p>
+    </div>
+  </div>
+</section>
+
+<section class="pb-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-display font-bold text-white mb-8">
+      {isIndustry ? 'What We Build' : 'Capabilities'}
+    </h2>
+    <ul class="grid md:grid-cols-2 gap-4">
+      {page.capabilities.map((item) => (
+        <li class="flex items-start gap-3 p-4 rounded-xl glass-card">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-primary-500 shrink-0"></span>
+          <span class="text-zinc-300">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="pb-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-display font-bold text-white mb-8">Example Use Cases</h2>
+    <div class="space-y-4">
+      {page.useCases.map((item) => (
+        <div class="p-5 rounded-xl glass-card text-zinc-300 font-mono text-sm md:text-base">
+          {item}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<SeoRichContent extras={extras} slug={page.slug} />
+
+{page.faqs.length > 0 && (
+  <section class="pb-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-display font-bold text-white mb-8">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        {page.faqs.map((faq) => (
+          <details class="group p-6 rounded-2xl glass-card">
+            <summary class="cursor-pointer text-lg font-semibold text-white list-none flex items-center justify-between gap-4">
+              {faq.question}
+              <span class="text-primary-400 group-open:rotate-45 transition-transform text-2xl leading-none">+</span>
+            </summary>
+            <p class="mt-4 text-zinc-400 leading-relaxed">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{relatedServices.length > 0 && (
+  <section class="pb-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-display font-bold text-white mb-8">Related Services</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {relatedServices.map((service) => (
+          <a
+            href={`/services/${service.slug}`}
+            class="p-6 rounded-2xl glass-card hover:border-primary-500/30 transition-colors"
+          >
+            <h3 class="text-lg font-bold text-white mb-2">{service.title}</h3>
+            <p class="text-sm text-zinc-400 line-clamp-2">{service.heroSubtitle}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<section class="pb-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="p-10 rounded-3xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20 text-center">
+      <h2 class="text-3xl font-display font-bold text-white mb-4">
+        Ready to automate one workflow in 14 days?
+      </h2>
+      <p class="text-zinc-400 mb-8 max-w-2xl mx-auto">
+        Start with our AI Systems Sprint — one manual workflow turned into a working system, fast.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/book-a-call"
+          class="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors"
+        >
+          Book a Free Call
+        </a>
+        <a
+          href="/ai-systems-sprint"
+          class="px-8 py-4 rounded-full bg-zinc-900 border border-zinc-700 text-white font-medium hover:bg-zinc-800 transition-colors"
+        >
+          Learn About the Sprint
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: page.title,
+  description: page.metaDescription,
+  provider: {
+    '@type': 'Organization',
+    name: 'Aizaz.studio',
+    url: 'https://aizaz.studio',
+  },
+  areaServed: 'Worldwide',
+  serviceType: page.title,
+})} />
+
+{page.faqs.length > 0 && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: page.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  })} />
+)}
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    ...breadcrumb.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      item: `https://aizaz.studio${item.href}`,
+    })),
+    {
+      '@type': 'ListItem',
+      position: breadcrumb.length + 1,
+      name: page.title,
+    },
+  ],
+})} />

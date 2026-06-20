@@ -109,11 +109,11 @@ const TestimonialCard: React.FC<{
 }> = ({ quote, author, role, company, audioSrc }) => (
   <div className="p-8 rounded-2xl bg-zinc-900/40 border border-white/5 relative flex flex-col h-full">
     <Quote className="absolute top-8 left-8 text-zinc-700 w-8 h-8 opacity-50" />
-    <p className="text-zinc-300 mb-8 relative z-10 pl-4 border-l-2 border-primary-500/50 italic flex-grow">
+    <p className="text-zinc-300 mb-8 relative z-10 pl-4 border-l-2 border-primary-500/50 italic grow">
       "{quote}"
     </p>
     <div className="flex items-center gap-4 mt-auto">
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-600" /> {/* Placeholder avatar */}
+      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-600" />
       <div>
         <h4 className="font-bold text-white text-sm">{author}</h4>
         <p className="text-xs text-zinc-500">{role}, {company}</p>
@@ -146,7 +146,7 @@ export const Testimonials: React.FC = () => {
             audioSrc="/audio/testimonial-david.m4a"
           />
           <TestimonialCard
-            quote="Aizaz Studio was a game-changer for our startup. The team was responsive, professional, and delivered high-quality work on time."
+            quote="Aizaz Studio was a game changer for our startup. The team was responsive, professional, and delivered high quality work on time."
             author="Ayaz K."
             role="Founder"
             company="TradingDojo - Pakistan"

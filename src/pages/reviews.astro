@@ -1,0 +1,27 @@
+---
+import SiteShell from '../components/SiteShell.astro';
+import PageHero from '../components/PageHero.astro';
+import { reviews } from '../data/commercialPages';
+
+const c = reviews;
+---
+
+<SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/reviews">
+  <PageHero eyebrow="Trust" title={c.title} description={c.intro} />
+
+  <section class="pb-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      {c.placeholderQuotes.map((item) => (
+        <blockquote class="p-8 rounded-2xl glass-card border-dashed border-zinc-700">
+          <p class="text-lg text-zinc-300 leading-relaxed mb-6 italic">"{item.quote}"</p>
+          <footer class="text-sm text-zinc-500">
+            <span class="text-zinc-400 font-semibold">{item.author}</span>
+            {item.role && <> · {item.role}</>}
+            {item.company && <> · {item.company}</>}
+          </footer>
+        </blockquote>
+      ))}
+      <p class="text-center text-sm text-zinc-600">Approved client testimonials will replace placeholders above.</p>
+    </div>
+  </section>
+</SiteShell>

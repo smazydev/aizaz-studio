@@ -1,0 +1,81 @@
+---
+import { processSteps } from '../data/processSteps';
+
+interface Props {
+  stepsOnly?: boolean;
+}
+
+const { stepsOnly = false } = Astro.props;
+---
+
+<section id="process" class="py-24 relative overflow-hidden">
+  <div class="absolute inset-0 page-glow pointer-events-none"></div>
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:48px_48px] sm:bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)] pointer-events-none opacity-60"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class:list={['grid gap-12 lg:gap-16 items-start', stepsOnly ? 'max-w-3xl mx-auto' : 'lg:grid-cols-12']}>
+      {!stepsOnly && (
+        <div class="lg:col-span-5 lg:sticky lg:top-28">
+          <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">How we work</div>
+          <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
+            From messy workflow to
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 to-primary-400"> live system</span>
+          </h2>
+          <p class="text-lg text-zinc-400 mb-6 leading-relaxed">
+            Whether it is a 14 day AI Systems Sprint or a full SaaS build, we follow the same delivery discipline: scoped, integrated, deployed, and documented.
+          </p>
+          <p class="text-sm text-zinc-500 mb-8 leading-relaxed">
+            No pod assignment theatre. No slide deck handoffs. One senior team owns architecture, build, cloud, and automation end to end.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="/ai-systems-sprint" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-600 text-white font-semibold hover:bg-primary-500 transition-colors">
+              14 Day Sprint →
+            </a>
+            <a href="/engineering-transformation" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-zinc-700 text-zinc-300 font-medium hover:bg-zinc-900 transition-colors">
+              Full process
+            </a>
+          </div>
+        </div>
+      )}
+
+      <div class:list={[stepsOnly ? '' : 'lg:col-span-7']}>
+        <ol class="relative">
+          <!-- connector rail running through the number badges -->
+          <div
+            class="absolute left-[27px] top-6 bottom-6 w-px bg-gradient-to-b from-primary-500/50 via-primary-500/20 to-transparent"
+            aria-hidden="true"
+          >
+          </div>
+
+          {processSteps.map((item, index) => (
+            <li class="relative pl-20 pb-5 last:pb-0 group">
+              <div class="absolute left-0 top-0">
+                <div class="relative flex h-[56px] w-[56px] items-center justify-center rounded-2xl bg-zinc-950 border border-primary-500/30 text-primary-400 font-display font-bold text-lg shadow-[0_0_0_4px_rgba(2,6,12,1)] transition-all duration-300 group-hover:border-primary-500/60 group-hover:text-primary-300 group-hover:shadow-[0_0_24px_rgba(14,165,233,0.18),0_0_0_4px_rgba(2,6,12,1)]">
+                  {item.step}
+                  {index === 0 && (
+                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                      <span class="absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75 animate-ping"></span>
+                      <span class="relative inline-flex h-3 w-3 rounded-full bg-primary-500"></span>
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div class="rounded-2xl border border-white/5 bg-zinc-950/40 p-5 sm:p-6 transition-all duration-300 group-hover:border-primary-500/30 group-hover:bg-zinc-900/50">
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mb-2.5">
+                  <h3 class="font-display font-bold text-white text-lg leading-tight">{item.title}</h3>
+                  <span class="inline-flex items-center rounded-full bg-primary-500/10 border border-primary-500/20 px-2.5 py-0.5 text-xs font-medium text-primary-300">
+                    {item.subtitle}
+                  </span>
+                </div>
+                <p class="text-sm sm:text-[15px] leading-relaxed text-zinc-400">
+                  {item.description}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

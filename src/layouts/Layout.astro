@@ -1,5 +1,56 @@
 ---
 import '../styles/global.css';
+import { SITE_URL } from '../data/seoPages';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title = 'Aizaz.studio | AI, Cloud & Automation Engineering',
+  description = 'Aizaz.studio builds AI-powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
+  canonical,
+  keywords = [],
+  noindex = false,
+} = Astro.props;
+
+const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : Astro.url.href.startsWith('http') ? Astro.url.href : `${SITE_URL}${Astro.url.pathname}`;
+const keywordContent = keywords.length > 0 ? keywords.join(', ') : 'AI automation, SaaS development, AWS DevOps, NetSuite integration, business process automation';
+const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
+const isHome = canonicalUrl === `${SITE_URL}/` || Astro.url.pathname === '/';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Aizaz Studio',
+  url: SITE_URL,
+  logo: `${SITE_URL}/aizaz-logo-white.png`,
+  description:
+    'Aizaz Studio builds AI, SaaS, cloud, and automation systems for startups and operations heavy businesses that need senior engineering execution.',
+  email: 'hello@aizaz.studio',
+  knowsAbout: [
+    'AI automation',
+    'SaaS development',
+    'AWS cloud engineering',
+    'DevOps',
+    'NetSuite integration',
+    'Business process automation',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  name: 'Aizaz Studio',
+  url: SITE_URL,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
 ---
 
 <!DOCTYPE html>
@@ -7,18 +58,73 @@ import '../styles/global.css';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aizaz Studio | Elite Engineering Resource Augmentation</title>
-    <meta name="description" content="Scale your engineering team without the hiring headache. Dedicated engineers and squads for startups and agencies." />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywordContent} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <meta name="robots" content="index, follow" />}
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/aizaz-logo-white.png" />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
-    
+    <meta name="google-site-verification" content="vdQFU_gQ4sckj5ouGdEv1bWB25FZ3g9T-fYpejML1l0" />
 
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aizaz.studio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={`${SITE_URL}/aizaz-logo-white.png`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
+
+    <!-- Google Analytics 4 (gtag.js) on every page -->
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <slot />
   </body>
 </html>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion) {
+    const revealElements = document.querySelectorAll('[data-reveal]');
+
+    if (revealElements.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+      );
+
+      revealElements.forEach((el) => observer.observe(el));
+    }
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-revealed'));
+  }
+</script>

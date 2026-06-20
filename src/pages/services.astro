@@ -1,16 +1,78 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Navbar } from '../components/Navbar';
-import { Services as ServicesComponent } from '../components/Services';
 import { Footer } from '../components/Footer';
 import { CTA } from '../components/CTA';
+import { servicePages, industryPages } from '../data/seoPages';
+import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout>
+<Layout
+  title="Services | AI, Cloud & Automation Engineering | Aizaz.studio"
+  description="AI automation, web app development, AWS DevOps, NetSuite integrations, business process automation, trading technology, and product enablement for growing businesses."
+  canonical="/services"
+  keywords={['AI automation services', 'SaaS development', 'NetSuite integration', 'AWS DevOps', 'business automation']}
+>
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
-    <main class="pt-20">
-      <ServicesComponent client:visible />
+    <main>
+      <PageHero
+        eyebrow="Services"
+        title="Build smarter systems."
+        highlight="Scale cleaner operations."
+        description="We help growing businesses replace messy manual workflows with reliable software systems — from AI agents and web apps to NetSuite integrations and AWS infrastructure."
+      />
+
+      <section class="pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-20 p-8 md:p-10 rounded-3xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div>
+              <h2 class="text-2xl md:text-3xl font-display font-bold text-white mb-3">AI Systems Sprint</h2>
+              <p class="text-zinc-400 max-w-2xl">
+                In 14 days, we turn one manual workflow into a working AI-assisted system, automation, dashboard, or internal tool.
+              </p>
+            </div>
+            <a
+              href="/ai-systems-sprint"
+              class="inline-flex justify-center px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors shrink-0"
+            >
+              View the Sprint Offer
+            </a>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-display font-bold text-white mb-8">Core Services</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
+          {servicePages.map((service) => (
+            <a
+              href={`/services/${service.slug}`}
+              class="group p-8 rounded-2xl glass-card hover:border-primary-500/30 hover:bg-zinc-900/50 transition-all"
+            >
+              <h3 class="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">
+                {service.title}
+              </h3>
+              <p class="text-zinc-400 text-sm leading-relaxed mb-4">{service.heroSubtitle}</p>
+              <span class="text-sm font-medium text-primary-400">Learn more →</span>
+            </a>
+          ))}
+        </div>
+
+        <h2 class="text-3xl font-display font-bold text-white mb-8">Industries We Serve</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {industryPages.map((industry) => (
+            <a
+              href={`/for/${industry.slug}`}
+              class="p-5 rounded-xl glass-card hover:border-primary-500/30 transition-colors"
+            >
+              <div class="text-xs uppercase tracking-wider text-primary-400 mb-2">{industry.audienceLabel}</div>
+              <h3 class="text-lg font-semibold text-white">{industry.title}</h3>
+            </a>
+          ))}
+        </div>
+        </div>
+      </section>
+
       <CTA client:visible />
     </main>
     <Footer client:visible />

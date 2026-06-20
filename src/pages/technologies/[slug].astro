@@ -1,0 +1,18 @@
+---
+import SiteShell from '../../components/SiteShell.astro';
+import TechnologyLanding from '../../components/TechnologyLanding.astro';
+import { technologyPages } from '../../data/technologyPages';
+
+export function getStaticPaths() {
+  return technologyPages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+---
+
+<SiteShell title={page.metaTitle} description={page.metaDescription} canonical={`/technologies/${page.slug}`}>
+  <TechnologyLanding page={page} />
+</SiteShell>

@@ -1,0 +1,87 @@
+---
+import type { ComparePage } from '../data/comparePages';
+import FaqSection from './FaqSection.astro';
+
+interface Props {
+  page: ComparePage;
+}
+
+const { page } = Astro.props;
+---
+
+<section class="pt-32 pb-16 relative overflow-hidden page-glow">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-primary-400 transition-colors">Home</a>
+      <span>/</span>
+      <a href="/compare" class="hover:text-primary-400 transition-colors">Compare</a>
+      <span>/</span>
+      <span class="text-zinc-300">{page.title}</span>
+    </nav>
+    <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">Compare</div>
+    <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">{page.title}</h1>
+    <p class="text-xl text-zinc-400 leading-relaxed mb-8">{page.heroSubtitle}</p>
+    <p class="text-zinc-400 leading-relaxed">{page.intro}</p>
+  </div>
+</section>
+
+<section class="pb-16">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x auto">
+    <table class="w-full min-w-[640px] text-left border-collapse">
+      <thead>
+        <tr class="border-b border-zinc-800">
+          <th class="py-4 pr-4 text-zinc-500 font-medium text-sm"></th>
+          <th class="py-4 px-4 text-white font-bold">Aizaz Studio</th>
+          <th class="py-4 px-4 text-zinc-400 font-bold">{page.optionBLabel ?? 'Alternative'}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {page.comparisonRows.map((row) => (
+          <tr class="border-b border-zinc-900">
+            <td class="py-4 pr-4 text-zinc-300 font-medium">{row.label}</td>
+            <td class="py-4 px-4 text-zinc-300">{row.optionA}</td>
+            <td class="py-4 px-4 text-zinc-500">{row.optionB}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{page.sections.map((section) => (
+  <section class="pb-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-display font-bold text-white mb-4">{section.heading}</h2>
+      {section.paragraphs.map((p) => (
+        <p class="text-zinc-400 leading-relaxed mb-4">{p}</p>
+      ))}
+    </div>
+  </section>
+))}
+
+<section class="pb-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">Related reading</h2>
+    <div class="flex flex-wrap gap-3">
+      {page.relatedLinks.map((link) => (
+        <a href={link.href} class="px-4 py-2 rounded-full border border-zinc-700 text-sm text-zinc-300 hover:border-primary-500/40 hover:text-white transition-colors">
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="pb-20">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="p-10 rounded-3xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20 text-center">
+      <p class="text-xl font-display font-bold text-white mb-6">{page.ctaText}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/book-a-call" class="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors">Book a Call</a>
+        <a href="/engagement-models" class="px-8 py-4 rounded-full bg-zinc-900 border border-zinc-700 text-white font-medium hover:bg-zinc-800 transition-colors">Engagement Models</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<FaqSection faqs={page.faqs} />

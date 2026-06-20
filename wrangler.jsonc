@@ -10,6 +10,18 @@
 		"binding": "ASSETS",
 		"directory": "./dist"
 	},
+	"routes": [
+		{
+			"pattern": "aizaz.studio",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.aizaz.studio",
+			"custom_domain": true
+		}
+	],
+	// Keep workers.dev available while custom domain DNS is being fixed
+	"workers_dev": true,
 	"observability": {
     "enabled": true
   }

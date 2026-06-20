@@ -1,0 +1,28 @@
+---
+import SiteShell from '../../components/SiteShell.astro';
+import PageHero from '../../components/PageHero.astro';
+import { technologyPages } from '../../data/technologyPages';
+---
+
+<SiteShell
+  title="Technologies We Build With | Aizaz Studio"
+  description="Node.js, Python, React, AWS, OpenAI, LangChain, and more — applied to SaaS, AI systems, automation, and cloud delivery."
+  canonical="/technologies"
+>
+  <PageHero
+    eyebrow="Stack"
+    title="Technologies tied to business outcomes"
+    description="We choose tools based on reliability, maintainability, and fit for your product — not resume driven hype."
+  />
+
+  <section class="pb-24">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {technologyPages.map((page) => (
+        <a href={`/technologies/${page.slug}`} class="p-6 rounded-2xl glass-card hover:border-primary-500/30 transition-colors group">
+          <h2 class="text-lg font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">{page.title}</h2>
+          <p class="text-sm text-zinc-500 line-clamp-2">{page.heroSubtitle}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</SiteShell>

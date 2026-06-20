@@ -1,0 +1,33 @@
+---
+import SiteShell from '../components/SiteShell.astro';
+import PageHero from '../components/PageHero.astro';
+import Process from '../components/Process.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { processPage } from '../data/commercialPages';
+
+const c = processPage;
+---
+
+<SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/process">
+  <PageHero eyebrow="How we work" title={c.title} description={c.intro}>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="/book-a-call" class="inline-flex justify-center px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors">Book a Call</a>
+      <a href="/engagement-models" class="inline-flex justify-center px-8 py-4 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">Engagement Models</a>
+    </div>
+  </PageHero>
+
+  <Process stepsOnly />
+
+  <FaqSection faqs={[
+    { question: 'How is this different from the full process page?', answer: 'This page is a conversion focused summary. The engineering transformation page includes more context for teams evaluating a larger engagement.' },
+    { question: 'Can we start with one step only?', answer: 'Yes. Many clients start with discovery and a 14 day AI Systems Sprint before committing to a platform build or retainer.' },
+    { question: 'Do you document everything for our team?', answer: 'Yes. Handoff includes architecture notes, runbooks, and access documentation so your team can operate and extend the system.' },
+    { question: 'Who works on our project?', answer: 'Senior engineers and architects. We do not rotate junior staff onto production systems without senior oversight.' },
+  ]} />
+
+  <section class="pb-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <a href="/engineering-transformation" class="text-primary-400 font-semibold hover:text-primary-300 transition-colors">Read the full engineering transformation overview →</a>
+    </div>
+  </section>
+</SiteShell>

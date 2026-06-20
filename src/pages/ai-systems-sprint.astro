@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
+import { CTA } from '../components/CTA';
+import PageHero from '../components/PageHero.astro';
+import { aiSystemsSprintPage } from '../data/seoPages';
+import { deliverySteps } from '../data/siteContent';
+import { BOOKING_URL } from '../data/siteConfig';
+
+const page = aiSystemsSprintPage;
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  canonical="/ai-systems-sprint"
+  keywords={page.keywords}
+>
+  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+    <Navbar client:load />
+    <main>
+      <PageHero
+        eyebrow="Flagship Offer"
+        title="AI Systems Sprint"
+        highlight="One workflow. 14 days. Live system."
+        description={page.heroSubtitle}
+      >
+        <div class="flex flex-col sm:flex-row gap-4 mt-2 sm:mt-0 w-full sm:w-auto justify-center">
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" class="inline-flex justify-center px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors">
+            Book Sprint Discovery Call
+          </a>
+        </div>
+      </PageHero>
+
+      <section class="pb-20 -mt-6">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-3 gap-4 p-6 rounded-2xl glass-card text-center">
+            <div><div class="text-2xl font-display font-bold text-white">14</div><div class="text-xs text-zinc-500 uppercase tracking-wider">Days</div></div>
+            <div><div class="text-2xl font-display font-bold text-white">1</div><div class="text-xs text-zinc-500 uppercase tracking-wider">Workflow</div></div>
+            <div><div class="text-2xl font-display font-bold text-white">100%</div><div class="text-xs text-zinc-500 uppercase tracking-wider">Deployed</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
+          <div class="p-8 rounded-2xl glass-card">
+            <h2 class="text-2xl font-display font-bold text-white mb-4">Why teams stall</h2>
+            <p class="text-zinc-400 leading-relaxed">{page.problem}</p>
+          </div>
+          <div class="p-8 rounded-2xl glass-card border-primary-500/20">
+            <h2 class="text-2xl font-display font-bold text-white mb-4">What you walk away with</h2>
+            <p class="text-zinc-400 leading-relaxed">{page.solution}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-display font-bold text-white mb-4">Perfect for teams who need momentum</h2>
+          <p class="text-zinc-400 text-lg mb-8 leading-relaxed">
+            The AI Systems Sprint is our fastest path from manual ops to working software. Founders use it to validate automation ROI. Operations leaders use it to fix one painful workflow before a bigger ERP or SaaS build. Agencies use it to deliver a concrete win for clients quickly.
+          </p>
+          <h3 class="text-xl font-display font-bold text-white mb-6">What&apos;s included</h3>
+          <ul class="grid md:grid-cols-2 gap-4">
+            {page.capabilities.map((item) => (
+              <li class="flex items-start gap-3 p-4 rounded-xl glass-card">
+                <span class="mt-1.5 w-2 h-2 rounded-full bg-primary-500 shrink-0"></span>
+                <span class="text-zinc-300">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-display font-bold text-white mb-8">Sprint examples we build</h2>
+          <div class="space-y-4">
+            {page.examples.map((item) => (
+              <div class="p-5 rounded-xl glass-card text-zinc-300 font-mono text-sm md:text-base">{item}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-display font-bold text-white mb-8">Sprint timeline</h2>
+          <div class="grid md:grid-cols-3 gap-4">
+            {deliverySteps.map((step) => (
+              <div class="p-6 rounded-2xl glass-card">
+                <div class="text-primary-400 font-display font-bold text-sm mb-3">{step.step}</div>
+                <h3 class="font-bold text-white mb-2">{step.title}</h3>
+                <p class="text-sm text-zinc-400 leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-display font-bold text-white mb-8">FAQ</h2>
+          <div class="space-y-4">
+            {page.faqs.map((faq) => (
+              <details class="group p-6 rounded-2xl glass-card">
+                <summary class="cursor-pointer text-lg font-semibold text-white list-none flex items-center justify-between gap-4">
+                  {faq.question}
+                  <span class="text-primary-400 group-open:rotate-45 transition-transform text-2xl leading-none">+</span>
+                </summary>
+                <p class="mt-4 text-zinc-400 leading-relaxed">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTA client:visible />
+    </main>
+    <Footer client:visible />
+  </div>
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: page.title,
+  description: page.metaDescription,
+  brand: { '@type': 'Organization', name: 'Aizaz.studio' },
+  offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: 'https://aizaz.studio/ai-systems-sprint' },
+})} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: page.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+})} />
