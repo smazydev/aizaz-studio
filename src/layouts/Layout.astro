@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/light-theme.css';
 import { SITE_URL } from '../data/seoPages';
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
   description?: string;
   canonical?: string;
   keywords?: string[];
+  ogImage?: string;
   noindex?: boolean;
 }
 
@@ -15,6 +17,7 @@ const {
   description = 'Aizaz.studio builds AI-powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
   canonical,
   keywords = [],
+  ogImage,
   noindex = false,
 } = Astro.props;
 
@@ -54,8 +57,16 @@ const websiteSchema = {
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="light">
   <head>
+    <script is:inline>
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        document.documentElement.setAttribute('data-theme', storedTheme === 'dark' ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
@@ -72,11 +83,12 @@ const websiteSchema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={`${SITE_URL}/aizaz-logo-white.png`} />
+    <meta property="og:image" content={ogImage ?? `${SITE_URL}/aizaz-logo-white.png`} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

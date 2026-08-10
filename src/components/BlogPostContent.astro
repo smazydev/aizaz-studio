@@ -1,0 +1,158 @@
+---
+import type { PublicBlogPost } from '../lib/blog';
+import BlogCard from './BlogCard.astro';
+import { marked } from 'marked';
+import { Image } from 'astro:assets';
+import { SITE_URL } from '../data/seoPages';
+
+interface Props {
+  blog: PublicBlogPost;
+  related?: PublicBlogPost[];
+  preview?: boolean;
+}
+
+const { blog, related = [], preview = false } = Astro.props;
+const contentHtml = marked.parse(blog.content);
+const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
+const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
+---
+
+<article>
+  <header class="mb-10">
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+      <span class="px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs font-bold uppercase tracking-wider">
+        {blog.category}
+      </span>
+      <time class="text-zinc-500 text-sm" datetime={blog.dateIso}>{blog.date}</time>
+      <span class="text-zinc-600">·</span>
+      <span class="text-zinc-500 text-sm">{blog.readTime}</span>
+      {preview && (
+        <>
+          <span class="text-zinc-600">·</span>
+          <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
+            Preview
+          </span>
+        </>
+      )}
+    </div>
+
+    <h1 class="text-3xl md:text-5xl lg:text-[3.25rem] font-display font-bold text-white mb-4 leading-[1.1]">
+      {blog.title}
+    </h1>
+
+    {blog.excerpt && (
+      <p class="text-xl text-zinc-400 mb-8 leading-relaxed">{blog.excerpt}</p>
+    )}
+
+    <div class="flex items-center gap-4 pb-8 border-b border-white/10">
+      <div class="w-11 h-11 rounded-full bg-gradient-to-br from-primary-500/40 to-indigo-600/40 border border-white/10 flex items-center justify-center font-bold text-white">
+        {blog.author.charAt(0)}
+      </div>
+      <div>
+        <div class="text-sm font-semibold text-white">{blog.author}</div>
+        <div class="text-xs text-zinc-500">Aizaz.studio</div>
+      </div>
+    </div>
+  </header>
+
+  {(blog.image || blog.imageUrl) && (
+    <div class="mb-12 rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
+      {blog.image ? (
+        <Image src={blog.image} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="lazy" />
+      ) : (
+        <img src={blog.imageUrl} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="lazy" />
+      )}
+    </div>
+  )}
+
+  <div class="grid lg:grid-cols-[1fr_240px] gap-12 items-start">
+    <div>
+      <div class="article-content" set:html={contentHtml} />
+
+      {blog.tags.length > 0 && (
+        <div class="mt-16 pt-8 border-t border-white/10">
+          <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Topics</div>
+          <div class="flex flex-wrap gap-2">
+            {blog.tags.map((tag) => (
+              <span class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/5 text-sm text-zinc-400">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!preview && (
+        <div class="mt-12 p-8 rounded-2xl glass-card border-primary-500/20">
+          <h3 class="text-xl font-display font-bold text-white mb-2">Want help implementing this?</h3>
+          <p class="text-zinc-400 mb-6">
+            We turn manual workflows into working AI systems, automations, and internal tools, often starting with a 14 day sprint.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a
+              href="/book-a-call"
+              class="inline-flex justify-center px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors"
+            >
+              Book a Free Call
+            </a>
+            <a href="/ai-systems-sprint" class="inline-flex justify-center px-6 py-3 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">
+              AI Systems Sprint
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+
+    <aside class="hidden lg:block sticky top-28 space-y-8">
+      {headings.length > 0 && (
+        <div class="p-5 rounded-2xl glass-card">
+          <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">On this page</div>
+          <nav class="space-y-2">
+            {headings.map((heading) => (
+              <a
+                href={`#${heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                class="block text-sm text-zinc-400 hover:text-primary-400 transition-colors leading-snug"
+              >
+                {heading}
+              </a>
+            ))}
+          </nav>
+        </div>
+      )}
+
+      {!preview && (
+        <div class="p-5 rounded-2xl glass-card">
+          <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">Share</div>
+          <p class="text-sm text-zinc-400 mb-4">Send this to someone drowning in manual ops.</p>
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(shareUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-primary-400 hover:text-primary-300"
+          >
+            Share on X →
+          </a>
+        </div>
+      )}
+    </aside>
+  </div>
+</article>
+
+{related.length > 0 && !preview && (
+  <section class="mt-24 pt-16 border-t border-white/10">
+    <h2 class="text-2xl font-display font-bold text-white mb-8">Continue Reading</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      {related.map((post) => (
+        <BlogCard blog={post} />
+      ))}
+    </div>
+  </section>
+)}
+
+<script>
+  document.querySelectorAll('.article-content h2, .article-content h3').forEach((heading) => {
+    if (heading instanceof HTMLElement && heading.textContent) {
+      heading.id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    }
+  });
+</script>

@@ -10,6 +10,22 @@
 		"binding": "ASSETS",
 		"directory": "./dist"
 	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "aizaz-studio-blog",
+			"database_id": "local-dev-placeholder"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "BLOG_IMAGES",
+			"bucket_name": "aizaz-blog-images"
+		}
+	],
+	"triggers": {
+		"crons": ["*/15 * * * *"]
+	},
 	"routes": [
 		{
 			"pattern": "aizaz.studio",
@@ -20,7 +36,6 @@
 			"custom_domain": true
 		}
 	],
-	// Keep workers.dev available while custom domain DNS is being fixed
 	"workers_dev": true,
 	"observability": {
     "enabled": true

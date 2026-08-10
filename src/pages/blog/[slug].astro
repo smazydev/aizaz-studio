@@ -3,31 +3,40 @@ import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { CTA } from '../../components/CTA';
-import BlogCard from '../../components/BlogCard.astro';
-import { blogs, getRelatedBlogs } from '../../data/blogs';
-import { marked } from 'marked';
-import { Image } from 'astro:assets';
+import BlogPostContent from '../../components/BlogPostContent.astro';
+import { buildArticleSchema, getPublishedPostBySlug, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
+import { SITE_URL } from '../../data/seoPages';
 
-export function getStaticPaths() {
-  return blogs.map((blog) => ({
-    params: { slug: blog.slug },
-    props: { blog },
-  }));
+export const prerender = false;
+
+const { slug } = Astro.params;
+const db = Astro.locals.runtime?.env?.DB;
+const blog = await getPublishedPostBySlug(db, slug!);
+
+if (!blog) {
+    return Astro.redirect('/blog');
 }
 
-const { blog } = Astro.props;
-const contentHtml = marked.parse(blog.content);
-const related = getRelatedBlogs(blog.slug);
-const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
+const allPosts = await getPublishedPosts(db);
+const related = getRelatedPosts(allPosts, blog.slug);
+const articleSchema = buildArticleSchema(blog, SITE_URL);
+const ogImage = blog.ogImage
+    ? blog.ogImage.startsWith('http')
+        ? blog.ogImage
+        : `${SITE_URL}${blog.ogImage}`
+    : undefined;
 ---
 
 <Layout
-  title={`${blog.title} | Aizaz.studio Blog`}
-  description={blog.excerpt}
-  canonical={`/blog/${blog.slug}`}
+  title={`${blog.seoTitle ?? blog.title} | Aizaz.studio Blog`}
+  description={blog.metaDescription ?? blog.excerpt}
+  canonical={blog.canonicalUrl ?? `/blog/${blog.slug}`}
   keywords={blog.tags}
+  ogImage={ogImage}
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <div class="site-shell min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
 
     <main class="pb-24">
@@ -37,113 +46,7 @@ const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[
           Back to Blog
         </a>
 
-        <div class="grid lg:grid-cols-[1fr_240px] gap-12 items-start">
-          <article>
-            <header class="mb-10">
-              <div class="flex flex-wrap items-center gap-3 mb-6">
-                <span class="px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs font-bold uppercase tracking-wider">
-                  {blog.category}
-                </span>
-                <time class="text-zinc-500 text-sm" datetime={blog.date}>{blog.date}</time>
-                <span class="text-zinc-600">·</span>
-                <span class="text-zinc-500 text-sm">{blog.readTime}</span>
-              </div>
-
-              <h1 class="text-3xl md:text-5xl lg:text-[3.25rem] font-display font-bold text-white mb-8 leading-[1.1]">
-                {blog.title}
-              </h1>
-
-              <div class="flex items-center gap-4 pb-8 border-b border-white/10">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-primary-500/40 to-indigo-600/40 border border-white/10 flex items-center justify-center font-bold text-white">
-                  {blog.author.charAt(0)}
-                </div>
-                <div>
-                  <div class="text-sm font-semibold text-white">{blog.author}</div>
-                  <div class="text-xs text-zinc-500">Aizaz.studio</div>
-                </div>
-              </div>
-            </header>
-
-            <div class="mb-12 rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
-              <Image src={blog.image} alt={blog.title} class="w-full aspect-[21/9] object-cover" />
-            </div>
-
-            <div class="article-content" set:html={contentHtml} />
-
-            {blog.tags && blog.tags.length > 0 && (
-              <div class="mt-16 pt-8 border-t border-white/10">
-                <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Topics</div>
-                <div class="flex flex-wrap gap-2">
-                  {blog.tags.map((tag) => (
-                    <span class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/5 text-sm text-zinc-400">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div class="mt-12 p-8 rounded-2xl glass-card border-primary-500/20">
-              <h3 class="text-xl font-display font-bold text-white mb-2">Want help implementing this?</h3>
-              <p class="text-zinc-400 mb-6">
-                We turn manual workflows into working AI systems, automations, and internal tools — often starting with a 14 day sprint.
-              </p>
-              <div class="flex flex-col sm:flex-row gap-3">
-                <a
-                  href="/book-a-call"
-                  class="inline-flex justify-center px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors"
-                >
-                  Book a Free Call
-                </a>
-                <a href="/ai-systems-sprint" class="inline-flex justify-center px-6 py-3 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">
-                  AI Systems Sprint
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <aside class="hidden lg:block sticky top-28 space-y-8">
-            {headings.length > 0 && (
-              <div class="p-5 rounded-2xl glass-card">
-                <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">On this page</div>
-                <nav class="space-y-2">
-                  {headings.map((heading) => (
-                    <a
-                      href={`#${heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                      class="block text-sm text-zinc-400 hover:text-primary-400 transition-colors leading-snug"
-                    >
-                      {heading}
-                    </a>
-                  ))}
-                </nav>
-              </div>
-            )}
-
-            <div class="p-5 rounded-2xl glass-card">
-              <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">Share</div>
-              <p class="text-sm text-zinc-400 mb-4">Send this to someone drowning in manual ops.</p>
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(`https://aizaz.studio/blog/${blog.slug}`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-sm font-medium text-primary-400 hover:text-primary-300"
-              >
-                Share on X →
-              </a>
-            </div>
-          </aside>
-        </div>
-
-        {related.length > 0 && (
-          <section class="mt-24 pt-16 border-t border-white/10">
-            <h2 class="text-2xl font-display font-bold text-white mb-8">Continue Reading</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-              {related.map((post) => (
-                <BlogCard blog={post} />
-              ))}
-            </div>
-          </section>
-        )}
+        <BlogPostContent blog={blog} related={related} />
       </div>
 
       <div class="mt-20">
@@ -153,11 +56,3 @@ const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[
     <Footer client:visible />
   </div>
 </Layout>
-
-<script>
-  document.querySelectorAll('.article-content h2, .article-content h3').forEach((heading) => {
-    if (heading instanceof HTMLElement && heading.textContent) {
-      heading.id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    }
-  });
-</script>

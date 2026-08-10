@@ -3,6 +3,7 @@ import { extraServicePages } from './servicePagesExtra';
 import { extraIndustryPages } from './industryPagesExtra';
 import { comparePages } from './comparePages';
 import { technologyPages } from './technologyPages';
+import { caseStudies } from './caseStudies';
 
 export interface SeoPage {
     slug: string;
@@ -720,7 +721,5 @@ export function getAllSeoPaths(): string[] {
 }
 
 function caseStudySlugs(): string[] {
-    return ['1archiver compliance platform', 'investorsgonewild investment platform'].map(
-        (slug) => `/case-studies/${slug}`,
-    );
+    return caseStudies.map((study) => `/case-studies/${study.slug}`);
 }

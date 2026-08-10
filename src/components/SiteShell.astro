@@ -14,7 +14,7 @@ const { title, description, canonical, keywords = [] } = Astro.props;
 ---
 
 <Layout title={title} description={description} canonical={canonical} keywords={keywords}>
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+  <div class="site-shell min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
     <main>
       <slot />

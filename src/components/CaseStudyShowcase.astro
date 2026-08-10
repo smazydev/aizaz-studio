@@ -8,10 +8,21 @@ interface Props {
 }
 
 const { showHeader = true } = Astro.props;
-const categories = Array.from(new Set(caseStudies.map((cs) => cs.category)));
+
+const showcaseOrder = [
+  'Real Estate • SaaS • Buyer Matching',
+  'SaaS Architecture • CRM • Multi-Tenant',
+  'Compliance • eDiscovery • Data Retention',
+  'FinTech • Investment Intelligence • Financial Analytics',
+  'Developer Tooling • Code Quality • CI/CD',
+];
+
+const categories = showcaseOrder.filter((category) =>
+  caseStudies.some((study) => study.category === category),
+);
 ---
 
-<section class={`${showHeader ? 'py-20' : 'pb-20'} bg-black`}>
+<section id="case-study-showcase" class={`${showHeader ? 'py-20' : 'pb-20'} bg-black`}>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {showHeader && (
       <div class="text-center mb-16">
@@ -30,6 +41,7 @@ const categories = Array.from(new Set(caseStudies.map((cs) => cs.category)));
         <button
           type="button"
           data-category={category}
+          data-index={index}
           class={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
             index === 0
               ? 'bg-zinc-800 text-white border border-zinc-700 shadow-lg shadow-primary-500/10 active'
@@ -47,6 +59,7 @@ const categories = Array.from(new Set(caseStudies.map((cs) => cs.category)));
         return (
           <div
             data-category-content={category}
+            data-index={index}
             class={`bg-zinc-900/30 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm transition-opacity duration-500 ${
               index === 0
                 ? 'opacity-100 z-10 relative'
@@ -102,32 +115,84 @@ const categories = Array.from(new Set(caseStudies.map((cs) => cs.category)));
 </section>
 
 <script>
-  const tabs = document.querySelectorAll('#category-tabs button');
-  const contents = document.querySelectorAll('[data-category-content]');
+  const section = document.getElementById('case-study-showcase');
+  const tabs = Array.from(document.querySelectorAll('#category-tabs button'));
+  const contents = Array.from(document.querySelectorAll('[data-category-content]'));
+  const total = tabs.length;
 
-  tabs.forEach((tab) => {
+  let currentIndex = 0;
+  let rotateTimer: ReturnType<typeof setInterval> | null = null;
+
+  function setActiveTab(tab: Element) {
+    tabs.forEach((t) => {
+      if (t === tab) {
+        t.classList.remove('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
+        t.classList.add('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
+      } else {
+        t.classList.add('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
+        t.classList.remove('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
+      }
+    });
+  }
+
+  function showIndex(index: number) {
+    currentIndex = index;
+
+    tabs.forEach((tab, i) => {
+      if (i === index) setActiveTab(tab);
+    });
+
+    contents.forEach((content, i) => {
+      if (i === index) {
+        content.classList.remove('opacity-0', 'z-0', 'pointer-events-none', 'absolute', 'inset-0');
+        content.classList.add('opacity-100', 'z-10', 'relative');
+      } else {
+        content.classList.add('opacity-0', 'z-0', 'pointer-events-none', 'absolute', 'inset-0');
+        content.classList.remove('opacity-100', 'z-10', 'relative');
+      }
+    });
+  }
+
+  function startRotation() {
+    if (rotateTimer) clearInterval(rotateTimer);
+    rotateTimer = setInterval(() => {
+      showIndex((currentIndex + 1) % total);
+    }, 2000);
+  }
+
+  function stopRotation() {
+    if (rotateTimer) {
+      clearInterval(rotateTimer);
+      rotateTimer = null;
+    }
+  }
+
+  tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => {
-      const category = tab.getAttribute('data-category');
-
-      tabs.forEach((t) => {
-        if (t === tab) {
-          t.classList.remove('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
-          t.classList.add('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
-        } else {
-          t.classList.add('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
-          t.classList.remove('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
-        }
-      });
-
-      contents.forEach((content) => {
-        if (content.getAttribute('data-category-content') === category) {
-          content.classList.remove('opacity-0', 'z-0', 'pointer-events-none', 'absolute', 'inset-0');
-          content.classList.add('opacity-100', 'z-10', 'relative');
-        } else {
-          content.classList.add('opacity-0', 'z-0', 'pointer-events-none', 'absolute', 'inset-0');
-          content.classList.remove('opacity-100', 'z-10', 'relative');
-        }
-      });
+      showIndex(index);
+      startRotation();
     });
   });
+
+  if (section && total > 1) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          startRotation();
+        } else {
+          stopRotation();
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(section);
+
+    section.addEventListener('mouseenter', stopRotation);
+    section.addEventListener('mouseleave', () => {
+      if (section.getBoundingClientRect().top < window.innerHeight) {
+        startRotation();
+      }
+    });
+  }
 </script>

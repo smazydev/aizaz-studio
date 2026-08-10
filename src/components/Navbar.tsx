@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 const navLinks = [
   { href: '/services', label: 'Services' },
@@ -40,12 +41,13 @@ export const Navbar: React.FC = () => {
             </span>
           </a>
 
-          <div className="hidden lg:flex items-center gap-7">
+          <div className="hidden lg:flex items-center gap-5">
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="text-sm font-medium text-zinc-400 hover:text-white transition-colors">
                 {link.label}
               </a>
             ))}
+            <ThemeToggle />
             <a
               href="/book-a-call"
               className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors"
@@ -54,7 +56,8 @@ export const Navbar: React.FC = () => {
             </a>
           </div>
 
-          <div className="lg:hidden">
+          <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white p-2"

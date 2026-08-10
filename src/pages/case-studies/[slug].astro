@@ -1,10 +1,13 @@
 ---
+export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { CTA } from '../../components/CTA';
 import { caseStudies } from '../../data/caseStudies';
+import { SITE_URL } from '../../data/seoPages';
 import { Image } from 'astro:assets';
+import { BOOKING_URL } from '../../data/siteConfig';
 
 export function getStaticPaths() {
   return caseStudies.map(study => ({
@@ -14,9 +17,34 @@ export function getStaticPaths() {
 }
 
 const { study } = Astro.props;
+const pageTitle = study.seoTitle ?? `${study.title} | Aizaz Studio`;
+const pageDescription = study.seoDescription ?? study.description;
+const canonicalPath = `/case-studies/${study.slug}`;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: study.title,
+  description: pageDescription,
+  author: {
+    '@type': 'Organization',
+    name: 'Aizaz Studio',
+    url: SITE_URL,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Aizaz Studio',
+    url: SITE_URL,
+  },
+  mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+};
 ---
 
-<Layout>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalPath}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
     
@@ -32,6 +60,61 @@ const { study } = Astro.props;
         <p class="text-xl text-zinc-400 max-w-3xl mx-auto">
           {study.description}
         </p>
+        {study.deliveredBy && (
+          <p class="mt-4 text-sm text-zinc-500 max-w-2xl mx-auto">
+            Delivered by {study.deliveredBy}
+          </p>
+        )}
+        {study.engagementNote && (
+          <p class="mt-3 text-sm text-zinc-500 max-w-2xl mx-auto">
+            {study.engagementNote}
+          </p>
+        )}
+        {(study.client || study.location || study.industry || study.projectValue) && (
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
+            {study.client && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Client</div>
+                <div class="text-sm text-white font-medium">{study.client}</div>
+              </div>
+            )}
+            {study.location && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Location</div>
+                <div class="text-sm text-white font-medium">{study.location}</div>
+              </div>
+            )}
+            {study.industry && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Industry</div>
+                <div class="text-sm text-white font-medium">{study.industry}</div>
+              </div>
+            )}
+            {study.projectValue && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Engagement</div>
+                <div class="text-sm text-white font-medium">{study.projectValue}</div>
+              </div>
+            )}
+            {study.deliveryDuration && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Delivery</div>
+                <div class="text-sm text-white font-medium">{study.deliveryDuration}</div>
+              </div>
+            )}
+          </div>
+        )}
+        {study.atAGlance && study.atAGlance.length > 0 && (
+          <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {study.atAGlance.map((item) => (
+              <div class="px-5 py-5 rounded-2xl bg-zinc-900/30 border border-white/10 text-center">
+                <div class="text-2xl md:text-3xl font-display font-bold text-white mb-2">{item.value}</div>
+                <div class="text-sm text-zinc-400">{item.label}</div>
+                {item.sublabel && <div class="text-xs text-zinc-500 mt-1">{item.sublabel}</div>}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Hero Image */}
@@ -48,6 +131,42 @@ const { study } = Astro.props;
 
       {/* Content Sections */}
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+        {study.testimonial && (
+          <section>
+            <div class="bg-zinc-900/30 border border-white/10 rounded-3xl p-8 md:p-12">
+              <div class="text-primary-400 font-semibold mb-6">{study.testimonial.rating}</div>
+              <blockquote class="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">
+                "{study.testimonial.quote}"
+              </blockquote>
+              <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <div>
+                  <div class="font-bold text-white text-lg">
+                    — {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
+                  </div>
+                  <div class="text-sm text-primary-400 mt-2">{study.testimonial.source}</div>
+                </div>
+                {study.testimonial.engagementMeta && (
+                  <div class="text-sm text-zinc-500">{study.testimonial.engagementMeta}</div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {study.engagement && study.engagement.length > 0 && (
+          <section>
+            <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">Project Details</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              {study.engagement.map((detail) => (
+                <div class="px-5 py-4 rounded-2xl bg-zinc-900/30 border border-white/5">
+                  <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">{detail.label}</div>
+                  <div class="text-sm text-white font-medium">{detail.value}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Detailed Content Sections */}
         {study.detailedContent?.map((section) => (
           <section>
@@ -76,6 +195,33 @@ const { study } = Astro.props;
                             </li>
                           ))}
                         </ul>
+                      )}
+                      {item.table && (
+                        <div class="overflow-hidden rounded-xl border border-white/10 mb-4">
+                          <table class="w-full text-left">
+                            <thead class="bg-zinc-900/80">
+                              <tr>
+                                <th class="px-5 py-3 text-sm font-semibold text-zinc-300">
+                                  {item.tableHeaders?.left ?? 'Agent Network'}
+                                </th>
+                                <th class="px-5 py-3 text-sm font-semibold text-zinc-300">
+                                  {item.tableHeaders?.right ?? 'Third-Party SaaS Cost'}
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.table.map((row) => (
+                                <tr class="border-t border-white/5">
+                                  <td class="px-5 py-3 text-zinc-300">{row.label}</td>
+                                  <td class="px-5 py-3 text-white font-medium">{row.value}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                      {item.tableCaption && (
+                        <p class="text-sm text-zinc-500 mb-8">{item.tableCaption}</p>
                       )}
                     </div>
                     {item.image && (
@@ -147,6 +293,20 @@ const { study } = Astro.props;
           </>
         )}
       </div>
+
+      {study.cta && (
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+          <div class="text-center p-10 md:p-12 rounded-3xl bg-zinc-900/30 border border-white/10">
+            <p class="text-xl md:text-2xl text-zinc-200 mb-8 leading-relaxed">{study.cta.headline}</p>
+            <a
+              href={study.cta.buttonHref ?? BOOKING_URL}
+              class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-zinc-100 transition-all"
+            >
+              {study.cta.buttonText}
+            </a>
+          </div>
+        </div>
+      )}
 
       <div class="mt-32">
         <CTA client:visible />

@@ -7,7 +7,15 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://aizaz.studio',
-  output: 'static',
+  output: 'server',
   integrations: [react(), tailwind()],
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+    workerEntryPoint: {
+      path: 'src/worker.ts',
+      namedExports: ['scheduled'],
+    },
+  }),
 });

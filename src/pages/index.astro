@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from '../layouts/Layout.astro';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
@@ -20,7 +21,7 @@ import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
   canonical="/"
   keywords={['AI automation agency', 'NetSuite integration', 'SaaS development', 'AWS DevOps', 'business process automation']}
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+  <div class="site-shell min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />
     <main>
       <Hero client:load />

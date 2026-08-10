@@ -1,0 +1,52 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+export const prerender = false;
+
+const next = Astro.url.searchParams.get('next') || '/admin';
+const error = Astro.url.searchParams.get('error');
+---
+
+<AdminLayout title="Login">
+  <div class="login-wrap">
+    <div class="card login-card">
+      <h1 style="margin-top:0;">Aizaz Studio Admin</h1>
+      <p class="muted">Sign in to manage blog posts.</p>
+      {error === 'config' && <p class="error">Admin auth is not configured on this environment.</p>}
+      <form id="login-form" class="grid" style="margin-top:1.5rem;">
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" required autocomplete="current-password" />
+        </div>
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        <p id="login-error" class="error" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <script define:vars={{ next }}>
+    const form = document.getElementById('login-form');
+    const errorEl = document.getElementById('login-error');
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      errorEl.hidden = true;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        errorEl.textContent = data.error || 'Login failed';
+        errorEl.hidden = false;
+        return;
+      }
+
+      window.location.href = next;
+    });
+  </script>
+</AdminLayout>

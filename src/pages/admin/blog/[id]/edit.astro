@@ -1,0 +1,31 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import BlogEditorForm from '../../../../components/admin/BlogEditorForm.astro';
+import { getPostById } from '../../../../lib/blog-db';
+
+export const prerender = false;
+
+const db = Astro.locals.runtime.env.DB;
+const post = await getPostById(db, Astro.params.id!);
+
+if (!post) {
+    return Astro.redirect('/admin');
+}
+---
+
+<AdminLayout title={`Edit: ${post.title}`}>
+  <div class="admin-shell">
+    <header class="admin-header">
+      <h1>Edit Post</h1>
+      <nav class="admin-nav">
+        <a href="/admin" class="btn">Back to dashboard</a>
+        {post.preview_token && (
+          <a href={`/blog/preview/${post.preview_token}`} class="btn" target="_blank" rel="noreferrer">Preview</a>
+        )}
+      </nav>
+    </header>
+    <main class="admin-main">
+      <BlogEditorForm mode="edit" post={post} />
+    </main>
+  </div>
+</AdminLayout>
