@@ -1,14 +1,16 @@
 import type { APIRoute } from 'astro';
 import { getAllSeoPaths, SITE_URL } from '../data/seoPages';
-import { listPublishedPosts } from '../lib/blog-db';
+import { getPublishedPosts } from '../lib/blog';
+import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ locals }) => {
   const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
   const db = locals.runtime?.env?.DB;
-  const cmsPaths = db ? (await listPublishedPosts(db)).map((post) => `/blog/${post.slug}`) : [];
-  const paths = Array.from(new Set([...staticPaths, '/blog', ...cmsPaths]));
+  const cmsPaths = (await getPublishedPosts(db)).map((post) => `/blog/${post.slug}`);
+  const caseStudyPaths = (await getAllCaseStudies()).map((study) => `/case-studies/${study.slug}`);
+  const paths = Array.from(new Set([...staticPaths, '/blog', ...cmsPaths, ...caseStudyPaths]));
 
   const urls = paths
     .map(

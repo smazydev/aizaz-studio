@@ -72,6 +72,7 @@ export interface CaseStudy {
     }[];
     gallery?: string[];
     backgroundImages?: ImageMetadata[];
+    imageUrl?: string;
     seoTitle?: string;
     seoDescription?: string;
     cta?: {

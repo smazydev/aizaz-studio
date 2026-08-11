@@ -17,6 +17,8 @@ declare namespace App {
 
 interface ImportMetaEnv {
     readonly PUBLIC_GA_ID?: string;
+    readonly SANITY_PROJECT_ID?: string;
+    readonly SANITY_DATASET?: string;
 }
 
 interface ImportMeta {

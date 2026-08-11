@@ -6,8 +6,21 @@ import { CTA } from '../../components/CTA';
 import BlogPostContent from '../../components/BlogPostContent.astro';
 import { buildArticleSchema, getPublishedPostBySlug, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
 import { SITE_URL } from '../../data/seoPages';
+import { blogs as legacyBlogs } from '../../data/blogs';
+import { isSanityConfigured } from '../../lib/sanity/client';
+import { getSanityBlogSlugs } from '../../lib/sanity/blog';
 
-export const prerender = false;
+export const prerender = isSanityConfigured();
+
+export async function getStaticPaths() {
+  if (!isSanityConfigured()) return [];
+
+  const sanitySlugs = await getSanityBlogSlugs();
+  const legacySlugs = legacyBlogs.map((post) => post.slug);
+  const slugs = Array.from(new Set([...sanitySlugs, ...legacySlugs]));
+
+  return slugs.map((slug) => ({ params: { slug } }));
+}
 
 const { slug } = Astro.params;
 const db = Astro.locals.runtime?.env?.DB;

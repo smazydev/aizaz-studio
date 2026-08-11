@@ -6,8 +6,9 @@ import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import BlogCard from '../components/BlogCard.astro';
 import { getPublishedPosts } from '../lib/blog';
+import { isSanityConfigured } from '../lib/sanity/client';
 
-export const prerender = false;
+export const prerender = isSanityConfigured();
 
 const db = Astro.locals.runtime?.env?.DB;
 const blogs = await getPublishedPosts(db);

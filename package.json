@@ -14,15 +14,19 @@
     "deploy": "astro build && wrangler deploy",
     "db:migrate:local": "wrangler d1 execute aizaz-studio-blog --local --file=./schema.sql",
     "db:migrate:remote": "wrangler d1 execute aizaz-studio-blog --remote --file=./schema.sql",
+    "studio": "npm run dev --prefix studio",
+    "studio:deploy": "npm run deploy --prefix studio",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/react": "^4.4.2",
     "@astrojs/tailwind": "^6.0.2",
+    "@sanity/client": "^7.26.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.16.6",
+    "groq": "^6.9.1",
     "lucide-react": "^0.562.0",
     "marked": "^17.0.1",
     "react": "^19.2.3",
@@ -32,6 +36,6 @@
   "devDependencies": {
     "@types/node": "^22.14.0",
     "typescript": "~5.8.2",
-    "wrangler": "^4.54.0"
+    "wrangler": "^4.120.1"
   }
 }

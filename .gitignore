@@ -14,8 +14,15 @@ dist-ssr
 
 # Local secrets and Cloudflare dev state
 .dev.vars
+.env
 .wrangler/
 cookies.txt
+
+# Sanity studio
+studio/.env
+studio/node_modules/
+studio/dist/
+studio/.sanity/
 
 # Editor directories and files
 .vscode/*

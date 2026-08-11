@@ -11,6 +11,8 @@ import {
     publishDueScheduledPosts,
     type BlogPostRow,
 } from './blog-db';
+import { isSanityConfigured } from './sanity/client';
+import { getSanityPostBySlug, getSanityPublishedPosts } from './sanity/blog';
 
 export interface PublicBlogPost {
     id: string;
@@ -83,14 +85,19 @@ export function mapDbPost(row: BlogPostRow): PublicBlogPost {
 }
 
 export async function getPublishedPosts(db?: D1Database): Promise<PublicBlogPost[]> {
-    const cmsPosts = db ? (await listPublishedPosts(db)).map(mapDbPost) : [];
-    const cmsSlugs = new Set(cmsPosts.map((post) => post.slug));
+    const sanityPosts = isSanityConfigured() ? await getSanityPublishedPosts() : [];
+    const sanitySlugs = new Set(sanityPosts.map((post) => post.slug));
+
+    const cmsPosts =
+        isSanityConfigured() || !db ? [] : (await listPublishedPosts(db)).map(mapDbPost).filter((post) => !sanitySlugs.has(post.slug));
+    const cmsSlugs = new Set([...sanitySlugs, ...cmsPosts.map((post) => post.slug)]);
+
     const legacyPosts = legacyBlogs
         .filter((post) => !cmsSlugs.has(post.slug))
         .map(mapLegacyPost)
         .sort((a, b) => new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime());
 
-    return [...cmsPosts, ...legacyPosts].sort(
+    return [...sanityPosts, ...cmsPosts, ...legacyPosts].sort(
         (a, b) => new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime(),
     );
 }
@@ -99,6 +106,11 @@ export async function getPublishedPostBySlug(
     db: D1Database | undefined,
     slug: string,
 ): Promise<PublicBlogPost | null> {
+    if (isSanityConfigured()) {
+        const sanityPost = await getSanityPostBySlug(slug);
+        if (sanityPost) return sanityPost;
+    }
+
     if (db) {
         await publishDueScheduledPosts(db);
         const row = await getPostBySlug(db, slug);

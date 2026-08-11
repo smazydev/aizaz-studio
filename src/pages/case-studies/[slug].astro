@@ -4,13 +4,14 @@ import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { CTA } from '../../components/CTA';
-import { caseStudies } from '../../data/caseStudies';
 import { SITE_URL } from '../../data/seoPages';
 import { Image } from 'astro:assets';
 import { BOOKING_URL } from '../../data/siteConfig';
+import { getAllCaseStudies } from '../../lib/sanity/caseStudies';
 
-export function getStaticPaths() {
-  return caseStudies.map(study => ({
+export async function getStaticPaths() {
+  const caseStudies = await getAllCaseStudies();
+  return caseStudies.map((study) => ({
     params: { slug: study.slug },
     props: { study },
   }));
@@ -120,11 +121,20 @@ const articleSchema = {
       {/* Hero Image */}
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-primary-500/10 aspect-video">
-          <Image 
-            src={study.image} 
-            alt={study.title}
-            class="w-full h-full object-cover"
-          />
+          {study.imageUrl ? (
+            <img
+              src={study.imageUrl}
+              alt={study.title}
+              class="w-full h-full object-cover"
+              loading="eager"
+            />
+          ) : (
+            <Image
+              src={study.image}
+              alt={study.title}
+              class="w-full h-full object-cover"
+            />
+          )}
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
       </div>
