@@ -10,6 +10,7 @@ interface Props {
   keywords?: string[];
   ogImage?: string;
   noindex?: boolean;
+  schemas?: Record<string, unknown>[];
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   keywords = [],
   ogImage,
   noindex = false,
+  schemas = [],
 } = Astro.props;
 
 const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : Astro.url.href.startsWith('http') ? Astro.url.href : `${SITE_URL}${Astro.url.pathname}`;
@@ -54,6 +56,14 @@ const websiteSchema = {
   url: SITE_URL,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+const pageStructuredData =
+  schemas.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@graph': schemas,
+      }
+    : null;
 ---
 
 <!DOCTYPE html>
@@ -94,8 +104,13 @@ const websiteSchema = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
 
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {!pageStructuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    )}
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
+    {pageStructuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(pageStructuredData)} />
+    )}
 
     <!-- Google Analytics 4 (gtag.js) on every page -->
     {gaId && (

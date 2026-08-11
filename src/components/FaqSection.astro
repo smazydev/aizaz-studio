@@ -31,12 +31,14 @@ const { faqs, heading = 'Frequently Asked Questions' } = Astro.props;
   </section>
 )}
 
-<script type="application/ld+json" set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-  })),
-})} />
+{faqs.length > 0 && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  })} />
+)}

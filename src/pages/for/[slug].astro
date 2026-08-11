@@ -5,6 +5,7 @@ import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import SeoLanding from '../../components/SeoLanding.astro';
 import { industryPages } from '../../data/seoPages';
+import { buildSeoPageSchemas } from '../../lib/seoSchema';
 
 export function getStaticPaths() {
   return industryPages.map((page) => ({
@@ -14,13 +15,23 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const canonicalPath = `/for/${page.slug}`;
+const schemas = buildSeoPageSchemas(
+  page,
+  [
+    { label: 'Home', href: '/' },
+    { label: 'Industries', href: '/services' },
+  ],
+  canonicalPath,
+);
 ---
 
 <Layout
   title={page.metaTitle}
   description={page.metaDescription}
-  canonical={`/for/${page.slug}`}
+  canonical={canonicalPath}
   keywords={page.keywords}
+  schemas={schemas}
 >
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />

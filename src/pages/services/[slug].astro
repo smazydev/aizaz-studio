@@ -5,6 +5,7 @@ import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import SeoLanding from '../../components/SeoLanding.astro';
 import { servicePages, getServiceBySlug } from '../../data/seoPages';
+import { buildSeoPageSchemas } from '../../lib/seoSchema';
 
 export function getStaticPaths() {
   return servicePages.map((page) => ({
@@ -14,16 +15,26 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const canonicalPath = `/services/${page.slug}`;
 const relatedServices = (page.relatedSlugs ?? [])
   .map((slug) => getServiceBySlug(slug))
   .filter(Boolean);
+const schemas = buildSeoPageSchemas(
+  page,
+  [
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/services' },
+  ],
+  canonicalPath,
+);
 ---
 
 <Layout
   title={page.metaTitle}
   description={page.metaDescription}
-  canonical={`/services/${page.slug}`}
+  canonical={canonicalPath}
   keywords={page.keywords}
+  schemas={schemas}
 >
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
     <Navbar client:load />

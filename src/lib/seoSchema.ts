@@ -6,18 +6,22 @@ interface FaqItem {
     answer: string;
 }
 
+interface BreadcrumbItem {
+    label: string;
+    href: string;
+}
+
 export function buildServiceSchema(page: SeoPage, canonicalPath: string) {
     const pageUrl = `${SITE_URL}${canonicalPath}`;
 
     return {
-        '@context': 'https://schema.org',
         '@type': 'Service',
         '@id': `${pageUrl}#service`,
         name: page.title,
         description: page.metaDescription,
         url: pageUrl,
         serviceType: page.title,
-        category: page.keywords[0],
+        image: `${SITE_URL}/aizaz-logo-white.png`,
         provider: {
             '@type': 'Organization',
             '@id': `${SITE_URL}/#organization`,
@@ -34,40 +38,18 @@ export function buildServiceSchema(page: SeoPage, canonicalPath: string) {
             url: `${SITE_URL}/book-a-call`,
             availability: 'https://schema.org/InStock',
             priceCurrency: 'USD',
-            price: '0',
             name: 'Free strategy call',
             description: 'Book a free discovery call to discuss scope, timeline, and fit.',
-        },
-        hasOfferCatalog: {
-            '@type': 'OfferCatalog',
-            name: `${page.title} engagement options`,
-            itemListElement: [
-                {
-                    '@type': 'Offer',
-                    itemOffered: {
-                        '@type': 'Service',
-                        name: page.title,
-                        description: page.heroSubtitle,
-                    },
-                },
-                {
-                    '@type': 'Offer',
-                    url: `${SITE_URL}/ai-systems-sprint`,
-                    itemOffered: {
-                        '@type': 'Service',
-                        name: 'AI Systems Sprint',
-                        description: 'A focused 14 day engagement to automate one high impact workflow.',
-                    },
-                },
-            ],
         },
     };
 }
 
 export function buildFaqSchema(faqs: FaqItem[]) {
+    if (faqs.length === 0) return null;
+
     return {
-        '@context': 'https://schema.org',
         '@type': 'FAQPage',
+        '@id': '#faq',
         mainEntity: faqs.map((faq) => ({
             '@type': 'Question',
             name: faq.question,
@@ -76,5 +58,65 @@ export function buildFaqSchema(faqs: FaqItem[]) {
                 text: faq.answer,
             },
         })),
+    };
+}
+
+export function buildBreadcrumbSchema(
+    breadcrumb: BreadcrumbItem[],
+    currentPageTitle: string,
+    canonicalPath: string,
+) {
+    return {
+        '@type': 'BreadcrumbList',
+        '@id': `${SITE_URL}${canonicalPath}#breadcrumb`,
+        itemListElement: [
+            ...breadcrumb.map((item, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: item.label,
+                item: `${SITE_URL}${item.href}`,
+            })),
+            {
+                '@type': 'ListItem',
+                position: breadcrumb.length + 1,
+                name: currentPageTitle,
+                item: `${SITE_URL}${canonicalPath}`,
+            },
+        ],
+    };
+}
+
+export function buildSeoPageSchemas(
+    page: SeoPage,
+    breadcrumb: BreadcrumbItem[],
+    canonicalPath: string,
+) {
+    const organization = {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'Aizaz Studio',
+        url: SITE_URL,
+        logo: `${SITE_URL}/aizaz-logo-white.png`,
+    };
+
+    const schemas: Record<string, unknown>[] = [
+        organization,
+        buildServiceSchema(page, canonicalPath),
+    ];
+
+    const faqSchema = buildFaqSchema(page.faqs);
+    if (faqSchema) {
+        schemas.push(faqSchema);
+    }
+
+    schemas.push(buildBreadcrumbSchema(breadcrumb, page.title, canonicalPath));
+
+    return schemas;
+}
+
+export function buildStructuredDataGraph(schemas: Record<string, unknown>[]) {
+    return {
+        '@context': 'https://schema.org',
+        '@graph': schemas,
     };
 }

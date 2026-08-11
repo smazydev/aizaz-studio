@@ -1,8 +1,6 @@
 ---
 import type { SeoPage, IndustryPage } from '../data/seoPages';
-import { SITE_URL } from '../data/seoPages';
 import { getSeoExtras } from '../data/seoExtras';
-import { buildFaqSchema, buildServiceSchema } from '../lib/seoSchema';
 import SeoRichContent from './SeoRichContent.astro';
 
 interface Props {
@@ -14,10 +12,7 @@ interface Props {
 
 const { page, breadcrumb, badge = 'Service', relatedServices = [] } = Astro.props;
 const isIndustry = 'audienceLabel' in page;
-const canonicalPath = isIndustry ? `/for/${page.slug}` : `/services/${page.slug}`;
 const extras = getSeoExtras(page);
-const serviceSchema = buildServiceSchema(page, canonicalPath);
-const faqSchema = page.faqs.length > 0 ? buildFaqSchema(page.faqs) : null;
 ---
 
 <section class="pt-32 pb-16 relative overflow-hidden page-glow">
@@ -167,28 +162,3 @@ const faqSchema = page.faqs.length > 0 ? buildFaqSchema(page.faqs) : null;
     </div>
   </div>
 </section>
-
-<script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
-
-{faqSchema && (
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-)}
-
-<script type="application/ld+json" set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    ...breadcrumb.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.label,
-      item: `${SITE_URL}${item.href}`,
-    })),
-    {
-      '@type': 'ListItem',
-      position: breadcrumb.length + 1,
-      name: page.title,
-      item: `${SITE_URL}${canonicalPath}`,
-    },
-  ],
-})} />
