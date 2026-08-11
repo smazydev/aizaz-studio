@@ -15,7 +15,6 @@ export default defineConfig({
     },
     workerEntryPoint: {
       path: 'src/worker.ts',
-      namedExports: ['scheduled'],
     },
   }),
 });
