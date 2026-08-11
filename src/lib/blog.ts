@@ -1,5 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import { blogs as legacyBlogs, type BlogPost as LegacyBlogPost } from '../data/blogs';
+import type { ContentAuthor } from './sanity/author';
 import { normalizeCategory } from './blog-categories';
 import { isSanityConfigured } from './sanity/client';
 import { getSanityPostBySlug, getSanityPublishedPosts } from './sanity/blog';
@@ -12,7 +13,7 @@ export interface PublicBlogPost {
     content: string;
     date: string;
     dateIso: string;
-    author: string;
+    author?: ContentAuthor;
     readTime: string;
     category: string;
     tags: string[];
@@ -36,7 +37,6 @@ function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {
         content: post.content,
         date: post.date,
         dateIso: post.date,
-        author: post.author,
         readTime: post.readTime,
         category: normalizeCategory(post.category),
         tags: post.tags ?? [],
@@ -90,10 +90,16 @@ export function buildArticleSchema(post: PublicBlogPost, siteUrl: string) {
         headline: post.seoTitle ?? post.title,
         description: post.metaDescription ?? post.excerpt,
         image: image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : undefined,
-        author: {
-            '@type': 'Person',
-            name: post.author,
-        },
+        ...(post.author
+            ? {
+                  author: {
+                      '@type': 'Person',
+                      name: post.author.name,
+                      jobTitle: post.author.role,
+                      ...(post.author.linkedin ? { sameAs: [post.author.linkedin] } : {}),
+                  },
+              }
+            : {}),
         publisher: {
             '@type': 'Organization',
             name: 'Aizaz Studio',

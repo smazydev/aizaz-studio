@@ -1,4 +1,5 @@
 import groq from 'groq';
+import { authorProjection } from './author';
 
 export const publishedPostsQuery = groq`
   *[_type == "post" && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) {
@@ -9,7 +10,7 @@ export const publishedPostsQuery = groq`
     body,
     category,
     tags,
-    author,
+    ${authorProjection},
     publishedAt,
     seoTitle,
     metaDescription,
@@ -29,7 +30,7 @@ export const postBySlugQuery = groq`
     body,
     category,
     tags,
-    author,
+    ${authorProjection},
     publishedAt,
     seoTitle,
     metaDescription,
@@ -55,6 +56,7 @@ export const caseStudiesQuery = groq`
     challenge,
     solution,
     outcome,
+    ${authorProjection},
     seoTitle,
     seoDescription,
     focusKeyword,

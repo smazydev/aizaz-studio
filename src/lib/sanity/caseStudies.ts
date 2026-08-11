@@ -1,5 +1,6 @@
 import type { CaseStudy } from '../../data/caseStudies';
 import { caseStudies as staticCaseStudies } from '../../data/caseStudies';
+import { mapSanityAuthor } from './author';
 import { getSanityClient, urlForImage } from './client';
 import { caseStudiesQuery } from './queries';
 
@@ -16,6 +17,7 @@ type SanityCaseStudy = {
     challenge?: string;
     solution?: string;
     outcome?: string;
+    author?: Parameters<typeof mapSanityAuthor>[0];
     seoTitle?: string;
     seoDescription?: string;
     focusKeyword?: string;
@@ -24,6 +26,7 @@ type SanityCaseStudy = {
 
 function mapSanityCaseStudy(study: SanityCaseStudy): CaseStudy {
     const imageUrl = urlForImage(study.coverImage);
+    const author = mapSanityAuthor(study.author);
 
     return {
         id: study._id,
@@ -37,6 +40,7 @@ function mapSanityCaseStudy(study: SanityCaseStudy): CaseStudy {
         client: study.client,
         location: study.location,
         industry: study.industry,
+        author,
         seoTitle: study.seoTitle,
         seoDescription: study.seoDescription,
         content: {

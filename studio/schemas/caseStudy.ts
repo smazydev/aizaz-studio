@@ -94,6 +94,14 @@ export const caseStudy = defineType({
             group: 'content',
         }),
         defineField({
+            name: 'author',
+            title: 'Author',
+            type: 'reference',
+            to: [{ type: 'person' }],
+            group: 'content',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
             name: 'seoTitle',
             title: 'SEO title',
             type: 'string',

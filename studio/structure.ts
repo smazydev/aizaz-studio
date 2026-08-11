@@ -9,6 +9,7 @@ export const structure = (S: StructureBuilder) =>
                 .title('SEO Dashboard')
                 .child(S.component(SeoDashboard).title('SEO Dashboard')),
             S.divider(),
+            S.documentTypeListItem('person').title('Authors'),
             S.documentTypeListItem('post').title('Blog posts'),
             S.documentTypeListItem('caseStudy').title('Case studies'),
         ]);

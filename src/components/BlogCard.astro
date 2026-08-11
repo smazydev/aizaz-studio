@@ -1,5 +1,6 @@
 ---
 import type { PublicBlogPost } from '../lib/blog';
+import AuthorCard from './AuthorCard.astro';
 import { Image } from 'astro:assets';
 
 interface Props {
@@ -53,12 +54,7 @@ const { blog, featured = false } = Astro.props;
     </p>
 
     <div class="flex items-center justify-between pt-5 border-t border-white/5 mt-auto">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500/30 to-indigo-600/30 border border-white/10 flex items-center justify-center text-xs font-bold text-white">
-          {blog.author.charAt(0)}
-        </div>
-        <span class="text-sm text-zinc-400">{blog.author}</span>
-      </div>
+      {blog.author ? <AuthorCard author={blog.author} compact /> : <span />}
       <span class="text-sm font-medium text-primary-400 group-hover:translate-x-1 transition-transform">
         Read →
       </span>

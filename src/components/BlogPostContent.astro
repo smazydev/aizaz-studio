@@ -1,5 +1,6 @@
 ---
 import type { PublicBlogPost } from '../lib/blog';
+import AuthorCard from './AuthorCard.astro';
 import BlogCard from './BlogCard.astro';
 import { marked } from 'marked';
 import { Image } from 'astro:assets';
@@ -45,13 +46,9 @@ const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
     )}
 
     <div class="flex items-center gap-4 pb-8 border-b border-white/10">
-      <div class="w-11 h-11 rounded-full bg-gradient-to-br from-primary-500/40 to-indigo-600/40 border border-white/10 flex items-center justify-center font-bold text-white">
-        {blog.author.charAt(0)}
-      </div>
-      <div>
-        <div class="text-sm font-semibold text-white">{blog.author}</div>
-        <div class="text-xs text-zinc-500">Aizaz.studio</div>
-      </div>
+      {blog.author ? (
+        <AuthorCard author={blog.author} />
+      ) : null}
     </div>
   </header>
 

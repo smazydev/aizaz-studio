@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro';
+import type { ContentAuthor } from '../lib/sanity/author';
 import archiverCover from '../assets/1archiver-casestudy-cover.png';
 import archiverBg1 from '../assets/1archiver-bg-dashboard-1.png';
 import archiverBg2 from '../assets/1archiver-bg-dashboard-2.png';
@@ -75,6 +76,7 @@ export interface CaseStudy {
     imageUrl?: string;
     seoTitle?: string;
     seoDescription?: string;
+    author?: ContentAuthor;
     cta?: {
         headline: string;
         buttonText: string;

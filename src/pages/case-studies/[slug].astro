@@ -8,6 +8,7 @@ import { SITE_URL } from '../../data/seoPages';
 import { Image } from 'astro:assets';
 import { BOOKING_URL } from '../../data/siteConfig';
 import { getAllCaseStudies } from '../../lib/sanity/caseStudies';
+import AuthorCard from '../../components/AuthorCard.astro';
 
 export async function getStaticPaths() {
   const caseStudies = await getAllCaseStudies();
@@ -26,11 +27,22 @@ const articleSchema = {
   '@type': 'Article',
   headline: study.title,
   description: pageDescription,
-  author: {
-    '@type': 'Organization',
-    name: 'Aizaz Studio',
-    url: SITE_URL,
-  },
+  ...(study.author
+    ? {
+        author: {
+          '@type': 'Person',
+          name: study.author.name,
+          jobTitle: study.author.role,
+          ...(study.author.linkedin ? { sameAs: [study.author.linkedin] } : {}),
+        },
+      }
+    : {
+        author: {
+          '@type': 'Organization',
+          name: 'Aizaz Studio',
+          url: SITE_URL,
+        },
+      }),
   publisher: {
     '@type': 'Organization',
     name: 'Aizaz Studio',
@@ -61,6 +73,11 @@ const articleSchema = {
         <p class="text-xl text-zinc-400 max-w-3xl mx-auto">
           {study.description}
         </p>
+        {study.author && (
+          <div class="mt-8 flex justify-center">
+            <AuthorCard author={study.author} wrapperClass="text-left" />
+          </div>
+        )}
         {study.deliveredBy && (
           <p class="mt-4 text-sm text-zinc-500 max-w-2xl mx-auto">
             Delivered by {study.deliveredBy}

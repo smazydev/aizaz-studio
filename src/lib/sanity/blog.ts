@@ -1,5 +1,6 @@
 import type { PublicBlogPost } from '../blog';
 import { normalizeCategory } from '../blog-categories';
+import { type ContentAuthor, mapSanityAuthor } from './author';
 import { calculateReadTime, formatDisplayDate } from '../blog-utils';
 import { getSanityClient, urlForImage } from './client';
 import { postBySlugQuery, publishedPostsQuery } from './queries';
@@ -12,7 +13,7 @@ type SanityPost = {
     body: string;
     category?: string;
     tags?: string[];
-    author?: string;
+    author?: Parameters<typeof mapSanityAuthor>[0];
     publishedAt: string;
     seoTitle?: string;
     metaDescription?: string;
@@ -26,6 +27,7 @@ type SanityPost = {
 function mapSanityPost(post: SanityPost): PublicBlogPost {
     const coverUrl = urlForImage(post.coverImage);
     const ogUrl = urlForImage(post.ogImage) ?? coverUrl;
+    const author = mapSanityAuthor(post.author);
 
     return {
         id: post._id,
@@ -35,7 +37,7 @@ function mapSanityPost(post: SanityPost): PublicBlogPost {
         content: post.body,
         date: formatDisplayDate(post.publishedAt),
         dateIso: post.publishedAt,
-        author: post.author ?? 'Aizaz K.',
+        author,
         readTime: calculateReadTime(post.body),
         category: normalizeCategory(post.category ?? 'Engineering Insights'),
         tags: post.tags ?? [],
@@ -55,7 +57,7 @@ export async function getSanityPublishedPosts(): Promise<PublicBlogPost[]> {
     if (!client) return [];
 
     const posts = await client.fetch<SanityPost[]>(publishedPostsQuery);
-    return posts.map(mapSanityPost);
+    return posts.map(mapSanityPost).filter((post) => post.author);
 }
 
 export async function getSanityPostBySlug(slug: string): Promise<PublicBlogPost | null> {
@@ -63,7 +65,10 @@ export async function getSanityPostBySlug(slug: string): Promise<PublicBlogPost 
     if (!client) return null;
 
     const post = await client.fetch<SanityPost | null>(postBySlugQuery, { slug });
-    return post ? mapSanityPost(post) : null;
+    if (!post) return null;
+
+    const mapped = mapSanityPost(post);
+    return mapped.author ? mapped : null;
 }
 
 export async function getSanityBlogSlugs(): Promise<string[]> {
