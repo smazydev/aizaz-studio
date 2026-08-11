@@ -13,6 +13,9 @@ import { ClientReviews } from '../components/ClientReviews';
 import { CTA } from '../components/CTA';
 import { Footer } from '../components/Footer';
 import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
+import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+
+const caseStudies = await getAllCaseStudies();
 ---
 
 <Layout
@@ -32,7 +35,7 @@ import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
       <Process />
       <WhyUs client:load />
       <ClientReviews client:load />
-      <CaseStudyShowcase />
+      <CaseStudyShowcase studies={caseStudies} />
       <CTA client:load />
     </main>
     <Footer client:load />

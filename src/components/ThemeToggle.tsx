@@ -4,8 +4,8 @@ import { Moon, Sun } from 'lucide-react';
 type Theme = 'light' | 'dark';
 
 function getTheme(): Theme {
-  if (typeof document === 'undefined') return 'light';
-  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  if (typeof document === 'undefined') return 'dark';
+  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 }
 
 function applyTheme(theme: Theme) {
@@ -14,14 +14,14 @@ function applyTheme(theme: Theme) {
 }
 
 export const ThemeToggle: React.FC = () => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
 
   useEffect(() => {
     setTheme(getTheme());
   }, []);
 
   const toggleTheme = () => {
-    const next: Theme = theme === 'light' ? 'dark' : 'light';
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
     applyTheme(next);
     setTheme(next);
   };
@@ -31,10 +31,10 @@ export const ThemeToggle: React.FC = () => {
       type="button"
       onClick={toggleTheme}
       className="theme-toggle p-2 rounded-full border border-zinc-700 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
-      aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
-      title={theme === 'light' ? 'Dark mode' : 'Light mode'}
+      aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+      title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
     >
-      {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   );
 };

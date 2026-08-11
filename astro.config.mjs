@@ -10,7 +10,12 @@ export default defineConfig({
   output: 'server',
   env: {
     schema: {
-      SANITY_PROJECT_ID: envField.string({ context: 'server', access: 'public', optional: true }),
+      SANITY_PROJECT_ID: envField.string({
+        context: 'server',
+        access: 'public',
+        optional: true,
+        default: 'bmcdpga9',
+      }),
       SANITY_DATASET: envField.string({
         context: 'server',
         access: 'public',
@@ -23,9 +28,6 @@ export default defineConfig({
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
-    },
-    workerEntryPoint: {
-      path: 'src/worker.ts',
     },
   }),
 });

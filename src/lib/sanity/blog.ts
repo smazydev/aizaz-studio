@@ -1,6 +1,6 @@
 import type { PublicBlogPost } from '../blog';
 import { normalizeCategory } from '../blog-categories';
-import { calculateReadTime, formatDisplayDate } from '../blog-db';
+import { calculateReadTime, formatDisplayDate } from '../blog-utils';
 import { getSanityClient, urlForImage } from './client';
 import { postBySlugQuery, publishedPostsQuery } from './queries';
 

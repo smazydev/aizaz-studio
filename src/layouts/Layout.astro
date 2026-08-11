@@ -57,14 +57,14 @@ const websiteSchema = {
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" data-theme="light">
+<html lang="en" class="scroll-smooth" data-theme="dark">
   <head>
     <script is:inline>
       try {
         var storedTheme = localStorage.getItem('theme');
-        document.documentElement.setAttribute('data-theme', storedTheme === 'dark' ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', storedTheme === 'light' ? 'light' : 'dark');
       } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
     </script>
     <meta charset="UTF-8" />

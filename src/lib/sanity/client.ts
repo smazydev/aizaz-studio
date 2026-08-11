@@ -1,7 +1,7 @@
 import { createClient, type SanityClient } from '@sanity/client';
 
 export function getSanityProjectId(): string | undefined {
-    return import.meta.env.SANITY_PROJECT_ID || (typeof process !== 'undefined' ? process.env.SANITY_PROJECT_ID : undefined);
+    return import.meta.env.SANITY_PROJECT_ID || (typeof process !== 'undefined' ? process.env.SANITY_PROJECT_ID : undefined) || 'bmcdpga9';
 }
 
 export function getSanityDataset(): string {

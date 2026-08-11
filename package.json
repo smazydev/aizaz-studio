@@ -12,8 +12,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "deploy": "astro build && wrangler deploy",
-    "db:migrate:local": "wrangler d1 execute aizaz-studio-blog --local --file=./schema.sql",
-    "db:migrate:remote": "wrangler d1 execute aizaz-studio-blog --remote --file=./schema.sql",
     "studio": "npm run dev --prefix studio",
     "studio:deploy": "npm run deploy --prefix studio",
     "astro": "astro"

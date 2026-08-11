@@ -6,12 +6,10 @@ import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import BlogCard from '../components/BlogCard.astro';
 import { getPublishedPosts } from '../lib/blog';
-import { isSanityConfigured } from '../lib/sanity/client';
 
-export const prerender = isSanityConfigured();
+export const prerender = true;
 
-const db = Astro.locals.runtime?.env?.DB;
-const blogs = await getPublishedPosts(db);
+const blogs = await getPublishedPosts();
 const [featured, ...rest] = blogs;
 const categories = ['All', ...Array.from(new Set(blogs.map((b) => b.category)))];
 ---

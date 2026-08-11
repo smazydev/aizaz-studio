@@ -3,12 +3,11 @@ import { getAllSeoPaths, SITE_URL } from '../data/seoPages';
 import { getPublishedPosts } from '../lib/blog';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 
-export const prerender = false;
+export const prerender = true;
 
-export const GET: APIRoute = async ({ locals }) => {
+export const GET: APIRoute = async () => {
   const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
-  const db = locals.runtime?.env?.DB;
-  const cmsPaths = (await getPublishedPosts(db)).map((post) => `/blog/${post.slug}`);
+  const cmsPaths = (await getPublishedPosts()).map((post) => `/blog/${post.slug}`);
   const caseStudyPaths = (await getAllCaseStudies()).map((study) => `/case-studies/${study.slug}`);
   const paths = Array.from(new Set([...staticPaths, '/blog', ...cmsPaths, ...caseStudyPaths]));
 

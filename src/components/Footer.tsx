@@ -1,5 +1,12 @@
 import React from 'react';
-import { Linkedin, Github, Twitter, Mail, PhoneCall } from 'lucide-react';
+import { Linkedin, Instagram, Twitter, Mail, PhoneCall } from 'lucide-react';
+import { SOCIAL_LINKS } from '../data/siteConfig';
+
+const socialItems = [
+  { href: SOCIAL_LINKS.linkedin, label: 'LinkedIn', Icon: Linkedin },
+  { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Instagram },
+  { href: SOCIAL_LINKS.twitter, label: 'X (Twitter)', Icon: Twitter },
+] as const;
 
 export const Footer: React.FC = () => {
   return (
@@ -7,19 +14,25 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded bg-gradient-to-br from-primary-400 to-indigo-600 flex items-center justify-center font-bold text-white text-xs font-display">
-                A
-              </div>
+            <a href="/" className="flex items-center gap-2 mb-4 w-fit">
+              <img src="/aizaz-logo-white.png" alt="Aizaz Studio" className="w-8 h-8 object-contain" />
               <span className="text-lg font-display font-bold text-white">Aizaz Studio</span>
-            </div>
+            </a>
             <p className="text-zinc-500 text-sm leading-relaxed mb-6">
               AI, cloud, and automation engineering for growing businesses. Senior execution for systems that ship — not rented developers.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Linkedin size={20} /></a>
-              <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Github size={20} /></a>
-              <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Twitter size={20} /></a>
+              {socialItems.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  {...(href !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  <Icon size={20} />
+                </a>
+              ))}
             </div>
           </div>
 

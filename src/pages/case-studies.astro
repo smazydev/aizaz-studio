@@ -6,6 +6,9 @@ import { Footer } from '../components/Footer';
 import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
+import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+
+const caseStudies = await getAllCaseStudies();
 ---
 
 <Layout
@@ -22,7 +25,7 @@ import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
         highlight="real-world scale"
         description="Compliance platforms, fintech infrastructure, and production systems — designed for security, scale, and operations teams that cannot afford fragile software."
       />
-      <CaseStudyShowcase showHeader={false} />
+      <CaseStudyShowcase studies={caseStudies} showHeader={false} />
       <CTA client:visible />
     </main>
     <Footer client:visible />
