@@ -22,7 +22,11 @@ export interface PublicBlogPost {
     seoTitle?: string;
     metaDescription?: string;
     canonicalUrl?: string;
+    ogTitle?: string;
+    ogDescription?: string;
     ogImage?: string;
+    noindex?: boolean;
+    focusKeyword?: string;
     updatedAt?: string;
     source: 'cms' | 'legacy';
     status?: string;

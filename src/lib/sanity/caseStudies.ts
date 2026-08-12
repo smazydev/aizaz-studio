@@ -3,6 +3,9 @@ import { caseStudies as staticCaseStudies } from '../../data/caseStudies';
 import { mapSanityAuthor } from './author';
 import { getSanityClient, urlForImage } from './client';
 import { caseStudiesQuery } from './queries';
+import { mapSanitySeo } from './seo';
+
+type SanityImage = { asset?: { _ref?: string } };
 
 type SanityCaseStudy = {
     _id: string;
@@ -17,37 +20,162 @@ type SanityCaseStudy = {
     challenge?: string;
     solution?: string;
     outcome?: string;
-    author?: Parameters<typeof mapSanityAuthor>[0];
+    projectValue?: string;
+    projectPeriod?: string;
+    deliveryDuration?: string;
+    deliveredBy?: string;
+    engagementNote?: string;
+    portfolioNote?: string;
+    atAGlance?: { value: string; label: string; sublabel?: string }[];
+    engagement?: { label: string; value: string }[];
+    stats?: { label: string; value: string }[];
+    testimonial?: {
+        quote: string;
+        author: string;
+        role?: string;
+        company?: string;
+        rating?: string;
+        source?: string;
+        engagementMeta?: string;
+    };
+    detailedContent?: {
+        title: string;
+        content?: string;
+        items?: {
+            title: string;
+            description?: string;
+            points?: string[];
+            image?: SanityImage;
+            table?: { label: string; value: string }[];
+            tableCaption?: string;
+            tableHeaderLeft?: string;
+            tableHeaderRight?: string;
+        }[];
+    }[];
+    gallery?: SanityImage[];
+    backgroundImages?: SanityImage[];
+    cta?: {
+        headline?: string;
+        body?: string;
+        buttonText: string;
+        buttonHref?: string;
+        secondaryButtonText?: string;
+        secondaryButtonHref?: string;
+    };
+    author?: string | { _ref?: string };
+    authorDoc?: Parameters<typeof mapSanityAuthor>[0];
+    seo?: Parameters<typeof mapSanitySeo>[0];
     seoTitle?: string;
     seoDescription?: string;
     focusKeyword?: string;
-    coverImage?: { asset?: { _ref?: string } };
+    coverImage?: SanityImage;
 };
 
-function mapSanityCaseStudy(study: SanityCaseStudy): CaseStudy {
-    const imageUrl = urlForImage(study.coverImage);
-    const author = mapSanityAuthor(study.author);
+function mapSanityCaseStudy(study: SanityCaseStudy, existing?: CaseStudy): CaseStudy {
+    const imageUrl = urlForImage(study.coverImage) ?? existing?.imageUrl;
+    const legacyAuthorName = typeof study.author === 'string' ? study.author : null;
+    const author = mapSanityAuthor(study.authorDoc, legacyAuthorName) ?? existing?.author;
+    const seo = mapSanitySeo(
+        study.seo,
+        {
+            seoTitle: study.seoTitle,
+            seoDescription: study.seoDescription,
+            focusKeyword: study.focusKeyword,
+        },
+        {
+            title: `${study.title} | Aizaz Studio`,
+            description: study.description,
+            canonicalPath: `/case-studies/${study.slug}`,
+            ogImageUrl: imageUrl,
+        },
+    );
+
+    const mappedDetailedContent =
+        study.detailedContent?.map((section) => ({
+            title: section.title,
+            content: section.content ?? '',
+            items: section.items?.map((item) => ({
+                title: item.title,
+                description: item.description ?? '',
+                points: item.points,
+                // Keep static ImageMetadata when CMS item has no image URL
+                image: existing?.detailedContent
+                    ?.flatMap((s) => s.items ?? [])
+                    .find((i) => i.title === item.title)?.image,
+                imageUrl: urlForImage(item.image),
+                table: item.table,
+                tableCaption: item.tableCaption,
+                tableHeaders:
+                    item.tableHeaderLeft || item.tableHeaderRight
+                        ? { left: item.tableHeaderLeft ?? '', right: item.tableHeaderRight ?? '' }
+                        : undefined,
+            })),
+        })) ?? existing?.detailedContent;
 
     return {
+        // Preserve rich static fields when Sanity omits them
+        ...existing,
         id: study._id,
         slug: study.slug,
-        category: study.category ?? 'Case Study',
+        category: study.category ?? existing?.category ?? 'Case Study',
         title: study.title,
         subtitle: study.subtitle,
         description: study.description,
-        image: staticCaseStudies[0].image,
+        image: existing?.image ?? staticCaseStudies[0].image,
         imageUrl,
-        client: study.client,
-        location: study.location,
-        industry: study.industry,
-        author,
-        seoTitle: study.seoTitle,
-        seoDescription: study.seoDescription,
+        client: study.client ?? existing?.client,
+        location: study.location ?? existing?.location,
+        industry: study.industry ?? existing?.industry,
+        projectValue: study.projectValue ?? existing?.projectValue,
+        projectPeriod: study.projectPeriod ?? existing?.projectPeriod,
+        deliveryDuration: study.deliveryDuration ?? existing?.deliveryDuration,
+        deliveredBy: study.deliveredBy ?? existing?.deliveredBy,
+        engagementNote: study.engagementNote ?? existing?.engagementNote,
+        portfolioNote: study.portfolioNote ?? existing?.portfolioNote,
+        atAGlance: study.atAGlance ?? existing?.atAGlance,
+        engagement: study.engagement ?? existing?.engagement,
+        stats: study.stats ?? existing?.stats,
+        testimonial: study.testimonial
+            ? {
+                  quote: study.testimonial.quote,
+                  author: study.testimonial.author,
+                  role: study.testimonial.role ?? '',
+                  rating: study.testimonial.rating ?? '',
+                  source: study.testimonial.source ?? '',
+                  engagementMeta: study.testimonial.engagementMeta,
+              }
+            : existing?.testimonial,
         content: {
-            challenge: study.challenge ?? '',
-            solution: study.solution ?? '',
-            outcome: study.outcome ?? '',
+            challenge: study.challenge || existing?.content.challenge || '',
+            solution: study.solution || existing?.content.solution || '',
+            outcome: study.outcome || existing?.content.outcome || '',
+            testimonial: existing?.content.testimonial,
         },
+        detailedContent: mappedDetailedContent,
+        gallery:
+            study.gallery?.map((img) => urlForImage(img)).filter((url): url is string => Boolean(url)) ??
+            existing?.gallery,
+        backgroundImages: existing?.backgroundImages,
+        backgroundImageUrls:
+            study.backgroundImages
+                ?.map((img) => urlForImage(img))
+                .filter((url): url is string => Boolean(url)) ?? existing?.backgroundImageUrls,
+        author,
+        seoTitle: seo.metaTitle,
+        seoDescription: seo.metaDescription,
+        canonicalPath: seo.canonicalPath,
+        ogTitle: seo.ogTitle,
+        ogDescription: seo.ogDescription,
+        ogImageUrl: seo.ogImageUrl,
+        noindex: seo.noIndex,
+        focusKeyword: seo.focusKeyword,
+        cta: study.cta
+            ? {
+                  headline: study.cta.headline ?? '',
+                  buttonText: study.cta.buttonText,
+                  buttonHref: study.cta.buttonHref,
+              }
+            : existing?.cta,
     };
 }
 
@@ -59,9 +187,15 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
         return staticCaseStudies;
     }
 
-    const sanityStudies = await client.fetch<SanityCaseStudy[]>(caseStudiesQuery);
-    for (const study of sanityStudies) {
-        staticBySlug.set(study.slug, mapSanityCaseStudy(study));
+    try {
+        const sanityStudies = await client.fetch<SanityCaseStudy[]>(caseStudiesQuery);
+        for (const study of sanityStudies) {
+            const existing = staticBySlug.get(study.slug);
+            staticBySlug.set(study.slug, mapSanityCaseStudy(study, existing));
+        }
+    } catch (error) {
+        console.warn('[sanity] Failed to fetch case studies; using static fallback.', error);
+        return staticCaseStudies;
     }
 
     const merged = Array.from(staticBySlug.values());

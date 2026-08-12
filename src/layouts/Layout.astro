@@ -8,6 +8,8 @@ interface Props {
   description?: string;
   canonical?: string;
   keywords?: string[];
+  ogTitle?: string;
+  ogDescription?: string;
   ogImage?: string;
   noindex?: boolean;
   schemas?: Record<string, unknown>[];
@@ -18,6 +20,8 @@ const {
   description = 'Aizaz.studio builds AI-powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
   canonical,
   keywords = [],
+  ogTitle,
+  ogDescription,
   ogImage,
   noindex = false,
   schemas = [],
@@ -25,6 +29,9 @@ const {
 
 const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : Astro.url.href.startsWith('http') ? Astro.url.href : `${SITE_URL}${Astro.url.pathname}`;
 const keywordContent = keywords.length > 0 ? keywords.join(', ') : 'AI automation, SaaS development, AWS DevOps, NetSuite integration, business process automation';
+const resolvedOgTitle = ogTitle || title;
+const resolvedOgDescription = ogDescription || description;
+const resolvedOgImage = ogImage ?? `${SITE_URL}/aizaz-logo-white.png`;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
 const isHome = canonicalUrl === `${SITE_URL}/` || Astro.url.pathname === '/';
 
@@ -90,15 +97,15 @@ const pageStructuredData =
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Aizaz.studio" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={resolvedOgTitle} />
+    <meta property="og:description" content={resolvedOgDescription} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImage ?? `${SITE_URL}/aizaz-logo-white.png`} />
+    <meta property="og:image" content={resolvedOgImage} />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <meta name="twitter:title" content={resolvedOgTitle} />
+    <meta name="twitter:description" content={resolvedOgDescription} />
+    <meta name="twitter:image" content={resolvedOgImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

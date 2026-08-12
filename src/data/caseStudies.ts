@@ -66,6 +66,7 @@ export interface CaseStudy {
             description: string;
             points?: string[];
             image?: ImageMetadata;
+            imageUrl?: string;
             table?: { label: string; value: string }[];
             tableCaption?: string;
             tableHeaders?: { left: string; right: string };
@@ -73,9 +74,16 @@ export interface CaseStudy {
     }[];
     gallery?: string[];
     backgroundImages?: ImageMetadata[];
+    backgroundImageUrls?: string[];
     imageUrl?: string;
     seoTitle?: string;
     seoDescription?: string;
+    canonicalPath?: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    ogImageUrl?: string;
+    noindex?: boolean;
+    focusKeyword?: string;
     author?: ContentAuthor;
     cta?: {
         headline: string;

@@ -10,6 +10,12 @@ type PostRow = {
     focusKeyword?: string;
     publishedAt?: string;
     ogImage?: unknown;
+    seo?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        focusKeyword?: string;
+        ogImage?: unknown;
+    };
 };
 
 type CaseStudyRow = {
@@ -18,6 +24,12 @@ type CaseStudyRow = {
     seoDescription?: string;
     seoTitle?: string;
     focusKeyword?: string;
+    seo?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        focusKeyword?: string;
+        ogImage?: unknown;
+    };
 };
 
 type DashboardStats = {
@@ -32,6 +44,26 @@ const cardStyle: React.CSSProperties = {
     padding: 16,
 };
 
+function postMeta(post: PostRow) {
+    return post.seo?.metaDescription || post.metaDescription;
+}
+
+function postOg(post: PostRow) {
+    return post.seo?.ogImage || post.ogImage;
+}
+
+function postKeyword(post: PostRow) {
+    return post.seo?.focusKeyword || post.focusKeyword;
+}
+
+function studyTitle(study: CaseStudyRow) {
+    return study.seo?.metaTitle || study.seoTitle;
+}
+
+function studyDesc(study: CaseStudyRow) {
+    return study.seo?.metaDescription || study.seoDescription;
+}
+
 export function SeoDashboard() {
     const client = useClient({ apiVersion: '2024-01-01' });
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -45,12 +77,14 @@ export function SeoDashboard() {
                 const [posts, caseStudies] = await Promise.all([
                     client.fetch<PostRow[]>(
                         `*[_type == "post" && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) {
-              _id, title, slug, metaDescription, seoTitle, focusKeyword, publishedAt, ogImage
+              _id, title, slug, metaDescription, seoTitle, focusKeyword, publishedAt, ogImage,
+              seo{ metaTitle, metaDescription, focusKeyword, ogImage }
             }`,
                     ),
                     client.fetch<CaseStudyRow[]>(
                         `*[_type == "caseStudy"] | order(_updatedAt desc) {
-              _id, title, seoDescription, seoTitle, focusKeyword
+              _id, title, seoDescription, seoTitle, focusKeyword,
+              seo{ metaTitle, metaDescription, focusKeyword, ogImage }
             }`,
                     ),
                 ]);
@@ -79,11 +113,11 @@ export function SeoDashboard() {
         return <p>Loading SEO dashboard…</p>;
     }
 
-    const postsMissingMeta = stats.posts.filter((post) => !post.metaDescription?.trim());
-    const postsMissingOg = stats.posts.filter((post) => !post.ogImage);
-    const postsMissingKeyword = stats.posts.filter((post) => !post.focusKeyword?.trim());
+    const postsMissingMeta = stats.posts.filter((post) => !postMeta(post)?.trim());
+    const postsMissingOg = stats.posts.filter((post) => !postOg(post));
+    const postsMissingKeyword = stats.posts.filter((post) => !postKeyword(post)?.trim());
     const caseStudiesMissingSeo = stats.caseStudies.filter(
-        (study) => !study.seoDescription?.trim() || !study.seoTitle?.trim(),
+        (study) => !studyDesc(study)?.trim() || !studyTitle(study)?.trim(),
     );
 
     return (
@@ -91,7 +125,8 @@ export function SeoDashboard() {
             <div>
                 <h2 style={{ margin: 0, fontSize: 28 }}>SEO & Content Dashboard</h2>
                 <p style={{ color: '#a1a1aa', marginTop: 8 }}>
-                    Track published content health. Service and landing pages stay in code for maximum SEO performance.
+                    Track published content health. Blog and case studies are editable in Sanity. Service and landing
+                    pages remain in code until Phase 2.
                 </p>
             </div>
 

@@ -19,6 +19,13 @@ export const person = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: 'bio',
+            title: 'Short bio',
+            type: 'text',
+            rows: 3,
+            description: 'Optional. Used when author profiles are shown in more detail.',
+        }),
+        defineField({
             name: 'photo',
             title: 'Photo',
             type: 'image',

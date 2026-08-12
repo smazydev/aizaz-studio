@@ -1,8 +1,15 @@
 import groq from 'groq';
 import { authorProjection } from './author';
+import { seoProjection } from './seo';
+
+/**
+ * Published posts = non-draft documents that are not scheduled for the future.
+ * `publishedAt` is optional: if missing, a published (non-draft) document still appears.
+ */
+const publishedPostFilter = `_type == "post" && !(_id in path("drafts.**")) && (!defined(publishedAt) || publishedAt <= now())`;
 
 export const publishedPostsQuery = groq`
-  *[_type == "post" && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) {
+  *[${publishedPostFilter}] | order(coalesce(publishedAt, _updatedAt) desc) {
     _id,
     title,
     "slug": slug.current,
@@ -12,17 +19,20 @@ export const publishedPostsQuery = groq`
     tags,
     ${authorProjection},
     publishedAt,
+    _createdAt,
+    ${seoProjection},
     seoTitle,
     metaDescription,
     canonicalPath,
     focusKeyword,
     coverImage,
-    ogImage
+    ogImage,
+    _updatedAt
   }
 `;
 
 export const postBySlugQuery = groq`
-  *[_type == "post" && slug.current == $slug && defined(publishedAt) && publishedAt <= now()][0] {
+  *[${publishedPostFilter} && slug.current == $slug][0] {
     _id,
     title,
     "slug": slug.current,
@@ -32,6 +42,8 @@ export const postBySlugQuery = groq`
     tags,
     ${authorProjection},
     publishedAt,
+    _createdAt,
+    ${seoProjection},
     seoTitle,
     metaDescription,
     canonicalPath,
@@ -43,7 +55,7 @@ export const postBySlugQuery = groq`
 `;
 
 export const caseStudiesQuery = groq`
-  *[_type == "caseStudy"] | order(_updatedAt desc) {
+  *[_type == "caseStudy" && !(_id in path("drafts.**"))] | order(_updatedAt desc) {
     _id,
     title,
     "slug": slug.current,
@@ -56,7 +68,50 @@ export const caseStudiesQuery = groq`
     challenge,
     solution,
     outcome,
+    projectValue,
+    projectPeriod,
+    deliveryDuration,
+    deliveredBy,
+    engagementNote,
+    portfolioNote,
+    atAGlance[]{ value, label, sublabel },
+    engagement[]{ label, value },
+    stats[]{ label, value },
+    testimonial{
+      quote,
+      author,
+      role,
+      company,
+      rating,
+      source,
+      engagementMeta
+    },
+    detailedContent[]{
+      title,
+      content,
+      items[]{
+        title,
+        description,
+        points,
+        image,
+        table[]{ label, value },
+        tableCaption,
+        tableHeaderLeft,
+        tableHeaderRight
+      }
+    },
+    gallery,
+    backgroundImages,
+    cta{
+      headline,
+      body,
+      buttonText,
+      buttonHref,
+      secondaryButtonText,
+      secondaryButtonHref
+    },
     ${authorProjection},
+    ${seoProjection},
     seoTitle,
     seoDescription,
     focusKeyword,

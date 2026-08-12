@@ -3,7 +3,7 @@ import { getAllSeoPaths, SITE_URL } from '../data/seoPages';
 import { getPublishedPosts } from '../lib/blog';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 
-export const prerender = true;
+export const prerender = false;
 
 export const GET: APIRoute = async () => {
   const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
@@ -15,7 +15,7 @@ export const GET: APIRoute = async () => {
     .map(
       (path) => `  <url>
     <loc>${SITE_URL}${path === '/' ? '' : path}</loc>
-    <changefreq>${path === '/' ? 'weekly' : 'monthly'}</changefreq>
+    <changefreq>${path === '/' ? 'weekly' : path.startsWith('/blog') || path.startsWith('/case-studies') ? 'daily' : 'monthly'}</changefreq>
     <priority>${path === '/' ? '1.0' : path.startsWith('/services') || path === '/ai-systems-sprint' ? '0.9' : path.startsWith('/blog/') ? '0.8' : '0.7'}</priority>
   </url>`,
     )
@@ -29,6 +29,7 @@ ${urls}
   return new Response(sitemap, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
     },
   });
 };

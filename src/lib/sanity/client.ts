@@ -13,21 +13,23 @@ export function isSanityConfigured(): boolean {
     return Boolean(projectId && projectId !== 'your-project-id');
 }
 
-let client: SanityClient | null = null;
+/** Fresh server reads — avoid CDN lag after Studio publish. */
+let liveClient: SanityClient | null = null;
 
 export function getSanityClient(): SanityClient | null {
     if (!isSanityConfigured()) return null;
 
-    if (!client) {
-        client = createClient({
+    if (!liveClient) {
+        liveClient = createClient({
             projectId: getSanityProjectId()!,
             dataset: getSanityDataset(),
             apiVersion: '2024-01-01',
-            useCdn: true,
+            useCdn: false,
+            perspective: 'published',
         });
     }
 
-    return client;
+    return liveClient;
 }
 
 type SanityImageSource = {

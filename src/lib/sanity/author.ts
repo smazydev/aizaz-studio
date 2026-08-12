@@ -8,30 +8,47 @@ export interface ContentAuthor {
     linkedin?: string;
 }
 
-type SanityAuthorSource = {
+type SanityAuthorDoc = {
     _id: string;
     name: string;
-    role: string;
+    role?: string;
     linkedin?: string;
     photo?: { asset?: { _ref?: string } };
 };
 
-export function mapSanityAuthor(author: SanityAuthorSource | null | undefined): ContentAuthor | undefined {
-    if (!author?.name || !author.role) return undefined;
+/** Accept person document, or legacy string author values from older posts. */
+export function mapSanityAuthor(
+    authorDoc: SanityAuthorDoc | null | undefined,
+    legacyName?: string | null,
+): ContentAuthor | undefined {
+    if (authorDoc?.name) {
+        return {
+            id: authorDoc._id,
+            name: authorDoc.name,
+            role: authorDoc.role || 'Author',
+            photoUrl: urlForImage(authorDoc.photo, 256),
+            linkedin: authorDoc.linkedin,
+        };
+    }
 
-    return {
-        id: author._id,
-        name: author.name,
-        role: author.role,
-        photoUrl: urlForImage(author.photo, 256),
-        linkedin: author.linkedin,
-    };
+    if (typeof legacyName === 'string' && legacyName.trim()) {
+        return {
+            id: `string:${legacyName.trim()}`,
+            name: legacyName.trim(),
+            role: 'Author',
+        };
+    }
+
+    return undefined;
 }
 
-export const authorProjection = `author->{
-  _id,
-  name,
-  role,
-  linkedin,
-  photo
-}`;
+export const authorProjection = `
+  author,
+  "authorDoc": author->{
+    _id,
+    name,
+    role,
+    linkedin,
+    photo
+  }
+`;

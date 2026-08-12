@@ -1,5 +1,6 @@
 ---
-export const prerender = true;
+export const prerender = false;
+
 import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
@@ -7,21 +8,27 @@ import { CTA } from '../../components/CTA';
 import { SITE_URL } from '../../data/seoPages';
 import { Image } from 'astro:assets';
 import { BOOKING_URL } from '../../data/siteConfig';
-import { getAllCaseStudies } from '../../lib/sanity/caseStudies';
+import { getCaseStudyBySlug } from '../../lib/sanity/caseStudies';
 import AuthorCard from '../../components/AuthorCard.astro';
 
-export async function getStaticPaths() {
-  const caseStudies = await getAllCaseStudies();
-  return caseStudies.map((study) => ({
-    params: { slug: study.slug },
-    props: { study },
-  }));
+const { slug } = Astro.params;
+const study = await getCaseStudyBySlug(slug!);
+
+if (!study) {
+  return Astro.redirect('/case-studies', 302);
 }
 
-const { study } = Astro.props;
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
 const pageTitle = study.seoTitle ?? `${study.title} | Aizaz Studio`;
 const pageDescription = study.seoDescription ?? study.description;
-const canonicalPath = `/case-studies/${study.slug}`;
+const canonicalPath = study.canonicalPath ?? `/case-studies/${study.slug}`;
+const ogTitle = study.ogTitle ?? pageTitle;
+const ogDescription = study.ogDescription ?? pageDescription;
+const ogImage = study.ogImageUrl
+  ? study.ogImageUrl.startsWith('http')
+    ? study.ogImageUrl
+    : `${SITE_URL}${study.ogImageUrl}`
+  : study.imageUrl;
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -49,6 +56,7 @@ const articleSchema = {
     url: SITE_URL,
   },
   mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+  ...(ogImage ? { image: ogImage } : {}),
 };
 ---
 
@@ -56,6 +64,10 @@ const articleSchema = {
   title={pageTitle}
   description={pageDescription}
   canonical={canonicalPath}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+  ogImage={ogImage}
+  noindex={study.noindex}
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
@@ -251,11 +263,15 @@ const articleSchema = {
                         <p class="text-sm text-zinc-500 mb-8">{item.tableCaption}</p>
                       )}
                     </div>
-                    {item.image && (
+                    {item.image ? (
                       <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
                         <Image src={item.image} alt={item.title} class="w-full h-auto object-cover" />
                       </div>
-                    )}
+                    ) : item.imageUrl ? (
+                      <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src={item.imageUrl} alt={item.title} class="w-full h-auto object-cover" loading="lazy" />
+                      </div>
+                    ) : null}
                   </div>
                 ))}
               </div>

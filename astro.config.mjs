@@ -22,6 +22,21 @@ export default defineConfig({
         optional: true,
         default: 'production',
       }),
+      REVALIDATE_SECRET: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+      CLOUDFLARE_ZONE_ID: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+      CLOUDFLARE_API_TOKEN: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
     },
   },
   integrations: [react(), tailwind()],

@@ -15,6 +15,7 @@ export function normalizeCategory(category: string): string {
     const map: Record<string, string> = {
         'AI Automation': 'AI & Automation',
         'ERP Integration': 'ERP & NetSuite',
+        'NetSuite & ERP': 'ERP & NetSuite',
         DevOps: 'Cloud & DevOps',
     };
     return map[category] ?? category;

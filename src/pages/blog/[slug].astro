@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
@@ -6,45 +8,39 @@ import { CTA } from '../../components/CTA';
 import BlogPostContent from '../../components/BlogPostContent.astro';
 import { buildArticleSchema, getPublishedPostBySlug, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
 import { SITE_URL } from '../../data/seoPages';
-import { blogs as legacyBlogs } from '../../data/blogs';
-import { isSanityConfigured } from '../../lib/sanity/client';
-import { getSanityBlogSlugs } from '../../lib/sanity/blog';
-
-export const prerender = true;
-
-export async function getStaticPaths() {
-  if (!isSanityConfigured()) return [];
-
-  const sanitySlugs = await getSanityBlogSlugs();
-  const legacySlugs = legacyBlogs.map((post) => post.slug);
-  const slugs = Array.from(new Set([...sanitySlugs, ...legacySlugs]));
-
-  return slugs.map((slug) => ({ params: { slug } }));
-}
 
 const { slug } = Astro.params;
 const blog = await getPublishedPostBySlug(slug!);
 
 if (!blog) {
-    return Astro.redirect('/blog');
+  return Astro.redirect('/blog', 302);
 }
 
 const allPosts = await getPublishedPosts();
 const related = getRelatedPosts(allPosts, blog.slug);
 const articleSchema = buildArticleSchema(blog, SITE_URL);
+const pageTitle = blog.seoTitle ?? `${blog.title} | Aizaz.studio Blog`;
+const pageDescription = blog.metaDescription ?? blog.excerpt;
+const ogTitle = blog.ogTitle ?? pageTitle;
+const ogDescription = blog.ogDescription ?? pageDescription;
 const ogImage = blog.ogImage
-    ? blog.ogImage.startsWith('http')
-        ? blog.ogImage
-        : `${SITE_URL}${blog.ogImage}`
-    : undefined;
+  ? blog.ogImage.startsWith('http')
+    ? blog.ogImage
+    : `${SITE_URL}${blog.ogImage}`
+  : undefined;
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
 ---
 
 <Layout
-  title={`${blog.seoTitle ?? blog.title} | Aizaz.studio Blog`}
-  description={blog.metaDescription ?? blog.excerpt}
+  title={pageTitle}
+  description={pageDescription}
   canonical={blog.canonicalUrl ?? `/blog/${blog.slug}`}
-  keywords={blog.tags}
+  keywords={blog.focusKeyword ? [...blog.tags, blog.focusKeyword] : blog.tags}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
   ogImage={ogImage}
+  noindex={blog.noindex}
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
