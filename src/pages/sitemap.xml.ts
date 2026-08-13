@@ -5,11 +5,25 @@ import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 
 export const prerender = false;
 
+/** Match sitewide trailingSlash: never — sitemap locs must be final 200 URLs. */
+function toCanonicalPath(path: string): string {
+  const trimmed = path.trim();
+  if (!trimmed || trimmed === '/') return '/';
+  const normalized = trimmed.replace(/\.html$/i, '').replace(/\/+$/, '');
+  return normalized.startsWith('/') ? normalized || '/' : `/${normalized}`;
+}
+
 export const GET: APIRoute = async () => {
   const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
   const cmsPaths = (await getPublishedPosts()).map((post) => `/blog/${post.slug}`);
   const caseStudyPaths = (await getAllCaseStudies()).map((study) => `/case-studies/${study.slug}`);
-  const paths = Array.from(new Set([...staticPaths, '/blog', ...cmsPaths, ...caseStudyPaths]));
+  const paths = Array.from(
+    new Set(
+      [...staticPaths, '/blog', ...cmsPaths, ...caseStudyPaths]
+        .map(toCanonicalPath)
+        .filter(Boolean),
+    ),
+  );
 
   const urls = paths
     .map(

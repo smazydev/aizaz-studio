@@ -8,6 +8,9 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://aizaz.studio',
   output: 'server',
+  // Canonical/sitemap policy: no trailing slash. Cloudflare assets must match via
+  // wrangler assets.html_handling = "drop-trailing-slash".
+  trailingSlash: 'never',
   env: {
     schema: {
       SANITY_PROJECT_ID: envField.string({

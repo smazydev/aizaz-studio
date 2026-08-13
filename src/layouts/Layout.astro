@@ -27,13 +27,24 @@ const {
   schemas = [],
 } = Astro.props;
 
-const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : Astro.url.href.startsWith('http') ? Astro.url.href : `${SITE_URL}${Astro.url.pathname}`;
+/** Sitewide policy: trailingSlash never — strip slash/.html so canonicals always 200. */
+function toCanonicalPath(path: string): string {
+  const trimmed = path.trim();
+  if (!trimmed || trimmed === '/') return '/';
+  const withoutHtml = trimmed.replace(/\.html$/i, '');
+  const withoutSlash = withoutHtml.replace(/\/+$/, '');
+  return withoutSlash.startsWith('/') ? withoutSlash || '/' : `/${withoutSlash}`;
+}
+
+const fallbackPath = Astro.url.pathname || '/';
+const canonicalPath = toCanonicalPath(canonical ?? fallbackPath);
+const canonicalUrl = canonicalPath === '/' ? `${SITE_URL}/` : `${SITE_URL}${canonicalPath}`;
 const keywordContent = keywords.length > 0 ? keywords.join(', ') : 'AI automation, SaaS development, AWS DevOps, NetSuite integration, business process automation';
 const resolvedOgTitle = ogTitle || title;
 const resolvedOgDescription = ogDescription || description;
 const resolvedOgImage = ogImage ?? `${SITE_URL}/aizaz-logo-white.png`;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
-const isHome = canonicalUrl === `${SITE_URL}/` || Astro.url.pathname === '/';
+const isHome = canonicalPath === '/' || Astro.url.pathname === '/';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
