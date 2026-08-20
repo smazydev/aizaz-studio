@@ -5,6 +5,11 @@ import { normalizeCategory } from './blog-categories';
 import { isSanityConfigured } from './sanity/client';
 import { getSanityPostBySlug, getSanityPublishedPosts } from './sanity/blog';
 
+/** Debug / CMS smoke-test slugs — keep reachable, never index. */
+export function isNonIndexableContentSlug(slug: string): boolean {
+    return /sanity-test/i.test(slug) || /^test-/i.test(slug) || /-test$/i.test(slug) || /^demo-/i.test(slug);
+}
+
 export interface PublicBlogPost {
     id: string;
     slug: string;
@@ -62,9 +67,11 @@ export async function getPublishedPosts(): Promise<PublicBlogPost[]> {
         .map(mapLegacyPost)
         .sort((a, b) => new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime());
 
-    return [...sanityPosts, ...legacyPosts].sort(
-        (a, b) => new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime(),
-    );
+    return [...sanityPosts, ...legacyPosts]
+        .map((post) =>
+            isNonIndexableContentSlug(post.slug) ? { ...post, noindex: true } : post,
+        )
+        .sort((a, b) => new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime());
 }
 
 export async function getPublishedPostBySlug(slug: string): Promise<PublicBlogPost | null> {

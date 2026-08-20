@@ -241,7 +241,7 @@ If the "workflow" is mostly judgment calls with no pattern, AI may assist but no
 
 List every tool touched: CRM, ERP, inbox, spreadsheet, Slack. If integration is impossible or data is unusable, fix data flow first.
 
-See our [AI workflow automation](/services/ai workflow automation) approach for how we connect real stacks.
+See our [AI workflow automation](/services/ai-workflow-automation) approach for how we connect real stacks.
 
 ## Estimate failure cost
 
@@ -249,7 +249,7 @@ What happens when this step is missed? Lost leads, late invoices, wrong inventor
 
 ## Try one sprint, not a platform
 
-The [AI Systems Sprint](/ai systems sprint) exists to validate one workflow in 14 days — proof before a larger build.
+The [AI Systems Sprint](/ai-systems-sprint) exists to validate one workflow in 14 days — proof before a larger build.
 
 ## Conclusion
 
@@ -272,13 +272,13 @@ Pick one workflow with daily volume, clear systems, and measurable pain. That is
 
 Website chat, WhatsApp replies, and FAQ bots fit when the job is **inform, qualify, or route** — not execute ten backend steps.
 
-Explore [custom AI chatbot development](/services/ai chatbot development) when the primary goal is conversation and qualification.
+Explore [custom AI chatbot development](/services/ai-chatbot-development) when the primary goal is conversation and qualification.
 
 ## Agents: systems that do work
 
 Agents call APIs, update CRMs, create tickets, and trigger workflows. Use them when the job is **complete a process**, not just answer a question.
 
-See [AI agent development](/services/ai agent development) for sales, support, and ops use cases.
+See [AI agent development](/services/ai-agent-development) for sales, support, and ops use cases.
 
 ## Security and oversight
 
@@ -307,9 +307,9 @@ AI automation pricing is rarely "the model." It is discovery, integration, error
 
 ## Sprint vs open ended projects
 
-A [14 day AI Systems Sprint](/ai systems sprint) scopes one workflow with a fixed outcome. Larger platforms or multi system automation are quoted in milestones.
+A [14 day AI Systems Sprint](/ai-systems-sprint) scopes one workflow with a fixed outcome. Larger platforms or multi system automation are quoted in milestones.
 
-Review [engagement models](/engagement models) for MVP builds, retainers, and audits.
+Review [engagement models](/engagement-models) for MVP builds, retainers, and audits.
 
 ## Integration depth moves cost
 
@@ -342,7 +342,7 @@ Previous developers disappeared. Production is unstable. Nobody can explain the 
 
 ## Step 1: audit before rebuild
 
-A [technical audit](/services/technical audit) clarifies what is salvageable, what is risky, and what must be rewritten.
+A [technical audit](/services/technical-audit) clarifies what is salvageable, what is risky, and what must be rewritten.
 
 ## Step 2: stabilize production
 
@@ -352,7 +352,7 @@ Stop the bleeding: fix deploys, add monitoring, document critical paths. Users a
 
 Ship the smallest set of changes that restore trust — then refactor with intent.
 
-Learn about our [project rescue](/services/project rescue) process.
+Learn about our [project rescue](/services/project-rescue) process.
 
 ## Conclusion
 
@@ -379,7 +379,7 @@ Fast frontend deploys, previews, and minimal DevOps — ideal for marketing site
 
 Long running jobs, private networking, custom compliance, multi service architectures, and cost control at scale often need AWS.
 
-See [AWS cloud engineering](/services/aws cloud engineering) and [cloud migration](/services/cloud migration) services.
+See [AWS cloud engineering](/services/aws-cloud-engineering) and [cloud migration](/services/cloud-migration) services.
 
 ## Migration is a product decision
 
@@ -410,7 +410,7 @@ At minimum: local, staging, production. No testing directly in prod.
 
 Every merge to main should deploy staging. Production deploys should be deliberate and repeatable.
 
-Our [DevOps consulting](/services/devops consulting) teams set this up alongside product builds.
+Our [DevOps consulting](/services/devops-consulting) teams set this up alongside product builds.
 
 ## Secrets and config
 
@@ -455,7 +455,7 @@ Who fixes bad SKU mappings — engineering or ops? Define ownership before go li
 
 ## Ignoring middleware
 
-Direct Shopify to NetSuite connectors break at volume. Custom [NetSuite integration](/services/netsuite integration) layers add logging and reconciliation.
+Direct Shopify to NetSuite connectors break at volume. Custom [NetSuite integration](/services/netsuite-integration) layers add logging and reconciliation.
 
 ## No ops dashboard
 

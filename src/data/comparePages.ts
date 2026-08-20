@@ -114,6 +114,7 @@ export const comparePages: ComparePage[] = [
             { label: 'Services', href: '/services' },
             { label: 'Case Studies', href: '/case-studies' },
             { label: 'Agency vs Freelancer', href: '/compare/agency-vs-freelancer' },
+            { label: 'Sprint vs Traditional Automation', href: '/compare/ai-systems-sprint-vs-traditional-automation' },
         ],
     },
     {
@@ -209,8 +210,8 @@ export const comparePages: ComparePage[] = [
         ctaText: 'Talk to us about your project scope',
         relatedLinks: [
             { label: 'Agency vs Staff Augmentation', href: '/compare/aizaz-vs-staff-augmentation' },
+            { label: 'Sprint vs Traditional Automation', href: '/compare/ai-systems-sprint-vs-traditional-automation' },
             { label: 'Engineering Transformation', href: '/engineering-transformation' },
-            { label: 'About', href: '/about' },
             { label: 'Services', href: '/services' },
         ],
     },

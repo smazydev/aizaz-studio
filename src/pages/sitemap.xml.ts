@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
 import { getAllSeoPaths, SITE_URL } from '../data/seoPages';
-import { getPublishedPosts } from '../lib/blog';
+import { getPublishedPosts, isNonIndexableContentSlug } from '../lib/blog';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
 
 export const prerender = false;
 
@@ -13,15 +14,29 @@ function toCanonicalPath(path: string): string {
   return normalized.startsWith('/') ? normalized || '/' : `/${normalized}`;
 }
 
+function isIndexablePath(path: string): boolean {
+  if (path.includes('?') || path.includes('/_image') || path.includes('/optimized/')) return false;
+  if (path.startsWith('/api/')) return false;
+  const slug = path.split('/').pop() ?? '';
+  if (isNonIndexableContentSlug(slug)) return false;
+  return true;
+}
+
 export const GET: APIRoute = async () => {
   const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
-  const cmsPaths = (await getPublishedPosts()).map((post) => `/blog/${post.slug}`);
-  const caseStudyPaths = (await getAllCaseStudies()).map((study) => `/case-studies/${study.slug}`);
+  const published = await getPublishedPosts();
+  const cmsPaths = published
+    .filter((post) => !post.noindex)
+    .map((post) => `/blog/${post.slug}`);
+  const caseStudyPaths = (await getAllCaseStudies())
+    .filter((study) => !study.noindex)
+    .map((study) => `/case-studies/${study.slug}`);
+
   const paths = Array.from(
     new Set(
       [...staticPaths, '/blog', ...cmsPaths, ...caseStudyPaths]
         .map(toCanonicalPath)
-        .filter(Boolean),
+        .filter((path) => Boolean(path) && isIndexablePath(path)),
     ),
   );
 
@@ -40,10 +55,10 @@ export const GET: APIRoute = async () => {
 ${urls}
 </urlset>`;
 
-  return new Response(sitemap, {
-    headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
-    },
+  const headers = new Headers({
+    'Content-Type': 'application/xml; charset=utf-8',
   });
+  applyCmsCacheHeaders(headers, ['cms', 'sitemap']);
+
+  return new Response(sitemap, { headers });
 };

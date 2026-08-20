@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { clearSanityFetchCache } from '../../lib/sanity/client';
 
 export const prerender = false;
 
@@ -58,7 +59,32 @@ function pathsFromSanityPayload(body: RevalidateBody): string[] {
     return Array.from(paths);
 }
 
-async function purgeCloudflareCache(paths: string[], locals: RuntimeLocals): Promise<{ purged: boolean; detail?: string }> {
+function tagsFromSanityPayload(body: RevalidateBody): string[] {
+    const tags = new Set<string>(['cms', 'blog', 'case-studies', 'sitemap']);
+    const slugValue = typeof body.slug === 'string' ? body.slug : body.slug?.current;
+    if (slugValue && body._type === 'post') tags.add(`blog:${slugValue}`);
+    if (slugValue && body._type === 'caseStudy') tags.add(`case-study:${slugValue}`);
+    return Array.from(tags);
+}
+
+/** Purge Workers Cache (the layer that actually skips Worker execution). */
+async function purgeWorkersCache(tags: string[]): Promise<{ purged: boolean; detail?: string }> {
+    try {
+        // Cloudflare Workers Cache API — available at runtime on Workers.
+        const { cache } = await import('cloudflare:workers');
+        await cache.purge({ tags });
+        return { purged: true, detail: `Workers Cache purged tags=[${tags.join(',')}]` };
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return { purged: false, detail: `Workers Cache purge unavailable: ${message}` };
+    }
+}
+
+/**
+ * Optional zone CDN purge for Assets (static HTML/_astro). Not a substitute for Workers Cache.
+ * Kept for environments that already configure ZONE_ID + API_TOKEN.
+ */
+async function purgeZoneCache(paths: string[], locals: RuntimeLocals): Promise<{ purged: boolean; detail?: string }> {
     const runtimeEnv = locals.runtime?.env;
     const zoneId =
         runtimeEnv?.CLOUDFLARE_ZONE_ID ||
@@ -70,7 +96,7 @@ async function purgeCloudflareCache(paths: string[], locals: RuntimeLocals): Pro
         (typeof process !== 'undefined' ? process.env.CLOUDFLARE_API_TOKEN : undefined);
 
     if (!zoneId || !apiToken) {
-        return { purged: false, detail: 'Cloudflare purge skipped (ZONE_ID/API_TOKEN not set). SSR + fresh Sanity reads still apply.' };
+        return { purged: false, detail: 'Zone purge skipped (ZONE_ID/API_TOKEN not set).' };
     }
 
     const files = paths.map((path) => `https://aizaz.studio${path === '/' ? '' : path}`);
@@ -86,10 +112,10 @@ async function purgeCloudflareCache(paths: string[], locals: RuntimeLocals): Pro
 
     if (!response.ok) {
         const text = await response.text();
-        return { purged: false, detail: `Cloudflare purge failed: ${response.status} ${text}` };
+        return { purged: false, detail: `Zone purge failed: ${response.status} ${text}` };
     }
 
-    return { purged: true, detail: `Purged ${files.length} URL(s).` };
+    return { purged: true, detail: `Zone purged ${files.length} URL(s).` };
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -97,7 +123,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (!secret) {
         return new Response(JSON.stringify({ ok: false, error: 'REVALIDATE_SECRET is not configured' }), {
             status: 503,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store',
+            },
         });
     }
 
@@ -109,7 +138,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (!provided || !timingSafeEqual(provided, secret)) {
         return new Response(JSON.stringify({ ok: false, error: 'Unauthorized' }), {
             status: 401,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store',
+            },
         });
     }
 
@@ -124,19 +156,27 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     const paths = pathsFromSanityPayload(body);
-    const purge = await purgeCloudflareCache(paths, locals);
+    const tags = tagsFromSanityPayload(body);
+    clearSanityFetchCache();
+    const workers = await purgeWorkersCache(tags);
+    const zone = await purgeZoneCache(paths, locals);
 
     return new Response(
         JSON.stringify({
             ok: true,
             revalidatedAt: new Date().toISOString(),
             paths,
-            cache: purge,
-            note: 'CMS routes fetch Sanity at request time (useCdn: false). Optional Cloudflare purge clears edge HTML cache for listed URLs.',
+            tags,
+            workersCache: workers,
+            zoneCache: zone,
+            note: 'Cleared isolate Sanity map; purged Workers Cache (primary). TTL/SWR still applies if purge fails.',
         }),
         {
             status: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store',
+            },
         },
     );
 };
@@ -144,5 +184,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 export const GET: APIRoute = async () =>
     new Response(JSON.stringify({ ok: true, message: 'Use POST with Authorization: Bearer <REVALIDATE_SECRET>' }), {
         status: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-store',
+        },
     });

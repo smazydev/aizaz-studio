@@ -3,7 +3,7 @@ export const prerender = true;
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import { portfolio } from '../data/commercialPages';
-import { Image } from 'astro:assets';
+import LocalImage from '../components/LocalImage.astro';
 import archiverCover from '../assets/1archiver-casestudy-cover.png';
 import igwCover from '../assets/igw-casestudy-cover.png';
 
@@ -25,7 +25,7 @@ const images: Record<string, typeof archiverCover> = {
         <article class="rounded-2xl overflow-hidden glass-card flex flex-col">
           {project.slug && images[project.slug] && (
             <div class="h-48 overflow-hidden">
-              <Image src={images[project.slug]} alt={project.name} class="w-full h-full object-cover" />
+              <LocalImage src={images[project.slug]} alt={project.name} class="w-full h-full object-cover" kind="card" width={960} />
             </div>
           )}
           <div class="p-8 flex flex-col flex-1">

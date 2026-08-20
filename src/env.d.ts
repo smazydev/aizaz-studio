@@ -10,3 +10,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
     readonly env: ImportMetaEnv;
 }
+
+declare module 'cloudflare:workers' {
+    export const cache: {
+        purge: (options: { tags?: string[]; pathPrefixes?: string[]; everything?: boolean }) => Promise<void>;
+    };
+}

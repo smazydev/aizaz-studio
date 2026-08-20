@@ -2,7 +2,7 @@ import type { PublicBlogPost } from '../blog';
 import { normalizeCategory } from '../blog-categories';
 import { mapSanityAuthor } from './author';
 import { calculateReadTime, formatDisplayDate } from '../blog-utils';
-import { getSanityClient, urlForImage } from './client';
+import { getSanityClient, cachedSanityFetch, urlForImage } from './client';
 import { postBySlugQuery, publishedPostsQuery } from './queries';
 import { mapSanitySeo, type PageSeo } from './seo';
 
@@ -84,7 +84,7 @@ export async function getSanityPublishedPosts(): Promise<PublicBlogPost[]> {
     if (!client) return [];
 
     try {
-        const posts = await client.fetch<SanityPost[]>(publishedPostsQuery);
+        const posts = await cachedSanityFetch('posts:all', () => client.fetch<SanityPost[]>(publishedPostsQuery));
         return posts.map(mapSanityPost).filter((post): post is PublicBlogPost => Boolean(post));
     } catch (error) {
         console.warn('[sanity] Failed to fetch published posts; using static fallback.', error);
@@ -97,7 +97,9 @@ export async function getSanityPostBySlug(slug: string): Promise<PublicBlogPost 
     if (!client) return null;
 
     try {
-        const post = await client.fetch<SanityPost | null>(postBySlugQuery, { slug });
+        const post = await cachedSanityFetch(`posts:slug:${slug}`, () =>
+            client.fetch<SanityPost | null>(postBySlugQuery, { slug }),
+        );
         if (!post) return null;
         return mapSanityPost(post);
     } catch (error) {

@@ -52,10 +52,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-bold mb-4">Industries</h4>
             <ul className="space-y-2 text-sm text-zinc-500">
-              <li><a href="/for/startups" className="hover:text-primary-400 transition-colors">Startups</a></li>
+              <li><a href="/for/saas-startups" className="hover:text-primary-400 transition-colors">SaaS Startups</a></li>
               <li><a href="/for/b2b-saas" className="hover:text-primary-400 transition-colors">B2B SaaS</a></li>
               <li><a href="/for/operations-teams" className="hover:text-primary-400 transition-colors">Operations Teams</a></li>
-              <li><a href="/for/healthtech" className="hover:text-primary-400 transition-colors">Healthtech</a></li>
+              <li><a href="/for/netsuite-users" className="hover:text-primary-400 transition-colors">NetSuite Users</a></li>
               <li><a href="/for/fintech" className="hover:text-primary-400 transition-colors">Fintech</a></li>
               <li><a href="/for/ecommerce-operations" className="hover:text-primary-400 transition-colors">Ecommerce Operations</a></li>
             </ul>
@@ -67,8 +67,8 @@ export const Footer: React.FC = () => {
               <li><a href="/about" className="hover:text-primary-400 transition-colors">About</a></li>
               <li><a href="/portfolio" className="hover:text-primary-400 transition-colors">Portfolio</a></li>
               <li><a href="/case-studies" className="hover:text-primary-400 transition-colors">Case Studies</a></li>
+              <li><a href="/technologies" className="hover:text-primary-400 transition-colors">Technologies</a></li>
               <li><a href="/reviews" className="hover:text-primary-400 transition-colors">Reviews</a></li>
-              <li><a href="/careers" className="hover:text-primary-400 transition-colors">Careers</a></li>
               <li><a href="/blog" className="hover:text-primary-400 transition-colors">Blog</a></li>
             </ul>
           </div>

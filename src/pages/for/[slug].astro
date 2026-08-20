@@ -4,8 +4,9 @@ import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import SeoLanding from '../../components/SeoLanding.astro';
-import { industryPages } from '../../data/seoPages';
+import { industryPages, getServiceBySlug } from '../../data/seoPages';
 import { buildSeoPageSchemas } from '../../lib/seoSchema';
+import { getIndustryRelatedGroups } from '../../data/internalLinks';
 
 export function getStaticPaths() {
   return industryPages.map((page) => ({
@@ -16,6 +17,10 @@ export function getStaticPaths() {
 
 const { page } = Astro.props;
 const canonicalPath = `/for/${page.slug}`;
+const relatedServices = (page.relatedSlugs ?? [])
+  .map((slug) => getServiceBySlug(slug))
+  .filter(Boolean);
+const relatedGroups = getIndustryRelatedGroups(page.slug, page.relatedSlugs ?? []);
 const schemas = buildSeoPageSchemas(
   page,
   [
@@ -43,6 +48,8 @@ const schemas = buildSeoPageSchemas(
           { label: 'Home', href: '/' },
           { label: 'Industries', href: '/services' },
         ]}
+        relatedServices={relatedServices}
+        relatedGroups={relatedGroups}
       />
     </main>
     <Footer client:visible />

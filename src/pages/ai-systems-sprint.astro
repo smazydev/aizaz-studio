@@ -8,8 +8,11 @@ import PageHero from '../components/PageHero.astro';
 import { aiSystemsSprintPage } from '../data/seoPages';
 import { deliverySteps } from '../data/siteContent';
 import { BOOKING_URL } from '../data/siteConfig';
+import RelatedContent from '../components/RelatedContent.astro';
+import { getCommercialRelatedGroups } from '../data/internalLinks';
 
 const page = aiSystemsSprintPage;
+const relatedGroups = getCommercialRelatedGroups('ai-systems-sprint');
 ---
 
 <Layout
@@ -117,6 +120,8 @@ const page = aiSystemsSprintPage;
           </div>
         </div>
       </section>
+
+      <RelatedContent groups={relatedGroups} />
 
       <CTA client:visible />
     </main>

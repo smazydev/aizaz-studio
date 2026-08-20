@@ -1,7 +1,7 @@
 ---
 import type { CaseStudy } from '../data/caseStudies';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import { Image } from 'astro:assets';
+import LocalImage from './LocalImage.astro';
 
 interface Props {
   studies: CaseStudy[];
@@ -76,12 +76,18 @@ const categories = showcaseOrder.filter((category) =>
                     alt={study.title}
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
+                    width="1200"
+                    height="900"
+                    decoding="async"
                   />
                 ) : (
-                  <Image
+                  <LocalImage
                     src={study.image}
                     alt={study.title}
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    kind="card"
+                    width={1200}
                   />
                 )}
                 <a

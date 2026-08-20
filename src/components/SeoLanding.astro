@@ -2,17 +2,22 @@
 import type { SeoPage, IndustryPage } from '../data/seoPages';
 import { getSeoExtras } from '../data/seoExtras';
 import SeoRichContent from './SeoRichContent.astro';
+import RelatedContent from './RelatedContent.astro';
+import type { RelatedGroup } from '../data/internalLinks';
 
 interface Props {
   page: SeoPage | IndustryPage;
   breadcrumb: { label: string; href: string }[];
   badge?: string;
   relatedServices?: SeoPage[];
+  relatedGroups?: RelatedGroup[];
 }
 
-const { page, breadcrumb, badge = 'Service', relatedServices = [] } = Astro.props;
+const { page, breadcrumb, badge = 'Service', relatedServices = [], relatedGroups = [] } = Astro.props;
 const isIndustry = 'audienceLabel' in page;
 const extras = getSeoExtras(page);
+// Prefer explicit relatedGroups (topic clusters). Fall back to legacy relatedServices cards.
+const showLegacyRelated = relatedGroups.length === 0 && relatedServices.length > 0;
 ---
 
 <section class="pt-32 pb-16 relative overflow-hidden page-glow">
@@ -117,7 +122,9 @@ const extras = getSeoExtras(page);
   </section>
 )}
 
-{relatedServices.length > 0 && (
+{relatedGroups.length > 0 && <RelatedContent groups={relatedGroups} />}
+
+{showLegacyRelated && (
   <section class="pb-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-3xl font-display font-bold text-white mb-8">Related Services</h2>

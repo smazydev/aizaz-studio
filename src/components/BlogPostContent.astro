@@ -3,8 +3,10 @@ import type { PublicBlogPost } from '../lib/blog';
 import AuthorCard from './AuthorCard.astro';
 import BlogCard from './BlogCard.astro';
 import { marked } from 'marked';
-import { Image } from 'astro:assets';
+import LocalImage from './LocalImage.astro';
+import RelatedContent from './RelatedContent.astro';
 import { SITE_URL } from '../data/seoPages';
+import { getArticleRelatedGroups } from '../data/internalLinks';
 
 interface Props {
   blog: PublicBlogPost;
@@ -16,6 +18,7 @@ const { blog, related = [], preview = false } = Astro.props;
 const contentHtml = marked.parse(blog.content);
 const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
 const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
+const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug);
 ---
 
 <article>
@@ -55,9 +58,9 @@ const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
   {(blog.image || blog.imageUrl) && (
     <div class="mb-12 rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
       {blog.image ? (
-        <Image src={blog.image} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="lazy" />
+        <LocalImage src={blog.image} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="eager" fetchpriority="high" kind="hero" width={1400} />
       ) : (
-        <img src={blog.imageUrl} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="lazy" />
+        <img src={blog.imageUrl} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="eager" fetchpriority="high" width="1400" height="600" decoding="async" />
       )}
     </div>
   )}
@@ -134,6 +137,8 @@ const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
     </aside>
   </div>
 </article>
+
+{!preview && <RelatedContent groups={commercialGroups} />}
 
 {related.length > 0 && !preview && (
   <section class="mt-24 pt-16 border-t border-white/10">

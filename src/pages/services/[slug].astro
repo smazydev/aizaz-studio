@@ -6,6 +6,7 @@ import { Footer } from '../../components/Footer';
 import SeoLanding from '../../components/SeoLanding.astro';
 import { servicePages, getServiceBySlug } from '../../data/seoPages';
 import { buildSeoPageSchemas } from '../../lib/seoSchema';
+import { getServiceRelatedGroups } from '../../data/internalLinks';
 
 export function getStaticPaths() {
   return servicePages.map((page) => ({
@@ -19,6 +20,7 @@ const canonicalPath = `/services/${page.slug}`;
 const relatedServices = (page.relatedSlugs ?? [])
   .map((slug) => getServiceBySlug(slug))
   .filter(Boolean);
+const relatedGroups = getServiceRelatedGroups(page.slug, page.relatedSlugs ?? []);
 const schemas = buildSeoPageSchemas(
   page,
   [
@@ -46,6 +48,7 @@ const schemas = buildSeoPageSchemas(
           { label: 'Services', href: '/services' },
         ]}
         relatedServices={relatedServices}
+        relatedGroups={relatedGroups}
       />
     </main>
     <Footer client:visible />

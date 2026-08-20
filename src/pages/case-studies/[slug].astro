@@ -6,10 +6,13 @@ import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { CTA } from '../../components/CTA';
 import { SITE_URL } from '../../data/seoPages';
-import { Image } from 'astro:assets';
 import { BOOKING_URL } from '../../data/siteConfig';
 import { getCaseStudyBySlug } from '../../lib/sanity/caseStudies';
 import AuthorCard from '../../components/AuthorCard.astro';
+import LocalImage from '../../components/LocalImage.astro';
+import RelatedContent from '../../components/RelatedContent.astro';
+import { applyCmsCacheHeaders } from '../../lib/cms-cache';
+import { getCaseStudyRelatedGroups } from '../../data/internalLinks';
 
 const { slug } = Astro.params;
 const study = await getCaseStudyBySlug(slug!);
@@ -18,7 +21,8 @@ if (!study) {
   return Astro.redirect('/case-studies', 302);
 }
 
-Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies', `case-study:${study.slug}`]);
+const relatedGroups = getCaseStudyRelatedGroups(study.slug);
 const pageTitle = study.seoTitle ?? `${study.title} | Aizaz Studio`;
 const pageDescription = study.seoDescription ?? study.description;
 const canonicalPath = study.canonicalPath ?? `/case-studies/${study.slug}`;
@@ -156,12 +160,19 @@ const articleSchema = {
               alt={study.title}
               class="w-full h-full object-cover"
               loading="eager"
+              fetchpriority="high"
+              width="1600"
+              height="900"
             />
           ) : (
-            <Image
+            <LocalImage
               src={study.image}
               alt={study.title}
               class="w-full h-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+              kind="hero"
+              width={1600}
             />
           )}
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -265,11 +276,11 @@ const articleSchema = {
                     </div>
                     {item.image ? (
                       <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                        <Image src={item.image} alt={item.title} class="w-full h-auto object-cover" />
+                        <LocalImage src={item.image} alt={item.title} class="w-full h-auto object-cover" kind="content" width={1200} />
                       </div>
                     ) : item.imageUrl ? (
                       <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                        <img src={item.imageUrl} alt={item.title} class="w-full h-auto object-cover" loading="lazy" />
+                        <img src={item.imageUrl} alt={item.title} class="w-full h-auto object-cover" loading="lazy" width="1200" height="800" />
                       </div>
                     ) : null}
                   </div>
@@ -336,6 +347,8 @@ const articleSchema = {
           </>
         )}
       </div>
+
+      <RelatedContent groups={relatedGroups} />
 
       {study.cta && (
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">

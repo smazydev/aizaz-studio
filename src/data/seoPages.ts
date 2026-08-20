@@ -422,6 +422,7 @@ export const industryPages: IndustryPage[] = [
                 answer: 'Book a call or start an AI Systems Sprint to automate one workflow or ship one critical feature in 14 days.',
             },
         ],
+        relatedSlugs: ['saas-mvp-development', 'web-app-saas-development', 'ai-automation-systems'],
     },
     {
         slug: 'ecommerce-wholesale',
@@ -464,6 +465,7 @@ export const industryPages: IndustryPage[] = [
                 answer: 'We migrate spreadsheet workflows into reliable systems with validation, automation, and reporting.',
             },
         ],
+        relatedSlugs: ['netsuite-integration', 'api-integration', 'business-process-automation'],
     },
     {
         slug: 'healthtech-clinics',
@@ -506,6 +508,7 @@ export const industryPages: IndustryPage[] = [
                 answer: 'Our 14 day AI Systems Sprint is ideal for one intake or reminder workflow end to end.',
             },
         ],
+        relatedSlugs: ['ai-automation-systems', 'business-process-automation', 'web-app-saas-development'],
     },
     {
         slug: 'trading-businesses',
@@ -548,6 +551,7 @@ export const industryPages: IndustryPage[] = [
                 answer: 'Yes. Data feeds, webhooks, and custom dashboards connected to your trading stack.',
             },
         ],
+        relatedSlugs: ['trading-technology-systems', 'web-app-saas-development'],
     },
     {
         slug: 'netsuite-users',
@@ -590,6 +594,7 @@ export const industryPages: IndustryPage[] = [
                 answer: 'Yes. We audit sync failures, add monitoring, and rebuild unreliable pipelines.',
             },
         ],
+        relatedSlugs: ['netsuite-integration', 'netsuite-erp-automation', 'api-integration'],
     },
     {
         slug: 'agencies',
@@ -632,6 +637,7 @@ export const industryPages: IndustryPage[] = [
                 answer: 'Book a call to discuss your current pipeline and where senior engineering support would help most.',
             },
         ],
+        relatedSlugs: ['web-app-saas-development', 'ai-automation-systems', 'netsuite-integration'],
     },
     ...extraIndustryPages,
 ];

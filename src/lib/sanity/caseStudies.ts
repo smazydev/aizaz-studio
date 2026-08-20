@@ -1,7 +1,7 @@
 import type { CaseStudy } from '../../data/caseStudies';
 import { caseStudies as staticCaseStudies } from '../../data/caseStudies';
 import { mapSanityAuthor } from './author';
-import { getSanityClient, urlForImage } from './client';
+import { cachedSanityFetch, getSanityClient, urlForImage } from './client';
 import { caseStudiesQuery } from './queries';
 import { mapSanitySeo } from './seo';
 
@@ -188,7 +188,9 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
     }
 
     try {
-        const sanityStudies = await client.fetch<SanityCaseStudy[]>(caseStudiesQuery);
+        const sanityStudies = await cachedSanityFetch('caseStudies:all', () =>
+            client.fetch<SanityCaseStudy[]>(caseStudiesQuery),
+        );
         for (const study of sanityStudies) {
             const existing = staticBySlug.get(study.slug);
             staticBySlug.set(study.slug, mapSanityCaseStudy(study, existing));

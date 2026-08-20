@@ -9,7 +9,18 @@
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist",
-		"html_handling": "drop-trailing-slash"
+		"html_handling": "drop-trailing-slash",
+		// Host/protocol middleware must see HTML. Skip hashed static assets so
+		// image/CSS/font requests are not forced through the Worker on every hit.
+		"run_worker_first": [
+			"/*",
+			"!/_astro/*",
+			"!/optimized/*",
+			"!/fonts/*",
+			"!/favicon.ico",
+			"!/favicon.svg",
+			"!/apple-touch-icon.png"
+		]
 	},
 	"routes": [
 		{
@@ -22,6 +33,11 @@
 		}
 	],
 	"workers_dev": true,
+	// Workers Cache sits in front of the Worker. Required for Cache-Control on SSR
+	// HTML to skip Worker/Sanity on subsequent anonymous requests.
+	"cache": {
+		"enabled": true
+	},
 	"observability": {
 		"enabled": true
 	}
