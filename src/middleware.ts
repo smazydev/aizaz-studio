@@ -4,8 +4,9 @@ const CANONICAL_ORIGIN = 'https://aizaz.studio';
 const CANONICAL_HOST = 'aizaz.studio';
 
 /**
- * Single indexable origin: https://aizaz.studio
- * Permanent 301 from www + http. Requires assets.run_worker_first for prerendered HTML.
+ * Canonical host/protocol redirects for requests that reach the Worker (SSR/API).
+ * Prerendered Assets are served asset-first and bypass this middleware — configure
+ * zone Always Use HTTPS + www→apex Redirect Rules for those paths.
  */
 export const onRequest = defineMiddleware(async (context, next) => {
   // Prerender has no real client Host/proto — skip redirects and avoid request.headers.
