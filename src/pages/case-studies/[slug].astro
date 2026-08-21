@@ -43,8 +43,16 @@ const articleSchema = {
         author: {
           '@type': 'Person',
           name: study.author.name,
-          jobTitle: study.author.role,
-          ...(study.author.linkedin ? { sameAs: [study.author.linkedin] } : {}),
+          ...(study.author.role ? { jobTitle: study.author.role } : {}),
+          ...(study.author.photoUrl ? { image: study.author.photoUrl } : {}),
+          ...((() => {
+            const sameAs = [
+              study.author.linkedin,
+              study.author.xUrl,
+              study.author.githubUrl,
+            ].filter((url): url is string => Boolean(url));
+            return sameAs.length ? { sameAs } : {};
+          })()),
         },
       }
     : {

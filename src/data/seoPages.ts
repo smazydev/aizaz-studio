@@ -4,6 +4,7 @@ import { extraIndustryPages } from './industryPagesExtra';
 import { comparePages } from './comparePages';
 import { technologyPages } from './technologyPages';
 import { caseStudies } from './caseStudies';
+import { isNonIndexableContentSlug } from '../lib/blog-utils';
 
 export interface SeoPage {
     slug: string;
@@ -720,7 +721,7 @@ export function getAllSeoPaths(): string[] {
         ...industryPages.map((p) => `/for/${p.slug}`),
         ...comparePages.map((p) => `/compare/${p.slug}`),
         ...technologyPages.map((p) => `/technologies/${p.slug}`),
-        ...blogs.map((b) => `/blog/${b.slug}`),
+        ...blogs.filter((b) => !isNonIndexableContentSlug(b.slug)).map((b) => `/blog/${b.slug}`),
         ...caseStudySlugs(),
     ];
     return paths;

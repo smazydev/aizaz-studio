@@ -6,7 +6,7 @@ import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { CTA } from '../../components/CTA';
 import BlogPostContent from '../../components/BlogPostContent.astro';
-import { buildArticleSchema, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
+import { buildArticleSchema, getLinkablePosts, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
 import { SITE_URL } from '../../data/seoPages';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
 
@@ -19,7 +19,8 @@ if (!blog) {
   return Astro.redirect('/blog', 302);
 }
 
-const related = getRelatedPosts(allPosts, blog.slug);
+// Related / prev-next must never point at noindex smoke-test posts.
+const related = getRelatedPosts(getLinkablePosts(allPosts), blog.slug);
 const articleSchema = buildArticleSchema(blog, SITE_URL);
 const pageTitle = blog.seoTitle ?? `${blog.title} | Aizaz.studio Blog`;
 const pageDescription = blog.metaDescription ?? blog.excerpt;

@@ -15,8 +15,7 @@ export const person = defineType({
             name: 'role',
             title: 'Role',
             type: 'string',
-            description: 'Example: Founder, Senior Engineer, Technical Writer',
-            validation: (rule) => rule.required(),
+            description: 'Optional. Example: Founder, Senior Engineer, Technical Writer',
         }),
         defineField({
             name: 'bio',
@@ -27,14 +26,37 @@ export const person = defineType({
         }),
         defineField({
             name: 'photo',
-            title: 'Photo',
+            title: 'Headshot',
             type: 'image',
             options: { hotspot: true },
+            description: 'Optional author photo shown on blog articles and cards.',
         }),
         defineField({
             name: 'linkedin',
             title: 'LinkedIn URL',
             type: 'url',
+            validation: (rule) =>
+                rule.uri({
+                    scheme: ['http', 'https'],
+                    allowRelative: false,
+                }),
+        }),
+        defineField({
+            name: 'xUrl',
+            title: 'X (Twitter) URL',
+            type: 'url',
+            description: 'Optional.',
+            validation: (rule) =>
+                rule.uri({
+                    scheme: ['http', 'https'],
+                    allowRelative: false,
+                }),
+        }),
+        defineField({
+            name: 'githubUrl',
+            title: 'GitHub URL',
+            type: 'url',
+            description: 'Optional.',
             validation: (rule) =>
                 rule.uri({
                     scheme: ['http', 'https'],

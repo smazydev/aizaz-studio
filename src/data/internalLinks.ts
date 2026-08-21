@@ -3,6 +3,8 @@
  * Prefer semantic relevance over volume. Cap consumers at 2–4 links per group.
  */
 
+import { isNonIndexableContentSlug } from '../lib/blog-utils';
+
 export type RelationGroupTitle =
   | 'Related Services'
   | 'Relevant Industries'
@@ -119,7 +121,9 @@ function mapSlugs(
   limit = 4,
 ): RelatedLink[] {
   if (!slugs?.length) return [];
-  return slugs.slice(0, limit).map((slug) => ({
+  const filtered =
+    prefix === '/blog' ? slugs.filter((slug) => !isNonIndexableContentSlug(slug)) : slugs;
+  return filtered.slice(0, limit).map((slug) => ({
     href: `${prefix}/${slug}`,
     label: labels[slug] ?? slug,
   }));
@@ -470,7 +474,11 @@ function relationsToGroups(rel: PageRelations, opts?: { excludeHref?: string }):
   const further = [
     ...mapSlugs(rel.articles, '/blog', ARTICLE_LABELS),
     ...(rel.pages ?? []),
-  ];
+  ].filter((link) => {
+    if (!link.href.startsWith('/blog/')) return true;
+    const slug = link.href.slice('/blog/'.length);
+    return !isNonIndexableContentSlug(slug);
+  });
   push('Further Reading', further);
 
   return groups.slice(0, 3);

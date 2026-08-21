@@ -8,25 +8,42 @@ interface Props {
 }
 
 const { author, wrapperClass = '', compact = false } = Astro.props;
-const initials = author.name
-  .split(' ')
+const name = author?.name?.trim() || 'Author';
+const role = author?.role?.trim() || '';
+const photoUrl = author?.photoUrl?.trim() || '';
+const linkedin = author?.linkedin?.trim() || '';
+const xUrl = author?.xUrl?.trim() || '';
+const githubUrl = author?.githubUrl?.trim() || '';
+
+const initials = name
+  .split(/\s+/)
   .filter(Boolean)
   .slice(0, 2)
   .map((part) => part.charAt(0))
-  .join('');
+  .join('')
+  .toUpperCase() || '?';
+
+const socialLinks = [
+  linkedin ? { href: linkedin, label: 'LinkedIn' } : null,
+  xUrl ? { href: xUrl, label: 'X' } : null,
+  githubUrl ? { href: githubUrl, label: 'GitHub' } : null,
+].filter((link): link is { href: string; label: string } => Boolean(link));
 ---
 
 <div class={`flex items-center gap-4 ${wrapperClass}`}>
-  {author.photoUrl ? (
+  {photoUrl ? (
     <img
-      src={author.photoUrl}
-      alt={author.name}
-      class={`rounded-full object-cover border border-white/10 ${compact ? 'w-9 h-9' : 'w-11 h-11'}`}
+      src={photoUrl}
+      alt={name}
+      class={`rounded-full object-cover border border-white/10 shrink-0 ${compact ? 'w-9 h-9' : 'w-11 h-11'}`}
+      width={compact ? 36 : 44}
+      height={compact ? 36 : 44}
       loading="lazy"
+      decoding="async"
     />
   ) : (
     <div
-      class={`rounded-full bg-gradient-to-br from-primary-500/40 to-indigo-600/40 border border-white/10 flex items-center justify-center font-bold text-white ${
+      class={`rounded-full bg-gradient-to-br from-primary-500/40 to-indigo-600/40 border border-white/10 flex items-center justify-center font-bold text-white shrink-0 ${
         compact ? 'w-9 h-9 text-xs' : 'w-11 h-11 text-sm'
       }`}
       aria-hidden="true"
@@ -36,17 +53,23 @@ const initials = author.name
   )}
 
   <div class="min-w-0">
-    <div class={`font-semibold text-white ${compact ? 'text-sm' : 'text-base'}`}>{author.name}</div>
-    <div class={`text-zinc-500 ${compact ? 'text-xs' : 'text-sm'}`}>{author.role}</div>
-    {author.linkedin && (
-      <a
-        href={author.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 mt-1 text-xs font-medium text-primary-400 hover:text-primary-300 transition-colors"
-      >
-        LinkedIn →
-      </a>
+    <div class={`font-semibold text-white ${compact ? 'text-sm' : 'text-base'}`}>{name}</div>
+    {role && (
+      <div class={`text-zinc-500 ${compact ? 'text-xs' : 'text-sm'}`}>{role}</div>
+    )}
+    {socialLinks.length > 0 && (
+      <div class={`flex flex-wrap items-center gap-x-3 gap-y-1 ${role ? 'mt-1' : 'mt-0.5'}`}>
+        {socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center text-xs font-medium text-primary-400 hover:text-primary-300 transition-colors"
+          >
+            {link.label} →
+          </a>
+        ))}
+      </div>
     )}
   </div>
 </div>

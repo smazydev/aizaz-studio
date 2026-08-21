@@ -26,7 +26,7 @@ export const GET: APIRoute = async () => {
   const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
   const published = await getPublishedPosts();
   const cmsPaths = published
-    .filter((post) => !post.noindex)
+    .filter((post) => !post.noindex && !isNonIndexableContentSlug(post.slug))
     .map((post) => `/blog/${post.slug}`);
   const caseStudyPaths = (await getAllCaseStudies())
     .filter((study) => !study.noindex)

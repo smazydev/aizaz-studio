@@ -2,13 +2,11 @@ import type { ImageMetadata } from 'astro';
 import { blogs as legacyBlogs, type BlogPost as LegacyBlogPost } from '../data/blogs';
 import type { ContentAuthor } from './sanity/author';
 import { normalizeCategory } from './blog-categories';
+import { isNonIndexableContentSlug } from './blog-utils';
 import { isSanityConfigured } from './sanity/client';
 import { getSanityPostBySlug, getSanityPublishedPosts } from './sanity/blog';
 
-/** Debug / CMS smoke-test slugs — keep reachable, never index. */
-export function isNonIndexableContentSlug(slug: string): boolean {
-    return /sanity-test/i.test(slug) || /^test-/i.test(slug) || /-test$/i.test(slug) || /^demo-/i.test(slug);
-}
+export { isNonIndexableContentSlug } from './blog-utils';
 
 export interface PublicBlogPost {
     id: string;
@@ -35,6 +33,15 @@ export interface PublicBlogPost {
     updatedAt?: string;
     source: 'cms' | 'legacy';
     status?: string;
+}
+
+/** Posts safe for lists, related/prev-next, sitemap, and internal-link maps. */
+export function isLinkableBlogPost(post: Pick<PublicBlogPost, 'slug' | 'noindex'>): boolean {
+    return !post.noindex && !isNonIndexableContentSlug(post.slug);
+}
+
+export function getLinkablePosts(posts: PublicBlogPost[]): PublicBlogPost[] {
+    return posts.filter(isLinkableBlogPost);
 }
 
 function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {
@@ -75,22 +82,40 @@ export async function getPublishedPosts(): Promise<PublicBlogPost[]> {
 }
 
 export async function getPublishedPostBySlug(slug: string): Promise<PublicBlogPost | null> {
+    const markIfNeeded = (post: PublicBlogPost): PublicBlogPost =>
+        isNonIndexableContentSlug(post.slug) ? { ...post, noindex: true } : post;
+
     if (isSanityConfigured()) {
         const sanityPost = await getSanityPostBySlug(slug);
-        if (sanityPost) return sanityPost;
+        if (sanityPost) return markIfNeeded(sanityPost);
     }
 
     const legacy = legacyBlogs.find((post) => post.slug === slug);
-    return legacy ? mapLegacyPost(legacy) : null;
+    return legacy ? markIfNeeded(mapLegacyPost(legacy)) : null;
 }
 
 export function getRelatedPosts(posts: PublicBlogPost[], currentSlug: string, limit = 2): PublicBlogPost[] {
+    const linkable = getLinkablePosts(posts);
     const current = posts.find((post) => post.slug === currentSlug);
-    const sameCategory = posts.filter(
+    const sameCategory = linkable.filter(
         (post) => post.slug !== currentSlug && current && post.category === current.category,
     );
-    const fallback = posts.filter((post) => post.slug !== currentSlug);
+    const fallback = linkable.filter((post) => post.slug !== currentSlug);
     return [...sameCategory, ...fallback].slice(0, limit);
+}
+
+/** Previous/next among linkable posts only (excludes noindex / sanity-test). */
+export function getAdjacentPosts(
+    posts: PublicBlogPost[],
+    currentSlug: string,
+): { previous: PublicBlogPost | null; next: PublicBlogPost | null } {
+    const linkable = getLinkablePosts(posts);
+    const index = linkable.findIndex((post) => post.slug === currentSlug);
+    if (index === -1) return { previous: null, next: null };
+    return {
+        previous: index > 0 ? linkable[index - 1] : null,
+        next: index < linkable.length - 1 ? linkable[index + 1] : null,
+    };
 }
 
 export function buildArticleSchema(post: PublicBlogPost, siteUrl: string) {
@@ -106,8 +131,16 @@ export function buildArticleSchema(post: PublicBlogPost, siteUrl: string) {
                   author: {
                       '@type': 'Person',
                       name: post.author.name,
-                      jobTitle: post.author.role,
-                      ...(post.author.linkedin ? { sameAs: [post.author.linkedin] } : {}),
+                      ...(post.author.role ? { jobTitle: post.author.role } : {}),
+                      ...(post.author.photoUrl ? { image: post.author.photoUrl } : {}),
+                      ...((() => {
+                          const sameAs = [
+                              post.author.linkedin,
+                              post.author.xUrl,
+                              post.author.githubUrl,
+                          ].filter((url): url is string => Boolean(url));
+                          return sameAs.length ? { sameAs } : {};
+                      })()),
                   },
               }
             : {}),

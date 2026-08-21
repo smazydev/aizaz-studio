@@ -1,7 +1,7 @@
 import type { PublicBlogPost } from '../blog';
 import { normalizeCategory } from '../blog-categories';
+import { calculateReadTime, formatDisplayDate, isNonIndexableContentSlug } from '../blog-utils';
 import { mapSanityAuthor } from './author';
-import { calculateReadTime, formatDisplayDate } from '../blog-utils';
 import { getSanityClient, cachedSanityFetch, urlForImage } from './client';
 import { postBySlugQuery, publishedPostsQuery } from './queries';
 import { mapSanitySeo, type PageSeo } from './seo';
@@ -71,7 +71,7 @@ function mapSanityPost(post: SanityPost): PublicBlogPost | null {
         ogTitle: seo.ogTitle,
         ogDescription: seo.ogDescription,
         ogImage: seo.ogImageUrl,
-        noindex: seo.noIndex ?? false,
+        noindex: (seo.noIndex ?? false) || isNonIndexableContentSlug(post.slug),
         focusKeyword: seo.focusKeyword,
         updatedAt: post._updatedAt ?? publishedAt,
         source: 'cms',
@@ -110,5 +110,7 @@ export async function getSanityPostBySlug(slug: string): Promise<PublicBlogPost 
 
 export async function getSanityBlogSlugs(): Promise<string[]> {
     const posts = await getSanityPublishedPosts();
-    return posts.map((post) => post.slug);
+    return posts
+        .filter((post) => !post.noindex && !isNonIndexableContentSlug(post.slug))
+        .map((post) => post.slug);
 }

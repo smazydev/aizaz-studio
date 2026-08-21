@@ -4,9 +4,8 @@ const CANONICAL_ORIGIN = 'https://aizaz.studio';
 const CANONICAL_HOST = 'aizaz.studio';
 
 /**
- * Canonical host/protocol redirects for requests that reach the Worker (SSR/API).
- * Prerendered Assets are served asset-first and bypass this middleware — configure
- * zone Always Use HTTPS + www→apex Redirect Rules for those paths.
+ * Canonical host/protocol redirects for all requests that reach the Worker.
+ * Pair with assets.run_worker_first: true so prerendered HTML is not served on www.
  */
 export const onRequest = defineMiddleware(async (context, next) => {
   // Prerender has no real client Host/proto — skip redirects and avoid request.headers.
@@ -28,14 +27,20 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  const isWww = host === `www.${CANONICAL_HOST}`;
-  const isApex = host === CANONICAL_HOST;
-  const shouldFixHost = isWww;
-  const shouldFixProto = proto === 'http' && (isApex || isWww);
+  const isCanonicalHost = host === CANONICAL_HOST;
+  const isHttps = proto === 'https';
 
-  if (shouldFixHost || shouldFixProto) {
+  // Never 301 when already on apex HTTPS (avoids self-redirect cache loops).
+  if (!isCanonicalHost || !isHttps) {
     const target = new URL(`${url.pathname}${url.search}`, CANONICAL_ORIGIN);
-    return context.redirect(target.toString(), 301);
+    return new Response(null, {
+      status: 301,
+      headers: {
+        Location: target.toString(),
+        // Host redirects must not be cached under a host-agnostic key.
+        'Cache-Control': 'no-store',
+      },
+    });
   }
 
   return next();

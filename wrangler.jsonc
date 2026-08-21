@@ -10,18 +10,9 @@
 		"binding": "ASSETS",
 		"directory": "./dist",
 		"html_handling": "drop-trailing-slash",
-		// Asset-first for prerendered marketing HTML (fast edge serve).
-		// Worker-first only for SSR/CMS routes that must not be shadowed by Assets.
-		// Canonical www/http redirects for static HTML: configure at the Cloudflare zone
-		// (Always Use HTTPS + www→apex Redirect Rule), not via run_worker_first.
-		"run_worker_first": [
-			"/blog",
-			"/blog/*",
-			"/case-studies",
-			"/case-studies/*",
-			"/api/*",
-			"/sitemap.xml"
-		]
+		// Worker runs first so middleware can 301 www→apex (and http→https) for every
+		// route — including prerendered marketing HTML that would otherwise return 200 on www.
+		"run_worker_first": true
 	},
 	"routes": [
 		{
