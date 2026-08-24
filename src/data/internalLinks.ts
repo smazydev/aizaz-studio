@@ -4,6 +4,7 @@
  */
 
 import { isNonIndexableContentSlug } from '../lib/blog-utils';
+import { isHiddenCaseStudySlug } from '../lib/case-study-visibility';
 
 export type RelationGroupTitle =
   | 'Related Services'
@@ -94,11 +95,10 @@ const TECH_LABELS: Record<string, string> = {
 };
 
 const CASE_LABELS: Record<string, string> = {
-  '1archiver-compliance-platform': '1Archiver Compliance Platform',
-  'investorsgonewild-investment-platform': 'InvestorsGoneWild Investment Platform',
-  'propertymatchmaker-real-estate-saas': 'PropertyMatchmaker Real Estate SaaS',
+  '1archiver-compliance-platform': '1Archiver — Compliance Email Archiving',
+  'propertymatchmaker-real-estate-saas': 'PropertyMatch — Real Estate SaaS MVP',
   'modernizing-multi-language-code-checking-tool': 'Multi-Language Code Checking Tool',
-  'designing-multi-tenant-crm-architecture': 'Multi-Tenant CRM Architecture',
+  'designing-multi-tenant-crm-architecture': 'SalesAngel — AI Sales Platform',
 };
 
 const ARTICLE_LABELS: Record<string, string> = {
@@ -121,8 +121,11 @@ function mapSlugs(
   limit = 4,
 ): RelatedLink[] {
   if (!slugs?.length) return [];
-  const filtered =
-    prefix === '/blog' ? slugs.filter((slug) => !isNonIndexableContentSlug(slug)) : slugs;
+  const filtered = slugs.filter((slug) => {
+    if (prefix === '/blog' && isNonIndexableContentSlug(slug)) return false;
+    if (prefix === '/case-studies' && isHiddenCaseStudySlug(slug)) return false;
+    return true;
+  });
   return filtered.slice(0, limit).map((slug) => ({
     href: `${prefix}/${slug}`,
     label: labels[slug] ?? slug,
@@ -132,8 +135,8 @@ function mapSlugs(
 /** Extra relations beyond existing relatedSlugs on SeoPage (industries, tech, proof, reading). */
 export const serviceClusterExtras: Record<string, PageRelations> = {
   'ai-automation-systems': {
-    industries: ['operations-teams', 'b2b-saas', 'saas-startups'],
-    technologies: ['openai', 'langchain', 'python-development'],
+    industries: ['operations-teams', 'b2b-saas', 'saas-startups', 'healthtech-clinics'],
+    technologies: ['openai', 'langchain', 'python-development', 'fastapi-development'],
     caseStudies: ['designing-multi-tenant-crm-architecture'],
     articles: ['ai-automation-workflows-for-operations-teams', 'identify-workflows-worth-automating-with-ai'],
     pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
@@ -161,7 +164,7 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     articles: ['building-production-ready-saas-mvp'],
   },
   'web-app-saas-development': {
-    industries: ['saas-startups', 'b2b-saas', 'startups'],
+    industries: ['saas-startups', 'b2b-saas', 'startups', 'healthtech-clinics', 'agencies'],
     technologies: ['react-development', 'nextjs-development', 'nodejs-development'],
     caseStudies: ['propertymatchmaker-real-estate-saas', 'designing-multi-tenant-crm-architecture'],
     articles: ['building-production-ready-saas-mvp', 'cicd-checklist-early-stage-saas'],
@@ -173,13 +176,13 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     articles: ['building-production-ready-saas-mvp', 'rescue-a-half-built-saas-product'],
   },
   'b2b-saas-development': {
-    industries: ['b2b-saas', 'saas-startups'],
+    industries: ['b2b-saas', 'saas-startups', 'agencies'],
     technologies: ['nestjs-development', 'postgresql', 'react-development'],
-    caseStudies: ['designing-multi-tenant-crm-architecture', 'investorsgonewild-investment-platform'],
+    caseStudies: ['designing-multi-tenant-crm-architecture'],
   },
   'backend-engineering': {
-    industries: ['b2b-saas', 'fintech'],
-    technologies: ['nodejs-development', 'nestjs-development', 'postgresql'],
+    industries: ['b2b-saas', 'fintech', 'logistics'],
+    technologies: ['nodejs-development', 'nestjs-development', 'postgresql', 'fastapi-development'],
     caseStudies: ['modernizing-multi-language-code-checking-tool'],
   },
   'aws-devops': {
@@ -209,7 +212,7 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     caseStudies: ['1archiver-compliance-platform'],
   },
   'business-process-automation': {
-    industries: ['operations-teams', 'ecommerce-operations', 'netsuite-users'],
+    industries: ['operations-teams', 'ecommerce-operations', 'netsuite-users', 'logistics'],
     technologies: ['openai', 'python-development'],
     articles: ['ai-automation-workflows-for-operations-teams'],
     pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
@@ -225,7 +228,7 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     articles: ['netsuite-shopify-integration-pitfalls', 'netsuite-integration-mistakes-growing-operations'],
   },
   'api-integration': {
-    industries: ['ecommerce-operations', 'operations-teams'],
+    industries: ['ecommerce-operations', 'operations-teams', 'logistics'],
     technologies: ['nodejs-development', 'python-development'],
     articles: ['netsuite-shopify-integration-pitfalls'],
   },
@@ -246,10 +249,9 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
   'trading-technology-systems': {
     industries: ['trading-businesses', 'fintech'],
     technologies: ['python-development', 'react-development'],
-    caseStudies: ['investorsgonewild-investment-platform'],
   },
   'technical-video-product-enablement': {
-    industries: ['saas-startups', 'b2b-saas'],
+    industries: ['saas-startups', 'b2b-saas', 'agencies'],
     services: ['web-app-saas-development', 'saas-mvp-development'],
   },
 };
@@ -291,25 +293,29 @@ export const industryClusterExtras: Record<string, PageRelations> = {
   },
   'healthtech-clinics': {
     services: ['ai-automation-systems', 'business-process-automation', 'web-app-saas-development'],
-    pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
+    pages: [
+      { href: '/ai-systems-sprint', label: 'AI Systems Sprint' },
+      { href: '/security', label: 'Security & Compliance' },
+    ],
   },
   healthtech: {
     services: ['ai-automation-systems', 'web-app-saas-development', 'aws-devops'],
   },
   fintech: {
     services: ['web-app-saas-development', 'backend-engineering', 'aws-cloud-engineering'],
-    caseStudies: ['investorsgonewild-investment-platform'],
     technologies: ['python-development', 'postgresql'],
   },
   'trading-businesses': {
     services: ['trading-technology-systems', 'web-app-saas-development'],
-    caseStudies: ['investorsgonewild-investment-platform'],
   },
   agencies: {
     services: ['web-app-saas-development', 'ai-automation-systems', 'technical-video-product-enablement'],
+    pages: [{ href: '/engagement-models', label: 'Engagement Models' }],
   },
   logistics: {
-    services: ['business-process-automation', 'api-integration', 'netsuite-integration'],
+    services: ['business-process-automation', 'api-integration', 'netsuite-integration', 'backend-engineering'],
+    technologies: ['aws', 'python-development'],
+    pages: [{ href: '/services/aws-cloud-engineering', label: 'AWS Cloud Engineering' }],
   },
   'professional-services': {
     services: ['business-process-automation', 'ai-automation-systems', 'web-app-saas-development'],
@@ -330,7 +336,6 @@ export const technologyClusterExtras: Record<string, PageRelations> = {
   },
   'python-development': {
     services: ['ai-automation-systems', 'backend-engineering', 'llm-app-development'],
-    caseStudies: ['investorsgonewild-investment-platform'],
   },
   'nodejs-development': {
     services: ['backend-engineering', 'api-integration', 'web-app-saas-development'],
@@ -348,7 +353,9 @@ export const technologyClusterExtras: Record<string, PageRelations> = {
     caseStudies: ['designing-multi-tenant-crm-architecture'],
   },
   'fastapi-development': {
-    services: ['backend-engineering', 'llm-app-development', 'ai-automation-systems'],
+    services: ['backend-engineering', 'llm-app-development', 'ai-automation-systems', 'ai-agent-development'],
+    technologies: ['python-development', 'postgresql'],
+    caseStudies: ['modernizing-multi-language-code-checking-tool'],
   },
   aws: {
     services: ['aws-devops', 'aws-cloud-engineering', 'cloud-migration'],
@@ -374,11 +381,6 @@ export const caseStudyCluster: Record<string, PageRelations> = {
     services: ['aws-devops', 'backend-engineering', 'platform-engineering'],
     industries: ['professional-services'],
     technologies: ['aws', 'nodejs-development'],
-  },
-  'investorsgonewild-investment-platform': {
-    services: ['web-app-saas-development', 'backend-engineering', 'trading-technology-systems'],
-    industries: ['fintech', 'trading-businesses'],
-    technologies: ['python-development', 'react-development', 'postgresql'],
   },
   'propertymatchmaker-real-estate-saas': {
     services: ['saas-mvp-development', 'web-app-saas-development', 'b2b-saas-development'],

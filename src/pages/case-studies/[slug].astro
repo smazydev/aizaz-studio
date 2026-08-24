@@ -18,7 +18,7 @@ const { slug } = Astro.params;
 const study = await getCaseStudyBySlug(slug!);
 
 if (!study) {
-  return Astro.redirect('/case-studies', 302);
+  return new Response(null, { status: 404 });
 }
 
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies', `case-study:${study.slug}`]);

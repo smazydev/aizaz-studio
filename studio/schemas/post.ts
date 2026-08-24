@@ -1,5 +1,10 @@
 import { defineField, defineType } from 'sanity';
+import { validateCanonicalPath, validateContentSlug } from './slugValidation';
 
+/**
+ * Blog Post schema used by Sanity Studio (`schemaTypes` → `post`).
+ * Author MUST be a reference to `person` (document title: Author) — never a free-text string.
+ */
 export const post = defineType({
     name: 'post',
     title: 'Blog Post',
@@ -22,7 +27,10 @@ export const post = defineType({
             type: 'slug',
             group: 'content',
             options: { source: 'title', maxLength: 96 },
-            validation: (rule) => rule.required(),
+            description:
+                'Enter only the slug segment, e.g. automate-manual-business-workflow-with-ai — not "Slug: …" or /blog/…',
+            validation: (rule) =>
+                rule.required().custom((value) => validateContentSlug(value?.current, 'blog')),
         }),
         defineField({
             name: 'excerpt',
@@ -33,13 +41,21 @@ export const post = defineType({
             validation: (rule) => rule.required().max(320),
         }),
         defineField({
+            name: 'bodyBlocks',
+            title: 'Body (rich text)',
+            type: 'blockContent',
+            group: 'content',
+            description: 'Preferred editor — paragraphs, headings, lists, links, code, and inline images.',
+        }),
+        defineField({
             name: 'body',
-            title: 'Body (Markdown)',
+            title: 'Body (Markdown legacy)',
             type: 'text',
             rows: 20,
             group: 'content',
-            description: 'Write in Markdown. Use ## for section headings.',
-            validation: (rule) => rule.required(),
+            description:
+                'Legacy Markdown field. Use Body (rich text) for new posts. Markdown still renders if rich text is empty.',
+            hidden: ({ document }) => Boolean(document?.bodyBlocks?.length),
         }),
         defineField({
             name: 'coverImage',
@@ -78,8 +94,18 @@ export const post = defineType({
             type: 'reference',
             to: [{ type: 'person' }],
             group: 'content',
-            description: 'Create an Author under People first, then select them here.',
-            validation: (rule) => rule.required(),
+            description:
+                'Pick an Author from Authors (e.g. Ali Zafar). Legacy posts may publish without a reference until migrated.',
+            options: { disableNew: false },
+        }),
+        defineField({
+            name: 'authorLegacy',
+            title: 'Author (legacy text)',
+            type: 'string',
+            group: 'content',
+            readOnly: true,
+            hidden: ({ document }) => !document?.authorLegacy,
+            description: 'Original author text kept for safety after migrating to Author documents.',
         }),
         defineField({
             name: 'publishedAt',
@@ -95,7 +121,6 @@ export const post = defineType({
             type: 'seoFields',
             group: 'seo',
         }),
-        // Legacy flat SEO fields — kept for existing documents; prefer `seo` above
         defineField({
             name: 'seoTitle',
             title: 'SEO title (legacy)',
@@ -118,8 +143,14 @@ export const post = defineType({
             title: 'Canonical path (legacy)',
             type: 'string',
             group: 'seo',
+            description: 'Normally /blog/{slug}. Override only when genuinely needed.',
             hidden: ({ document }) => Boolean(document?.seo),
             deprecated: { reason: 'Use the SEO object instead' },
+            validation: (rule) =>
+                rule.custom((value, context) => {
+                    const slug = (context.document as { slug?: { current?: string } } | undefined)?.slug?.current;
+                    return validateCanonicalPath(value, slug);
+                }),
         }),
         defineField({
             name: 'ogImage',
@@ -144,11 +175,12 @@ export const post = defineType({
             subtitle: 'category',
             media: 'coverImage',
             publishedAt: 'publishedAt',
+            authorName: 'author.name',
         },
-        prepare({ title, subtitle, media, publishedAt }) {
+        prepare({ title, subtitle, media, publishedAt, authorName }) {
             return {
                 title,
-                subtitle: [subtitle, publishedAt ? new Date(publishedAt).toLocaleDateString() : 'Draft']
+                subtitle: [authorName, subtitle, publishedAt ? new Date(publishedAt).toLocaleDateString() : 'Draft']
                     .filter(Boolean)
                     .join(' · '),
                 media,

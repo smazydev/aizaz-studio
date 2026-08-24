@@ -5,12 +5,10 @@ import PageHero from '../components/PageHero.astro';
 import { portfolio } from '../data/commercialPages';
 import LocalImage from '../components/LocalImage.astro';
 import archiverCover from '../assets/1archiver-casestudy-cover.png';
-import igwCover from '../assets/igw-casestudy-cover.png';
 
 const c = portfolio;
 const images: Record<string, typeof archiverCover> = {
   '1archiver-compliance-platform': archiverCover,
-  'investorsgonewild-investment-platform': igwCover,
 };
 ---
 

@@ -85,6 +85,8 @@ export interface CaseStudy {
     noindex?: boolean;
     focusKeyword?: string;
     author?: ContentAuthor;
+    /** Excluded from listings, sitemap, and internal links — data kept in source. */
+    hiddenFromPublic?: boolean;
     cta?: {
         headline: string;
         buttonText: string;
@@ -97,9 +99,13 @@ export const caseStudies: CaseStudy[] = [
         id: '1',
         slug: '1archiver-compliance-platform',
         category: 'Compliance • eDiscovery • Data Retention',
-        title: '1Archiver: Building a Compliance Grade Email Archiving Platform',
-        subtitle: 'Enterprise focused Email Archiving & Compliance Platform',
-        description: 'A compliance ready platform built for scale, security, and verification. Designed to handle tens of terabytes of email data with zero tolerance for data loss.',
+        title: '1Archiver — Compliance Email Archiving',
+        subtitle: 'Compliance-grade email archiving platform',
+        description:
+            'A compliance-ready email archiving platform built for scale, security, and verification — developed as a product initiative led by Aizaz Studio technical leadership.',
+        seoTitle: '1Archiver — Compliance Email Archiving | Aizaz Studio',
+        seoDescription:
+            'Compliance-grade email archiving platform designed for tens of terabytes, multiple mail providers, and audit-defensible retention.',
         image: archiverCover,
         backgroundImages: [
             archiverBg1,
@@ -110,9 +116,12 @@ export const caseStudies: CaseStudy[] = [
             archiverBg1
         ],
         content: {
-            challenge: 'Enterprises don’t just need to store emails — they need to prove trust. Most archiving solutions are fragile, insecure, or collapse under real world data volumes. The challenge was to build a platform that is safe, secure, fast, and defensible in court, capable of handling tens of terabytes of data, multiple providers (IMAP, Exchange, Gmail), and complex legal holds.',
-            solution: 'We treated this as a systems engineering problem, not a CRUD app. We designed for compliance first by separating responsibilities into Connectors (edge), Workers (integrity), and a Compliance Core (system of record). We made security a default with immutable data and tamper evident logs, and built for horizontal scale using streaming ingestion and decoupled search indexes.',
-            outcome: '1Archiver is now a compliance ready platform, not just an MVP. It features secure verifiable email ingestion, clear separation of concerns, and scalable search across massive datasets. The architecture is ready for on prem and cloud deployments and is built to pass audits, ensuring the system is defensible and reliable.',
+            challenge:
+                'Enterprises need to prove email retention is trustworthy — not just stored. Most archiving tools are fragile under real-world volume, mix ingestion with business logic, or fail audit scrutiny. 1Archiver was designed to handle tens of terabytes across IMAP, Exchange, and Gmail with zero tolerance for data loss.',
+            solution:
+                'The platform was engineered as a systems problem: Connectors at the edge, Workers for integrity, and a Compliance Core as the system of record. Security defaults include immutable data and tamper-evident logs, with horizontal scale via streaming ingestion and decoupled search indexes.',
+            outcome:
+                '1Archiver is a compliance-ready platform with secure verifiable ingestion, clear separation of concerns, and scalable search across massive datasets — architecture ready for on-prem and cloud deployments and built to pass audits.',
         },
         detailedContent: [
             {
@@ -193,6 +202,7 @@ export const caseStudies: CaseStudy[] = [
     {
         id: '2',
         slug: 'investorsgonewild-investment-platform',
+        hiddenFromPublic: true,
         category: 'FinTech • Investment Intelligence • Financial Analytics',
         title: 'InvestorsGoneWild: Building a Unified, Metadata Driven Investment Platform',
         subtitle: 'Multi Asset Investment Intelligence Platform',
@@ -280,10 +290,13 @@ export const caseStudies: CaseStudy[] = [
         id: '3',
         slug: 'propertymatchmaker-real-estate-saas',
         category: 'Real Estate • SaaS • Buyer Matching',
-        title: 'From Airtable Prototype to a Custom Real Estate SaaS MVP',
-        subtitle: 'Real Estate Buyer & Property Matching SaaS MVP',
+        title: 'PropertyMatch — Real Estate SaaS MVP',
+        subtitle: 'Real estate buyer & property matching SaaS MVP',
         description:
-            'How we turned a working real estate matching prototype into a focused SaaS MVP while replacing a per-agent SaaS licensing dependency.',
+            'How PropertyMatch moved from a validated Airtable prototype to a focused SaaS MVP while replacing per-agent SaaS licensing dependency.',
+        seoTitle: 'PropertyMatch — Real Estate SaaS MVP | Aizaz Studio',
+        seoDescription:
+            'How PropertyMatch moved from a validated real estate matching prototype to a focused SaaS MVP with owned infrastructure instead of per-agent SaaS licensing.',
         image: propertyMatchmakerCover,
         client: 'Oran',
         location: 'Los Angeles, California, USA',
@@ -651,30 +664,29 @@ export const caseStudies: CaseStudy[] = [
     {
         id: '5',
         slug: 'designing-multi-tenant-crm-architecture',
-        category: 'SaaS Architecture • CRM • Multi-Tenant',
-        title: 'Designing a Multi-Tenant CRM Architecture for Sales Teams',
-        subtitle:
-            'Architecting the technical foundation for a scalable multi-tenant CRM and sales enablement SaaS platform.',
+        category: 'SaaS Architecture • CRM • Sales Enablement',
+        title: 'SalesAngel — AI Sales Platform',
+        subtitle: 'AI sales platform architecture for organizations and sales teams',
         description:
-            'How Aizaz Studio translated detailed product epics and user stories into a multi-tenant CRM and dialer architecture designed for organizations, users, and long-term SaaS evolution.',
+            'How Aizaz Studio translated detailed product epics and user stories into scalable SalesAngel architecture — multi-tenant CRM, dialer, and sales enablement designed for long-term SaaS evolution.',
         image: salesangelCover,
         client: 'Sanjay Khosla',
         location: 'Tracy, California, USA',
-        industry: 'CRM Multi-Tenant Technical Architecture',
+        industry: 'AI Sales Platform · CRM · Dialer',
         projectValue: 'Hourly · Upwork',
         projectPeriod: 'Oct 27, 2025 – Jan 29, 2026',
         deliveredBy: 'Aizaz Studio',
-        seoTitle: 'Designing a Multi-Tenant CRM Architecture for Sales Teams | Aizaz Studio',
+        seoTitle: 'SalesAngel — AI Sales Platform | Aizaz Studio',
         seoDescription:
-            'How Aizaz Studio architected the technical foundation for a scalable multi-tenant CRM and sales enablement SaaS platform with tenant isolation, CRM workflows, and dialer capabilities.',
+            'How Aizaz Studio architected the technical foundation for SalesAngel — a scalable AI sales platform with tenant isolation, CRM workflows, and dialer capabilities.',
         atAGlance: [
-            { value: 'Multi-Tenant', label: 'Architecture focus', sublabel: 'Organizations & users' },
+            { value: 'Multi-tenant', label: 'Architecture focus', sublabel: 'Organizations & users' },
             { value: '9 days', label: 'Engagement length', sublabel: 'Oct 27, 2025 – Jan 29, 2026' },
             { value: '5.0/5.0', label: 'Client rating' },
             { value: 'CRM + Dialer', label: 'Platform scope', sublabel: 'Sales enablement SaaS' },
         ],
         engagement: [
-            { label: 'Project', value: 'CRM Multi-Tenant Technical Architecture' },
+            { label: 'Project', value: 'SalesAngel — AI Sales Platform' },
             { label: 'Client', value: 'Sanjay Khosla' },
             { label: 'Location', value: 'Tracy, California, USA' },
             { label: 'Duration', value: 'Oct 27, 2025 – Jan 29, 2026' },

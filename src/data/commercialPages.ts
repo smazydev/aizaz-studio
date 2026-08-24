@@ -399,21 +399,6 @@ export const portfolio: PortfolioContent = {
             stack: ['Node.js', 'PostgreSQL', 'AWS', 'Message queues', 'Search indexes'],
             href: '/case-studies/1archiver-compliance-platform',
         },
-        {
-            slug: 'investorsgonewild-investment-platform',
-            name: 'InvestorsGoWild',
-            category: 'FinTech • Investment Intelligence • Analytics',
-            summary:
-                'Unified investment intelligence platform spanning stocks, crypto, and real estate — metadata driven like an enterprise CRM so power users customize views without constant code changes.',
-            outcomes: [
-                'Multi asset data unified under one queryable experience',
-                'Integration first architecture with Bloomberg, Gemini, and BatchData',
-                'Metadata driven entities and dashboards for evolving investor strategies',
-                'AI assisted insights layered on trusted market and property data',
-            ],
-            stack: ['React', 'Node.js', 'PostgreSQL', 'External market APIs', 'AWS'],
-            href: '/case-studies/investorsgonewild-investment-platform',
-        },
     ],
 };
 

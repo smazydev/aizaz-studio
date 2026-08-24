@@ -1,11 +1,12 @@
 import { defineMiddleware } from 'astro:middleware';
+import { resolveMalformedBlogSlug } from './lib/blog-utils';
 
 const CANONICAL_ORIGIN = 'https://aizaz.studio';
 const CANONICAL_HOST = 'aizaz.studio';
 
 /**
- * Canonical host/protocol redirects for all requests that reach the Worker.
- * Pair with assets.run_worker_first: true so prerendered HTML is not served on www.
+ * Canonical host/protocol redirects for SSR/API requests that reach the Worker.
+ * Apex/www normalization should also be configured at Cloudflare zone level for static Assets.
  */
 export const onRequest = defineMiddleware(async (context, next) => {
   // Prerender has no real client Host/proto — skip redirects and avoid request.headers.
@@ -15,6 +16,21 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const request = context.request;
   const url = new URL(request.url);
+
+  const blogMatch = url.pathname.match(/^\/blog\/([^/]+)\/?$/);
+  if (blogMatch) {
+    const resolved = resolveMalformedBlogSlug(blogMatch[1]);
+    if (resolved && resolved !== blogMatch[1]) {
+      const target = new URL(`/blog/${resolved}${url.search}`, CANONICAL_ORIGIN);
+      return new Response(null, {
+        status: 301,
+        headers: {
+          Location: target.toString(),
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+  }
   const hostHeader = request.headers.get('host')?.split(':')[0]?.toLowerCase();
   const host = (hostHeader || url.hostname).toLowerCase();
   const forwardedProto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim().toLowerCase();

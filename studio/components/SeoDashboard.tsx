@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useClient } from 'sanity';
 
+/** Public legacy/code case studies (excludes hidden entries like InvestorsGoneWild). */
+const LEGACY_CODE_CASE_STUDY_COUNT = 4;
+
 type PostRow = {
     _id: string;
     title?: string;
@@ -10,11 +13,14 @@ type PostRow = {
     focusKeyword?: string;
     publishedAt?: string;
     ogImage?: unknown;
+    author?: { _ref?: string };
+    authorLegacy?: string;
     seo?: {
         metaTitle?: string;
         metaDescription?: string;
         focusKeyword?: string;
         ogImage?: unknown;
+        canonicalPath?: string;
     };
 };
 
@@ -48,6 +54,10 @@ function postMeta(post: PostRow) {
     return post.seo?.metaDescription || post.metaDescription;
 }
 
+function postTitle(post: PostRow) {
+    return post.seo?.metaTitle || post.seoTitle;
+}
+
 function postOg(post: PostRow) {
     return post.seo?.ogImage || post.ogImage;
 }
@@ -64,6 +74,14 @@ function studyDesc(study: CaseStudyRow) {
     return study.seo?.metaDescription || study.seoDescription;
 }
 
+function isMalformedSlug(slug?: string): boolean {
+    if (!slug?.trim()) return true;
+    if (/^Slug:/i.test(slug)) return true;
+    if (/\s/.test(slug)) return true;
+    if (slug.startsWith('/') || slug.includes('/blog/')) return true;
+    return false;
+}
+
 export function SeoDashboard() {
     const client = useClient({ apiVersion: '2024-01-01' });
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -77,8 +95,8 @@ export function SeoDashboard() {
                 const [posts, caseStudies] = await Promise.all([
                     client.fetch<PostRow[]>(
                         `*[_type == "post" && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) {
-              _id, title, slug, metaDescription, seoTitle, focusKeyword, publishedAt, ogImage,
-              seo{ metaTitle, metaDescription, focusKeyword, ogImage }
+              _id, title, slug, metaDescription, seoTitle, focusKeyword, publishedAt, ogImage, author, authorLegacy,
+              seo{ metaTitle, metaDescription, focusKeyword, ogImage, canonicalPath }
             }`,
                     ),
                     client.fetch<CaseStudyRow[]>(
@@ -114,19 +132,30 @@ export function SeoDashboard() {
     }
 
     const postsMissingMeta = stats.posts.filter((post) => !postMeta(post)?.trim());
+    const postsMissingTitle = stats.posts.filter((post) => !postTitle(post)?.trim());
     const postsMissingOg = stats.posts.filter((post) => !postOg(post));
     const postsMissingKeyword = stats.posts.filter((post) => !postKeyword(post)?.trim());
+    const postsMissingAuthor = stats.posts.filter((post) => !post.author?._ref && !post.authorLegacy?.trim());
+    const postsMalformedSlug = stats.posts.filter((post) => isMalformedSlug(post.slug?.current));
     const caseStudiesMissingSeo = stats.caseStudies.filter(
         (study) => !studyDesc(study)?.trim() || !studyTitle(study)?.trim(),
     );
+    const caseStudiesMissingOg = stats.caseStudies.filter((study) => !(study.seo?.ogImage || study.seoTitle));
+
+    const seoIssueCount =
+        postsMissingMeta.length +
+        postsMissingTitle.length +
+        postsMissingOg.length +
+        postsMissingAuthor.length +
+        postsMalformedSlug.length +
+        caseStudiesMissingSeo.length;
 
     return (
         <div style={{ display: 'grid', gap: 20, padding: 24, maxWidth: 1100 }}>
             <div>
                 <h2 style={{ margin: 0, fontSize: 28 }}>SEO & Content Dashboard</h2>
                 <p style={{ color: '#a1a1aa', marginTop: 8 }}>
-                    Track published content health. Blog and case studies are editable in Sanity. Service and landing
-                    pages remain in code until Phase 2.
+                    Editorial safety checks for Sanity content. Service and landing pages remain in code until Phase 2.
                 </p>
             </div>
 
@@ -136,18 +165,23 @@ export function SeoDashboard() {
                     <div style={{ fontSize: 32, fontWeight: 700 }}>{stats.posts.length}</div>
                 </div>
                 <div style={cardStyle}>
-                    <div style={{ color: '#a1a1aa', fontSize: 12 }}>Case studies</div>
+                    <div style={{ color: '#a1a1aa', fontSize: 12 }}>Sanity case studies</div>
                     <div style={{ fontSize: 32, fontWeight: 700 }}>{stats.caseStudies.length}</div>
+                    <div style={{ color: '#71717a', fontSize: 11, marginTop: 4 }}>
+                        Legacy code case studies: {LEGACY_CODE_CASE_STUDY_COUNT}
+                    </div>
                 </div>
                 <div style={cardStyle}>
                     <div style={{ color: '#a1a1aa', fontSize: 12 }}>SEO issues</div>
-                    <div style={{ fontSize: 32, fontWeight: 700, color: '#fbbf24' }}>
-                        {postsMissingMeta.length + postsMissingOg.length + caseStudiesMissingSeo.length}
-                    </div>
+                    <div style={{ fontSize: 32, fontWeight: 700, color: '#fbbf24' }}>{seoIssueCount}</div>
                 </div>
             </div>
 
             <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+                <IssueList
+                    title="Posts missing SEO title"
+                    items={postsMissingTitle.map((post) => post.title || post.slug?.current || post._id)}
+                />
                 <IssueList
                     title="Posts missing meta description"
                     items={postsMissingMeta.map((post) => post.title || post.slug?.current || post._id)}
@@ -161,8 +195,20 @@ export function SeoDashboard() {
                     items={postsMissingKeyword.map((post) => post.title || post.slug?.current || post._id)}
                 />
                 <IssueList
+                    title="Posts missing author reference"
+                    items={postsMissingAuthor.map((post) => post.title || post.slug?.current || post._id)}
+                />
+                <IssueList
+                    title="Posts with malformed slug"
+                    items={postsMalformedSlug.map((post) => post.title || post.slug?.current || post._id)}
+                />
+                <IssueList
                     title="Case studies missing SEO title/description"
                     items={caseStudiesMissingSeo.map((study) => study.title || study._id)}
+                />
+                <IssueList
+                    title="Case studies missing OG image"
+                    items={caseStudiesMissingOg.map((study) => study.title || study._id)}
                 />
             </div>
 
@@ -176,10 +222,10 @@ export function SeoDashboard() {
                         — rankings, clicks, indexing
                     </li>
                     <li>
-                        <a href="https://pagespeed.web.dev/" target="_blank" rel="noreferrer">
-                            PageSpeed Insights
+                        <a href="https://www.bing.com/webmasters" target="_blank" rel="noreferrer">
+                            Bing Webmaster Tools
                         </a>{' '}
-                        — Core Web Vitals
+                        — IndexNow, sitemap
                     </li>
                     <li>
                         <a href="https://aizaz.studio/sitemap.xml" target="_blank" rel="noreferrer">

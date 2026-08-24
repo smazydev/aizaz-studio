@@ -15,8 +15,9 @@ interface Props {
 }
 
 const { blog, related = [], preview = false } = Astro.props;
-const contentHtml = marked.parse(blog.content);
-const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
+const contentHtml = blog.contentHtml ?? marked.parse(blog.content ?? '');
+const plainTextForHeadings = blog.contentHtml ? blog.content.replace(/<[^>]+>/g, '\n') : blog.content;
+const headings = [...(plainTextForHeadings ?? '').matchAll(/^## (.+)$/gm)].map((match) => match[1]);
 const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
 const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug);
 ---
@@ -48,9 +49,9 @@ const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug);
       <p class="text-xl text-zinc-400 mb-8 leading-relaxed">{blog.excerpt}</p>
     )}
 
-    <div class="flex items-center gap-4 pb-8 border-b border-white/10">
+    <div class="flex items-start gap-4 pb-8 border-b border-white/10">
       {blog.author ? (
-        <AuthorCard author={blog.author} />
+        <AuthorCard author={blog.author} showBio />
       ) : null}
     </div>
   </header>

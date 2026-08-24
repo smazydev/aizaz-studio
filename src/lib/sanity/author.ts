@@ -63,6 +63,7 @@ export function mapSanityAuthor(
 
 export const authorProjection = `
   author,
+  authorLegacy,
   "authorDoc": author->{
     _id,
     name,

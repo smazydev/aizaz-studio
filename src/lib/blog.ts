@@ -1,6 +1,7 @@
 import type { ImageMetadata } from 'astro';
 import { blogs as legacyBlogs, type BlogPost as LegacyBlogPost } from '../data/blogs';
 import type { ContentAuthor } from './sanity/author';
+import { mapSanityAuthor } from './sanity/author';
 import { normalizeCategory } from './blog-categories';
 import { isNonIndexableContentSlug } from './blog-utils';
 import { isSanityConfigured } from './sanity/client';
@@ -14,6 +15,7 @@ export interface PublicBlogPost {
     title: string;
     excerpt: string;
     content: string;
+    contentHtml?: string;
     date: string;
     dateIso: string;
     author?: ContentAuthor;
@@ -44,7 +46,13 @@ export function getLinkablePosts(posts: PublicBlogPost[]): PublicBlogPost[] {
     return posts.filter(isLinkableBlogPost);
 }
 
+const LEGACY_SEO_TITLES: Record<string, string> = {
+    'identify-workflows-worth-automating-with-ai':
+        'How to Choose Your First AI Automation Workflow | Aizaz Studio',
+};
+
 function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {
+    const author = mapSanityAuthor(undefined, post.author);
     return {
         id: post.id,
         slug: post.slug,
@@ -53,11 +61,12 @@ function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {
         content: post.content,
         date: post.date,
         dateIso: post.date,
+        author,
         readTime: post.readTime,
         category: normalizeCategory(post.category),
         tags: post.tags ?? [],
         image: post.image,
-        seoTitle: post.title,
+        seoTitle: LEGACY_SEO_TITLES[post.slug] ?? post.title,
         metaDescription: post.excerpt,
         canonicalUrl: `/blog/${post.slug}`,
         source: 'legacy',
@@ -122,7 +131,7 @@ export function buildArticleSchema(post: PublicBlogPost, siteUrl: string) {
     const image = post.ogImage ?? post.imageUrl;
     return {
         '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
+        '@type': 'Article',
         headline: post.seoTitle ?? post.title,
         description: post.metaDescription ?? post.excerpt,
         image: image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : undefined,

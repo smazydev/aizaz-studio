@@ -7,7 +7,6 @@ export const siteStats = [
 
 export const clientLogos = [
     '1Archiver',
-    'InvestorsGoneWild',
     'TradingDojo',
     'VamsBiome',
     'EthicalAI',

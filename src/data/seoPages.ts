@@ -5,6 +5,7 @@ import { comparePages } from './comparePages';
 import { technologyPages } from './technologyPages';
 import { caseStudies } from './caseStudies';
 import { isNonIndexableContentSlug } from '../lib/blog-utils';
+import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 
 export interface SeoPage {
     slug: string;
@@ -728,5 +729,5 @@ export function getAllSeoPaths(): string[] {
 }
 
 function caseStudySlugs(): string[] {
-    return caseStudies.map((study) => `/case-studies/${study.slug}`);
+    return filterPublicCaseStudies(caseStudies).map((study) => `/case-studies/${study.slug}`);
 }

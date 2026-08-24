@@ -1,6 +1,13 @@
 import type { PublicBlogPost } from '../blog';
 import { normalizeCategory } from '../blog-categories';
-import { calculateReadTime, formatDisplayDate, isNonIndexableContentSlug } from '../blog-utils';
+import {
+    calculateReadTime,
+    formatDisplayDate,
+    isMalformedBlogSlug,
+    isNonIndexableContentSlug,
+    normalizeBlogSlug,
+} from '../blog-utils';
+import { estimatePortableTextReadTime, portableTextToHtml, type PortableTextBlock } from '../portable-text';
 import { mapSanityAuthor } from './author';
 import { getSanityClient, cachedSanityFetch, urlForImage } from './client';
 import { postBySlugQuery, publishedPostsQuery } from './queries';
@@ -8,13 +15,15 @@ import { mapSanitySeo, type PageSeo } from './seo';
 
 type SanityPost = {
     _id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    body: string;
+    title?: string;
+    slug?: string;
+    excerpt?: string;
+    body?: string;
+    bodyBlocks?: PortableTextBlock[];
     category?: string;
     tags?: string[];
     author?: string | { _ref?: string };
+    authorLegacy?: string | null;
     authorDoc?: Parameters<typeof mapSanityAuthor>[0];
     publishedAt?: string | null;
     _createdAt?: string;
@@ -29,12 +38,20 @@ type SanityPost = {
 };
 
 function mapSanityPost(post: SanityPost): PublicBlogPost | null {
-    if (!post.slug || !post.title) return null;
+    const rawSlug = post.slug?.trim();
+    if (!rawSlug || !post.title?.trim()) return null;
+    if (isMalformedBlogSlug(rawSlug)) return null;
 
+    const slug = normalizeBlogSlug(rawSlug);
     const coverUrl = urlForImage(post.coverImage);
-    const legacyAuthorName = typeof post.author === 'string' ? post.author : null;
+    const legacyAuthorName =
+        post.authorLegacy?.trim() ||
+        (typeof post.author === 'string' ? post.author : null);
     const author = mapSanityAuthor(post.authorDoc, legacyAuthorName);
     const publishedAt = post.publishedAt || post._updatedAt || post._createdAt || new Date().toISOString();
+    const bodyHtml = portableTextToHtml(post.bodyBlocks);
+    const markdownBody = post.body ?? '';
+    const content = bodyHtml || markdownBody;
     const seo: PageSeo = mapSanitySeo(
         post.seo,
         {
@@ -46,22 +63,25 @@ function mapSanityPost(post: SanityPost): PublicBlogPost | null {
         },
         {
             title: post.title,
-            description: post.excerpt,
-            canonicalPath: `/blog/${post.slug}`,
+            description: post.excerpt ?? '',
+            canonicalPath: `/blog/${slug}`,
             ogImageUrl: coverUrl,
         },
     );
 
     return {
         id: post._id,
-        slug: post.slug,
+        slug,
         title: post.title,
         excerpt: post.excerpt ?? '',
-        content: post.body ?? '',
+        content,
+        contentHtml: bodyHtml || undefined,
         date: formatDisplayDate(publishedAt),
         dateIso: publishedAt,
         author,
-        readTime: calculateReadTime(post.body ?? ''),
+        readTime: bodyHtml
+            ? estimatePortableTextReadTime(post.bodyBlocks)
+            : calculateReadTime(markdownBody),
         category: normalizeCategory(post.category ?? 'Engineering Insights'),
         tags: post.tags ?? [],
         imageUrl: coverUrl,
@@ -71,7 +91,7 @@ function mapSanityPost(post: SanityPost): PublicBlogPost | null {
         ogTitle: seo.ogTitle,
         ogDescription: seo.ogDescription,
         ogImage: seo.ogImageUrl,
-        noindex: (seo.noIndex ?? false) || isNonIndexableContentSlug(post.slug),
+        noindex: (seo.noIndex ?? false) || isNonIndexableContentSlug(slug),
         focusKeyword: seo.focusKeyword,
         updatedAt: post._updatedAt ?? publishedAt,
         source: 'cms',
@@ -110,7 +130,5 @@ export async function getSanityPostBySlug(slug: string): Promise<PublicBlogPost 
 
 export async function getSanityBlogSlugs(): Promise<string[]> {
     const posts = await getSanityPublishedPosts();
-    return posts
-        .filter((post) => !post.noindex && !isNonIndexableContentSlug(post.slug))
-        .map((post) => post.slug);
+    return posts.filter((post) => !post.noindex).map((post) => post.slug);
 }

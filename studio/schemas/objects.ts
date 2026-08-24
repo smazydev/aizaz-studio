@@ -24,7 +24,16 @@ export const seoFields = defineType({
             name: 'canonicalPath',
             title: 'Canonical URL path',
             type: 'string',
-            description: 'Example: /blog/my-post-slug — leave blank to use the page URL.',
+            description:
+                'Example: /blog/my-post-slug — leave blank to auto-use /blog/{slug}. Blog posts normally should not need a manual override.',
+            validation: (rule) =>
+                rule.custom((value) => {
+                    if (!value?.trim()) return true;
+                    if (!value.startsWith('/')) return 'Must start with /';
+                    if (/\s/.test(value)) return 'Cannot contain spaces';
+                    if (/Slug:/i.test(value)) return 'Remove malformed slug text from canonical path';
+                    return true;
+                }),
         }),
         defineField({
             name: 'ogTitle',
@@ -313,5 +322,91 @@ export const caseStudySection = defineType({
             type: 'array',
             of: [{ type: 'caseStudySectionItem' }],
         }),
+    ],
+});
+
+export const bodyImage = defineType({
+    name: 'bodyImage',
+    title: 'Inline image',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'image',
+            title: 'Image',
+            type: 'image',
+            options: { hotspot: true },
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'alt',
+            title: 'Alt text',
+            type: 'string',
+            validation: (rule) => rule.required().min(3),
+        }),
+        defineField({
+            name: 'caption',
+            title: 'Caption',
+            type: 'string',
+        }),
+        defineField({
+            name: 'sourceUrl',
+            title: 'Source / link',
+            type: 'url',
+            description: 'Optional attribution or source link.',
+            validation: (rule) =>
+                rule.uri({
+                    scheme: ['http', 'https'],
+                    allowRelative: false,
+                }),
+        }),
+    ],
+    preview: {
+        select: {
+            title: 'alt',
+            media: 'image',
+        },
+    },
+});
+
+/** Portable Text body for blog posts — paragraphs, headings, lists, links, code, images. */
+export const blockContent = defineType({
+    name: 'blockContent',
+    title: 'Rich text',
+    type: 'array',
+    of: [
+        {
+            type: 'block',
+            styles: [
+                { title: 'Normal', value: 'normal' },
+                { title: 'H2', value: 'h2' },
+                { title: 'H3', value: 'h3' },
+                { title: 'H4', value: 'h4' },
+                { title: 'Quote', value: 'blockquote' },
+            ],
+            lists: [
+                { title: 'Bullet', value: 'bullet' },
+                { title: 'Numbered', value: 'number' },
+            ],
+            marks: {
+                decorators: [{ title: 'Code', value: 'code' }],
+                annotations: [
+                    {
+                        name: 'link',
+                        type: 'object',
+                        title: 'Link',
+                        fields: [
+                            defineField({
+                                name: 'href',
+                                title: 'URL',
+                                type: 'url',
+                                validation: (rule) =>
+                                    rule.uri({ allowRelative: true, scheme: ['http', 'https', 'mailto'] }),
+                            }),
+                        ],
+                    },
+                ],
+            },
+        },
+        { type: 'bodyImage' },
     ],
 });

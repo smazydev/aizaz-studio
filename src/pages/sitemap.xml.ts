@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getAllSeoPaths, SITE_URL } from '../data/seoPages';
 import { getPublishedPosts, isNonIndexableContentSlug } from '../lib/blog';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { isPublicCaseStudy } from '../lib/case-study-visibility';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 
 export const prerender = false;
@@ -29,7 +30,7 @@ export const GET: APIRoute = async () => {
     .filter((post) => !post.noindex && !isNonIndexableContentSlug(post.slug))
     .map((post) => `/blog/${post.slug}`);
   const caseStudyPaths = (await getAllCaseStudies())
-    .filter((study) => !study.noindex)
+    .filter((study) => isPublicCaseStudy(study))
     .map((study) => `/case-studies/${study.slug}`);
 
   const paths = Array.from(

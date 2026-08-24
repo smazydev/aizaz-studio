@@ -5,9 +5,10 @@ interface Props {
   author: ContentAuthor;
   wrapperClass?: string;
   compact?: boolean;
+  showBio?: boolean;
 }
 
-const { author, wrapperClass = '', compact = false } = Astro.props;
+const { author, wrapperClass = '', compact = false, showBio = false } = Astro.props;
 const name = author?.name?.trim() || 'Author';
 const role = author?.role?.trim() || '';
 const photoUrl = author?.photoUrl?.trim() || '';
@@ -56,6 +57,9 @@ const socialLinks = [
     <div class={`font-semibold text-white ${compact ? 'text-sm' : 'text-base'}`}>{name}</div>
     {role && (
       <div class={`text-zinc-500 ${compact ? 'text-xs' : 'text-sm'}`}>{role}</div>
+    )}
+    {showBio && author.bio?.trim() && (
+      <p class={`text-zinc-400 leading-relaxed ${compact ? 'text-xs mt-1' : 'text-sm mt-2'}`}>{author.bio}</p>
     )}
     {socialLinks.length > 0 && (
       <div class={`flex flex-wrap items-center gap-x-3 gap-y-1 ${role ? 'mt-1' : 'mt-0.5'}`}>

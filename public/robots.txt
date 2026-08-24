@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
 
 Sitemap: https://aizaz.studio/sitemap.xml

@@ -11,6 +11,8 @@ import {
     labelValue,
     caseStudySectionItem,
     caseStudySection,
+    bodyImage,
+    blockContent,
 } from './objects';
 
 export const schemaTypes = [
@@ -24,6 +26,8 @@ export const schemaTypes = [
     labelValue,
     caseStudySectionItem,
     caseStudySection,
+    bodyImage,
+    blockContent,
     // Documents
     person,
     post,

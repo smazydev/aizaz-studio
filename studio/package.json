@@ -5,8 +5,13 @@
   "scripts": {
     "dev": "sanity dev",
     "build": "sanity build",
-    "deploy": "sanity deploy",
-    "start": "sanity start"
+    "deploy": "sanity deploy --yes --schema-required",
+    "deploy:schema": "sanity schema deploy --yes",
+    "deploy:studio": "sanity deploy --yes --schema-required",
+    "start": "sanity start",
+    "verify:author-schema": "npx --yes tsx scripts/verify-author-schema.ts",
+    "migrate:authors": "sanity exec scripts/migrate-author-strings.ts --with-user-token",
+    "seed:authors": "sanity exec scripts/seed-authors.ts --with-user-token"
   },
   "dependencies": {
     "@sanity/vision": "^6.9.1",

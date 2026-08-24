@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import { notifyIndexNow } from '../../lib/indexnow';
+import { isNonIndexableContentSlug, normalizeBlogSlug } from '../../lib/blog-utils';
 import { clearSanityFetchCache } from '../../lib/sanity/client';
 
 export const prerender = false;
@@ -50,7 +52,10 @@ function pathsFromSanityPayload(body: RevalidateBody): string[] {
 
     const slugValue = typeof body.slug === 'string' ? body.slug : body.slug?.current;
     if (slugValue && body._type === 'post') {
-        paths.add(`/blog/${slugValue}`);
+        const cleanSlug = normalizeBlogSlug(slugValue);
+        if (cleanSlug && !isNonIndexableContentSlug(cleanSlug)) {
+            paths.add(`/blog/${cleanSlug}`);
+        }
     }
     if (slugValue && body._type === 'caseStudy') {
         paths.add(`/case-studies/${slugValue}`);
@@ -60,10 +65,15 @@ function pathsFromSanityPayload(body: RevalidateBody): string[] {
 }
 
 function tagsFromSanityPayload(body: RevalidateBody): string[] {
-    const tags = new Set<string>(['cms', 'blog', 'case-studies', 'sitemap']);
+    const tags = new Set<string>();
     const slugValue = typeof body.slug === 'string' ? body.slug : body.slug?.current;
-    if (slugValue && body._type === 'post') tags.add(`blog:${slugValue}`);
+    if (slugValue && body._type === 'post') {
+        const cleanSlug = normalizeBlogSlug(slugValue);
+        if (cleanSlug) tags.add(`blog:${cleanSlug}`);
+    }
     if (slugValue && body._type === 'caseStudy') tags.add(`case-study:${slugValue}`);
+    // List/index pages refresh via short browser TTL + SWR — avoid purging all CMS HTML.
+    tags.add('sitemap');
     return Array.from(tags);
 }
 
@@ -78,44 +88,6 @@ async function purgeWorkersCache(tags: string[]): Promise<{ purged: boolean; det
         const message = error instanceof Error ? error.message : String(error);
         return { purged: false, detail: `Workers Cache purge unavailable: ${message}` };
     }
-}
-
-/**
- * Optional zone CDN purge for Assets (static HTML/_astro). Not a substitute for Workers Cache.
- * Kept for environments that already configure ZONE_ID + API_TOKEN.
- */
-async function purgeZoneCache(paths: string[], locals: RuntimeLocals): Promise<{ purged: boolean; detail?: string }> {
-    const runtimeEnv = locals.runtime?.env;
-    const zoneId =
-        runtimeEnv?.CLOUDFLARE_ZONE_ID ||
-        import.meta.env.CLOUDFLARE_ZONE_ID ||
-        (typeof process !== 'undefined' ? process.env.CLOUDFLARE_ZONE_ID : undefined);
-    const apiToken =
-        runtimeEnv?.CLOUDFLARE_API_TOKEN ||
-        import.meta.env.CLOUDFLARE_API_TOKEN ||
-        (typeof process !== 'undefined' ? process.env.CLOUDFLARE_API_TOKEN : undefined);
-
-    if (!zoneId || !apiToken) {
-        return { purged: false, detail: 'Zone purge skipped (ZONE_ID/API_TOKEN not set).' };
-    }
-
-    const files = paths.map((path) => `https://aizaz.studio${path === '/' ? '' : path}`);
-
-    const response = await fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${apiToken}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ files }),
-    });
-
-    if (!response.ok) {
-        const text = await response.text();
-        return { purged: false, detail: `Zone purge failed: ${response.status} ${text}` };
-    }
-
-    return { purged: true, detail: `Zone purged ${files.length} URL(s).` };
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -158,8 +130,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const paths = pathsFromSanityPayload(body);
     const tags = tagsFromSanityPayload(body);
     clearSanityFetchCache();
-    const workers = await purgeWorkersCache(tags);
-    const zone = await purgeZoneCache(paths, locals);
+    const workers = tags.length ? await purgeWorkersCache(tags) : { purged: false, detail: 'No cache tags to purge' };
+    const zone = { purged: false, detail: 'Zone purge skipped (prefer edge TTL + SWR for static HTML).' };
+    const indexNow = await notifyIndexNow(paths, locals.runtime?.env);
 
     return new Response(
         JSON.stringify({
@@ -169,7 +142,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
             tags,
             workersCache: workers,
             zoneCache: zone,
-            note: 'Cleared isolate Sanity map; purged Workers Cache (primary). TTL/SWR still applies if purge fails.',
+            indexNow,
+            note: 'Cleared isolate Sanity map; targeted Workers Cache purge only. Lists rely on SWR.',
         }),
         {
             status: 200,

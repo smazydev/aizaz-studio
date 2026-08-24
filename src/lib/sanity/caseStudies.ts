@@ -1,5 +1,6 @@
 import type { CaseStudy } from '../../data/caseStudies';
 import { caseStudies as staticCaseStudies } from '../../data/caseStudies';
+import { filterPublicCaseStudies, isPublicCaseStudy } from '../case-study-visibility';
 import { mapSanityAuthor } from './author';
 import { cachedSanityFetch, getSanityClient, urlForImage } from './client';
 import { caseStudiesQuery } from './queries';
@@ -184,7 +185,7 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
     const staticBySlug = new Map(staticCaseStudies.map((study) => [study.slug, study]));
 
     if (!client) {
-        return staticCaseStudies;
+        return filterPublicCaseStudies(staticCaseStudies);
     }
 
     try {
@@ -197,10 +198,10 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
         }
     } catch (error) {
         console.warn('[sanity] Failed to fetch case studies; using static fallback.', error);
-        return staticCaseStudies;
+        return filterPublicCaseStudies(staticCaseStudies);
     }
 
-    const merged = Array.from(staticBySlug.values());
+    const merged = filterPublicCaseStudies(Array.from(staticBySlug.values()));
     const staticOrder = new Map(staticCaseStudies.map((study, index) => [study.slug, index]));
 
     return merged.sort((a, b) => {
@@ -215,5 +216,6 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
 
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudy | undefined> {
     const studies = await getAllCaseStudies();
-    return studies.find((study) => study.slug === slug);
+    const study = studies.find((item) => item.slug === slug);
+    return study && isPublicCaseStudy(study) ? study : undefined;
 }

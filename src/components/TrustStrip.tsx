@@ -2,7 +2,7 @@ import React from 'react';
 
 // Using text placeholders for logos as per instruction to not use external images unless picsum
 const logos = [
-  "InvestorsGoneWild", "1Archiver", "VamsBiome", "TradingDojo", "EthicalAI"
+  "1Archiver", "VamsBiome", "TradingDojo", "EthicalAI"
 ];
 
 export const TrustStrip: React.FC = () => {

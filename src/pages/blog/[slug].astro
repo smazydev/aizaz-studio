@@ -1,6 +1,4 @@
 ---
-export const prerender = false;
-
 import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
@@ -9,20 +7,32 @@ import BlogPostContent from '../../components/BlogPostContent.astro';
 import { buildArticleSchema, getLinkablePosts, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
 import { SITE_URL } from '../../data/seoPages';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
+import { isMalformedBlogSlug, normalizeBlogSlug, resolveMalformedBlogSlug } from '../../lib/blog-utils';
 
-const { slug } = Astro.params;
-// Single list fetch (cached) — avoids duplicate Sanity round-trips for detail + related.
+export const prerender = false;
+
+const { slug: rawSlug } = Astro.params;
+const raw = rawSlug ?? '';
+const resolved = resolveMalformedBlogSlug(raw);
+if (resolved && resolved !== raw) {
+  return Astro.redirect(`/blog/${resolved}`, 301);
+}
+
+const slug = normalizeBlogSlug(raw);
+if (!slug || isMalformedBlogSlug(slug)) {
+  return new Response(null, { status: 404 });
+}
+
 const allPosts = await getPublishedPosts();
 const blog = allPosts.find((post) => post.slug === slug) ?? null;
 
 if (!blog) {
-  return Astro.redirect('/blog', 302);
+  return new Response(null, { status: 404 });
 }
 
-// Related / prev-next must never point at noindex smoke-test posts.
 const related = getRelatedPosts(getLinkablePosts(allPosts), blog.slug);
 const articleSchema = buildArticleSchema(blog, SITE_URL);
-const pageTitle = blog.seoTitle ?? `${blog.title} | Aizaz.studio Blog`;
+const pageTitle = blog.seoTitle ?? `${blog.title} | Aizaz Studio`;
 const pageDescription = blog.metaDescription ?? blog.excerpt;
 const ogTitle = blog.ogTitle ?? pageTitle;
 const ogDescription = blog.ogDescription ?? pageDescription;
