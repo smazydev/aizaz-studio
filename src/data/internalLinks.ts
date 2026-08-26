@@ -112,6 +112,7 @@ const ARTICLE_LABELS: Record<string, string> = {
   'when-to-move-from-vercel-to-aws': 'When to Move from Vercel to AWS',
   'cicd-checklist-early-stage-saas': 'CI/CD Checklist for Early-Stage SaaS',
   'netsuite-integration-mistakes-growing-operations': 'NetSuite Integration Mistakes',
+  'has-ai-made-software-development-cheaper': 'Has AI Made Software Development Cheaper?',
 };
 
 function mapSlugs(
@@ -444,6 +445,13 @@ export const articleCluster: Record<string, PageRelations> = {
   'netsuite-integration-mistakes-growing-operations': {
     services: ['netsuite-integration', 'netsuite-erp-automation'],
     industries: ['netsuite-users', 'operations-teams'],
+  },
+  'has-ai-made-software-development-cheaper': {
+    services: ['ai-automation-systems', 'saas-mvp-development'],
+    pages: [
+      { href: '/ai-systems-sprint', label: 'AI Systems Sprint' },
+      { href: '/engagement-models', label: 'Engagement Models' },
+    ],
   },
 };
 

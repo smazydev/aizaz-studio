@@ -32,6 +32,7 @@ export interface PublicBlogPost {
     ogImage?: string;
     noindex?: boolean;
     focusKeyword?: string;
+    faqs?: { question: string; answer: string }[];
     updatedAt?: string;
     source: 'cms' | 'legacy';
     status?: string;

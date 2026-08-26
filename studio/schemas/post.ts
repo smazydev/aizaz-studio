@@ -74,12 +74,22 @@ export const post = defineType({
                     'Engineering Insights',
                     'AI & Automation',
                     'ERP & NetSuite',
-                    'NetSuite & ERP',
                     'Cloud & DevOps',
                     'SaaS & Product',
                 ],
             },
+            description:
+                'Use ERP & NetSuite (not the old NetSuite & ERP label). Existing posts with the old label still map correctly on the site.',
             initialValue: 'Engineering Insights',
+        }),
+        defineField({
+            name: 'faqs',
+            title: 'FAQs',
+            type: 'array',
+            group: 'content',
+            description:
+                'Optional questions shown at the end of the article. Add only useful questions that the article genuinely answers.',
+            of: [{ type: 'faqItem' }],
         }),
         defineField({
             name: 'tags',

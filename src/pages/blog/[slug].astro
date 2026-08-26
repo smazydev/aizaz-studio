@@ -49,7 +49,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog', `blog:${blog.slug}`
   title={pageTitle}
   description={pageDescription}
   canonical={blog.canonicalUrl ?? `/blog/${blog.slug}`}
-  keywords={blog.focusKeyword ? [...blog.tags, blog.focusKeyword] : blog.tags}
+  keywords={blog.tags}
   ogTitle={ogTitle}
   ogDescription={ogDescription}
   ogImage={ogImage}

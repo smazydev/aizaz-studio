@@ -34,8 +34,26 @@ type SanityPost = {
     focusKeyword?: string;
     coverImage?: { asset?: { _ref?: string } };
     ogImage?: { asset?: { _ref?: string } };
+    faqs?: Array<{
+        question?: string | null;
+        answer?: string | null;
+        enabled?: boolean | null;
+    }> | null;
     _updatedAt?: string;
 };
+
+function normalizeFaqs(
+    faqs: SanityPost['faqs'],
+): { question: string; answer: string }[] {
+    if (!Array.isArray(faqs)) return [];
+    return faqs
+        .filter((item) => item?.enabled !== false)
+        .map((item) => ({
+            question: item?.question?.trim() ?? '',
+            answer: item?.answer?.trim() ?? '',
+        }))
+        .filter((item) => item.question.length > 0 && item.answer.length > 0);
+}
 
 function mapSanityPost(post: SanityPost): PublicBlogPost | null {
     const rawSlug = post.slug?.trim();
@@ -93,6 +111,7 @@ function mapSanityPost(post: SanityPost): PublicBlogPost | null {
         ogImage: seo.ogImageUrl,
         noindex: (seo.noIndex ?? false) || isNonIndexableContentSlug(slug),
         focusKeyword: seo.focusKeyword,
+        faqs: normalizeFaqs(post.faqs),
         updatedAt: post._updatedAt ?? publishedAt,
         source: 'cms',
         status: 'published',

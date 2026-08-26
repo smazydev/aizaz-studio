@@ -8,9 +8,10 @@ export const seoFields = defineType({
     fields: [
         defineField({
             name: 'metaTitle',
-            title: 'Meta title',
+            title: 'SEO title',
             type: 'string',
-            description: 'Defaults to the page title when blank.',
+            description:
+                'Browser/search title for this page. Leave blank to use the document title. Aim for ~50–60 characters.',
             validation: (rule) => rule.max(70),
         }),
         defineField({
@@ -18,6 +19,8 @@ export const seoFields = defineType({
             title: 'Meta description',
             type: 'text',
             rows: 3,
+            description:
+                'Short summary for search snippets and social previews when OG description is blank. Aim for ~140–155 characters.',
             validation: (rule) => rule.max(160),
         }),
         defineField({
@@ -25,7 +28,7 @@ export const seoFields = defineType({
             title: 'Canonical URL path',
             type: 'string',
             description:
-                'Example: /blog/my-post-slug — leave blank to auto-use /blog/{slug}. Blog posts normally should not need a manual override.',
+                'Path-only canonical, e.g. /blog/my-post-slug. Leave blank to auto-use /blog/{slug}. Do not enter a full https:// URL.',
             validation: (rule) =>
                 rule.custom((value) => {
                     if (!value?.trim()) return true;
@@ -39,33 +42,35 @@ export const seoFields = defineType({
             name: 'ogTitle',
             title: 'OG title',
             type: 'string',
-            description: 'Defaults to meta title when blank.',
+            description: 'Open Graph / social share title. Defaults to SEO title when blank.',
         }),
         defineField({
             name: 'ogDescription',
             title: 'OG description',
             type: 'text',
             rows: 2,
-            description: 'Defaults to meta description when blank.',
+            description: 'Open Graph / social share description. Defaults to meta description when blank.',
         }),
         defineField({
             name: 'ogImage',
             title: 'OG image',
             type: 'image',
+            description: 'Social share image. Defaults to the cover image when blank.',
             options: { hotspot: true },
         }),
         defineField({
             name: 'noIndex',
             title: 'No-index',
             type: 'boolean',
-            description: 'When enabled, search engines are asked not to index this page.',
+            description: 'When enabled, search engines are asked not to index this page (adds noindex).',
             initialValue: false,
         }),
         defineField({
             name: 'focusKeyword',
             title: 'Focus keyword',
             type: 'string',
-            description: 'Primary keyword for editorial tracking (not a public meta tag).',
+            description:
+                'Editorial-only primary keyword for writers. Not emitted as a public meta keywords tag.',
         }),
     ],
 });
@@ -141,16 +146,35 @@ export const faqItem = defineType({
             name: 'question',
             title: 'Question',
             type: 'string',
-            validation: (rule) => rule.required(),
+            validation: (rule) => rule.required().max(180),
         }),
         defineField({
             name: 'answer',
             title: 'Answer',
             type: 'text',
             rows: 4,
-            validation: (rule) => rule.required(),
+            validation: (rule) => rule.required().min(1),
+        }),
+        defineField({
+            name: 'enabled',
+            title: 'Enabled',
+            type: 'boolean',
+            description: 'Disabled entries stay editable in Studio but are not shown on the public site.',
+            initialValue: true,
         }),
     ],
+    preview: {
+        select: {
+            title: 'question',
+            enabled: 'enabled',
+        },
+        prepare({ title, enabled }) {
+            return {
+                title: title || 'Untitled FAQ',
+                subtitle: enabled === false ? 'Disabled' : 'Enabled',
+            };
+        },
+    },
 });
 
 export const stat = defineType({
