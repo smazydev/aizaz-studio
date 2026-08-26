@@ -34,7 +34,7 @@ export const servicePages: SeoPage[] = [
         title: 'AI Automation Systems',
         metaTitle: 'AI Automation Systems for Business | Aizaz.studio',
         metaDescription:
-            'Build AI agents, chatbots, lead qualification flows, and workflow automations connected to your CRM, email, and internal tools. Aizaz.studio delivers production ready AI systems.',
+            'Build AI agents, chatbots, lead qualification, and workflow automations connected to your CRM, email, and internal tools.',
         heroSubtitle:
             'Turn repetitive decisions and manual workflows into reliable AI assisted systems that connect to your real business tools.',
         keywords: [
@@ -284,7 +284,7 @@ export const servicePages: SeoPage[] = [
         title: 'Trading Technology Systems',
         metaTitle: 'Trading Technology & Dashboard Development | Aizaz.studio',
         metaDescription:
-            'Trading dashboards, backtesting tools, signal systems, MT5 and TradingView integrations, risk monitoring, and research infrastructure for trading businesses.',
+            'Trading dashboards, backtesting tools, signal systems, MT5 and TradingView integrations, and research infrastructure for trading businesses.',
         heroSubtitle:
             'Build the dashboards, signal pipelines, and research tools serious traders and trading businesses rely on.',
         keywords: [
@@ -649,7 +649,7 @@ export const aiSystemsSprintPage = {
     title: 'AI Systems Sprint',
     metaTitle: 'AI Systems Sprint — Working Automation in 14 Days | Aizaz.studio',
     metaDescription:
-        'In 14 days, Aizaz.studio identifies one manual workflow in your business and delivers a working AI assisted system, automation, dashboard, or internal tool.',
+        'A 14-day engagement that turns one manual workflow into a working AI system, automation, or internal tool your team can use.',
     heroSubtitle:
         'One workflow. Fourteen days. A working system your team can use — not a slide deck.',
     keywords: ['AI sprint', 'automation sprint', '14 day MVP', 'workflow automation project'],

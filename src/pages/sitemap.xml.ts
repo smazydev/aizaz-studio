@@ -41,10 +41,13 @@ export const GET: APIRoute = async () => {
     ),
   );
 
+  // Homepage loc must match the page canonical exactly: https://aizaz.studio/
+  const toLoc = (path: string) => (path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`);
+
   const urls = paths
     .map(
       (path) => `  <url>
-    <loc>${SITE_URL}${path === '/' ? '' : path}</loc>
+    <loc>${toLoc(path)}</loc>
     <changefreq>${path === '/' ? 'weekly' : path.startsWith('/blog') || path.startsWith('/case-studies') ? 'daily' : 'monthly'}</changefreq>
     <priority>${path === '/' ? '1.0' : path.startsWith('/services') || path === '/ai-systems-sprint' ? '0.9' : path.startsWith('/blog/') ? '0.8' : '0.7'}</priority>
   </url>`,

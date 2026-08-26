@@ -379,7 +379,7 @@ export const bookACall: BookACallContent = {
 export const portfolio: PortfolioContent = {
     metaTitle: 'Portfolio — SaaS, Compliance & FinTech Builds | Aizaz.studio',
     metaDescription:
-        'Selected Aizaz.studio portfolio work: compliance grade platforms, investment intelligence systems, and production SaaS — built for scale, security, and real business outcomes.',
+        'Selected portfolio work from Aizaz.studio: compliance platforms, SaaS products, and production systems built for scale and real business outcomes.',
     title: 'Portfolio',
     intro:
         'These projects represent production systems — not concept work. Each started with a hard operational or compliance problem and shipped as software teams could run, audit, and extend.',
@@ -405,28 +405,28 @@ export const portfolio: PortfolioContent = {
 export const reviews: ReviewsContent = {
     metaTitle: 'Client Reviews | Aizaz.studio',
     metaDescription:
-        'Client reviews and testimonials for Aizaz.studio — SaaS development, AI automation, and integration delivery. Replace placeholders with approved quotes as they are collected.',
+        'Client feedback on Aizaz.studio delivery for SaaS development, AI automation, and integration projects.',
     title: 'Client Reviews',
     intro:
-        'We measure success in production deployments and hours recovered — not slide decks. Testimonials below include placeholders until final client approvals are on file.',
+        'We measure success in production deployments and hours recovered — not slide decks. Approved client quotes will appear here as they are cleared for publication.',
     placeholderQuotes: [
         {
-            quote: 'Client quote placeholder — replace with approved testimonial.',
-            author: 'Placeholder Name',
+            quote: 'Approved client testimonial coming soon.',
+            author: 'Client',
             role: 'Founder',
             company: '1Archiver',
         },
         {
-            quote: 'Client quote placeholder — replace with approved testimonial.',
-            author: 'Placeholder Name',
+            quote: 'Approved client testimonial coming soon.',
+            author: 'Client',
             role: 'Founder',
-            company: 'InvestorsGoWild',
+            company: 'SaaS Client',
         },
         {
-            quote: 'Client quote placeholder — replace with approved testimonial.',
-            author: 'Placeholder Name',
+            quote: 'Approved client testimonial coming soon.',
+            author: 'Client',
             role: 'Operations Lead',
-            company: 'SaaS Client',
+            company: 'Ops Client',
         },
     ],
 };
@@ -434,7 +434,7 @@ export const reviews: ReviewsContent = {
 export const security: SecurityContent = {
     metaTitle: 'Security & Data Handling | Aizaz.studio',
     metaDescription:
-        'How Aizaz.studio handles security, access, data, and cloud delivery for SaaS and automation clients. Practical practices for production systems — not checkbox compliance theater.',
+        'How Aizaz.studio handles security, access, and data for SaaS and automation clients — practical production practices, not checkbox theater.',
     title: 'Security & Data Handling',
     heroSubtitle:
         'We build systems that touch customer, financial, and operational data — security is part of delivery, not a document you receive after launch.',
@@ -506,7 +506,7 @@ export const security: SecurityContent = {
 export const processPage: ProcessPageContent = {
     metaTitle: 'Our Delivery Process | Aizaz.studio',
     metaDescription:
-        'How Aizaz.studio delivers SaaS, AI automation, and integration projects: workflow discovery, architecture, build, deploy, and handoff — the same discipline on every engagement.',
+        'How Aizaz.studio delivers SaaS, AI automation, and integration work: discovery, architecture, build, deploy, and handoff on every engagement.',
     title: 'Our Engineering Process',
     intro:
         'Every engagement — sprint, MVP, or dedicated pod — follows the same five phases. Discovery finds the highest leverage problem; architecture prevents rebuilds; delivery ends with software your team can run.',

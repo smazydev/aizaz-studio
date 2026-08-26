@@ -115,7 +115,7 @@ export const extraIndustryPages: IndustryPage[] = [
         title: 'Software Systems for Operations Teams',
         metaTitle: 'Operations Automation & Internal Tools | Aizaz Studio',
         metaDescription:
-            'Aizaz Studio builds internal tools, workflow automations, and dashboards for operations teams tired of spreadsheets, manual reconciliations, and disconnected SaaS apps.',
+            'Internal tools, workflow automations, and dashboards for operations teams stuck on spreadsheets, manual reconciliations, and disconnected SaaS apps.',
         heroSubtitle:
             'Replace manual reconciliations and copy paste workflows with systems your ops team can run and extend.',
         keywords: [
@@ -277,7 +277,7 @@ export const extraIndustryPages: IndustryPage[] = [
         title: 'Systems for Ecommerce Operations',
         metaTitle: 'Ecommerce Operations Automation | Aizaz Studio',
         metaDescription:
-            'Connect storefronts, ERPs, warehouses, and finance tools. Aizaz Studio automates orders, inventory, fulfillment, and reporting for ecommerce operations teams.',
+            'Connect storefronts, ERPs, warehouses, and finance tools — automate orders, inventory, fulfillment, and reporting for ecommerce ops.',
         heroSubtitle:
             'Stop fighting sync errors. Build operations that keep inventory, orders, and customer data aligned across every channel.',
         keywords: [

@@ -6,7 +6,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Rescue a Stalled, Broken, or Overcomplicated Software Project',
         metaTitle: 'Software Project Rescue Services | Aizaz.studio',
         metaDescription:
-            'Stabilize failing software projects with senior engineering. We audit codebases, fix critical bugs, restore deployments, and get your product back on track without starting over.',
+            'Stabilize failing software projects with senior engineering: audit codebases, fix critical bugs, restore deploys, and get products back on track.',
         heroSubtitle:
             'When deadlines slip, bugs pile up, and nobody trusts the codebase, senior engineers step in to stabilize, ship, and set a path forward.',
         keywords: [
@@ -65,7 +65,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Technical Audit',
         metaTitle: 'Technical Audit for Software & Cloud Systems | Aizaz.studio',
         metaDescription:
-            'Independent technical audits for codebases, cloud infrastructure, security posture, and architecture. Get a clear risk report and prioritized action plan from senior engineers.',
+            'Independent technical audits for codebases, cloud, security, and architecture — clear risk reports and prioritized action plans.',
         heroSubtitle:
             'Know exactly what is broken, what is risky, and what to fix first before you invest more time and budget.',
         keywords: [
@@ -183,7 +183,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'AI Chatbot Development',
         metaTitle: 'AI Chatbot Development for Business | Aizaz.studio',
         metaDescription:
-            'Custom AI chatbots for websites, WhatsApp, and internal support. Connected to your CRM and knowledge base with lead capture, triage, and human handoff built in.',
+            'Custom AI chatbots for websites, WhatsApp, and internal support — CRM-connected with lead capture, triage, and human handoff.',
         heroSubtitle:
             'Launch AI chatbots that capture leads, answer accurately from your content, and hand off to humans when conversations need a real person.',
         keywords: [
@@ -301,7 +301,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'LLM App Development',
         metaTitle: 'LLM Application Development | Aizaz.studio',
         metaDescription:
-            'Build custom LLM powered applications — internal copilots, document tools, search interfaces, and AI features inside your SaaS product. Production architecture, not prototypes.',
+            'Build custom LLM apps — copilots, document tools, search, and AI features inside SaaS products. Production architecture, not prototypes.',
         heroSubtitle:
             'Ship LLM powered features and standalone apps with the retrieval, auth, monitoring, and UX your users and investors expect.',
         keywords: [
@@ -360,7 +360,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'SaaS MVP Development',
         metaTitle: 'SaaS MVP Development for Startups | Aizaz.studio',
         metaDescription:
-            'Launch investor ready SaaS MVPs in weeks with auth, payments, core workflows, and deployable architecture. Senior engineers, not a rotating freelancer bench.',
+            'Launch investor-ready SaaS MVPs in weeks with auth, payments, core workflows, and deployable architecture — senior engineers only.',
         heroSubtitle:
             'Ship a SaaS MVP that real users can sign up for, pay for, and rely on — built with architecture that survives your first growth spike.',
         keywords: [
@@ -419,7 +419,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'B2B SaaS Development',
         metaTitle: 'B2B SaaS Development Studio | Aizaz.studio',
         metaDescription:
-            'Build B2B SaaS platforms with multi tenant architecture, role based access, billing, integrations, and admin tooling. Senior full stack execution for growth stage products.',
+            'Build B2B SaaS platforms with multi-tenant architecture, RBAC, billing, integrations, and admin tooling for growth-stage products.',
         heroSubtitle:
             'Build B2B SaaS that enterprise buyers trust — with proper tenancy, permissions, integrations, and ops tooling from day one.',
         keywords: [
@@ -478,7 +478,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Backend Engineering',
         metaTitle: 'Backend Engineering Services | Aizaz.studio',
         metaDescription:
-            'Senior backend engineering for APIs, databases, background jobs, and scalable server architecture. Node.js, PostgreSQL, AWS — built for products that need to perform under load.',
+            'Senior backend engineering for APIs, databases, background jobs, and scalable architecture with Node.js, PostgreSQL, and AWS.',
         heroSubtitle:
             'Build backends that handle real traffic, clean data models, and integrations your frontend and partners can depend on.',
         keywords: [
@@ -537,7 +537,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'AWS Cloud Engineering',
         metaTitle: 'AWS Cloud Engineering Services | Aizaz.studio',
         metaDescription:
-            'Design and build production AWS infrastructure — EC2, ECS, Lambda, RDS, S3, networking, and security. Architecture your product can scale on without surprise bills or outages.',
+            'Design and build production AWS infrastructure — EC2, ECS, Lambda, RDS, S3, networking, and security your product can scale on.',
         heroSubtitle:
             'Get AWS infrastructure designed by engineers who ship products on it daily — not generic diagrams that fall apart in production.',
         keywords: [
@@ -596,7 +596,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'DevOps Consulting',
         metaTitle: 'DevOps Consulting Services | Aizaz.studio',
         metaDescription:
-            'DevOps consulting for CI/CD pipelines, containerization, monitoring, and release automation. Turn fragile deploys into reliable shipping cadence your whole team trusts.',
+            'DevOps consulting for CI/CD, containers, monitoring, and release automation — turn fragile deploys into a reliable shipping cadence.',
         heroSubtitle:
             'Stop dreading releases. Get CI/CD, monitoring, and deployment practices that let your team ship daily without breaking production.',
         keywords: [
@@ -655,7 +655,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Cloud Migration',
         metaTitle: 'Cloud Migration Services | Aizaz.studio',
         metaDescription:
-            'Migrate applications, databases, and workloads to AWS with minimal downtime. Assessment, planning, execution, and validation from engineers who run production systems daily.',
+            'Migrate apps, databases, and workloads to AWS with minimal downtime — assessment, planning, execution, and validation.',
         heroSubtitle:
             'Move off legacy servers, cramped hosting, or messy multi cloud setups with a migration plan that protects uptime and data integrity.',
         keywords: [
@@ -714,7 +714,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Platform Engineering',
         metaTitle: 'Platform Engineering Services | Aizaz.studio',
         metaDescription:
-            'Build internal developer platforms, shared infrastructure, and self serve tooling that helps your engineering team ship faster with guardrails, not gatekeepers.',
+            'Build internal developer platforms and self-serve tooling so engineering ships faster with guardrails, not gatekeepers.',
         heroSubtitle:
             'Give your developers a paved road — environments, templates, CI/CD, and observability — so product teams ship without reinventing infrastructure every sprint.',
         keywords: [
@@ -773,7 +773,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'API Integration',
         metaTitle: 'API Integration Development Services | Aizaz.studio',
         metaDescription:
-            'Connect your product to third party APIs, webhooks, and partner systems. Reliable integrations with error handling, retries, monitoring, and documentation your team can maintain.',
+            'Connect products to third-party APIs, webhooks, and partner systems with retries, monitoring, and documentation your team can maintain.',
         heroSubtitle:
             'Make your product talk to everything it needs to — payment providers, CRMs, ERPs, shipping APIs — without brittle scripts that break on every vendor update.',
         keywords: [
@@ -832,7 +832,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'CRM Integration',
         metaTitle: 'CRM Integration Services | Aizaz.studio',
         metaDescription:
-            'Integrate HubSpot, Salesforce, Pipedrive, and custom CRMs with your product, ecommerce, and ops tools. Sync contacts, deals, and activities with reliable two way data flows.',
+            'Integrate HubSpot, Salesforce, Pipedrive, and custom CRMs with your product and ops tools — reliable two-way contact and deal sync.',
         heroSubtitle:
             'Keep your CRM accurate automatically — sync leads, deals, and customer activity from every channel without manual data entry.',
         keywords: [
@@ -891,7 +891,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'NetSuite Integration',
         metaTitle: 'NetSuite Integration Services | Aizaz.studio',
         metaDescription:
-            'NetSuite integrations for ecommerce, CRM, 3PL, and custom apps. Order sync, inventory, fulfillment, and finance data flows with SuiteScript, REST, and middleware you can trust.',
+            'NetSuite integrations for ecommerce, CRM, 3PL, and custom apps — order, inventory, fulfillment, and finance sync you can trust.',
         heroSubtitle:
             'Connect NetSuite to Shopify, CRMs, warehouses, and internal tools so orders, inventory, and finance data stay aligned across every channel.',
         keywords: [

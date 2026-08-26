@@ -20,9 +20,9 @@ export const blogs: BlogPost[] = [
     {
         id: '1',
         slug: 'ai-automation-workflows-for-operations-teams',
-        title: 'How to Pick Your First AI Automation Workflow (Without Wasting 6 Months)',
+        title: 'AI Automation Workflow Examples for Operations Teams',
         excerpt:
-            'Most teams chase AI demos. The ones that win pick one manual workflow, connect it to real tools, and ship a working system in two weeks.',
+            'Concrete AI automation examples ops teams ship first — lead intake, support triage, clinic forms, and order exceptions — connected to real tools.',
         date: 'January 8, 2026',
         author: 'Aizaz K.',
         readTime: '6 min read',
@@ -49,7 +49,7 @@ The highest ROI AI projects we build at Aizaz.studio follow the same pattern:
 
 This is exactly what our **AI Systems Sprint** is built for: one workflow, fourteen days, working software.
 
-## Good first workflows to automate
+## Concrete automation examples for operations teams
 
 These are proven starting points across industries:
 
@@ -59,6 +59,8 @@ These are proven starting points across industries:
 - **NetSuite order issue → alert → retry workflow → reporting dashboard**
 
 Notice what they have in common: clear inputs, clear outputs, and measurable time saved.
+
+If you are still deciding *which* workflows deserve automation at all, start with our guide on [identifying workflows worth automating](/blog/identify-workflows-worth-automating-with-ai).
 
 ## What "done" looks like
 
@@ -73,9 +75,9 @@ That is the bar we hold for every sprint engagement.
 
 ## Conclusion
 
-If you are exploring AI for your business, do not ask *"What AI tool should we buy?"*
+If you are exploring AI for operations, do not ask *"What AI tool should we buy?"*
 
-Ask: **"Which manual workflow costs us the most time every week — and what would change if it ran reliably without us?"**
+Ask: **"Which daily ops workflow costs us the most time — and what would change if it ran reliably without us?"**
 
 That question leads to systems that scale. The other one leads to shelfware.
     `,
@@ -217,7 +219,8 @@ Build less. Build it properly. Then scale.
         id: '4',
         slug: 'identify-workflows-worth-automating-with-ai',
         title: 'How to Identify Workflows Worth Automating with AI',
-        excerpt: 'A practical filter for ops leaders and founders: which manual workflows actually deserve AI, and which should stay human for now.',
+        excerpt:
+            'A practical filter for ops leaders and founders: which manual workflows deserve AI, and which should stay human for now.',
         date: 'February 2, 2026',
         author: 'Aizaz K.',
         readTime: '7 min read',
@@ -246,6 +249,12 @@ See our [AI workflow automation](/services/ai-workflow-automation) approach for 
 ## Estimate failure cost
 
 What happens when this step is missed? Lost leads, late invoices, wrong inventory? Higher failure cost = higher automation ROI.
+
+## Score before you build
+
+Rank candidates by frequency × minutes × failure cost. Automate the top one first — then expand.
+
+Once you know which workflow wins, see [AI automation workflow examples for operations teams](/blog/ai-automation-workflows-for-operations-teams) for concrete patterns teams ship first.
 
 ## Try one sprint, not a platform
 

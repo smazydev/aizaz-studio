@@ -296,7 +296,7 @@ export const caseStudies: CaseStudy[] = [
             'How PropertyMatch moved from a validated Airtable prototype to a focused SaaS MVP while replacing per-agent SaaS licensing dependency.',
         seoTitle: 'PropertyMatch — Real Estate SaaS MVP | Aizaz Studio',
         seoDescription:
-            'How PropertyMatch moved from a validated real estate matching prototype to a focused SaaS MVP with owned infrastructure instead of per-agent SaaS licensing.',
+            'How PropertyMatch moved from an Airtable prototype to a focused real estate SaaS MVP with owned infrastructure.',
         image: propertyMatchmakerCover,
         client: 'Oran',
         location: 'Los Angeles, California, USA',
@@ -484,7 +484,7 @@ export const caseStudies: CaseStudy[] = [
         subtitle:
             'Extending an existing developer tool with multi-language checks, observability, Azure CI/CD and npm package preparation.',
         description:
-            'How Aizaz Studio extended an existing code checking tool across Python, Node.js and .NET while adding observability, Azure CI/CD and npm package preparation.',
+            'How Aizaz Studio extended a multi-language code checking tool with observability, Azure CI/CD, and npm package preparation.',
         image: codeCheckerCover,
         client: 'Jesse Dahir-Kanehl, Kanehl Consulting LLC',
         location: 'West Salem, Oregon, USA',
@@ -494,7 +494,7 @@ export const caseStudies: CaseStudy[] = [
         deliveredBy: 'Aizaz Studio',
         seoTitle: 'Modernizing a Multi-Language Code Checking Tool | Aizaz Studio',
         seoDescription:
-            'How Aizaz Studio extended an existing code checking tool across Python, Node.js and .NET while adding observability, Azure CI/CD and npm package preparation.',
+            'How Aizaz Studio extended a multi-language code checking tool with observability, Azure CI/CD, and npm package preparation.',
         atAGlance: [
             { value: '3', label: 'Language ecosystems', sublabel: 'Python, Node.js, .NET' },
             { value: 'Sep 28 to Jan 8', label: 'Project period', sublabel: '2025 to 2026' },
@@ -678,7 +678,7 @@ export const caseStudies: CaseStudy[] = [
         deliveredBy: 'Aizaz Studio',
         seoTitle: 'SalesAngel — AI Sales Platform | Aizaz Studio',
         seoDescription:
-            'How Aizaz Studio architected the technical foundation for SalesAngel — a scalable AI sales platform with tenant isolation, CRM workflows, and dialer capabilities.',
+            'How Aizaz Studio designed the SalesAngel technical foundation — multi-tenant CRM, dialer, and sales workflows built to scale.',
         atAGlance: [
             { value: 'Multi-tenant', label: 'Architecture focus', sublabel: 'Organizations & users' },
             { value: '9 days', label: 'Engagement length', sublabel: 'Oct 27, 2025 – Jan 29, 2026' },

@@ -17,7 +17,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Node.js Development for SaaS and API Platforms',
         metaTitle: 'Node.js Development for SaaS & APIs | Aizaz.studio',
         metaDescription:
-            'Senior Node.js development for SaaS products, REST and GraphQL APIs, real time dashboards, and automation backends. Production ready architecture from day one.',
+            'Senior Node.js development for SaaS products, REST and GraphQL APIs, real-time dashboards, and automation backends.',
         heroSubtitle:
             'Build fast, scalable backends and APIs that power SaaS products, internal tools, and workflow automation — without fragile scripts holding your business together.',
         outcomes: [
@@ -67,7 +67,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Python Development for AI, Data, and Automation',
         metaTitle: 'Python Development for AI & Automation | Aizaz.studio',
         metaDescription:
-            'Python development for AI pipelines, data processing, internal automation, and API services. Connect models, databases, and business tools with production grade code.',
+            'Python development for AI pipelines, data processing, internal automation, and API services with production-grade code.',
         heroSubtitle:
             'Use Python where it wins — AI workflows, data pipelines, scraping, and backend services that turn raw information into automated business decisions.',
         outcomes: [
@@ -167,7 +167,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Next.js Development for SaaS and Marketing Sites',
         metaTitle: 'Next.js Development for SaaS Products | Aizaz.studio',
         metaDescription:
-            'Next.js development for SaaS landing pages, authenticated app routes, SEO friendly marketing sites, and full stack products with API routes and server actions.',
+            'Next.js development for SaaS apps, authenticated routes, SEO marketing sites, and full-stack products with API routes.',
         heroSubtitle:
             'One framework for your marketing site, authenticated app, and API layer — built for SEO, performance, and the speed SaaS founders need at launch.',
         outcomes: [
@@ -217,7 +217,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'NestJS Development for Enterprise APIs and SaaS Backends',
         metaTitle: 'NestJS Development for SaaS & APIs | Aizaz.studio',
         metaDescription:
-            'NestJS development for structured SaaS backends, microservices, GraphQL APIs, and integration layers. Modular architecture built for growing engineering teams.',
+            'NestJS development for structured SaaS backends, microservices, GraphQL APIs, and modular integration layers.',
         heroSubtitle:
             'When your API surface grows beyond a single file, NestJS gives you modules, guards, and patterns that keep SaaS backends maintainable as the team scales.',
         outcomes: [
@@ -267,7 +267,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'FastAPI Development for AI APIs and High Speed Backends',
         metaTitle: 'FastAPI Development for AI & APIs | Aizaz.studio',
         metaDescription:
-            'FastAPI development for AI endpoints, data services, and automation APIs. Async Python backends with automatic docs, validation, and cloud ready deployment.',
+            'FastAPI development for AI endpoints, data services, and automation APIs with async Python, validation, and cloud-ready deploy.',
         heroSubtitle:
             'Fast, typed Python APIs for AI features, data services, and automation — with OpenAPI docs your frontend and partner teams can actually use.',
         outcomes: [
@@ -317,7 +317,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'AWS Cloud Infrastructure for SaaS and Automation Platforms',
         metaTitle: 'AWS Cloud & Infrastructure for SaaS | Aizaz.studio',
         metaDescription:
-            'AWS architecture, deployment, and DevOps for SaaS products, automation pipelines, and API platforms. Reliable cloud infrastructure your business can depend on.',
+            'AWS architecture, deployment, and DevOps for SaaS products, automation pipelines, and API platforms.',
         heroSubtitle:
             'Move from fragile manual deploys to AWS infrastructure with monitoring, backups, and pipelines — so your SaaS and automation systems survive real traffic.',
         outcomes: [
@@ -367,7 +367,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'PostgreSQL for SaaS Data Models and Reliable Analytics',
         metaTitle: 'PostgreSQL for SaaS & Data Platforms | Aizaz.studio',
         metaDescription:
-            'PostgreSQL database design, optimization, and integration for SaaS products, automation systems, and analytics. Durable data layers your business can trust.',
+            'PostgreSQL design, optimization, and integration for SaaS products, automation systems, and analytics workloads.',
         heroSubtitle:
             'Your SaaS, automation, and AI features need a database that stays correct under load — PostgreSQL is our default for transactional truth and rich queries.',
         outcomes: [
@@ -467,7 +467,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'OpenAI Integration for Business Automation and SaaS AI',
         metaTitle: 'OpenAI Integration for Business Automation | Aizaz.studio',
         metaDescription:
-            'OpenAI API integration for chatbots, document AI, lead qualification, and SaaS copilots. Production ready LLM features connected to your CRM, ERP, and workflows.',
+            'OpenAI API integration for chatbots, document AI, lead qualification, and SaaS copilots connected to your CRM and workflows.',
         heroSubtitle:
             'Turn OpenAI from a demo into business software — lead scoring, support triage, document extraction, and copilots wired to the tools your team already uses.',
         outcomes: [
@@ -517,7 +517,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'LangChain for Multi Step AI Agents and Workflow Automation',
         metaTitle: 'LangChain Development for AI Agents | Aizaz.studio',
         metaDescription:
-            'LangChain development for AI agents, RAG pipelines, and multi step automations. Connect LLMs to databases, APIs, and business tools with observable, maintainable chains.',
+            'LangChain development for AI agents, RAG pipelines, and multi-step automations connected to databases, APIs, and business tools.',
         heroSubtitle:
             'When a single prompt is not enough, LangChain orchestrates multi step AI agents — retrieval, tool use, and memory — tied to real business outcomes.',
         outcomes: [
@@ -567,7 +567,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Stripe Integration for SaaS Billing and Subscription Revenue',
         metaTitle: 'Stripe Integration for SaaS Billing | Aizaz.studio',
         metaDescription:
-            'Stripe integration for SaaS subscriptions, usage billing, customer portals, and webhook automation. Reliable payments connected to your product and ops workflows.',
+            'Stripe integration for SaaS subscriptions, usage billing, customer portals, and webhook automation connected to your product.',
         heroSubtitle:
             'Get subscription billing, invoicing, and payment webhooks right — so revenue flows into your SaaS product and CRM without manual reconciliation every month.',
         outcomes: [

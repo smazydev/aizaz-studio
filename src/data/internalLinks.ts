@@ -102,10 +102,10 @@ const CASE_LABELS: Record<string, string> = {
 };
 
 const ARTICLE_LABELS: Record<string, string> = {
-  'ai-automation-workflows-for-operations-teams': 'AI Automation Workflows for Operations',
+  'ai-automation-workflows-for-operations-teams': 'AI Automation Workflow Examples for Operations',
   'netsuite-shopify-integration-pitfalls': 'NetSuite–Shopify Integration Pitfalls',
   'building-production-ready-saas-mvp': 'Building a Production-Ready SaaS MVP',
-  'identify-workflows-worth-automating-with-ai': 'Workflows Worth Automating with AI',
+  'identify-workflows-worth-automating-with-ai': 'Identify Workflows Worth Automating with AI',
   'ai-agent-vs-chatbot-for-business': 'AI Agent vs Chatbot for Business',
   'how-much-does-ai-automation-cost': 'How Much Does AI Automation Cost',
   'rescue-a-half-built-saas-product': 'Rescue a Half-Built SaaS Product',

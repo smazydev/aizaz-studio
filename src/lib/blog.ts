@@ -48,7 +48,9 @@ export function getLinkablePosts(posts: PublicBlogPost[]): PublicBlogPost[] {
 
 const LEGACY_SEO_TITLES: Record<string, string> = {
     'identify-workflows-worth-automating-with-ai':
-        'How to Choose Your First AI Automation Workflow | Aizaz Studio',
+        'How to Identify Workflows Worth Automating with AI | Aizaz Studio',
+    'ai-automation-workflows-for-operations-teams':
+        'AI Automation Workflow Examples for Operations Teams | Aizaz Studio',
 };
 
 function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {

@@ -18,7 +18,7 @@ export const comparePages: ComparePage[] = [
         title: 'Product Engineering Agency vs Staff Augmentation',
         metaTitle: 'Product Engineering Agency vs Staff Augmentation | Aizaz Studio',
         metaDescription:
-            'Compare a product engineering agency focused on shipped outcomes with staff augmentation models that rent developers by the hour. See which model fits your goals.',
+            'Compare a product engineering agency focused on shipped outcomes with staff augmentation that rents developers by the hour.',
         heroSubtitle:
             'When you need working systems, not another seat on your Slack channel.',
         intro:
@@ -122,7 +122,7 @@ export const comparePages: ComparePage[] = [
         title: 'Product Engineering Agency vs Freelancer',
         metaTitle: 'Product Engineering Agency vs Freelancer | Aizaz Studio',
         metaDescription:
-            'Compare hiring a freelancer with engaging a product engineering agency. Understand tradeoffs in speed, accountability, architecture, and long term maintainability.',
+            'Compare hiring a freelancer with a product engineering agency — speed, accountability, architecture, and long-term maintainability.',
         heroSubtitle:
             'Freelancers excel at tasks. Agencies own systems.',
         intro:
@@ -220,7 +220,7 @@ export const comparePages: ComparePage[] = [
         title: 'AI Systems Sprint vs Traditional Automation',
         metaTitle: 'AI Systems Sprint vs Traditional Automation | Aizaz Studio',
         metaDescription:
-            'Compare a focused 14 day AI Systems Sprint with traditional automation projects. Learn when speed, AI assisted workflows, and scoped delivery beat long consulting engagements.',
+            'Compare a 14-day AI Systems Sprint with traditional automation projects — when scoped delivery beats long consulting engagements.',
         heroSubtitle:
             'Ship one working AI workflow in 14 days instead of waiting months for a traditional automation project.',
         intro:
