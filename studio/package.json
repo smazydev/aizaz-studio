@@ -11,7 +11,8 @@
     "start": "sanity start",
     "verify:author-schema": "npx --yes tsx scripts/verify-author-schema.ts",
     "migrate:authors": "sanity exec scripts/migrate-author-strings.ts --with-user-token",
-    "seed:authors": "sanity exec scripts/seed-authors.ts --with-user-token"
+    "seed:authors": "sanity exec scripts/seed-authors.ts --with-user-token",
+    "seed:homepage": "sanity exec scripts/seed-homepage.ts --with-user-token"
   },
   "dependencies": {
     "@sanity/vision": "^6.9.1",

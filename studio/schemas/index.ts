@@ -1,6 +1,7 @@
 import { person } from './person';
 import { post } from './post';
 import { caseStudy } from './caseStudy';
+import { homepage } from './homepage';
 import {
     seoFields,
     link,
@@ -32,4 +33,5 @@ export const schemaTypes = [
     person,
     post,
     caseStudy,
+    homepage,
 ];

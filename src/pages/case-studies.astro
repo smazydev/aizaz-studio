@@ -11,6 +11,11 @@ import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 
 const caseStudies = await getAllCaseStudies();
+/** Independent of Homepage CMS — full public listing order from getAllCaseStudies(). */
+const showcaseItems = caseStudies.map((study) => ({
+  study,
+  tabLabel: study.category || study.title,
+}));
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
 ---
 
@@ -28,7 +33,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
         highlight="real-world scale"
         description="Compliance platforms, fintech infrastructure, and production systems — designed for security, scale, and operations teams that cannot afford fragile software."
       />
-      <CaseStudyShowcase studies={caseStudies} showHeader={false} />
+      <CaseStudyShowcase items={showcaseItems} showHeader={false} />
       <CTA client:visible />
     </main>
     <Footer client:visible />

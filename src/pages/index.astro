@@ -13,9 +13,14 @@ import { ClientReviews } from '../components/ClientReviews';
 import { CTA } from '../components/CTA';
 import { Footer } from '../components/Footer';
 import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
-import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { getHomepageContent } from '../lib/sanity/homepage';
 
-const caseStudies = await getAllCaseStudies();
+/**
+ * Homepage stays prerendered. Sanity values are baked in at build time.
+ * Publishing Homepage in Studio does not go live until the next production build/deploy.
+ * One Sanity fetch for editable fields; SEO title/meta/canonical remain code-controlled.
+ */
+const homepage = await getHomepageContent();
 ---
 
 <Layout
@@ -28,14 +33,19 @@ const caseStudies = await getAllCaseStudies();
     <Navbar client:load />
     <main>
       <Hero client:load />
-      <LogoMarquee client:load />
-      <StatsBar client:load />
+      <LogoMarquee client:load label={homepage.marqueeLabel} items={homepage.marqueeItems} />
+      <StatsBar client:load stats={homepage.stats} />
       <ProblemSection client:load />
       <Services client:load />
       <Process />
       <WhyUs client:load />
       <ClientReviews client:load />
-      <CaseStudyShowcase studies={caseStudies} />
+      <CaseStudyShowcase
+        items={homepage.featuredCaseStudies}
+        eyebrow={homepage.showcaseEyebrow}
+        title={homepage.showcaseTitle}
+        description={homepage.showcaseDescription}
+      />
       <CTA client:load />
     </main>
     <Footer client:load />
