@@ -1,0 +1,98 @@
+---
+import { clientReviews, siteStats } from '../../data/siteContent';
+
+const quote = clientReviews[0];
+const metric = siteStats[1];
+const services = [
+  {
+    k: '01',
+    t: 'AI Automation',
+    d: 'Agents, workflow routing, and systems that take work off the team.',
+    href: '/services/ai-automation-systems',
+  },
+  {
+    k: '02',
+    t: 'Product engineering',
+    d: 'SaaS platforms, internal tools, and MVPs built to be extended.',
+    href: '/services/web-app-saas-development',
+  },
+  {
+    k: '03',
+    t: 'ERP / NetSuite',
+    d: 'Integrations that keep orders, inventory, and finance in one truth.',
+    href: '/services/netsuite-erp-automation',
+  },
+  {
+    k: '04',
+    t: 'Cloud infrastructure',
+    d: 'AWS, CI/CD, and monitoring so the system stays up after launch.',
+    href: '/services/aws-devops',
+  },
+];
+---
+
+<section class="rs-dark" aria-labelledby="home-dark-heading">
+  <div class="rs-wrap">
+    <div class="rs-dark__intro">
+      <div>
+        <p class="rs-kicker" data-reveal>05 — Studio</p>
+        <h2 id="home-dark-heading" class="rs-heading" data-reveal="clip" style="margin: 18px 0 0; max-width: 12ch;">
+          The power of systems, not slides.
+        </h2>
+      </div>
+      <p class="rs-body" data-reveal>
+        Senior engineering for teams that need software to hold under real load — compliance, fintech, operations, and infrastructure.
+      </p>
+    </div>
+
+    <div class="rs-dark__stage">
+      <div class="rs-faces" data-reveal>
+        <div class="rs-face rs-face--hot"><span class="rs-face__shape"></span></div>
+        <div class="rs-face"><span class="rs-face__shape" style="filter: grayscale(0.4) contrast(1.1)"></span></div>
+        <div class="rs-face"><span class="rs-face__shape" style="border-radius: 40% 60% 50% 50%"></span></div>
+        <div class="rs-face rs-face--hot"><span class="rs-face__shape"></span></div>
+        <div class="rs-face"><span class="rs-face__shape"></span></div>
+      </div>
+
+      <div class="rs-metrics" data-reveal data-reveal-delay="2">
+        <div>
+          <p
+            class="rs-metric__num"
+            data-count="50"
+            data-suffix="+"
+          >
+            50+
+          </p>
+          <p class="rs-micro" style="margin-top: 16px">{metric.label}</p>
+        </div>
+        <div>
+          <p class="rs-body" style="max-width: 28ch; color: rgba(245,245,240,0.62)">
+            Remote delivery across the US, UK, Middle East, and South Asia. Overlapping hours for standups and deploys.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rs-services-col">
+      {services.map((s) => (
+        <a href={s.href} data-reveal>
+          <p class="rs-micro">{s.k}</p>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </a>
+      ))}
+    </div>
+
+    <figure class="rs-quote" data-reveal>
+      <div class="rs-quote__photo" aria-hidden="true">
+        <span class="rs-face__shape"></span>
+      </div>
+      <div>
+        <blockquote>“{quote.quote}”</blockquote>
+        <figcaption>
+          {quote.author} — {quote.role}, {quote.company}
+        </figcaption>
+      </div>
+    </figure>
+  </div>
+</section>

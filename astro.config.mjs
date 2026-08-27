@@ -7,6 +7,7 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://aizaz.studio',
+  trailingSlash: 'never',
   output: 'static',
   integrations: [react(), tailwind()],
   adapter: cloudflare(),

@@ -27,7 +27,7 @@ export const Hero: React.FC = () => {
             </h1>
 
             <p className="text-lg text-zinc-400 mb-8 max-w-xl leading-relaxed">
-              We build AI agents, web apps, NetSuite integrations, and AWS infrastructure for startups and operations heavy businesses — from first workflow automation to full production platforms.
+              We build AI agents, web apps, NetSuite integrations, and AWS infrastructure for startups and operations heavy businesses, from first workflow automation to full production platforms.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-10">

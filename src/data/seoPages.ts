@@ -45,7 +45,7 @@ export const servicePages: SeoPage[] = [
         problem:
             'Most businesses know AI could help, but their workflows still live in spreadsheets, inboxes, and disconnected SaaS tools. Teams copy paste between systems, miss leads, and spend hours on tasks that should be automated.',
         solution:
-            'We design AI automation systems that sit inside your operations — not as demos, but as working tools. From lead qualification to support triage and document processing, we connect AI to the systems your team already uses.',
+            'We design AI automation systems that sit inside your operations, not as demos, but as working tools. From lead qualification to support triage and document processing, we connect AI to the systems your team already uses.',
         capabilities: [
             'AI agents and internal assistants',
             'Website and WhatsApp chatbots',
@@ -63,7 +63,7 @@ export const servicePages: SeoPage[] = [
         faqs: [
             {
                 question: 'Do you build custom AI agents or use off the shelf tools?',
-                answer: 'Both. We choose the stack based on your workflow, data sensitivity, and scale — from OpenAI and Anthropic APIs to self hosted models when needed.',
+                answer: 'Both. We choose the stack based on your workflow, data sensitivity, and scale, from OpenAI and Anthropic APIs to self hosted models when needed.',
             },
             {
                 question: 'Can AI automation connect to our existing CRM or ERP?',
@@ -71,7 +71,7 @@ export const servicePages: SeoPage[] = [
             },
             {
                 question: 'How fast can we launch a first AI workflow?',
-                answer: 'Our AI Systems Sprint delivers one working workflow in 14 days — scoped, built, deployed, and ready for your team to use.',
+                answer: 'Our AI Systems Sprint delivers one working workflow in 14 days, scoped, built, deployed, and ready for your team to use.',
             },
         ],
         relatedSlugs: ['business-process-automation', 'web-app-saas-development'],
@@ -95,7 +95,7 @@ export const servicePages: SeoPage[] = [
         problem:
             'Many teams stall between a prototype and a product customers can rely on. Auth is fragile, data models break under load, and every new feature feels like a patch on top of a patch.',
         solution:
-            'We build web apps and SaaS platforms with production grade foundations — clean APIs, secure authentication, scalable databases, and deployment pipelines that survive real usage.',
+            'We build web apps and SaaS platforms with production grade foundations, clean APIs, secure authentication, scalable databases, and deployment pipelines that survive real usage.',
         capabilities: [
             'MVPs and full SaaS platforms',
             'Admin and customer portals',
@@ -113,7 +113,7 @@ export const servicePages: SeoPage[] = [
         faqs: [
             {
                 question: 'What tech stack do you use for web apps?',
-                answer: 'We match the stack to the product — commonly React, Next.js, Astro, Node.js, PostgreSQL, and AWS. We prioritize maintainability and your team’s ability to extend the system.',
+                answer: 'We match the stack to the product, commonly React, Next.js, Astro, Node.js, PostgreSQL, and AWS. We prioritize maintainability and your team’s ability to extend the system.',
             },
             {
                 question: 'Can you take over an existing codebase?',
@@ -143,9 +143,9 @@ export const servicePages: SeoPage[] = [
             'backend scalability',
         ],
         problem:
-            'Deployments break at the worst time. Backups are unclear. Monitoring is an afterthought. Teams ship features fast but infrastructure cannot keep up — and nobody knows what will fail next.',
+            'Deployments break at the worst time. Backups are unclear. Monitoring is an afterthought. Teams ship features fast but infrastructure cannot keep up, and nobody knows what will fail next.',
         solution:
-            'We design and operate AWS infrastructure that matches how your product actually runs — with automated deployments, observability, disaster recovery, and security built in from the start.',
+            'We design and operate AWS infrastructure that matches how your product actually runs, with automated deployments, observability, disaster recovery, and security built in from the start.',
         capabilities: [
             'AWS architecture and deployment',
             'Docker containerization',
@@ -195,7 +195,7 @@ export const servicePages: SeoPage[] = [
         problem:
             'NetSuite holds critical business data, but it rarely talks cleanly to Shopify, CRMs, 3PLs, or internal tools. Teams export CSVs, fix sync errors manually, and lose hours reconciling orders and inventory.',
         solution:
-            'We build NetSuite integrations and ERP automations that keep data flowing reliably — SuiteScript workflows, middleware, SFTP pipelines, and dashboards that surface issues before they become crises.',
+            'We build NetSuite integrations and ERP automations that keep data flowing reliably, SuiteScript workflows, middleware, SFTP pipelines, and dashboards that surface issues before they become crises.',
         capabilities: [
             'NetSuite REST and SuiteScript workflows',
             'Shopify, CRM, and 3PL integrations',
@@ -243,7 +243,7 @@ export const servicePages: SeoPage[] = [
             'internal tool automation',
         ],
         problem:
-            'Staff repeat the same steps dozens of times per day — updating CRMs, sending follow ups, moving data between spreadsheets, and checking multiple systems for one answer.',
+            'Staff repeat the same steps dozens of times per day, updating CRMs, sending follow ups, moving data between spreadsheets, and checking multiple systems for one answer.',
         solution:
             'We automate the workflows that drain your team’s time, connecting CRMs, email, WhatsApp, databases, and internal portals into systems that run reliably in the background.',
         capabilities: [
@@ -263,7 +263,7 @@ export const servicePages: SeoPage[] = [
         faqs: [
             {
                 question: 'Is this like Zapier or Make?',
-                answer: 'We build custom automations when off the shelf tools hit limits — complex logic, high volume, sensitive data, or deep ERP integrations.',
+                answer: 'We build custom automations when off the shelf tools hit limits, complex logic, high volume, sensitive data, or deep ERP integrations.',
             },
             {
                 question: 'Can you automate across many tools at once?',
@@ -295,7 +295,7 @@ export const servicePages: SeoPage[] = [
         problem:
             'Trading teams juggle spreadsheets, disconnected charting tools, manual signal alerts, and fragile scripts. Research is slow, risk checks are inconsistent, and scaling to more users or strategies is painful.',
         solution:
-            'We build trading technology systems — dashboards, backtesting engines, signal pipelines, and integrations with MT5, TradingView, and messaging platforms — designed for serious operational use.',
+            'We build trading technology systems, dashboards, backtesting engines, signal pipelines, and integrations with MT5, TradingView, and messaging platforms, designed for serious operational use.',
         capabilities: [
             'Trading and portfolio dashboards',
             'Backtesting and research tools',
@@ -321,7 +321,7 @@ export const servicePages: SeoPage[] = [
             },
             {
                 question: 'Do you provide financial advice or signals?',
-                answer: 'No. We build the technology systems — dashboards, automation, and infrastructure — not trading advice or signal content.',
+                answer: 'No. We build the technology systems, dashboards, automation, and infrastructure, not trading advice or signal content.',
             },
         ],
         relatedSlugs: ['web-app-saas-development', 'aws-devops'],
@@ -345,7 +345,7 @@ export const servicePages: SeoPage[] = [
         problem:
             'Great products lose deals and confuse users because nobody can explain them clearly. Sales demos are inconsistent, onboarding is text heavy, and support teams answer the same questions repeatedly.',
         solution:
-            'We create technical video content that explains your product accurately — demo videos for sales, onboarding walkthroughs for customers, and training content for internal teams.',
+            'We create technical video content that explains your product accurately, demo videos for sales, onboarding walkthroughs for customers, and training content for internal teams.',
         capabilities: [
             'Product demo and launch videos',
             'Customer onboarding walkthroughs',
@@ -371,7 +371,7 @@ export const servicePages: SeoPage[] = [
             },
             {
                 question: 'Do you script and record, or just edit?',
-                answer: 'End to end — scripting, recording, editing, and delivery in formats ready for your website, LMS, or sales team.',
+                answer: 'End to end, scripting, recording, editing, and delivery in formats ready for your website, LMS, or sales team.',
             },
         ],
         relatedSlugs: ['web-app-saas-development', 'ai-automation-systems'],
@@ -388,7 +388,7 @@ export const industryPages: IndustryPage[] = [
         metaDescription:
             'Aizaz.studio helps SaaS startups build MVPs, scale cloud infrastructure, automate operations, and ship reliable products faster.',
         heroSubtitle:
-            'From MVP to scale — web apps, AI features, AWS infrastructure, and automations built for startup velocity.',
+            'From MVP to scale, web apps, AI features, AWS infrastructure, and automations built for startup velocity.',
         keywords: ['SaaS startup development', 'startup MVP', 'SaaS engineering partner'],
         problem:
             'SaaS founders need to ship fast without building on fragile foundations. Every sprint adds tech debt, deployments are scary, and operational work steals time from product.',
@@ -477,7 +477,7 @@ export const industryPages: IndustryPage[] = [
         problem:
             'Clinic staff spend too much time on forms, follow ups, and manual data entry. Patient information is scattered and operational bottlenecks slow care delivery.',
         solution:
-            'We build healthtech workflows and internal systems — intake forms, AI summaries, appointment reminders, and ops dashboards — with privacy and reliability in mind.',
+            'We build healthtech workflows and internal systems, intake forms, AI summaries, appointment reminders, and ops dashboards, with privacy and reliability in mind.',
         capabilities: [
             'Patient intake and form automation',
             'AI assisted summaries and triage',
@@ -494,7 +494,7 @@ export const industryPages: IndustryPage[] = [
         faqs: [
             {
                 question: 'Do you handle HIPAA or healthcare compliance?',
-                answer: 'We design with privacy and security best practices. Compliance requirements vary by region and use case — we scope this during discovery.',
+                answer: 'We design with privacy and security best practices. Compliance requirements vary by region and use case, we scope this during discovery.',
             },
             {
                 question: 'Can you integrate with existing clinic software?',
@@ -514,12 +514,12 @@ export const industryPages: IndustryPage[] = [
         metaDescription:
             'Dashboards, signal systems, member portals, MT5 and TradingView integrations, and research tools for trading educators and signal businesses.',
         heroSubtitle:
-            'Build the infrastructure behind your signals, research, and member experience — not just another spreadsheet.',
+            'Build the infrastructure behind your signals, research, and member experience, not just another spreadsheet.',
         keywords: ['trading platform development', 'signal provider software', 'trading educator tech'],
         problem:
             'Trading businesses outgrow Telegram groups and manual signal delivery. Members want dashboards, educators need reliable infrastructure, and risk checks must be consistent.',
         solution:
-            'We build trading technology — signal pipelines, member portals, dashboards, journaling tools, and integrations — so your business scales beyond manual workflows.',
+            'We build trading technology, signal pipelines, member portals, dashboards, journaling tools, and integrations, so your business scales beyond manual workflows.',
         capabilities: [
             'Signal distribution systems',
             'Member portals and subscriptions',
@@ -554,7 +554,7 @@ export const industryPages: IndustryPage[] = [
         title: 'Custom Integrations for NetSuite Users',
         metaTitle: 'NetSuite Automation for Operations Teams | Aizaz.studio',
         metaDescription:
-            'For companies running NetSuite with disconnected Shopify, CRM, spreadsheet, and warehouse tools — we build the middleware that connects everything.',
+            'For companies running NetSuite with disconnected Shopify, CRM, spreadsheet, and warehouse tools, we build the middleware that connects everything.',
         heroSubtitle:
             'Your ERP should not be an island. We connect NetSuite to the rest of your business.',
         keywords: ['NetSuite automation company', 'ERP integration services', 'NetSuite consultant developer'],
@@ -598,12 +598,12 @@ export const industryPages: IndustryPage[] = [
         metaDescription:
             'Agencies partner with Aizaz.studio for senior backend, cloud, automation, and ERP work their in house team does not cover.',
         heroSubtitle:
-            'Extend your agency with senior engineers for backend, AWS, automation, and ERP integrations — without hiring full time.',
+            'Extend your agency with senior engineers for backend, AWS, automation, and ERP integrations, without hiring full time.',
         keywords: ['agency development partner', 'white label engineering', 'backend agency support'],
         problem:
             'Agencies win projects that need deep backend, cloud, or ERP expertise their core team does not have. Subcontracting is risky and quality is hard to control.',
         solution:
-            'We act as a technical partner for agencies — delivering backend systems, AWS infrastructure, automations, and NetSuite integrations under your client relationship.',
+            'We act as a technical partner for agencies, delivering backend systems, AWS infrastructure, automations, and NetSuite integrations under your client relationship.',
         capabilities: [
             'Backend and API development',
             'AWS and DevOps delivery',
@@ -624,7 +624,7 @@ export const industryPages: IndustryPage[] = [
             },
             {
                 question: 'What types of projects fit best?',
-                answer: 'Backend systems, cloud infrastructure, ERP integrations, and automation — especially when timelines are tight and quality bar is high.',
+                answer: 'Backend systems, cloud infrastructure, ERP integrations, and automation, especially when timelines are tight and quality bar is high.',
             },
             {
                 question: 'How do we start a partnership?',
@@ -638,11 +638,11 @@ export const industryPages: IndustryPage[] = [
 export const aiSystemsSprintPage = {
     slug: 'ai-systems-sprint',
     title: 'AI Systems Sprint',
-    metaTitle: 'AI Systems Sprint — Working Automation in 14 Days | Aizaz.studio',
+    metaTitle: 'AI Systems Sprint | Working Automation in 14 Days | Aizaz.studio',
     metaDescription:
         'In 14 days, Aizaz.studio identifies one manual workflow in your business and delivers a working AI assisted system, automation, dashboard, or internal tool.',
     heroSubtitle:
-        'One workflow. Fourteen days. A working system your team can use — not a slide deck.',
+        'One workflow. Fourteen days. A working system your team can use, not a slide deck.',
     keywords: ['AI sprint', 'automation sprint', '14 day MVP', 'workflow automation project'],
     problem:
         'Teams know what should be automated but never prioritize it. Projects stall in discovery, agencies deliver decks instead of working software, and manual work continues.',
@@ -666,7 +666,7 @@ export const aiSystemsSprintPage = {
     faqs: [
         {
             question: 'What do we get at the end of 14 days?',
-            answer: 'A deployed, working system for one scoped workflow — plus documentation so your team knows how to use and extend it.',
+            answer: 'A deployed, working system for one scoped workflow, plus documentation so your team knows how to use and extend it.',
         },
         {
             question: 'Do we need to know exactly what to automate?',

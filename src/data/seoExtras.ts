@@ -7,16 +7,16 @@ export interface SeoExtra {
 export const seoExtras: Record<string, SeoExtra> = {
     'ai automation systems': {
         benefits: [
-            { title: 'Connected to your stack', description: 'HubSpot, Salesforce, NetSuite, Slack, WhatsApp, and custom APIs — not isolated chatbot demos.' },
+            { title: 'Connected to your stack', description: 'HubSpot, Salesforce, NetSuite, Slack, WhatsApp, and custom APIs, not isolated chatbot demos.' },
             { title: 'Human in the loop by design', description: 'AI handles triage and routine decisions; your team keeps control on edge cases and approvals.' },
-            { title: 'Production monitoring', description: 'Logging, error alerts, and retry logic so automations fail loudly — not silently.' },
+            { title: 'Production monitoring', description: 'Logging, error alerts, and retry logic so automations fail loudly, not silently.' },
         ],
         seoSections: [
             {
                 heading: 'AI automation agency for operations heavy businesses',
                 paragraphs: [
                     'Businesses searching for an AI automation partner usually need more than a chatbot widget. They need lead qualification that updates the CRM, support triage that creates tickets, or document workflows that feed internal dashboards.',
-                    'Aizaz.studio builds AI automation systems as production software — scoped around one high value workflow first, then expanded across the business. That is why many clients start with our 14 day AI Systems Sprint before committing to a larger platform build.',
+                    'Aizaz.studio builds AI automation systems as production software, scoped around one high value workflow first, then expanded across the business. That is why many clients start with our 14 day AI Systems Sprint before committing to a larger platform build.',
                 ],
             },
             {
@@ -29,12 +29,12 @@ export const seoExtras: Record<string, SeoExtra> = {
         processSteps: [
             { step: '01', title: 'Workflow audit', description: 'Identify the manual process costing the most time each week.' },
             { step: '02', title: 'Agent & integration build', description: 'Connect AI to CRM, email, chat, or ERP with clear handoff rules.' },
-            { step: '03', title: 'Launch & tune', description: 'Deploy, monitor, and refine based on real usage — not lab tests.' },
+            { step: '03', title: 'Launch & tune', description: 'Deploy, monitor, and refine based on real usage, not lab tests.' },
         ],
     },
     'web app saas development': {
         benefits: [
-            { title: 'MVP to scale ready', description: 'Auth, billing, APIs, and deployment pipelines built in from the start — not bolted on later.' },
+            { title: 'MVP to scale ready', description: 'Auth, billing, APIs, and deployment pipelines built in from the start, not bolted on later.' },
             { title: 'Founder friendly delivery', description: 'Clear milestones, visible progress, and documentation your next hire can actually use.' },
             { title: 'Full stack ownership', description: 'Frontend, backend, database, and AWS infrastructure from one senior team.' },
         ],
@@ -55,7 +55,7 @@ export const seoExtras: Record<string, SeoExtra> = {
     },
     'aws devops': {
         benefits: [
-            { title: 'AWS native architecture', description: 'EC2, ECS, Lambda, RDS, S3, CloudWatch — chosen for your workload, not resume driven design.' },
+            { title: 'AWS native architecture', description: 'EC2, ECS, Lambda, RDS, S3, CloudWatch, chosen for your workload, not resume driven design.' },
             { title: 'CI/CD that teams trust', description: 'Automated tests, staging environments, and rollback friendly deploy pipelines.' },
             { title: 'Incident ready ops', description: 'Alerts, logs, backups, and runbooks so outages are rare and recoverable.' },
         ],
@@ -63,7 +63,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'AWS consulting and DevOps for product teams',
                 paragraphs: [
-                    'Cloud infrastructure should reduce risk, not create it. We help startups and scale ups move from fragile manual deploys to automated, monitored AWS environments — including migrations, containerization, and security hardening.',
+                    'Cloud infrastructure should reduce risk, not create it. We help startups and scale ups move from fragile manual deploys to automated, monitored AWS environments, including migrations, containerization, and security hardening.',
                     'Our DevOps work often pairs with SaaS builds and ERP integrations: the same team that writes your application also owns how it runs in production.',
                 ],
             },
@@ -73,7 +73,7 @@ export const seoExtras: Record<string, SeoExtra> = {
         benefits: [
             { title: 'Shopify ↔ NetSuite specialists', description: 'Order, inventory, customer, and fulfillment sync with validation and retry logic.' },
             { title: 'SuiteScript & middleware', description: 'Custom workflows, REST integrations, and SFTP/CSV pipelines when native connectors fall short.' },
-            { title: 'Ops visibility', description: 'Dashboards and alerts when sync fails — before finance or support finds out manually.' },
+            { title: 'Ops visibility', description: 'Dashboards and alerts when sync fails, before finance or support finds out manually.' },
         ],
         seoSections: [
             {
@@ -89,7 +89,7 @@ export const seoExtras: Record<string, SeoExtra> = {
         benefits: [
             { title: 'Cross tool orchestration', description: 'CRMs, email, WhatsApp, Sheets, databases, and internal portals in one workflow.' },
             { title: 'Beyond no code limits', description: 'Custom logic, volume, and ERP depth when Zapier style tools break down.' },
-            { title: 'Measurable time saved', description: 'Automations scoped around hours recovered per week — not vanity integrations.' },
+            { title: 'Measurable time saved', description: 'Automations scoped around hours recovered per week, not vanity integrations.' },
         ],
         seoSections: [
             {
@@ -110,7 +110,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'Trading technology development for educators and signal providers',
                 paragraphs: [
-                    'Trading businesses outgrow spreadsheets and manual Telegram workflows quickly. We build trading dashboards, backtesting tools, journaling platforms, and signal infrastructure — technology systems, not financial advice.',
+                    'Trading businesses outgrow spreadsheets and manual Telegram workflows quickly. We build trading dashboards, backtesting tools, journaling platforms, and signal infrastructure, technology systems, not financial advice.',
                 ],
             },
         ],
@@ -119,13 +119,13 @@ export const seoExtras: Record<string, SeoExtra> = {
         benefits: [
             { title: 'Technical accuracy', description: 'Engineers who understand the product record demos that match how the software actually works.' },
             { title: 'Sales & onboarding ready', description: 'Assets formatted for websites, decks, help centers, and internal training.' },
-            { title: 'Shipped alongside the build', description: 'Enablement content created while context is fresh — not months after launch.' },
+            { title: 'Shipped alongside the build', description: 'Enablement content created while context is fresh, not months after launch.' },
         ],
         seoSections: [
             {
                 heading: 'Product demo and enablement video for software teams',
                 paragraphs: [
-                    'Complex products lose deals when nobody can explain them clearly. We produce demo videos, onboarding walkthroughs, and sales enablement content for SaaS, automation, and internal tools — scripted, recorded, and edited for business use.',
+                    'Complex products lose deals when nobody can explain them clearly. We produce demo videos, onboarding walkthroughs, and sales enablement content for SaaS, automation, and internal tools, scripted, recorded, and edited for business use.',
                 ],
             },
         ],
@@ -133,14 +133,14 @@ export const seoExtras: Record<string, SeoExtra> = {
     'saas startups': {
         benefits: [
             { title: 'Speed without fragility', description: 'MVPs and v1 platforms engineered to survive real users and investor diligence.' },
-            { title: 'AI features in product', description: 'Assistants, document processing, and workflow agents embedded in your SaaS — not side projects.' },
+            { title: 'AI features in product', description: 'Assistants, document processing, and workflow agents embedded in your SaaS, not side projects.' },
             { title: 'One team, full stack', description: 'Product engineering, cloud, and automation under one roof.' },
         ],
         seoSections: [
             {
                 heading: 'Engineering partner for SaaS startups',
                 paragraphs: [
-                    'SaaS founders need velocity, but not at the cost of a rebuild in twelve months. Aizaz.studio helps early stage and growth stage startups ship AI features, customer portals, billing, and AWS infrastructure with senior engineers who think in systems — not ticket queues.',
+                    'SaaS founders need velocity, but not at the cost of a rebuild in twelve months. Aizaz.studio helps early stage and growth stage startups ship AI features, customer portals, billing, and AWS infrastructure with senior engineers who think in systems, not ticket queues.',
                 ],
             },
         ],
@@ -155,7 +155,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'Ecommerce automation and wholesale software development',
                 paragraphs: [
-                    'Ecommerce and wholesale operators lose margin to manual ops — fixing sync errors, reconciling inventory, and chasing orders across Shopify, NetSuite, and 3PLs. We build integrations and custom portals that make multi channel commerce operable at scale.',
+                    'Ecommerce and wholesale operators lose margin to manual ops, fixing sync errors, reconciling inventory, and chasing orders across Shopify, NetSuite, and 3PLs. We build integrations and custom portals that make multi channel commerce operable at scale.',
                 ],
             },
         ],
@@ -170,7 +170,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'Healthtech and clinic workflow automation',
                 paragraphs: [
-                    'Clinics and healthtech teams drown in admin — intake, follow ups, scheduling, and manual data entry. Aizaz.studio builds internal systems and automations that reduce repetitive work while keeping clinical teams in control of patient facing decisions.',
+                    'Clinics and healthtech teams drown in admin, intake, follow ups, scheduling, and manual data entry. Aizaz.studio builds internal systems and automations that reduce repetitive work while keeping clinical teams in control of patient facing decisions.',
                 ],
             },
         ],
@@ -185,7 +185,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'Software for trading educators and signal businesses',
                 paragraphs: [
-                    'Trading educators and signal providers need infrastructure that matches their audience growth — not another spreadsheet and manual broadcast workflow. We build the technology layer: alerts, portals, dashboards, and integrations.',
+                    'Trading educators and signal providers need infrastructure that matches their audience growth, not another spreadsheet and manual broadcast workflow. We build the technology layer: alerts, portals, dashboards, and integrations.',
                 ],
             },
         ],
@@ -200,7 +200,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'NetSuite automation for finance and operations teams',
                 paragraphs: [
-                    'If your team exports CSVs to fix NetSuite data every week, the problem is integration architecture — not user error. We build SuiteScript, middleware, and reporting systems that make NetSuite data usable across the business.',
+                    'If your team exports CSVs to fix NetSuite data every week, the problem is integration architecture, not user error. We build SuiteScript, middleware, and reporting systems that make NetSuite data usable across the business.',
                 ],
             },
         ],
@@ -215,7 +215,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             {
                 heading: 'Development partner for agencies',
                 paragraphs: [
-                    'Agencies win deals that need NetSuite integrations, AWS backends, or AI automation — skills that are hard to hire for on every project. Aizaz.studio acts as a technical partner for delivery, not a competitor for your client relationship.',
+                    'Agencies win deals that need NetSuite integrations, AWS backends, or AI automation, skills that are hard to hire for on every project. Aizaz.studio acts as a technical partner for delivery, not a competitor for your client relationship.',
                 ],
             },
         ],

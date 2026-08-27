@@ -7,7 +7,7 @@ const steps = [
     title: 'Workflow discovery',
     subtitle: 'Map the manual process & your stack',
     description:
-      'We audit CRM, ERP, email, spreadsheets, and internal tools to find the workflow costing the most time — and define success in measurable terms.',
+      'We audit CRM, ERP, email, spreadsheets, and internal tools to find the workflow costing the most time, and define success in measurable terms.',
     details: [
       'Stack & integration inventory',
       'Manual step mapping',
@@ -20,7 +20,7 @@ const steps = [
     title: 'Architecture & scope',
     subtitle: 'Design the system before writing code',
     description:
-      'Data models, API connections, AI decision points, auth, and failure handling are planned so the build survives production — not just demos.',
+      'Data models, API connections, AI decision points, auth, and failure handling are planned so the build survives production, not just demos.',
     details: [
       'Integration & data flow design',
       'Security and access model',
@@ -33,7 +33,7 @@ const steps = [
     title: 'Build & integrate',
     subtitle: 'Ship working software connected to your tools',
     description:
-      'Senior engineers build the automation, dashboard, SaaS feature, or ERP middleware — integrated with NetSuite, Shopify, AWS, HubSpot, and your existing stack.',
+      'Senior engineers build the automation, dashboard, SaaS feature, or ERP middleware, integrated with NetSuite, Shopify, AWS, HubSpot, and your existing stack.',
     details: [
       'Daily progress with async updates',
       'Staging environment for review',
@@ -46,7 +46,7 @@ const steps = [
     title: 'Deploy & monitor',
     subtitle: 'CI/CD, alerts, and reliability built in',
     description:
-      'We deploy to AWS (or your cloud), set up monitoring and error alerts, and make sure failures are visible — not silent.',
+      'We deploy to AWS (or your cloud), set up monitoring and error alerts, and make sure failures are visible, not silent.',
     details: [
       'Automated deployment pipeline',
       'Logging and error alerting',
@@ -136,16 +136,16 @@ export const TransformationTimeline: React.FC = () => {
               key={step.title}
               data-index={index}
               className={`rounded-2xl border p-5 sm:p-6 transition-all duration-500 ${
-                isActive
-                  ? 'glass-card border-primary-500/30'
-                  : 'bg-zinc-950/30 border-white/5 opacity-70'
-              }`}
+ isActive
+ ? 'glass-card border-primary-500/30'
+ : 'bg-zinc-950/30 border-white/5 opacity-70'
+ }`}
             >
               <div className="flex items-center gap-4">
                 <div
                   className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
-                    isActive ? 'bg-primary-500 text-white' : 'bg-zinc-900 text-zinc-500'
-                  }`}
+ isActive ? 'bg-primary-500 text-white' : 'bg-zinc-900 text-zinc-500'
+ }`}
                 >
                   <Icon size={20} />
                 </div>

@@ -36,7 +36,7 @@ export const Services: React.FC = () => {
           <div className="max-w-2xl">
             <div className="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">What We Build</div>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Systems that connect your business — not another disconnected tool
+              Systems that connect your business, not another disconnected tool
             </h2>
             <p className="text-lg text-zinc-400">
               From AI workflows to ERP integrations and cloud infrastructure, we design and ship the technical backbone operations teams actually rely on.

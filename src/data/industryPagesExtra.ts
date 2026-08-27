@@ -20,7 +20,7 @@ export const extraIndustryPages: IndustryPage[] = [
         problem:
             'Founders lose weeks hiring, onboarding, and managing contractors while critical product and ops work stalls. Prototypes pile up, but nothing reliable reaches customers.',
         solution:
-            'We embed as a senior product engineering team that scopes, builds, and deploys the systems your startup needs now — from MVPs and internal tools to AI workflows and cloud infrastructure.',
+            'We embed as a senior product engineering team that scopes, builds, and deploys the systems your startup needs now, from MVPs and internal tools to AI workflows and cloud infrastructure.',
         capabilities: [
             'MVP and v1 product development',
             'Founder facing dashboards and admin tools',
@@ -182,7 +182,7 @@ export const extraIndustryPages: IndustryPage[] = [
         problem:
             'Healthtech products and clinic operations depend on fragmented tools, manual intake, and staff time spent on paperwork instead of care or product growth.',
         solution:
-            'We build healthtech software with privacy aware architecture — intake automation, internal dashboards, appointment workflows, and AI assisted summaries connected to the systems you already use.',
+            'We build healthtech software with privacy aware architecture, intake automation, internal dashboards, appointment workflows, and AI assisted summaries connected to the systems you already use.',
         capabilities: [
             'Patient and client intake automation',
             'Clinical and ops dashboards',
@@ -200,7 +200,7 @@ export const extraIndustryPages: IndustryPage[] = [
         faqs: [
             {
                 question: 'Do you build HIPAA compliant systems?',
-                answer: 'We design with security and privacy best practices. Specific compliance requirements depend on your region, data types, and hosting choices — we scope this during discovery.',
+                answer: 'We design with security and privacy best practices. Specific compliance requirements depend on your region, data types, and hosting choices, we scope this during discovery.',
             },
             {
                 question: 'Can you integrate with our existing clinic or practice software?',
@@ -344,7 +344,7 @@ export const extraIndustryPages: IndustryPage[] = [
         problem:
             'Logistics operations depend on phone calls, shared inboxes, and outdated spreadsheets. Delays get discovered late, customers chase updates, and teams react instead of orchestrate.',
         solution:
-            'We build logistics software that connects carriers, warehouses, and customer systems — tracking dashboards, exception queues, and automations that keep freight moving.',
+            'We build logistics software that connects carriers, warehouses, and customer systems, tracking dashboards, exception queues, and automations that keep freight moving.',
         capabilities: [
             'Shipment tracking and status dashboards',
             'Carrier and 3PL API integrations',
@@ -398,7 +398,7 @@ export const extraIndustryPages: IndustryPage[] = [
         problem:
             'Professional services firms sell expertise but lose margin to manual proposals, disjointed client communication, and delivery tracking spread across email, docs, and spreadsheets.',
         solution:
-            'We build systems that streamline client onboarding, project delivery, and internal ops — so your team spends time on high value work, not administrative reconstruction.',
+            'We build systems that streamline client onboarding, project delivery, and internal ops, so your team spends time on high value work, not administrative reconstruction.',
         capabilities: [
             'Client portals and secure document sharing',
             'Proposal and onboarding workflow automation',

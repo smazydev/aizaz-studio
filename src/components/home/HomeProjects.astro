@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import { caseStudies } from '../../data/caseStudies';
+
+const studies = caseStudies.slice(0, 2);
+const shapes = ['square', 'wide'] as const;
+---
+
+<section class="rs-section rs-wrap" aria-labelledby="home-work-heading">
+  <div style="margin-bottom: clamp(48px, 7vw, 96px); max-width: 14ch;">
+    <p class="rs-kicker" data-reveal>03 — Work</p>
+    <h2 id="home-work-heading" class="rs-heading" data-reveal="clip" style="margin: 16px 0 0;">
+      Production systems.
+    </h2>
+  </div>
+
+  <div class="rs-projects">
+    {studies.map((study, index) => (
+      <article class={`rs-project rs-project--${shapes[index] ?? 'wide'}`} data-reveal>
+        <a class="rs-project__media" href={`/case-studies/${study.slug}`}>
+          <Image src={study.image} alt={study.title} widths={[720, 1080, 1440]} sizes="(min-width: 1024px) 1100px, 100vw" />
+        </a>
+        <div class="rs-project__foot">
+          <div>
+            <p class="rs-micro">{study.category.split('•')[0].trim()}</p>
+            <h3>
+              <a href={`/case-studies/${study.slug}`}>{study.subtitle}</a>
+            </h3>
+          </div>
+          <p>{study.description}</p>
+          <a class="rs-micro" href={`/case-studies/${study.slug}`}>View →</a>
+        </div>
+      </article>
+    ))}
+
+    <article class="rs-project rs-project--wide" data-reveal>
+      <div class="rs-project__media" style="min-height: clamp(320px, 42vh, 560px);">
+        <div class="rs-chain" aria-hidden="true">
+          <span class="rs-chain__a"></span>
+          <span class="rs-chain__b"></span>
+        </div>
+      </div>
+      <div class="rs-project__foot">
+        <div>
+          <p class="rs-micro">Integrations</p>
+          <h3>Connected infrastructure, not another isolated app.</h3>
+        </div>
+        <p>ERP, CRM, email, payments, and internal tools wired into one operational flow.</p>
+        <a class="rs-micro" href="/services/api-integration">Services →</a>
+      </div>
+    </article>
+  </div>
+</section>

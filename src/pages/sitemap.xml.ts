@@ -6,7 +6,7 @@ export const GET: APIRoute = () => {
   const urls = paths
     .map(
       (path) => `  <url>
-    <loc>${SITE_URL}${path === '/' ? '' : path}</loc>
+    <loc>${path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path.replace(/\/$/, '')}`}</loc>
     <changefreq>${path === '/' ? 'weekly' : 'monthly'}</changefreq>
     <priority>${path === '/' ? '1.0' : path.startsWith('/services') || path === '/ai-systems-sprint' ? '0.9' : '0.7'}</priority>
   </url>`,

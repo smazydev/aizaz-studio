@@ -1,0 +1,25 @@
+---
+import { BOOKING_URL } from '../../data/siteConfig';
+---
+
+<section class="rs-section--tight rs-wrap" aria-labelledby="home-cta-heading">
+  <div class="rs-cta">
+    <div class="rs-cta__bg" aria-hidden="true"></div>
+    <div class="rs-cta__copy" data-reveal>
+      <p class="rs-kicker">Let's build</p>
+      <h2 id="home-cta-heading" class="rs-heading">Start with one workflow.</h2>
+      <p class="rs-body" style="margin-top: 20px; max-width: 28ch;">
+        Map the stack, pick the highest-impact process, and leave with a concrete next step.
+      </p>
+      <a class="rs-btn rs-btn--light" href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style="margin-top: 28px; width: fit-content;">
+        Book a call
+      </a>
+    </div>
+    <form class="rs-cta__form" data-home-form data-reveal data-reveal-delay="2">
+      <input type="text" name="name" placeholder="Name" required autocomplete="name" />
+      <input type="email" name="email" placeholder="Email" required autocomplete="email" />
+      <textarea name="message" placeholder="What should this system take off your team?" required></textarea>
+      <button class="rs-btn rs-btn--light" type="submit">Send message</button>
+    </form>
+  </div>
+</section>

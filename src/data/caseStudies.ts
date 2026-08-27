@@ -60,14 +60,14 @@ export const caseStudies: CaseStudy[] = [
             archiverBg1
         ],
         content: {
-            challenge: 'Enterprises don’t just need to store emails — they need to prove trust. Most archiving solutions are fragile, insecure, or collapse under real world data volumes. The challenge was to build a platform that is safe, secure, fast, and defensible in court, capable of handling tens of terabytes of data, multiple providers (IMAP, Exchange, Gmail), and complex legal holds.',
+            challenge: 'Enterprises don’t just need to store emails, they need to prove trust. Most archiving solutions are fragile, insecure, or collapse under real world data volumes. The challenge was to build a platform that is safe, secure, fast, and defensible in court, capable of handling tens of terabytes of data, multiple providers (IMAP, Exchange, Gmail), and complex legal holds.',
             solution: 'We treated this as a systems engineering problem, not a CRUD app. We designed for compliance first by separating responsibilities into Connectors (edge), Workers (integrity), and a Compliance Core (system of record). We made security a default with immutable data and tamper evident logs, and built for horizontal scale using streaming ingestion and decoupled search indexes.',
             outcome: '1Archiver is now a compliance ready platform, not just an MVP. It features secure verifiable email ingestion, clear separation of concerns, and scalable search across massive datasets. The architecture is ready for on prem and cloud deployments and is built to pass audits, ensuring the system is defensible and reliable.',
         },
         detailedContent: [
             {
                 title: "The Problem",
-                content: "Most archiving solutions fail in one of three ways: they mix business logic with ingestion, treat security as an afterthought, or collapse under real world data volumes. 1Archiver started with a simple question: 'What if we built an email archiver the way it should actually be built — safe, secure, fast, and defensible in court?'",
+                content: "Most archiving solutions fail in one of three ways: they mix business logic with ingestion, treat security as an afterthought, or collapse under real world data volumes. 1Archiver started with a simple question: 'What if we built an email archiver the way it should actually be built, safe, secure, fast, and defensible in court?'",
                 items: [
                     {
                         title: "Architectural Challenges",
@@ -156,7 +156,7 @@ export const caseStudies: CaseStudy[] = [
         detailedContent: [
             {
                 title: "The Problem",
-                content: "Modern investors don’t suffer from a lack of data — they suffer from fragmentation. Real estate, stocks, and crypto data live in isolated systems. The real problem was architectural: How do you unify fundamentally different asset classes under one system without turning the platform brittle?",
+                content: "Modern investors don’t suffer from a lack of data, they suffer from fragmentation. Real estate, stocks, and crypto data live in isolated systems. The real problem was architectural: How do you unify fundamentally different asset classes under one system without turning the platform brittle?",
                 items: [
                     {
                         title: "Architectural Challenges",
@@ -169,13 +169,13 @@ export const caseStudies: CaseStudy[] = [
                 content: "Instead of building a fixed investment app, we treated InvestorsGoneWild as a financial operating system.",
                 items: [
                     {
-                        title: "1. A One Stop Shop — Without a Monolith",
+                        title: "1. A One Stop Shop | Without a Monolith",
                         description: "We designed a layered abstraction that allowed each data source to remain independent while still being queryable under a unified experience.",
                         image: igwBg1,
                         points: [
-                            "Stocks & Commodities — market data, performance, trends",
-                            "Crypto — volatility aware analytics and signals",
-                            "Real Estate — batch data ingestion and regional insights"
+                            "Stocks & Commodities, market data, performance, trends",
+                            "Crypto, volatility aware analytics and signals",
+                            "Real Estate, batch data ingestion and regional insights"
                         ]
                     },
                     {

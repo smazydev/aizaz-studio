@@ -135,21 +135,21 @@ export const Testimonials: React.FC = () => {
             quote="Aizaz Studio felt less like an agency and more like our own team. The engineer we hired onboarded in 2 days and pushed code to production on day 4."
             author="Mo"
             role="Founder"
-            company="1Archiver - Middleast"
+            company="1Archiver, Middleast"
             audioSrc="/public/1archiver-testimonial.m4a"
           />
           <TestimonialCard
             quote="This was a short engagement focused on getting some backend routes wired up for a travel app MVP. Ali from Aizaz Studios helped get a few key pieces in place during the early setup phase."
             author="Adam C."
             role="Founder"
-            company="MVP Travel App - United States"
+            company="MVP Travel App, United States"
             audioSrc="/audio/testimonial-david.m4a"
           />
           <TestimonialCard
             quote="Aizaz Studio was a game changer for our startup. The team was responsive, professional, and delivered high quality work on time."
             author="Ayaz K."
             role="Founder"
-            company="TradingDojo - Pakistan"
+            company="TradingDojo, Pakistan"
             audioSrc="/audio/testimonial-elena.mp3"
           />
         </div>

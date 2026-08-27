@@ -22,7 +22,7 @@ export const comparePages: ComparePage[] = [
         heroSubtitle:
             'When you need working systems, not another seat on your Slack channel.',
         intro:
-            'Staff augmentation adds developers to your roster. A product engineering agency owns deliverables end to end — architecture, build, deployment, and handoff. If your goal is rented capacity, augmentation can work. If your goal is a production outcome on a defined timeline, the models are not interchangeable.',
+            'Staff augmentation adds developers to your roster. A product engineering agency owns deliverables end to end, architecture, build, deployment, and handoff. If your goal is rented capacity, augmentation can work. If your goal is a production outcome on a defined timeline, the models are not interchangeable.',
         comparisonRows: [
             {
                 label: 'Primary deliverable',
@@ -65,7 +65,7 @@ export const comparePages: ComparePage[] = [
                 heading: 'Why founders choose outcomes over rented developers',
                 paragraphs: [
                     'Staff augmentation sounds flexible: add a senior React developer for three months and see what happens. In practice, founders and ops leaders become project managers for people they did not hire, chasing status updates instead of customer results.',
-                    'A product engineering agency inverts that dynamic. You describe the business problem — a broken order sync, a missing customer portal, an AI workflow that should run every morning — and the agency returns with architecture, implementation, deployment, and documentation.',
+                    'A product engineering agency inverts that dynamic. You describe the business problem, a broken order sync, a missing customer portal, an AI workflow that should run every morning, and the agency returns with architecture, implementation, deployment, and documentation.',
                     'That difference matters when speed and clarity beat headcount. You are not buying hours. You are buying a shipped system your team can run.',
                 ],
             },
@@ -89,7 +89,7 @@ export const comparePages: ComparePage[] = [
         faqs: [
             {
                 question: 'Is Aizaz Studio just staff augmentation with a different label?',
-                answer: 'No. We do not sell open ended developer hours. Engagements are scoped around deliverables — a workflow, integration, portal, or sprint outcome — with clear acceptance criteria.',
+                answer: 'No. We do not sell open ended developer hours. Engagements are scoped around deliverables, a workflow, integration, portal, or sprint outcome, with clear acceptance criteria.',
             },
             {
                 question: 'Can you work alongside our internal engineering team?',
@@ -101,7 +101,7 @@ export const comparePages: ComparePage[] = [
             },
             {
                 question: 'What if we only need one feature, not a full team?',
-                answer: 'That is common. Our AI Systems Sprint delivers one working workflow or feature in 14 days — ideal when you want a result, not a long term contractor search.',
+                answer: 'That is common. Our AI Systems Sprint delivers one working workflow or feature in 14 days, ideal when you want a result, not a long term contractor search.',
             },
             {
                 question: 'Do you provide developers we can manage directly?',
@@ -125,7 +125,7 @@ export const comparePages: ComparePage[] = [
         heroSubtitle:
             'Freelancers excel at tasks. Agencies own systems.',
         intro:
-            'A freelancer can be the right choice for a well defined task with a patient manager on your side. A product engineering agency fits when the work spans discovery, architecture, multiple integrations, deployment, and handoff — and you need it done as a cohesive outcome, not a collection of gigs.',
+            'A freelancer can be the right choice for a well defined task with a patient manager on your side. A product engineering agency fits when the work spans discovery, architecture, multiple integrations, deployment, and handoff, and you need it done as a cohesive outcome, not a collection of gigs.',
         comparisonRows: [
             {
                 label: 'Scope handling',
@@ -164,13 +164,13 @@ export const comparePages: ComparePage[] = [
                 paragraphs: [
                     'Freelancer marketplaces optimize for low hourly cost, not business outcomes. A founder saves on rate but spends on coordination: writing specs, reviewing partial work, fixing integration gaps, and hiring someone else when the first freelancer moves on.',
                     'Product engineering agencies price for the whole journey. Discovery, build, deployment, and documentation are part of the engagement because production software requires all of them.',
-                    'When the project is a landing page tweak, hire a freelancer. When the project is your order pipeline, customer portal, or AI ops workflow, the comparison is not about hourly rate — it is about total cost to a working system.',
+                    'When the project is a landing page tweak, hire a freelancer. When the project is your order pipeline, customer portal, or AI ops workflow, the comparison is not about hourly rate, it is about total cost to a working system.',
                 ],
             },
             {
                 heading: 'Accountability changes the engagement',
                 paragraphs: [
-                    'Freelancers deliver what you ask for. Agencies help you ask for the right thing. That starts with workflow mapping, stack review, and a definition of done tied to business metrics — fewer support tickets, faster onboarding, reliable inventory sync.',
+                    'Freelancers deliver what you ask for. Agencies help you ask for the right thing. That starts with workflow mapping, stack review, and a definition of done tied to business metrics, fewer support tickets, faster onboarding, reliable inventory sync.',
                     'Agencies also carry delivery risk across disciplines. Backend, frontend, integrations, and infrastructure do not sit in separate Upwork contracts. One team owns the thread from first commit to production monitoring.',
                     'For founders without a technical cofounder, that accountability is often the difference between a demo and a product customers can rely on.',
                 ],
@@ -223,7 +223,7 @@ export const comparePages: ComparePage[] = [
         heroSubtitle:
             'Ship one working AI workflow in 14 days instead of waiting months for a traditional automation project.',
         intro:
-            'Traditional automation projects often begin with lengthy discovery, broad platform selection, and phased rollouts measured in quarters. An AI Systems Sprint compresses that into a single outcome: one production ready workflow, built, deployed, and handed off in 14 days. Both approaches automate work — the difference is speed, scope, and how much AI changes what is possible.',
+            'Traditional automation projects often begin with lengthy discovery, broad platform selection, and phased rollouts measured in quarters. An AI Systems Sprint compresses that into a single outcome: one production ready workflow, built, deployed, and handed off in 14 days. Both approaches automate work, the difference is speed, scope, and how much AI changes what is possible.',
         comparisonRows: [
             {
                 label: 'Timeline',
@@ -261,7 +261,7 @@ export const comparePages: ComparePage[] = [
                 heading: 'Why sprints beat big bang automation',
                 paragraphs: [
                     'Traditional automation engagements promise transformation but deliver planning documents while manual work continues. Teams lose momentum waiting for platform procurement, stakeholder alignment, and multi phase rollouts.',
-                    'An AI Systems Sprint forces prioritization. What is the one workflow costing the most time or causing the most errors? Lead qualification, support triage, document processing, order exceptions — pick one, ship it, measure it.',
+                    'An AI Systems Sprint forces prioritization. What is the one workflow costing the most time or causing the most errors? Lead qualification, support triage, document processing, order exceptions, pick one, ship it, measure it.',
                     'That proof point unlocks budget and confidence for the next workflow. Progress becomes visible in production, not in a Gantt chart.',
                 ],
             },
@@ -269,7 +269,7 @@ export const comparePages: ComparePage[] = [
                 heading: 'Where AI changes the automation equation',
                 paragraphs: [
                     'Classic automation handles predictable if then logic. AI assisted workflows handle unstructured input: emails, PDFs, chat messages, and messy form data that used to require human judgment on every item.',
-                    'Our sprints combine reliable integrations with AI where it adds leverage — summarizing inbound requests, scoring leads, routing exceptions, drafting first responses — while keeping humans in the loop when accuracy matters.',
+                    'Our sprints combine reliable integrations with AI where it adds leverage, summarizing inbound requests, scoring leads, routing exceptions, drafting first responses, while keeping humans in the loop when accuracy matters.',
                     'Traditional automation projects often bolt AI on later as a phase two upgrade. Sprints design AI into the workflow from day one because that is where modern ops teams win time back.',
                 ],
             },
@@ -285,7 +285,7 @@ export const comparePages: ComparePage[] = [
         faqs: [
             {
                 question: 'What counts as one workflow in a sprint?',
-                answer: 'A connected flow with clear start and end — for example, inbound lead → AI qualification → CRM update → follow up email. We define boundaries during discovery before day one.',
+                answer: 'A connected flow with clear start and end, for example, inbound lead → AI qualification → CRM update → follow up email. We define boundaries during discovery before day one.',
             },
             {
                 question: 'Can a sprint connect to our existing CRM or ERP?',
@@ -305,7 +305,7 @@ export const comparePages: ComparePage[] = [
             },
             {
                 question: 'Do we need to choose between AI and traditional automation?',
-                answer: 'No. The sprint uses the best tool for each step — reliable integrations and rules where logic is fixed, AI where input is unstructured or decisions need assistance.',
+                answer: 'No. The sprint uses the best tool for each step, reliable integrations and rules where logic is fixed, AI where input is unstructured or decisions need assistance.',
             },
         ],
         ctaText: 'Start an AI Systems Sprint',

@@ -14,7 +14,7 @@ export const ProblemSection: React.FC = () => {
               <span className="text-gradient block mt-2">You need connected systems.</span>
             </h2>
             <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
-              Most businesses are not short on software. They are short on architecture — workflows that run reliably across CRM, ERP, cloud, and internal teams without someone babysitting spreadsheets all day.
+              Most businesses are not short on software. They are short on architecture, workflows that run reliably across CRM, ERP, cloud, and internal teams without someone babysitting spreadsheets all day.
             </p>
             <a
               href="/ai-systems-sprint"

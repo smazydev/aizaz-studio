@@ -1,0 +1,30 @@
+---
+import { engagementModels } from '../../data/commercialPages';
+
+const faqs = engagementModels.faqs;
+---
+
+<section class="rs-section rs-wrap rs-faq" aria-labelledby="home-faq-heading">
+  <p class="rs-kicker" data-reveal>07 — FAQ</p>
+  <h2 id="home-faq-heading" class="rs-heading-md" data-reveal="clip">Questions, answered plainly.</h2>
+
+  {faqs.map((faq) => (
+    <details data-reveal>
+      <summary>
+        {faq.question}
+        <span aria-hidden="true">+</span>
+      </summary>
+      <p>{faq.answer}</p>
+    </details>
+  ))}
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+})} />

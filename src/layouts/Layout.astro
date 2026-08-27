@@ -8,17 +8,37 @@ interface Props {
   canonical?: string;
   keywords?: string[];
   noindex?: boolean;
+  theme?: 'dark' | 'light';
 }
 
 const {
   title = 'Aizaz.studio | AI, Cloud & Automation Engineering',
-  description = 'Aizaz.studio builds AI-powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
+  description = 'Aizaz.studio builds AI powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
   canonical,
   keywords = [],
   noindex = false,
+  theme = 'dark',
 } = Astro.props;
 
-const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : Astro.url.href.startsWith('http') ? Astro.url.href : `${SITE_URL}${Astro.url.pathname}`;
+function toCanonicalUrl(url: string): string {
+  try {
+    const parsed = new URL(url, SITE_URL);
+    // Keep file URLs (e.g. sitemap.xml, .png) as-is
+    if (/\.[a-z0-9]+$/i.test(parsed.pathname)) return parsed.toString();
+    if (parsed.pathname === '/' || parsed.pathname === '') return `${SITE_URL}/`;
+    parsed.pathname = parsed.pathname.replace(/\/$/, '');
+    return parsed.toString();
+  } catch {
+    return url === `${SITE_URL}/` || url === '/' ? `${SITE_URL}/` : url.replace(/\/$/, '');
+  }
+}
+
+const rawCanonical = canonical
+  ? `${SITE_URL}${canonical}`
+  : Astro.url.href.startsWith('http')
+    ? Astro.url.href
+    : `${SITE_URL}${Astro.url.pathname}`;
+const canonicalUrl = toCanonicalUrl(rawCanonical);
 const keywordContent = keywords.length > 0 ? keywords.join(', ') : 'AI automation, SaaS development, AWS DevOps, NetSuite integration, business process automation';
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
 const isHome = canonicalUrl === `${SITE_URL}/` || Astro.url.pathname === '/';
@@ -54,7 +74,7 @@ const websiteSchema = {
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class:list={['scroll-smooth', theme === 'light' && 'theme-light']}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -78,9 +98,10 @@ const websiteSchema = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
@@ -98,15 +119,18 @@ const websiteSchema = {
       </>
     )}
   </head>
-  <body>
+  <body class:list={[theme === 'light' && 'theme-light']}>
     <slot />
   </body>
 </html>
 
 <script>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const homeOwnsReveal = document.body.classList.contains('theme-light');
 
-  if (!reduceMotion) {
+  if (homeOwnsReveal) {
+    // Homepage motion is handled in src/lib/home-motion.ts
+  } else if (!reduceMotion) {
     const revealElements = document.querySelectorAll('[data-reveal]');
 
     if (revealElements.length > 0) {

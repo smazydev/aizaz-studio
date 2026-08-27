@@ -26,7 +26,7 @@ export const WhyUs: React.FC = () => {
           </div>
           <div className="lg:col-span-5 flex items-end">
             <p className="text-zinc-400 text-lg leading-relaxed">
-              Most agencies deliver isolated pieces — a website here, a script there, cloud handled by someone else. We bring the layers together so your systems actually work in production.
+              Most agencies deliver isolated pieces, a website here, a script there, cloud handled by someone else. We bring the layers together so your systems actually work in production.
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@ export const WhyUs: React.FC = () => {
           <BenefitCard
             icon={<Layers size={28} />}
             title="Architecture first thinking"
-            description="We design how data, workflows, and tools connect before writing code — so you do not rebuild in six months."
+            description="We design how data, workflows, and tools connect before writing code, so you do not rebuild in six months."
           />
           <BenefitCard
             icon={<Rocket size={28} />}
@@ -45,12 +45,12 @@ export const WhyUs: React.FC = () => {
           <BenefitCard
             icon={<Shield size={28} />}
             title="Production grade delivery"
-            description="Auth, monitoring, backups, and deployment pipelines are part of the build — not afterthoughts."
+            description="Auth, monitoring, backups, and deployment pipelines are part of the build, not afterthoughts."
           />
           <BenefitCard
             icon={<Users size={28} />}
             title="Built for real operations"
-            description="We work with ops heavy businesses — ecommerce, clinics, trading teams, NetSuite users, and SaaS founders."
+            description="We work with ops heavy businesses, ecommerce, clinics, trading teams, NetSuite users, and SaaS founders."
           />
         </div>
       </div>

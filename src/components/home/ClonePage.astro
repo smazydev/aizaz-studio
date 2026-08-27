@@ -1,0 +1,869 @@
+---
+import HeroSculpture from './HeroSculpture.astro';
+import ProjectArt from './ProjectArt.astro';
+
+const isDev = import.meta.env.DEV;
+const services = [
+  {
+    n: '01',
+    title: 'AI Automation',
+    body: 'Agents and workflows that take work off your team — from intake to action, with evals and a human handoff.',
+    items: ['Workflow mapping', 'Tool use & guardrails', 'Production evals'],
+    viz: 'flow',
+  },
+  {
+    n: '02',
+    title: 'Product Engineering',
+    body: 'Web apps and SaaS products built to ship — architecture, UI, and the backend your users actually hit.',
+    items: ['MVP to production', 'React / Node', 'Auth, billing, APIs'],
+    viz: 'product',
+  },
+  {
+    n: '03',
+    title: 'Systems Integration',
+    body: 'CRM, helpdesk, warehouse, and internal tools connected so data stops living in five places.',
+    items: ['API connectors', 'Event buses', 'Idempotent sync'],
+    viz: 'bus',
+  },
+  {
+    n: '04',
+    title: 'ERP / NetSuite',
+    body: 'NetSuite and operations systems wired to the rest of the stack — orders, inventory, and finance in one flow.',
+    items: ['NetSuite REST / SuiteQL', 'Order sync', 'Custom records'],
+    viz: 'erp',
+  },
+  {
+    n: '05',
+    title: 'Cloud Infrastructure',
+    body: 'AWS environments that stay up: CI/CD, observability, and the reliability work that makes shipping safe.',
+    items: ['AWS landing zone', 'Pipelines & canaries', 'Logs, traces, alerts'],
+    viz: 'cloud',
+  },
+];
+
+const projects = [
+  {
+    kind: 'wide',
+    viz: 'optical' as const,
+    title: 'Support Copilot for SaaS',
+    client: 'Cantos',
+    system: 'LLM agent + RAG',
+    year: '2026',
+    description: 'Draft replies and pulls account context; reduced first-response time by 38%.',
+  },
+  {
+    kind: 'square',
+    viz: 'product' as const,
+    title: 'Underwriting Risk Copilot',
+    client: 'Northline',
+    system: 'Triage assistant',
+    year: '2026',
+    description: 'Built a triage assistant to summarize claims; cut manual review time by 42%.',
+  },
+  {
+    kind: 'cinema',
+    viz: 'material' as const,
+    title: 'Clinical Note Summarizer',
+    client: 'Harbor Clinic',
+    system: 'Clinical RAG',
+    year: '2025',
+    description: 'Clinic-lobby assistant answering pre-visit questions; decreased front-desk calls by 28%.',
+  },
+  {
+    kind: 'wide',
+    viz: 'mesh' as const,
+    title: 'Catalog Intelligence Engine',
+    client: 'Atelier Market',
+    system: 'Embeddings pipeline',
+    year: '2026',
+    description: 'Launched a shopping copilot that understands attributes; raised add-to-cart by 12%.',
+  },
+];
+
+const process = [
+  { n: '01', title: 'Discover', body: 'Align on problems, data reality, and success metrics.' },
+  { n: '02', title: 'Design', body: 'Map the experience, prompts, and human handoff states.' },
+  { n: '03', title: 'Build', body: 'Ship the agent, pipeline, or product against live systems.' },
+  { n: '04', title: 'Integrate', body: 'Connect CRM, ERP, warehouse, and internal tools.' },
+  { n: '05', title: 'Ship', body: 'Production deploy with tracing, canaries, and rollback.' },
+  { n: '06', title: 'Observe', body: 'Evals, cost, latency, and safety stay visible after launch.' },
+];
+
+const why = [
+  { title: 'Outcome over Output', body: 'We measure what matters — accuracy, latency, safety, and cost — so every sprint ships business value, not just features.' },
+  { title: 'Eval-First Reliability', body: 'From day one, we run offline/online evals, canary tests, and tracing. You see how models perform — and why.' },
+  { title: 'Secure by Design', body: 'PII handling, SSO/SAML, RBAC, encryption, and audit trails — built in, not bolted on. Enterprise-ready from the start.' },
+  { title: 'Design-Led AI Experiences', body: 'We craft prompts, interfaces, and guardrails that feel intuitive — so adoption rises and support tickets fall.' },
+];
+
+const features = [
+  { title: 'Agents', body: 'Autonomous flows with guardrails and a clear handoff to humans.' },
+  { title: 'RAG', body: 'Private knowledge with freshness, citations, and explainability.' },
+  { title: 'Workflow Automation', body: 'Repetitive operations become planned, executed, and reported.' },
+  { title: 'Data Pipelines', body: 'Clean, embed, and route context so models see the right truth.' },
+  { title: 'AI Integrations', body: 'CRM, helpdesk, ERP, and warehouse connected through APIs.' },
+  { title: 'Observability', body: 'Accuracy, latency, safety, and cost measured from day one.' },
+];
+
+const tools = ['OpenAI', 'Anthropic', 'LangChain', 'Pinecone', 'AWS', 'Postgres', 'Stripe', 'Slack'];
+
+const people = [
+  { name: 'Noah Reed', role: 'ML / Agent Lead', hot: true },
+  { name: 'Lucas Hayes', role: 'Solutions Architect', hot: false },
+  { name: 'Jordan Brooks', role: 'Data Engineer', hot: false },
+  { name: 'Erin Park', role: 'MLOps Engineer', hot: true },
+  { name: 'Ava Collins', role: 'Design Lead', hot: false },
+];
+
+const awards = [
+  { k: '01', t: 'Innovation in AI', d: 'Underwriting Risk Copilot (Fintech) / 2026' },
+  { k: '02', t: 'Best AI Product Design', d: 'Support Copilot (SaaS)' },
+  { k: '03', t: 'Data & AI Excellence', d: 'Clinical Note Summarizer (Healthcare)' },
+  { k: '04', t: 'Risk Intelligence', d: 'Catalog Intelligence Engine' },
+];
+
+const faqs = [
+  { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
+  { q: 'What do we need to start?', a: 'A clear problem statement, success metrics, access to sample data, and a stakeholder who can make decisions. We’ll run a kickoff workshop to align scope.' },
+  { q: 'Which models/stack do you use?', a: 'Modern, scalable stacks like React, Node.js, and cloud services. We choose models/APIs based on the use case, performance, and cost.' },
+  { q: 'Are model/API costs included in pricing?', a: 'Model and API costs are usually billed separately based on usage. We share estimates upfront and help optimize costs.' },
+];
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/case-studies', label: 'Works' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '/book-a-call', label: 'Contact' },
+];
+
+const haiField = (() => {
+  let s = 0xa12a2;
+  const rng = () => {
+    s |= 0;
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const gauss = () => {
+    const u = rng() || 1e-6;
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(Math.PI * 2 * rng());
+  };
+  const W = 1000;
+  const H = 720;
+  type Pt = { x: number; y: number; r: number; hot: boolean; o: number };
+  const pts: Pt[] = [];
+  const add = (cx: number, cy: number, sx: number, sy: number, n: number, hotP: number) => {
+    for (let i = 0; i < n; i++) {
+      const z = rng();
+      pts.push({
+        x: +(Math.min(0.98, Math.max(0.02, cx + gauss() * sx)) * W).toFixed(1),
+        y: +(Math.min(0.98, Math.max(0.02, cy + gauss() * sy)) * H).toFixed(1),
+        r: +(0.7 + z * 1.15).toFixed(2),
+        hot: rng() < hotP,
+        o: +(0.28 + z * 0.58).toFixed(2),
+      });
+    }
+  };
+  add(0.3, 0.38, 0.13, 0.16, 460, 0.04);
+  add(0.5, 0.47, 0.1, 0.12, 360, 0.1);
+  add(0.68, 0.61, 0.1, 0.11, 440, 0.7);
+  add(0.17, 0.71, 0.08, 0.09, 200, 0.07);
+  add(0.79, 0.25, 0.07, 0.08, 170, 0.05);
+  const bridge = (a: [number, number], b: [number, number], n: number, hotP: number) => {
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      pts.push({
+        x: +((a[0] + (b[0] - a[0]) * t + gauss() * 0.012) * W).toFixed(1),
+        y: +((a[1] + (b[1] - a[1]) * t + Math.sin(t * Math.PI) * 0.045 + gauss() * 0.012) * H).toFixed(1),
+        r: 0.95,
+        hot: rng() < hotP,
+        o: 0.45,
+      });
+    }
+  };
+  bridge([0.3, 0.38], [0.5, 0.47], 90, 0.1);
+  bridge([0.5, 0.47], [0.68, 0.61], 100, 0.48);
+  bridge([0.3, 0.38], [0.17, 0.71], 70, 0.06);
+  bridge([0.5, 0.47], [0.79, 0.25], 55, 0.05);
+  const links: { x1: number; y1: number; x2: number; y2: number; hot: boolean }[] = [];
+  const cols = 28;
+  const rows = 20;
+  const bins: number[][] = Array.from({ length: cols * rows }, () => []);
+  pts.forEach((p, i) => {
+    const cx = Math.min(cols - 1, Math.floor((p.x / W) * cols));
+    const cy = Math.min(rows - 1, Math.floor((p.y / H) * rows));
+    bins[cy * cols + cx].push(i);
+  });
+  bins.forEach((bin) => {
+    for (let i = 0; i < bin.length; i++) {
+      if (rng() > 0.58 || bin.length < 2) continue;
+      const a = pts[bin[i]];
+      const b = pts[bin[(i + 1) % bin.length]];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      if (dx * dx + dy * dy < 1700) links.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, hot: a.hot && b.hot });
+    }
+  });
+  return { pts, links };
+})();
+---
+
+<div class="clone">
+  {isDev && (
+    <>
+      <div class="ref-overlay" data-ref-overlay hidden>
+        <img src="/dev/reference-home.jpg" alt="" />
+      </div>
+      <div class="ref-chip">Shift+R</div>
+    </>
+  )}
+
+  <!-- 01 NAV -->
+  <header class="c-nav">
+    <input id="c-nav" type="checkbox" />
+    <div class="c-nav__inner">
+      <a class="c-nav__logo" href="/">AgenAI</a>
+      <nav class="c-nav__links" aria-label="Primary">
+        {nav.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+      <a class="c-btn c-nav__cta" href="/book-a-call">Start a Project</a>
+      <label class="c-nav__burger" for="c-nav" aria-label="Open menu"><span></span></label>
+    </div>
+    <nav class="c-nav__mobile">
+      {nav.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+  </header>
+
+  <main>
+    <!-- 02 HERO -->
+    <section class="c-hero" aria-label="Hero" data-hero>
+      <div class="c-hero__art c-hero__art--back" aria-hidden="true">
+        <HeroSculpture layer="back" />
+      </div>
+      <div class="c-hero__art c-hero__art--rear" aria-hidden="true">
+        <HeroSculpture layer="rear" />
+      </div>
+      <div class="c-hero__copy">
+        <p class="c-micro c-hero__kicker c-hero__ui" data-reveal>AI-Driven Agency</p>
+        <h1 class="c-hero__title" data-reveal="clip">Your AI Sprint<br />Team<br />on Demand</h1>
+        <div class="c-hero__ui" data-reveal>
+          <p class="c-hero__lede">From discovery to deployment — prototype, validate, launch.</p>
+          <div class="c-hero__cta">
+            <a class="c-btn" href="/services">Explore Services</a>
+            <a class="c-btn c-btn--ghost" href="#pricing">View Pricing Plans</a>
+          </div>
+        </div>
+      </div>
+      <div class="c-hero__art c-hero__art--front" aria-hidden="true">
+        <HeroSculpture layer="front" />
+      </div>
+      <p class="c-hero__scroll c-hero__ui">Scroll for more</p>
+    </section>
+
+    <!-- 03 HUMAN CENTERED -->
+    <section class="home-human-ai">
+      <div class="c-wrap home-human-ai__head">
+        <div class="home-human-ai__heading">
+          <p class="c-micro c-red">About Us</p>
+          <h2 class="home-human-ai__title">Human-<br />Centered AI,<br />Built for<br />Production</h2>
+        </div>
+        <p class="c-lede home-human-ai__lede">
+          Good AI feels obvious—because the hard work is hidden. Available for worldwide projects. Based in Montréal, Canada.
+        </p>
+      </div>
+      <div class="c-wrap home-human-ai__grid">
+        <article class="home-human-ai__visual">
+          <svg class="home-human-ai__field" viewBox="0 0 1000 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            {haiField.links.map((l) => (
+              <line
+                x1={l.x1}
+                y1={l.y1}
+                x2={l.x2}
+                y2={l.y2}
+                class={l.hot ? 'is-hot' : undefined}
+              />
+            ))}
+            {haiField.pts.map((p) => (
+              <circle cx={p.x} cy={p.y} r={p.r} opacity={p.o} class={p.hot ? 'is-hot' : undefined} />
+            ))}
+          </svg>
+          <span class="home-human-ai__noise"></span>
+          <span class="home-human-ai__meta">inference field · {haiField.pts.length.toLocaleString()} nodes</span>
+        </article>
+        <div class="home-human-ai__side">
+          <article class="home-human-ai__module">
+            <div class="home-human-ai__module-bar">
+              <p class="c-micro c-red">Aizaz · runtime</p>
+              <span class="home-human-ai__live">live</span>
+            </div>
+            <div class="home-human-ai__kpi">
+              <span>120+</span>
+              <small>clients shipped</small>
+            </div>
+            <svg class="home-human-ai__spark" viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 34 C18 34 22 18 40 20 C58 22 62 8 80 12 C98 16 104 30 122 24 C140 18 148 6 168 10 C188 14 196 32 216 22 C228 16 234 20 240 18" fill="none" />
+            </svg>
+            <p class="home-human-ai__copy">shipping AI from idea to production in 8–10 weeks</p>
+            <div class="home-human-ai__module-meta">
+              <span>p95 184ms</span>
+              <span>eval 0.97</span>
+              <span>ok</span>
+            </div>
+          </article>
+          <article class="home-human-ai__object">
+            <div class="home-human-ai__part" aria-hidden="true">
+              <span class="home-human-ai__part-shadow"></span>
+              <span class="home-human-ai__part-body">
+                <i class="home-human-ai__part-face"></i>
+                <i class="home-human-ai__part-slit"></i>
+                <i class="home-human-ai__part-port"></i>
+              </span>
+            </div>
+            <div class="home-human-ai__caption">
+              <p class="c-micro">Ava Collins</p>
+              <p>AgenAI’s Design Lead</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 SERVICES -->
+    <section class="home-services" id="services" data-services>
+      <div class="c-wrap">
+        <div class="home-services__head">
+          <div>
+            <p class="c-micro c-red">Services</p>
+            <h2 class="home-services__title">End-to-End<br />AI Services</h2>
+          </div>
+          <p class="c-lede">
+            We turn ambiguous AI ideas into production features your users trust—combining strategy, design, engineering, and rigorous evaluation.
+          </p>
+        </div>
+        <div class="home-services__grid">
+          <div class="home-services__visual" data-service-viz>
+            <div class="home-services__panel is-on" data-sv="0">
+              <span class="home-services__panel-n">01 · FLOW</span>
+              <svg class="home-services__svg" viewBox="0 0 800 640" preserveAspectRatio="none" aria-hidden="true">
+                {Array.from({ length: 20 }).map((_, i) => <line class="g" x1={20 + i * 40} y1="16" x2={20 + i * 40} y2="624" />)}
+                {Array.from({ length: 15 }).map((_, i) => <line class="g" x1="16" y1={20 + i * 42} x2="784" y2={20 + i * 42} />)}
+                <text x="48" y="78">INGEST</text>
+                <text x="236" y="78">PLAN</text>
+                <text x="424" y="78">TOOL CALLS</text>
+                <text x="620" y="78">OUTPUT</text>
+                <rect x="40" y="128" width="128" height="64" rx="8" />
+                <rect x="40" y="228" width="128" height="64" rx="8" />
+                <rect x="40" y="328" width="128" height="64" rx="8" />
+                <rect x="40" y="428" width="128" height="64" rx="8" />
+                <text x="56" y="166">ticket</text>
+                <text x="56" y="266">email</text>
+                <text x="56" y="366">crm</text>
+                <text x="56" y="466">webhook</text>
+                <rect class="hot" x="220" y="188" width="156" height="248" rx="10" />
+                <text x="240" y="228">AGENT</text>
+                <text x="240" y="258">route · tool · eval</text>
+                <rect x="428" y="148" width="132" height="72" rx="8" />
+                <rect class="hot" x="428" y="248" width="132" height="72" rx="8" />
+                <rect x="428" y="348" width="132" height="72" rx="8" />
+                <rect x="428" y="448" width="132" height="72" rx="8" />
+                <text x="444" y="190">search</text>
+                <text x="444" y="290">write</text>
+                <text x="444" y="390">notify</text>
+                <text x="444" y="490">handoff</text>
+                <rect x="616" y="208" width="140" height="200" rx="10" />
+                <text x="636" y="300">ACTION</text>
+                <path class="flow" d="M168 160 H220" />
+                <path class="flow" d="M168 260 H220" />
+                <path class="flow" d="M168 360 C196 360 196 280 220 280" />
+                <path class="flow" d="M168 460 C196 460 204 360 220 360" />
+                <path class="flow hot" d="M376 312 H428" />
+                <path class="flow" d="M560 184 C588 184 588 280 616 280" />
+                <path class="flow hot" d="M560 284 H616" />
+                <path class="flow" d="M560 384 C588 384 588 330 616 330" />
+                {[
+                  [70,160],[70,260],[70,360],[70,460],
+                  [298,248],[298,312],[298,376],
+                  [494,184],[494,284],[494,384],[494,484],
+                  [686,308],
+                ].map((p) => (
+                  <circle
+                    cx={p[0]}
+                    cy={p[1]}
+                    r="3.5"
+                    class={p[0] === 298 || (p[0] === 494 && p[1] === 284) ? 'hot' : undefined}
+                  />
+                ))}
+                <rect x="616" y="520" width="140" height="52" rx="6" />
+                <text x="636" y="552">p95 184ms</text>
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="1">
+              <span class="home-services__panel-n">02 · PRODUCT</span>
+              <div class="home-services__chassis" aria-hidden="true">
+                <div class="home-services__chassis-unit">
+                  <span class="home-services__chassis-bezel"></span>
+                  <span class="home-services__chassis-screen"></span>
+                  <span class="home-services__chassis-row"><i></i><i></i><i class="hot"></i></span>
+                  <span class="home-services__chassis-rail"></span>
+                </div>
+              </div>
+            </div>
+            <div class="home-services__panel" data-sv="2">
+              <span class="home-services__panel-n">03 · BUS</span>
+              <svg class="home-services__svg" viewBox="0 0 800 640" preserveAspectRatio="none" aria-hidden="true">
+                {Array.from({ length: 18 }).map((_, i) => <line class="g" x1={24 + i * 44} y1="20" x2={24 + i * 44} y2="620" />)}
+                <rect class="bus" x="372" y="48" width="56" height="544" rx="6" />
+                <text x="378" y="38">EVENT BUS</text>
+                {['CRM', 'HELPDESK', 'WAREHOUSE', 'DOCS'].map((label, i) => {
+                  const y = 78 + i * 128;
+                  return (
+                    <g>
+                      <rect x="40" y={y} width="220" height="88" rx="8" />
+                      <text x="58" y={y + 52}>{label}</text>
+                      <path class="flow" d={`M260 ${y + 44} H372`} />
+                      <circle cx="260" cy={y + 44} r="3.5" />
+                    </g>
+                  );
+                })}
+                {['ERP', 'BILLING', 'AUTH', 'NOTIFY'].map((label, i) => {
+                  const y = 78 + i * 128;
+                  return (
+                    <g>
+                      <rect x="540" y={y} width="220" height="88" rx="8" />
+                      <text x="558" y={y + 52}>{label}</text>
+                      <path class="flow hot" d={`M428 ${y + 44} H540`} />
+                      <circle class="hot" cx="540" cy={y + 44} r="3.5" />
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="3">
+              <span class="home-services__panel-n">04 · NETSUITE</span>
+              <svg class="home-services__svg" viewBox="0 0 800 640" preserveAspectRatio="none" aria-hidden="true">
+                {Array.from({ length: 16 }).map((_, i) => <line class="g" x1={30 + i * 48} y1="20" x2={30 + i * 48} y2="620" />)}
+                <rect x="48" y="56" width="292" height="210" rx="12" />
+                <text x="72" y="92">ORDERS</text>
+                {[0, 1, 2, 3].map((n) => <line class="g" x1="72" y1={128 + n * 28} x2="312" y2={128 + n * 28} />)}
+                <rect x="460" y="56" width="292" height="210" rx="12" />
+                <text x="484" y="92">CUSTOMERS</text>
+                {[0, 1, 2, 3].map((n) => <line class="g" x1="484" y1={128 + n * 28} x2="720" y2={128 + n * 28} />)}
+                <rect x="48" y="374" width="292" height="210" rx="12" />
+                <text x="72" y="410">INVENTORY</text>
+                {[0, 1, 2, 3].map((n) => <line class="g" x1="72" y1={446 + n * 28} x2="312" y2={446 + n * 28} />)}
+                <rect x="460" y="374" width="292" height="210" rx="12" />
+                <text x="484" y="410">FINANCE</text>
+                {[0, 1, 2, 3].map((n) => <line class="g" x1="484" y1={446 + n * 28} x2="720" y2={446 + n * 28} />)}
+                <rect class="core" x="352" y="286" width="96" height="68" rx="10" />
+                <text x="372" y="326">SYNC</text>
+                <path class="flow" d="M340 161 H400 V286" />
+                <path class="flow" d="M460 161 H400" />
+                <path class="flow hot" d="M340 479 H400 V354" />
+                <path class="flow" d="M460 479 H400" />
+                <circle class="hot" cx="400" cy="161" r="4" />
+                <circle cx="400" cy="479" r="4" />
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="4">
+              <span class="home-services__panel-n">05 · INFRA</span>
+              <svg class="home-services__svg" viewBox="0 0 800 640" preserveAspectRatio="none" aria-hidden="true">
+                {[
+                  ['EDGE', 36],
+                  ['SERVICES', 156],
+                  ['QUEUES', 276],
+                  ['DATABASE', 396],
+                  ['OBSERVE', 516],
+                ].map(([label, y], i) => (
+                  <g>
+                    <rect class={i === 4 ? 'hot' : ''} x="40" y={y} width="720" height="100" rx="10" />
+                    <text x="64" y={Number(y) + 36}>{label}</text>
+                    {Array.from({ length: 10 }).map((_, n) => (
+                      <circle class={i === 2 && n === 4 ? 'hot' : ''} cx={210 + n * 52} cy={Number(y) + 62} r="4" />
+                    ))}
+                    {i < 4 && <path class={i === 2 ? 'flow hot' : 'flow'} d={`M400 ${Number(y) + 100} V${Number(y) + 120}`} />}
+                  </g>
+                ))}
+              </svg>
+            </div>
+          </div>
+          <div class="home-services__acc" role="list">
+            {services.map((s, i) => (
+              <button
+                class:list={['home-services__item', i === 0 && 'is-on']}
+                type="button"
+                data-service={String(i)}
+                aria-expanded={i === 0 ? 'true' : 'false'}
+              >
+                <span class="home-services__item-top">
+                  <span class="home-services__idx">{s.n}</span>
+                  <span class="home-services__item-title">{s.title}</span>
+                </span>
+                <span class="home-services__item-body">
+                  <span class="home-services__item-inner">
+                    {s.body}
+                    <span class="home-services__item-meta">{s.items.join('  ·  ')}</span>
+                  </span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05–08 PROJECTS -->
+    <div class="c-wrap c-works-label">
+      <p class="c-micro c-red">Featured Works</p>
+    </div>
+    {projects.map((p) => (
+      <article class={`c-project c-project--${p.kind}`} data-reveal="media">
+        <div class="c-project__frame">
+          <ProjectArt kind={p.viz} />
+        </div>
+        <div class="c-project__meta">
+          <div>
+            <p class="c-micro">Project</p>
+            <h3>{p.title}</h3>
+          </div>
+          <div>
+            <p class="c-micro">Industry</p>
+            <p class="c-project__val">{p.client}</p>
+          </div>
+          <div>
+            <p class="c-micro">System</p>
+            <p class="c-project__val">{p.system}</p>
+          </div>
+          <div>
+            <p class="c-micro">Year</p>
+            <p class="c-project__val">{p.year}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+
+    <!-- 09 FROM IDEA -->
+    <section class="c-process">
+      <div class="c-wrap">
+        <p class="c-micro c-red">Process</p>
+        <h2 class="c-h1">From Idea to<br />Production</h2>
+        <div class="c-rail" data-process>
+          <div class="c-rail__track" aria-hidden="true"><span data-process-fill></span></div>
+          {process.map((row, i) => (
+            <article class:list={['c-rail__node', i === 0 && 'is-on']} data-process-node>
+              <p class="c-micro c-red">{row.n}</p>
+              <h3>{row.title}</h3>
+              <p>{row.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 WHY -->
+    <section class="c-why">
+      <div class="c-wrap">
+        <p class="c-micro c-red">Benefits</p>
+        <h2 class="c-h2">Why Choose Us</h2>
+        <div class="c-why__grid">
+          {why.map((item, i) => (
+            <article class="c-why__card">
+              {i === 0 && (
+                <div class="c-why__sys c-why__sys--graph" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+              )}
+              {i === 1 && (
+                <div class="c-why__sys c-why__sys--code" aria-hidden="true">
+                  <div class="c-why__gutter"></div>
+                  <div class="c-why__lines"><b></b><b></b><b></b><b></b></div>
+                </div>
+              )}
+              {i === 2 && (
+                <div class="c-why__sys c-why__sys--infra" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              )}
+              {i === 3 && (
+                <div class="c-why__sys c-why__sys--flow" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              )}
+              <p class="c-micro">0{i + 1} / SYS</p>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 FEATURES -->
+    <section class="c-features">
+      <div class="c-wrap">
+        <p class="c-micro c-red" style="text-align:center">Features</p>
+        <h2 class="c-h1">All Features<br />in One</h2>
+        <div class="c-hub" data-hub>
+          <svg class="c-hub__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="50" y1="50" x2="18" y2="14" />
+            <line x1="50" y1="50" x2="82" y2="14" />
+            <line x1="50" y1="50" x2="12" y2="50" />
+            <line x1="50" y1="50" x2="88" y2="50" />
+            <line x1="50" y1="50" x2="18" y2="86" />
+            <line x1="50" y1="50" x2="82" y2="86" />
+          </svg>
+          {features.map((f, i) => (
+            <article class="c-hub__item" data-hub-item={String(i)} tabindex="0">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </article>
+          ))}
+          <div class="c-hub__core" data-hub-core aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 TOOLS -->
+    <section class="c-tools">
+      <div class="c-wrap">
+        <p class="c-micro c-red">Tools</p>
+        <h2 class="c-h2">We work with powerful AI tools</h2>
+        <p class="c-lede">
+          We design, build, and evaluate with a modern AI stack—LLMs, vector search, orchestration, and observability—so your features are fast, reliable, and secure.
+        </p>
+        <div class="c-orbit" data-orbit>
+          {tools.map((t, i) => {
+            const angle = (i / tools.length) * Math.PI * 2 - Math.PI / 2;
+            const depth = (i % 3) + 1;
+            const radius = depth === 1 ? 30 : depth === 2 ? 38 : 44;
+            const x = 50 + Math.cos(angle) * radius;
+            const y = 50 + Math.sin(angle) * (radius * 0.82);
+            return (
+              <span
+                class="c-orbit__pill"
+                data-depth={String(depth)}
+                style={`left: ${x}%; top: ${y}%;`}
+              >
+                {t}
+              </span>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- 13–15 DARK / METRIC / TESTIMONIAL -->
+    <section class="c-dark">
+      <div class="c-wrap">
+        <div class="c-dark__intro">
+          <div>
+            <p class="c-micro">Team Members</p>
+            <h2 class="c-h1">The Squad<br />Shipping Your AI</h2>
+          </div>
+          <p class="c-lede">Human-centered AI, built for production. 85+ specialists across strategy, design, and MLOps.</p>
+        </div>
+
+        <div class="c-dash">
+          <div class="c-people">
+            {people.map((p) => (
+              <figure class:list={['c-person', p.hot && 'c-person--hot']}>
+                <span class="c-person__face"></span>
+                <figcaption>
+                  {p.name}<br />{p.role}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div class="c-dark__side">
+            <div class="c-ui">
+              <div class="c-ui__bar"><i></i><i></i><i></i><span>runtime.prod</span></div>
+              <div class="c-ui__tabs">
+                <span class="is-on">Agents</span>
+                <span>Evals</span>
+                <span>Logs</span>
+              </div>
+              <div class="c-ui__status"><b></b> live · us-east-1</div>
+              <div class="c-ui__row"><span>ingest</span><b></b></div>
+              <div class="c-ui__row"><span>eval</span><b class="mid"></b></div>
+              <div class="c-ui__row"><span>guard</span><b class="ok"></b></div>
+              <div class="c-ui__chart" aria-hidden="true">
+                <i style="height:28%"></i>
+                <i style="height:46%"></i>
+                <i class="on" style="height:72%"></i>
+                <i style="height:40%"></i>
+                <i class="on" style="height:88%"></i>
+                <i style="height:54%"></i>
+                <i style="height:36%"></i>
+                <i class="on" style="height:64%"></i>
+              </div>
+              <div class="c-ui__user"><i></i> noah reed · session 04</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-dark__growth">
+          <div>
+            <p class="c-micro">Our growth</p>
+            <p class="c-stat"><span data-count="230">230</span><small>K</small></p>
+          </div>
+          <div class="c-dark__metrics">
+            <div>
+              <p class="c-micro">Uptime</p>
+              <p class="c-stat c-stat--sm"><span data-count="95">95</span><small>%</small></p>
+            </div>
+            <div>
+              <p class="c-micro">On time</p>
+              <p class="c-stat c-stat--sm"><span data-count="99">99</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-awards">
+          {awards.map((a) => (
+            <div>
+              <p class="c-micro">{a.k}</p>
+              <h3>{a.t}</h3>
+              <p class="c-lede" style="margin:0">{a.d}</p>
+            </div>
+          ))}
+        </div>
+
+        <figure class="c-quote">
+          <div>
+            <p class="c-micro">What Our Clients Say</p>
+            <blockquote>“We shipped our first copilot in 7 weeks and cut support tickets by 31%. The eval dashboards made every decision obvious.”</blockquote>
+            <figcaption>Elena Ruiz — Cantos SaaS VP Product</figcaption>
+          </div>
+          <div class="c-quote__photo" aria-hidden="true">
+            <span class="c-person__face"></span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 16 PRICING -->
+    <section class="c-price" id="pricing">
+      <div class="c-wrap">
+        <div class="c-price__head">
+          <div>
+            <p class="c-micro c-red">Pricing Plans</p>
+            <h2 class="c-h1">From pilot to enterprise, clear scope, transparent costs</h2>
+          </div>
+          <div class="c-toggle" aria-hidden="true">
+            <span>Monthly</span>
+            <span class="is-on">Annually</span>
+          </div>
+        </div>
+        <div class="c-price__grid">
+          <article class="c-plan">
+            <p class="c-micro">Starter Plan — For startups</p>
+            <p class="c-plan__amount">$9,900</p>
+            <p class="c-lede">/ year</p>
+            <p class="c-lede" style="margin-top: 18px">Prove value in two weeks with a clickable UX, tech spike, and a clear go/no-go roadmap.</p>
+            <ul>
+              <li>Discovery workshop</li>
+              <li>Opportunity brief</li>
+              <li>Clickable UX</li>
+              <li>1 data source & 1 integration</li>
+            </ul>
+            <a class="c-btn" href="/book-a-call" style="margin-top: 32px">Get Started</a>
+          </article>
+          <article class="c-plan c-plan--dark">
+            <p class="c-micro">Enterprise Plan — For organisations</p>
+            <p class="c-plan__amount">$19,900</p>
+            <p class="c-lede" style="color: rgba(245,245,240,0.55)">/ year</p>
+            <p class="c-lede" style="margin-top: 18px; color: rgba(245,245,240,0.62)">
+              Compliance-ready delivery for complex orgs—multi-env releases, canaries, and change management.
+            </p>
+            <ul>
+              <li>Everything in Starter</li>
+              <li>CI/CD, tracing, alerts, guardrails</li>
+              <li>Full eval dashboard</li>
+              <li>3 data sources & 3 integrations</li>
+            </ul>
+            <a class="c-btn" href="/book-a-call" style="margin-top: 32px">Get Started</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 FAQ -->
+    <section class="c-faq">
+      <div class="c-wrap">
+        <p class="c-micro c-red">FAQs</p>
+        <h2 class="c-h2">Frequently Asked Questions</h2>
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}<span>+</span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- 18 CTA -->
+    <section class="c-cta">
+      <div class="c-wrap">
+        <div class="c-cta__panel" data-cta>
+          <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
+          <div class="c-cta__copy">
+            <p class="c-micro">Contact</p>
+            <h2 class="c-h1">Let’s Build Intelligent Things</h2>
+            <p class="c-lede" style="margin-top: 16px; max-width: 28ch; color: rgba(245,245,240,0.65)">
+              Fill this form below. hello@youraiagency.com · +1 (647) 555 0172
+            </p>
+          </div>
+          <form data-home-form>
+            <input name="name" placeholder="Your Name" required autocomplete="name" />
+            <input name="email" type="email" placeholder="Email" required autocomplete="email" />
+            <select name="interest">
+              <option>You are interested in</option>
+              <option>Starter Plan</option>
+              <option>Enterprise Plan</option>
+              <option>A custom sprint</option>
+            </select>
+            <textarea name="message" placeholder="More About The Project" required></textarea>
+            <button class="c-btn c-btn--light" type="submit">Submit Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 19 FOOTER -->
+  <footer class="c-foot">
+    <div class="c-wrap">
+      <div class="c-foot__cols">
+        <div>
+          <h4>Studio</h4>
+          <p>AI-driven agency. From discovery to deployment.</p>
+        </div>
+        <div>
+          <h4>Pages</h4>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/services">Services</a>
+          <a href="/case-studies">Works</a>
+        </div>
+        <div>
+          <h4>Social</h4>
+          <a href="#">Twitter / X</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+        <div>
+          <h4>Start</h4>
+          <a href="/book-a-call">Contact</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+      </div>
+      <p class="c-foot__mark" aria-hidden="true">AIZAZ</p>
+      <div class="c-foot__base">
+        <span>© 2026 AgenAI. All Rights Reserved.</span>
+        <span>Based in Montréal, Canada</span>
+      </div>
+    </div>
+  </footer>
+</div>

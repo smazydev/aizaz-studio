@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
               <span className="text-lg font-display font-bold text-white">Aizaz Studio</span>
             </div>
             <p className="text-zinc-500 text-sm leading-relaxed mb-6">
-              AI, cloud, and automation engineering for growing businesses. Senior execution for systems that ship — not rented developers.
+              AI, cloud, and automation engineering for growing businesses. Senior execution for systems that ship, not rented developers.
             </p>
             <div className="flex gap-4">
               <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Linkedin size={20} /></a>

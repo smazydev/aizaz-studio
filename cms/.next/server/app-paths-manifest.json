@@ -1,0 +1,4 @@
+{
+  "/(frontend)/page": "app/(frontend)/page.js",
+  "/(payload)/admin/[[...segments]]/page": "app/(payload)/admin/[[...segments]]/page.js"
+}

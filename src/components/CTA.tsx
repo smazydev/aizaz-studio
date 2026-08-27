@@ -17,7 +17,7 @@ export const CTA: React.FC = () => {
           </span>
         </h2>
         <p className="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto">
-          Book a free call to map your highest impact automation — or start with our AI Systems Sprint and ship something your team can use immediately.
+          Book a free call to map your highest impact automation, or start with our AI Systems Sprint and ship something your team can use immediately.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a

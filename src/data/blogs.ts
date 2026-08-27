@@ -34,40 +34,30 @@ export const blogs: BlogPost[] = [
 
 They start with the technology instead of the workflow.
 
-A chatbot here. A Copilot license there. A Zapier experiment that breaks when volume spikes. Six months later, the team is still copying data between CRM, email, and spreadsheets — just with more SaaS subscriptions.
+A chatbot here. A Copilot license there. A Zapier experiment that breaks when volume spikes. Six months later, the team is still copying data between CRM, email, and spreadsheets, just with more SaaS subscriptions.
 
-**AI only pays off when it removes a real operational step** — not when it adds another dashboard nobody opens.
+**AI only pays off when it removes a real operational step**, not when it adds another dashboard nobody opens.
 
 ## Start with one workflow, not a platform
 
 The highest ROI AI projects we build at Aizaz.studio follow the same pattern:
 
-1. **Find a workflow that happens daily** — lead intake, support triage, order exceptions, appointment follow ups.
-2. **Map the systems involved** — website form, CRM, email, Slack, NetSuite, WhatsApp.
-3. **Automate the decision layer** — qualification, routing, summarization, escalation.
-4. **Keep humans in the loop** — for edge cases, approvals, and relationship moments.
+1. **Find a workflow that happens daily**, lead intake, support triage, order exceptions, appointment follow ups.
+2. **Map the systems involved**, website form, CRM, email, Slack, NetSuite, WhatsApp.
+3. **Automate the decision layer**, qualification, routing, summarization, escalation.
+4. **Keep humans in the loop**, for edge cases, approvals, and relationship moments.
 
 This is exactly what our **AI Systems Sprint** is built for: one workflow, fourteen days, working software.
 
 ## Good first workflows to automate
 
-These are proven starting points across industries:
-
-- **Website lead → AI qualification → CRM update → follow up email**
-- **Support request → AI triage → ticket creation → human handoff**
-- **Clinic form → AI summary → dashboard → appointment reminder**
-- **NetSuite order issue → alert → retry workflow → reporting dashboard**
+These are proven starting points across industries:, **Website lead → AI qualification → CRM update → follow up email**, **Support request → AI triage → ticket creation → human handoff**, **Clinic form → AI summary → dashboard → appointment reminder**, **NetSuite order issue → alert → retry workflow → reporting dashboard**
 
 Notice what they have in common: clear inputs, clear outputs, and measurable time saved.
 
 ## What "done" looks like
 
-A successful first automation is not a proof of concept deck. It is:
-
-- Deployed and used by the team daily
-- Connected to production tools, not a sandbox
-- Logged and monitored when something fails
-- Documented so someone else can maintain it
+A successful first automation is not a proof of concept deck. It is:, Deployed and used by the team daily, Connected to production tools, not a sandbox, Logged and monitored when something fails, Documented so someone else can maintain it
 
 That is the bar we hold for every sprint engagement.
 
@@ -75,17 +65,17 @@ That is the bar we hold for every sprint engagement.
 
 If you are exploring AI for your business, do not ask *"What AI tool should we buy?"*
 
-Ask: **"Which manual workflow costs us the most time every week — and what would change if it ran reliably without us?"**
+Ask: **"Which manual workflow costs us the most time every week, and what would change if it ran reliably without us?"**
 
 That question leads to systems that scale. The other one leads to shelfware.
-    `,
+ `,
     },
     {
         id: '2',
         slug: 'netsuite-shopify-integration-pitfalls',
         title: 'NetSuite + Shopify Sync: 5 Failures We See (and How to Fix Them)',
         excerpt:
-            'Order sync errors, inventory drift, and silent failures are not "NetSuite being NetSuite." They are architecture problems — and they are fixable.',
+            'Order sync errors, inventory drift, and silent failures are not "NetSuite being NetSuite." They are architecture problems, and they are fixable.',
         date: 'December 20, 2025',
         author: 'Aizaz K.',
         readTime: '7 min read',
@@ -95,7 +85,7 @@ That question leads to systems that scale. The other one leads to shelfware.
         content: `
 ## Why ERP integrations feel harder than they should
 
-NetSuite is powerful. Shopify is fast. Connecting them should be straightforward — yet operations teams spend hours every week fixing sync errors, reconciling inventory, and chasing orders that never made it to fulfillment.
+NetSuite is powerful. Shopify is fast. Connecting them should be straightforward, yet operations teams spend hours every week fixing sync errors, reconciling inventory, and chasing orders that never made it to fulfillment.
 
 In most cases, the problem is not the platforms. It is how the integration was designed.
 
@@ -103,7 +93,7 @@ In most cases, the problem is not the platforms. It is how the integration was d
 
 **The failure:** A nightly CSV export that breaks when product options, bundles, or partial fulfillments enter the picture.
 
-**The fix:** Event driven sync with idempotent jobs — the same order can be retried without creating duplicates.
+**The fix:** Event driven sync with idempotent jobs, the same order can be retried without creating duplicates.
 
 ## 2. No visibility when something breaks
 
@@ -113,7 +103,7 @@ In most cases, the problem is not the platforms. It is how the integration was d
 
 ## 3. Inventory logic copied from a blog post
 
-**The failure:** Available quantity calculated differently in Shopify and NetSuite — overselling, angry customers, emergency manual fixes.
+**The failure:** Available quantity calculated differently in Shopify and NetSuite, overselling, angry customers, emergency manual fixes.
 
 **The fix:** Define a single source of truth for available to promise inventory and document the rules before writing code.
 
@@ -131,21 +121,16 @@ In most cases, the problem is not the platforms. It is how the integration was d
 
 ## What good looks like
 
-Reliable NetSuite + Shopify integrations share these traits:
+Reliable NetSuite + Shopify integrations share these traits:, Clear separation between **connectors**, **workers**, and **reporting**, Retry logic with dead letter queues for failed records, Dashboards ops teams actually use, Audit trails finance can trust
 
-- Clear separation between **connectors**, **workers**, and **reporting**
-- Retry logic with dead letter queues for failed records
-- Dashboards ops teams actually use
-- Audit trails finance can trust
-
-We have built these systems for ecommerce and wholesale businesses where downtime directly hits revenue — not just IT tickets.
+We have built these systems for ecommerce and wholesale businesses where downtime directly hits revenue, not just IT tickets.
 
 ## Conclusion
 
 If your team is manually fixing sync errors every week, you do not have a NetSuite problem. You have an integration architecture problem.
 
 Fix the architecture, and the operations get quieter. That is when the business can actually scale.
-    `,
+ `,
     },
     {
         id: '3',
@@ -162,7 +147,7 @@ Fix the architecture, and the operations get quieter. That is when the business 
         content: `
 ## MVPs are not excuses for fragile systems
 
-Founders are told to move fast and break things. That advice works for validation — not for the systems paying customers depend on.
+Founders are told to move fast and break things. That advice works for validation, not for the systems paying customers depend on.
 
 The best MVPs we build are **small in scope but serious in foundation**: auth, data model, deployment, and monitoring are not "later problems."
 
@@ -170,7 +155,7 @@ The best MVPs we build are **small in scope but serious in foundation**: auth, d
 
 ### Authentication and roles
 
-Do not bolt auth on after launch. Define who can do what on day one — admin, customer, team member, API client.
+Do not bolt auth on after launch. Define who can do what on day one, admin, customer, team member, API client.
 
 ### Database design
 
@@ -178,31 +163,21 @@ Your schema will change, but core entities should be modeled intentionally. Avoi
 
 ### Deployment pipeline
 
-If deploying is scary, you will ship less often. CI/CD, staging environments, and rollback capability are MVP features — not enterprise luxuries.
+If deploying is scary, you will ship less often. CI/CD, staging environments, and rollback capability are MVP features, not enterprise luxuries.
 
 ### Observability
 
-When something breaks at 2 AM, you need logs and alerts — not a founder staring at a blank screen guessing.
+When something breaks at 2 AM, you need logs and alerts, not a founder staring at a blank screen guessing.
 
 ## What you can safely defer
 
-Not everything needs to be perfect v1:
+Not everything needs to be perfect v1:, Advanced analytics dashboards, Complex billing tiers, Every third party integration, Pixel perfect admin UI
 
-- Advanced analytics dashboards
-- Complex billing tiers
-- Every third party integration
-- Pixel perfect admin UI
-
-Defer features — not fundamentals.
+Defer features, not fundamentals.
 
 ## How we approach SaaS builds at Aizaz.studio
 
-We treat early stage products as **systems engineering projects**:
-
-- Scope the smallest useful version
-- Design the architecture for the next 10x of users, not the next 10x of features
-- Deploy to AWS with proper CI/CD from the first release
-- Automate ops workflows alongside the product
+We treat early stage products as **systems engineering projects**:, Scope the smallest useful version, Design the architecture for the next 10x of users, not the next 10x of features, Deploy to AWS with proper CI/CD from the first release, Automate ops workflows alongside the product
 
 That is how MVPs become platforms instead of rebuilds.
 
@@ -211,7 +186,7 @@ That is how MVPs become platforms instead of rebuilds.
 Speed and quality are not opposites when you scope ruthlessly and engineer deliberately.
 
 Build less. Build it properly. Then scale.
-    `,
+ `,
     },
     {
         id: '4',
@@ -227,7 +202,7 @@ Build less. Build it properly. Then scale.
         content: `
 ## Start with frequency and pain
 
-Automate workflows that happen **daily** and cost real hours — not edge cases that happen twice a quarter.
+Automate workflows that happen **daily** and cost real hours, not edge cases that happen twice a quarter.
 
 Ask: how many times per week does this happen, and how many minutes does each run take?
 
@@ -249,12 +224,12 @@ What happens when this step is missed? Lost leads, late invoices, wrong inventor
 
 ## Try one sprint, not a platform
 
-The [AI Systems Sprint](/ai systems sprint) exists to validate one workflow in 14 days — proof before a larger build.
+The [AI Systems Sprint](/ai systems sprint) exists to validate one workflow in 14 days, proof before a larger build.
 
 ## Conclusion
 
 Pick one workflow with daily volume, clear systems, and measurable pain. That is where AI automation pays off first.
-    `,
+ `,
     },
     {
         id: '5',
@@ -270,7 +245,7 @@ Pick one workflow with daily volume, clear systems, and measurable pain. That is
         content: `
 ## Chatbots: conversational front doors
 
-Website chat, WhatsApp replies, and FAQ bots fit when the job is **inform, qualify, or route** — not execute ten backend steps.
+Website chat, WhatsApp replies, and FAQ bots fit when the job is **inform, qualify, or route**, not execute ten backend steps.
 
 Explore [custom AI chatbot development](/services/ai chatbot development) when the primary goal is conversation and qualification.
 
@@ -286,14 +261,14 @@ Both need logging, human handoff, and clear data boundaries. Agents need stricte
 
 ## Conclusion
 
-If users need answers, start with a chatbot. If your team needs work done across tools, build an agent — or both in sequence.
-    `,
+If users need answers, start with a chatbot. If your team needs work done across tools, build an agent, or both in sequence.
+ `,
     },
     {
         id: '6',
         slug: 'how-much-does-ai-automation-cost',
         title: 'How Much Does AI Automation Cost?',
-        excerpt: 'What drives pricing for AI automation projects — scope, integrations, volume, and why fixed sprints beat open ended hourly work.',
+        excerpt: 'What drives pricing for AI automation projects, scope, integrations, volume, and why fixed sprints beat open ended hourly work.',
         date: 'February 18, 2026',
         author: 'Aizaz K.',
         readTime: '5 min read',
@@ -317,18 +292,18 @@ Connecting HubSpot is different from NetSuite, Shopify, and custom ERP middlewar
 
 ## Ongoing costs
 
-Factor API usage, hosting, monitoring, and optional retainer support — not just build cost.
+Factor API usage, hosting, monitoring, and optional retainer support, not just build cost.
 
 ## Conclusion
 
 Get a fixed scope for the first workflow. Measure hours saved. Then expand with data, not hype.
-    `,
+ `,
     },
     {
         id: '7',
         slug: 'rescue-a-half-built-saas-product',
         title: 'How to Rescue a Half Built SaaS Product',
-        excerpt: 'When your MVP stalled, deploys fail, or the codebase is a black box — a senior led rescue path that avoids starting from zero.',
+        excerpt: 'When your MVP stalled, deploys fail, or the codebase is a black box, a senior led rescue path that avoids starting from zero.',
         date: 'March 1, 2026',
         author: 'Aizaz K.',
         readTime: '8 min read',
@@ -350,14 +325,14 @@ Stop the bleeding: fix deploys, add monitoring, document critical paths. Users a
 
 ## Step 3: prioritize roadmap
 
-Ship the smallest set of changes that restore trust — then refactor with intent.
+Ship the smallest set of changes that restore trust, then refactor with intent.
 
 Learn about our [project rescue](/services/project rescue) process.
 
 ## Conclusion
 
 Half built products are often recoverable. Start with audit and stabilization, not a rewrite pitch on day one.
-    `,
+ `,
     },
     {
         id: '8',
@@ -373,7 +348,7 @@ Half built products are often recoverable. Start with audit and stabilization, n
         content: `
 ## Vercel wins early
 
-Fast frontend deploys, previews, and minimal DevOps — ideal for marketing sites and early Next.js MVPs.
+Fast frontend deploys, previews, and minimal DevOps, ideal for marketing sites and early Next.js MVPs.
 
 ## AWS wins when backend complexity grows
 
@@ -383,18 +358,18 @@ See [AWS cloud engineering](/services/aws cloud engineering) and [cloud migratio
 
 ## Migration is a product decision
 
-Move when pain is measurable: deploy limits, runaway costs, missing observability, or integration constraints — not because AWS sounds enterprise.
+Move when pain is measurable: deploy limits, runaway costs, missing observability, or integration constraints, not because AWS sounds enterprise.
 
 ## Conclusion
 
 Stay on Vercel until backend and ops requirements clearly exceed the platform. Then migrate with a plan, not a big bang.
-    `,
+ `,
     },
     {
         id: '9',
         slug: 'cicd-checklist-early-stage-saas',
         title: 'CI/CD Checklist for Early Stage SaaS',
-        excerpt: 'The minimum pipeline serious SaaS teams need before they scale customers — tests, staging, deploys, and rollback.',
+        excerpt: 'The minimum pipeline serious SaaS teams need before they scale customers, tests, staging, deploys, and rollback.',
         date: 'March 15, 2026',
         author: 'Aizaz K.',
         readTime: '5 min read',
@@ -414,7 +389,7 @@ Our [DevOps consulting](/services/devops consulting) teams set this up alongside
 
 ## Secrets and config
 
-Environment variables in a secrets manager — never in git.
+Environment variables in a secrets manager, never in git.
 
 ## Monitoring and alerts
 
@@ -427,7 +402,7 @@ Know how to revert the last release without panic.
 ## Conclusion
 
 CI/CD is not luxury infrastructure. It is how early SaaS teams ship without fear.
-    `,
+ `,
     },
     {
         id: '10',
@@ -443,7 +418,7 @@ CI/CD is not luxury infrastructure. It is how early SaaS teams ship without fear
         content: `
 ## Treating sync as fire and forget
 
-Orders and inventory need validation, retries, and alerts — not hope.
+Orders and inventory need validation, retries, and alerts, not hope.
 
 ## No idempotency
 
@@ -451,7 +426,7 @@ Duplicate webhooks create duplicate orders. Design idempotent handlers from day 
 
 ## Mapping data without ownership
 
-Who fixes bad SKU mappings — engineering or ops? Define ownership before go live.
+Who fixes bad SKU mappings, engineering or ops? Define ownership before go live.
 
 ## Ignoring middleware
 
@@ -463,8 +438,8 @@ Finance should not learn about sync failures from angry customers.
 
 ## Conclusion
 
-Growing operations teams need integrations that fail loudly and recover safely — not another CSV export ritual.
-    `,
+Growing operations teams need integrations that fail loudly and recover safely, not another CSV export ritual.
+ `,
     },
 ];
 

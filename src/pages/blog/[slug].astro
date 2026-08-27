@@ -86,7 +86,7 @@ const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[
             <div class="mt-12 p-8 rounded-2xl glass-card border-primary-500/20">
               <h3 class="text-xl font-display font-bold text-white mb-2">Want help implementing this?</h3>
               <p class="text-zinc-400 mb-6">
-                We turn manual workflows into working AI systems, automations, and internal tools — often starting with a 14 day sprint.
+                We turn manual workflows into working AI systems, automations, and internal tools, often starting with a 14 day sprint.
               </p>
               <div class="flex flex-col sm:flex-row gap-3">
                 <a
@@ -155,7 +155,7 @@ const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[
 </Layout>
 
 <script>
-  document.querySelectorAll('.article-content h2, .article-content h3').forEach((heading) => {
+  document.querySelectorAll('.article-content h2.article-content h3').forEach((heading) => {
     if (heading instanceof HTMLElement && heading.textContent) {
       heading.id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     }
