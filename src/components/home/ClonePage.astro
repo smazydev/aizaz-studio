@@ -334,186 +334,217 @@ const haiField = (() => {
     <!-- 04 SERVICES -->
     <section class="home-services" id="services" data-services>
       <div class="home-services__inner">
-        <p class="c-micro c-red">Services</p>
-        <h2 class="home-services__title">End-to-End<br />AI Services</h2>
-        <div class="home-services__grid">
+        <div class="home-services__head">
+          <p class="c-micro c-red">Services</p>
+          <h2 class="home-services__title">End-to-End<br />AI Services</h2>
+        </div>
+        <div class="home-services__stage">
           <div class="home-services__visual" data-service-viz>
             <span class="home-services__depth" aria-hidden="true"></span>
             <div class="home-services__panel is-on" data-sv="0">
               <span class="home-services__panel-n">01 · AUTOMATION</span>
-              <svg class="home-services__svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-                {Array.from({ length: 22 }).map((_, i) => <line class="g" x1={20 + i * 44} y1="12" x2={20 + i * 44} y2="708" />)}
-                {Array.from({ length: 16 }).map((_, i) => <line class="g" x1="16" y1={16 + i * 44} x2="984" y2={16 + i * 44} />)}
-                <g class="mid">
-                  <rect x="40" y="96" width="160" height="528" rx="14" />
-                  <rect x="236" y="160" width="176" height="400" rx="14" />
-                  <rect class="hot" x="448" y="188" width="196" height="344" rx="16" />
-                  <rect x="680" y="128" width="140" height="464" rx="14" />
-                  <rect x="852" y="220" width="108" height="280" rx="14" />
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
                 </g>
-                <text x="56" y="72">INPUTS</text>
-                <text x="252" y="136">WORKFLOW</text>
-                <text x="468" y="164">AGENT / LOGIC</text>
-                <text x="696" y="104">TOOLS / APIs</text>
-                <text x="860" y="196">OUTPUTS</text>
-                <text x="64" y="250">ticket</text>
-                <text x="64" y="350">email</text>
-                <text x="64" y="450">crm</text>
-                <text x="64" y="550">webhook</text>
-                <text x="260" y="280">route</text>
-                <text x="260" y="380">eval</text>
-                <text x="260" y="480">guard</text>
-                <text x="472" y="280">plan</text>
-                <text x="472" y="360">tool use</text>
-                <text x="472" y="440">handoff</text>
-                <text x="696" y="240">search</text>
-                <text x="696" y="340">write</text>
-                <text x="696" y="440">notify</text>
-                <text x="696" y="540">api</text>
-                <text x="864" y="360">action</text>
-                <path class="flow" d="M200 244 H236" />
-                <path class="flow" d="M200 344 H236" />
-                <path class="flow" d="M200 444 C218 444 218 360 236 360" />
-                <path class="flow" d="M200 544 C218 544 220 460 236 460" />
-                <path class="flow hot" d="M412 360 H448" />
-                <path class="flow" d="M644 280 C662 280 662 240 680 240" />
-                <path class="flow hot" d="M644 360 H680" />
-                <path class="flow" d="M644 440 C662 440 662 500 680 500" />
-                <path class="flow hot" d="M820 360 H852" />
-                <circle cx="88" cy="244" r="4" />
-                <circle cx="88" cy="344" r="4" />
-                <circle cx="88" cy="444" r="4" />
-                <circle cx="88" cy="544" r="4" />
-                <circle class="hot" cx="546" cy="360" r="5" />
-                <circle class="hot" cx="750" cy="334" r="4" />
-                <circle class="pkt" cx="320" cy="360" r="3" />
-                <circle class="pkt" cx="760" cy="360" r="3" />
-                <rect x="852" y="536" width="108" height="44" rx="8" />
-                <text x="868" y="564">p95 184ms</text>
+                <g class="mid">
+                  <rect x="24" y="84" width="112" height="960" rx="16" />
+                  <rect x="148" y="148" width="104" height="832" rx="16" />
+                  <rect class="hot" x="264" y="112" width="156" height="904" rx="18" />
+                  <rect x="432" y="168" width="118" height="792" rx="16" />
+                  <rect x="562" y="212" width="100" height="704" rx="16" />
+                  <rect x="674" y="256" width="80" height="616" rx="16" />
+                  <rect x="766" y="300" width="70" height="528" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="40" y="64">INPUTS</text>
+                  <text x="160" y="128">EVENTS</text>
+                  <text x="280" y="92">AGENT / LOGIC</text>
+                  <text x="448" y="148">TOOLS</text>
+                  <text x="580" y="192">API</text>
+                  <text x="688" y="236">DATA</text>
+                  <text x="772" y="280">OUTPUT</text>
+                  <text x="44" y="260">ticket</text>
+                  <text x="44" y="420">email</text>
+                  <text x="44" y="580">crm</text>
+                  <text x="44" y="740">webhook</text>
+                  <text x="44" y="900">form</text>
+                  <text x="164" y="320">ingest</text>
+                  <text x="164" y="500">route</text>
+                  <text x="164" y="680">queue</text>
+                  <text x="284" y="300">plan</text>
+                  <text x="284" y="460">tool use</text>
+                  <text x="284" y="620">eval</text>
+                  <text x="284" y="780">handoff</text>
+                  <text x="448" y="340">search</text>
+                  <text x="448" y="500">write</text>
+                  <text x="448" y="660">notify</text>
+                  <text x="576" y="400">rest</text>
+                  <text x="576" y="560">hook</text>
+                  <text x="688" y="440">store</text>
+                  <text x="688" y="620">cache</text>
+                  <text x="774" y="520">action</text>
+                  <path class="flow" d="M136 248 H148" />
+                  <path class="flow" d="M136 408 H148" />
+                  <path class="flow" d="M136 568 C142 568 142 488 148 488" />
+                  <path class="flow" d="M252 488 H264" />
+                  <path class="flow hot" d="M420 448 H432" />
+                  <path class="flow" d="M550 328 C556 328 556 388 562 388" />
+                  <path class="flow hot" d="M550 488 H562" />
+                  <path class="flow hot" d="M662 548 H674" />
+                  <path class="flow hot" d="M754 508 H766" />
+                  <circle cx="56" cy="248" r="4" />
+                  <circle cx="56" cy="408" r="4" />
+                  <circle cx="56" cy="568" r="4" />
+                  <circle cx="56" cy="728" r="4" />
+                  <circle class="hot" cx="342" cy="448" r="6" />
+                  <circle class="hot" cx="491" cy="488" r="4" />
+                  <circle class="pkt" cx="206" cy="488" r="3" />
+                  <circle class="pkt" cx="618" cy="508" r="3" />
+                  <rect x="766" y="780" width="70" height="48" rx="8" />
+                  <text x="774" y="810">p95</text>
+                </g>
               </svg>
             </div>
             <div class="home-services__panel" data-sv="1">
               <span class="home-services__panel-n">02 · PRODUCT</span>
-              <svg class="home-services__svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-                {Array.from({ length: 22 }).map((_, i) => <line class="g" x1={20 + i * 44} y1="12" x2={20 + i * 44} y2="708" />)}
-                {Array.from({ length: 16 }).map((_, i) => <line class="g" x1="16" y1={16 + i * 44} x2="984" y2={16 + i * 44} />)}
-                <g class="mid">
-                  <rect x="80" y="88" width="840" height="96" rx="14" />
-                  <rect x="80" y="220" width="248" height="400" rx="16" />
-                  <rect class="hot" x="376" y="220" width="248" height="400" rx="16" />
-                  <rect x="672" y="220" width="248" height="184" rx="16" />
-                  <rect x="672" y="436" width="248" height="184" rx="16" />
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
                 </g>
-                <text x="104" y="144">APP SHELL</text>
-                <text x="104" y="280">UI SURFACE</text>
-                <text x="400" y="280">DOMAIN CORE</text>
-                <text x="696" y="280">AUTH / API</text>
-                <text x="696" y="496">BILLING</text>
-                <path class="flow" d="M328 420 H376" />
-                <path class="flow hot" d="M624 420 H672" />
-                <path class="flow" d="M796 404 V436" />
-                <circle cx="500" cy="420" r="5" class="hot" />
-                <circle cx="204" cy="420" r="4" />
-                <circle cx="796" cy="312" r="4" />
-                <circle class="pkt" cx="350" cy="420" r="3" />
+                <g class="mid">
+                  <rect x="28" y="72" width="804" height="140" rx="16" />
+                  <rect x="28" y="236" width="252" height="808" rx="18" />
+                  <rect class="hot" x="304" y="236" width="252" height="808" rx="18" />
+                  <rect x="580" y="236" width="252" height="388" rx="18" />
+                  <rect x="580" y="648" width="252" height="396" rx="18" />
+                </g>
+                <g class="fg">
+                  <text x="52" y="132">APP SHELL</text>
+                  <text x="52" y="300">UI SURFACE</text>
+                  <text x="328" y="300">DOMAIN CORE</text>
+                  <text x="604" y="300">AUTH / API</text>
+                  <text x="604" y="712">BILLING</text>
+                  <path class="flow" d="M280 640 H304" />
+                  <path class="flow hot" d="M556 640 H580" />
+                  <path class="flow" d="M706 624 V648" />
+                  <circle class="hot" cx="430" cy="640" r="6" />
+                  <circle cx="154" cy="640" r="4" />
+                  <circle cx="706" cy="430" r="4" />
+                  <circle class="pkt" cx="292" cy="640" r="3" />
+                </g>
               </svg>
             </div>
             <div class="home-services__panel" data-sv="2">
               <span class="home-services__panel-n">03 · INTEGRATION</span>
-              <svg class="home-services__svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-                {Array.from({ length: 22 }).map((_, i) => <line class="g" x1={20 + i * 44} y1="12" x2={20 + i * 44} y2="708" />)}
-                {Array.from({ length: 16 }).map((_, i) => <line class="g" x1="16" y1={16 + i * 44} x2="984" y2={16 + i * 44} />)}
-                <g class="mid">
-                  <rect class="bus" x="456" y="72" width="88" height="576" rx="12" />
-                  <rect x="56" y="96" width="280" height="112" rx="14" />
-                  <rect x="56" y="248" width="280" height="112" rx="14" />
-                  <rect x="56" y="400" width="280" height="112" rx="14" />
-                  <rect x="56" y="552" width="280" height="96" rx="14" />
-                  <rect x="664" y="96" width="280" height="112" rx="14" />
-                  <rect x="664" y="248" width="280" height="112" rx="14" />
-                  <rect x="664" y="400" width="280" height="112" rx="14" />
-                  <rect x="664" y="552" width="280" height="96" rx="14" />
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
                 </g>
-                <text x="472" y="56">EVENT BUS</text>
-                <text x="80" y="160">CRM</text>
-                <text x="80" y="312">HELPDESK</text>
-                <text x="80" y="464">WAREHOUSE</text>
-                <text x="80" y="608">DOCS</text>
-                <text x="688" y="160">ERP</text>
-                <text x="688" y="312">BILLING</text>
-                <text x="688" y="464">AUTH</text>
-                <text x="688" y="608">NOTIFY</text>
-                <path class="flow" d="M336 152 H456" />
-                <path class="flow" d="M336 304 H456" />
-                <path class="flow" d="M336 456 H456" />
-                <path class="flow" d="M336 600 H456" />
-                <path class="flow hot" d="M544 152 H664" />
-                <path class="flow hot" d="M544 304 H664" />
-                <path class="flow" d="M544 456 H664" />
-                <path class="flow" d="M544 600 H664" />
-                <circle class="hot" cx="500" cy="304" r="5" />
-                <circle class="pkt" cx="400" cy="304" r="3" />
-                <circle class="pkt" cx="600" cy="152" r="3" />
+                <g class="mid">
+                  <rect class="bus" x="386" y="56" width="88" height="980" rx="14" />
+                  <rect x="28" y="80" width="300" height="200" rx="16" />
+                  <rect x="28" y="308" width="300" height="200" rx="16" />
+                  <rect x="28" y="536" width="300" height="200" rx="16" />
+                  <rect x="28" y="764" width="300" height="200" rx="16" />
+                  <rect x="532" y="80" width="300" height="200" rx="16" />
+                  <rect x="532" y="308" width="300" height="200" rx="16" />
+                  <rect x="532" y="536" width="300" height="200" rx="16" />
+                  <rect x="532" y="764" width="300" height="200" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="400" y="42">EVENT BUS</text>
+                  <text x="52" y="176">CRM</text>
+                  <text x="52" y="404">HELPDESK</text>
+                  <text x="52" y="632">WAREHOUSE</text>
+                  <text x="52" y="860">DOCS</text>
+                  <text x="556" y="176">ERP</text>
+                  <text x="556" y="404">BILLING</text>
+                  <text x="556" y="632">AUTH</text>
+                  <text x="556" y="860">NOTIFY</text>
+                  <path class="flow" d="M328 180 H386" />
+                  <path class="flow" d="M328 408 H386" />
+                  <path class="flow" d="M328 636 H386" />
+                  <path class="flow" d="M328 864 H386" />
+                  <path class="flow hot" d="M474 180 H532" />
+                  <path class="flow hot" d="M474 408 H532" />
+                  <path class="flow" d="M474 636 H532" />
+                  <path class="flow" d="M474 864 H532" />
+                  <circle class="hot" cx="430" cy="408" r="6" />
+                  <circle class="pkt" cx="358" cy="408" r="3" />
+                  <circle class="pkt" cx="502" cy="180" r="3" />
+                </g>
               </svg>
             </div>
             <div class="home-services__panel" data-sv="3">
               <span class="home-services__panel-n">04 · NETSUITE</span>
-              <svg class="home-services__svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-                {Array.from({ length: 22 }).map((_, i) => <line class="g" x1={20 + i * 44} y1="12" x2={20 + i * 44} y2="708" />)}
-                {Array.from({ length: 16 }).map((_, i) => <line class="g" x1="16" y1={16 + i * 44} x2="984" y2={16 + i * 44} />)}
-                <g class="mid">
-                  <rect x="56" y="64" width="360" height="240" rx="16" />
-                  <rect x="584" y="64" width="360" height="240" rx="16" />
-                  <rect x="56" y="416" width="360" height="240" rx="16" />
-                  <rect x="584" y="416" width="360" height="240" rx="16" />
-                  <rect class="core" x="428" y="308" width="144" height="104" rx="14" />
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
                 </g>
-                <text x="80" y="112">ORDERS</text>
-                <text x="608" y="112">CUSTOMERS</text>
-                <text x="80" y="464">INVENTORY</text>
-                <text x="608" y="464">FINANCE</text>
-                <text x="468" y="368">SYNC</text>
-                <line class="g" x1="80" y1="156" x2="384" y2="156" />
-                <line class="g" x1="80" y1="196" x2="360" y2="196" />
-                <line class="g" x1="80" y1="236" x2="372" y2="236" />
-                <line class="g" x1="608" y1="156" x2="912" y2="156" />
-                <line class="g" x1="608" y1="196" x2="888" y2="196" />
-                <line class="g" x1="80" y1="508" x2="384" y2="508" />
-                <line class="g" x1="608" y1="508" x2="912" y2="508" />
-                <path class="flow" d="M416 184 H500 V308" />
-                <path class="flow" d="M584 184 H500" />
-                <path class="flow hot" d="M416 536 H500 V412" />
-                <path class="flow" d="M584 536 H500" />
-                <circle class="hot" cx="500" cy="360" r="5" />
-                <circle class="pkt" cx="500" cy="240" r="3" />
+                <g class="mid">
+                  <rect x="28" y="56" width="360" height="420" rx="18" />
+                  <rect x="472" y="56" width="360" height="420" rx="18" />
+                  <rect x="28" y="604" width="360" height="420" rx="18" />
+                  <rect x="472" y="604" width="360" height="420" rx="18" />
+                  <rect class="core" x="358" y="470" width="144" height="140" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="52" y="112">ORDERS</text>
+                  <text x="496" y="112">CUSTOMERS</text>
+                  <text x="52" y="660">INVENTORY</text>
+                  <text x="496" y="660">FINANCE</text>
+                  <text x="396" y="552">SYNC</text>
+                  <line class="g" x1="52" y1="168" x2="352" y2="168" />
+                  <line class="g" x1="52" y1="216" x2="328" y2="216" />
+                  <line class="g" x1="52" y1="264" x2="340" y2="264" />
+                  <line class="g" x1="496" y1="168" x2="796" y2="168" />
+                  <line class="g" x1="496" y1="216" x2="772" y2="216" />
+                  <line class="g" x1="52" y1="716" x2="352" y2="716" />
+                  <line class="g" x1="496" y1="716" x2="796" y2="716" />
+                  <path class="flow" d="M388 266 H430 V470" />
+                  <path class="flow" d="M472 266 H430" />
+                  <path class="flow hot" d="M388 814 H430 V610" />
+                  <path class="flow" d="M472 814 H430" />
+                  <circle class="hot" cx="430" cy="540" r="6" />
+                  <circle class="pkt" cx="430" cy="360" r="3" />
+                </g>
               </svg>
             </div>
             <div class="home-services__panel" data-sv="4">
               <span class="home-services__panel-n">05 · INFRA</span>
-              <svg class="home-services__svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-                {Array.from({ length: 22 }).map((_, i) => <line class="g" x1={20 + i * 44} y1="12" x2={20 + i * 44} y2="708" />)}
-                {Array.from({ length: 16 }).map((_, i) => <line class="g" x1="16" y1={16 + i * 44} x2="984" y2={16 + i * 44} />)}
-                <g class="mid">
-                  <rect x="48" y="40" width="904" height="104" rx="14" />
-                  <rect x="48" y="168" width="904" height="104" rx="14" />
-                  <rect class="hot" x="48" y="296" width="904" height="104" rx="14" />
-                  <rect x="48" y="424" width="904" height="104" rx="14" />
-                  <rect x="48" y="552" width="904" height="116" rx="14" />
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
                 </g>
-                <text x="72" y="80">EDGE</text>
-                <text x="72" y="208">SERVICES</text>
-                <text x="72" y="336">QUEUES</text>
-                <text x="72" y="464">DATABASE</text>
-                <text x="72" y="596">OBSERVABILITY</text>
-                {Array.from({ length: 11 }).map((_, n) => <circle cx={220 + n * 64} cy="92" r="4" />)}
-                {Array.from({ length: 11 }).map((_, n) => <circle cx={220 + n * 64} cy="220" r="4" />)}
-                {Array.from({ length: 11 }).map((_, n) => <circle class={n === 5 ? 'hot' : undefined} cx={220 + n * 64} cy="348" r="4" />)}
-                {Array.from({ length: 11 }).map((_, n) => <circle cx={220 + n * 64} cy="476" r="4" />)}
-                {Array.from({ length: 11 }).map((_, n) => <circle cx={220 + n * 64} cy="612" r="4" />)}
-                <path class="flow" d="M500 144 V168" />
-                <path class="flow" d="M500 272 V296" />
-                <path class="flow hot" d="M500 400 V424" />
-                <path class="flow" d="M500 528 V552" />
+                <g class="mid">
+                  <rect x="28" y="48" width="804" height="172" rx="16" />
+                  <rect x="28" y="244" width="804" height="172" rx="16" />
+                  <rect class="hot" x="28" y="440" width="804" height="172" rx="16" />
+                  <rect x="28" y="636" width="804" height="172" rx="16" />
+                  <rect x="28" y="832" width="804" height="196" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="52" y="92">EDGE</text>
+                  <text x="52" y="288">SERVICES</text>
+                  <text x="52" y="484">QUEUES</text>
+                  <text x="52" y="680">DATABASE</text>
+                  <text x="52" y="892">OBSERVABILITY</text>
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="134" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="330" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle class={n === 5 ? 'hot' : undefined} cx={200 + n * 52} cy="526" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="722" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="934" r="4" />)}
+                  <path class="flow" d="M430 220 V244" />
+                  <path class="flow" d="M430 416 V440" />
+                  <path class="flow hot" d="M430 612 V636" />
+                  <path class="flow" d="M430 808 V832" />
+                </g>
               </svg>
             </div>
           </div>
