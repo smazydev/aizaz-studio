@@ -314,20 +314,33 @@ function services() {
 
 function processRail() {
   const root = document.querySelector<HTMLElement>('[data-process]');
-  const fill = document.querySelector<HTMLElement>('[data-process-fill]');
-  const nodes = document.querySelectorAll<HTMLElement>('[data-process-node]');
-  if (!root || !fill || !nodes.length) return;
+  if (!root) return;
+  const fills = [...root.querySelectorAll<SVGPathElement>('[data-process-fill]')];
+  const nodes = [...root.querySelectorAll<HTMLElement>('[data-process-node]')];
+  const core = root.querySelector<HTMLElement>('[data-process-core]');
+  if (!nodes.length) return;
+
+  fills.forEach((el) => {
+    el.style.strokeDasharray = '1';
+    el.style.strokeDashoffset = '1';
+  });
 
   const update = () => {
     const rect = root.getBoundingClientRect();
     const view = window.innerHeight;
-    const entered = rect.top < view * 0.82;
+    const entered = rect.top < view * 0.86;
     const progress = entered
-      ? Math.min(1, Math.max(0, (view * 0.72 - rect.top) / (rect.height + view * 0.2)))
+      ? Math.min(1, Math.max(0, (view * 0.72 - rect.top) / (rect.height + view * 0.18)))
       : 0;
-    fill.style.width = `${progress * 100}%`;
-    const active = progress <= 0.04 ? -1 : Math.min(nodes.length - 1, Math.floor(progress * nodes.length));
+    root.style.setProperty('--process-p', String(progress));
+    fills.forEach((el) => {
+      el.style.strokeDashoffset = String(1 - progress);
+    });
+    const active = entered
+      ? Math.min(nodes.length - 1, Math.max(0, Math.floor(progress * nodes.length)))
+      : 0;
     nodes.forEach((n, i) => n.classList.toggle('is-on', i <= active));
+    if (core) core.classList.toggle('is-on', active >= 2);
   };
 
   window.addEventListener('scroll', update, { passive: true });
