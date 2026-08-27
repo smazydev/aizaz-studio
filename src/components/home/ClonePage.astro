@@ -2,6 +2,7 @@
 import HeroSculpture from './HeroSculpture.astro';
 import ProjectArt from './ProjectArt.astro';
 import HomeWhy from './HomeWhy.astro';
+import HomeFeatures from './HomeFeatures.astro';
 
 const isDev = import.meta.env.DEV;
 const services = [
@@ -88,15 +89,6 @@ const process = [
   { n: '04', title: 'Integrate', body: 'Join CRM, ERP, warehouse, and internal tools.', meta: 'BUS / SYNC / AUTH', art: 'join' },
   { n: '05', title: 'Ship', body: 'Deploy with tracing, canaries, and rollback.', meta: 'CI / CANARY / PROD', art: 'ship' },
   { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
-];
-
-const features = [
-  { title: 'Agents', body: 'Autonomous flows with guardrails and a clear handoff to humans.' },
-  { title: 'RAG', body: 'Private knowledge with freshness, citations, and explainability.' },
-  { title: 'Workflow Automation', body: 'Repetitive operations become planned, executed, and reported.' },
-  { title: 'Data Pipelines', body: 'Clean, embed, and route context so models see the right truth.' },
-  { title: 'AI Integrations', body: 'CRM, helpdesk, ERP, and warehouse connected through APIs.' },
-  { title: 'Observability', body: 'Accuracy, latency, safety, and cost measured from day one.' },
 ];
 
 const tools = ['OpenAI', 'Anthropic', 'LangChain', 'Pinecone', 'AWS', 'Postgres', 'Stripe', 'Slack'];
@@ -672,29 +664,7 @@ const haiField = (() => {
     <HomeWhy />
 
     <!-- 11 FEATURES -->
-    <section class="c-features">
-      <div class="c-wrap">
-        <p class="c-micro c-red" style="text-align:center">Features</p>
-        <h2 class="c-h1">All Features<br />in One</h2>
-        <div class="c-hub" data-hub>
-          <svg class="c-hub__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="50" y1="50" x2="18" y2="14" />
-            <line x1="50" y1="50" x2="82" y2="14" />
-            <line x1="50" y1="50" x2="12" y2="50" />
-            <line x1="50" y1="50" x2="88" y2="50" />
-            <line x1="50" y1="50" x2="18" y2="86" />
-            <line x1="50" y1="50" x2="82" y2="86" />
-          </svg>
-          {features.map((f, i) => (
-            <article class="c-hub__item" data-hub-item={String(i)} tabindex="0">
-              <h3>{f.title}</h3>
-              <p>{f.body}</p>
-            </article>
-          ))}
-          <div class="c-hub__core" data-hub-core aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
+    <HomeFeatures />
 
     <!-- 12 TOOLS -->
     <section class="c-tools">
