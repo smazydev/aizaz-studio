@@ -1,6 +1,7 @@
 ---
 import HeroSculpture from './HeroSculpture.astro';
 import ProjectArt from './ProjectArt.astro';
+import HomeWhy from './HomeWhy.astro';
 
 const isDev = import.meta.env.DEV;
 const services = [
@@ -87,13 +88,6 @@ const process = [
   { n: '04', title: 'Integrate', body: 'Join CRM, ERP, warehouse, and internal tools.', meta: 'BUS / SYNC / AUTH', art: 'join' },
   { n: '05', title: 'Ship', body: 'Deploy with tracing, canaries, and rollback.', meta: 'CI / CANARY / PROD', art: 'ship' },
   { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
-];
-
-const why = [
-  { title: 'Outcome over Output', body: 'We measure what matters — accuracy, latency, safety, and cost — so every sprint ships business value, not just features.' },
-  { title: 'Eval-First Reliability', body: 'From day one, we run offline/online evals, canary tests, and tracing. You see how models perform — and why.' },
-  { title: 'Secure by Design', body: 'PII handling, SSO/SAML, RBAC, encryption, and audit trails — built in, not bolted on. Enterprise-ready from the start.' },
-  { title: 'Design-Led AI Experiences', body: 'We craft prompts, interfaces, and guardrails that feel intuitive — so adoption rises and support tickets fall.' },
 ];
 
 const features = [
@@ -675,42 +669,7 @@ const haiField = (() => {
     </section>
 
     <!-- 10 WHY -->
-    <section class="c-why">
-      <div class="c-wrap">
-        <p class="c-micro c-red">Benefits</p>
-        <h2 class="c-h2">Why Choose Us</h2>
-        <div class="c-why__grid">
-          {why.map((item, i) => (
-            <article class="c-why__card">
-              {i === 0 && (
-                <div class="c-why__sys c-why__sys--graph" aria-hidden="true">
-                  <span></span><span></span><span></span><span></span><span></span>
-                </div>
-              )}
-              {i === 1 && (
-                <div class="c-why__sys c-why__sys--code" aria-hidden="true">
-                  <div class="c-why__gutter"></div>
-                  <div class="c-why__lines"><b></b><b></b><b></b><b></b></div>
-                </div>
-              )}
-              {i === 2 && (
-                <div class="c-why__sys c-why__sys--infra" aria-hidden="true">
-                  <span></span><span></span><span></span>
-                </div>
-              )}
-              {i === 3 && (
-                <div class="c-why__sys c-why__sys--flow" aria-hidden="true">
-                  <span></span><span></span><span></span>
-                </div>
-              )}
-              <p class="c-micro">0{i + 1} / SYS</p>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+    <HomeWhy />
 
     <!-- 11 FEATURES -->
     <section class="c-features">
