@@ -83,13 +83,40 @@ function tagsFromSanityPayload(body: RevalidateBody): string[] {
     return Array.from(tags);
 }
 
+/** Path prefixes for defensive Workers Cache purge (supplements tags). */
+function pathPrefixesFromSanityPayload(body: RevalidateBody): string[] {
+    const prefixes = new Set<string>();
+    const slugValue = typeof body.slug === 'string' ? body.slug : body.slug?.current;
+    if (slugValue && body._type === 'post') {
+        const cleanSlug = normalizeBlogSlug(slugValue);
+        if (cleanSlug) prefixes.add(`/blog/${cleanSlug}`);
+    }
+    if (slugValue && body._type === 'caseStudy') {
+        prefixes.add(`/case-studies/${slugValue}`);
+    }
+    return Array.from(prefixes);
+}
+
 /** Purge Workers Cache (the layer that actually skips Worker execution). */
-async function purgeWorkersCache(tags: string[]): Promise<{ purged: boolean; detail?: string }> {
+async function purgeWorkersCache(options: {
+    tags: string[];
+    pathPrefixes: string[];
+}): Promise<{ purged: boolean; detail?: string }> {
+    const { tags, pathPrefixes } = options;
+    if (tags.length === 0 && pathPrefixes.length === 0) {
+        return { purged: false, detail: 'No cache tags or path prefixes to purge' };
+    }
     try {
         // Cloudflare Workers Cache API — available at runtime on Workers.
         const { cache } = await import('cloudflare:workers');
-        await cache.purge({ tags });
-        return { purged: true, detail: `Workers Cache purged tags=[${tags.join(',')}]` };
+        await cache.purge({
+            ...(tags.length ? { tags } : {}),
+            ...(pathPrefixes.length ? { pathPrefixes } : {}),
+        });
+        return {
+            purged: true,
+            detail: `Workers Cache purged tags=[${tags.join(',')}] pathPrefixes=[${pathPrefixes.join(',')}]`,
+        };
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         return { purged: false, detail: `Workers Cache purge unavailable: ${message}` };
@@ -135,8 +162,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const paths = pathsFromSanityPayload(body);
     const tags = tagsFromSanityPayload(body);
+    const pathPrefixes = pathPrefixesFromSanityPayload(body);
     clearSanityFetchCache();
-    const workers = tags.length ? await purgeWorkersCache(tags) : { purged: false, detail: 'No cache tags to purge' };
+    const workers = await purgeWorkersCache({ tags, pathPrefixes });
     const zone = { purged: false, detail: 'Zone purge skipped (prefer edge TTL + SWR for static HTML).' };
     const indexNow = await notifyIndexNow(paths, locals.runtime?.env);
 
@@ -146,10 +174,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
             revalidatedAt: new Date().toISOString(),
             paths,
             tags,
+            pathPrefixes,
             workersCache: workers,
             zoneCache: zone,
             indexNow,
-            note: 'Cleared isolate Sanity map; purged article, blog listing, and sitemap cache tags.',
+            note: 'Cleared isolate Sanity map; purged article tags plus pathname prefix, blog listing, and sitemap.',
         }),
         {
             status: 200,

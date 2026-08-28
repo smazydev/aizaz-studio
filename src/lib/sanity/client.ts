@@ -14,8 +14,9 @@ export function isSanityConfigured(): boolean {
 }
 
 /**
- * Public reads use the Sanity API CDN for lower upstream latency.
- * Primary HTML caching is Cloudflare Workers Cache (wrangler cache.enabled + CDN-Cache-Control).
+ * Server SSR reads use the live Sanity API (useCdn: false).
+ * Cloudflare Workers Cache already caches public HTML; the API CDN's ~60s lag
+ * can re-poison that edge cache after a publish purge.
  * This Map is only a short in-isolate dedupe — not a global CDN.
  */
 let publishedClient: SanityClient | null = null;
@@ -28,7 +29,7 @@ export function getSanityClient(): SanityClient | null {
             projectId: getSanityProjectId()!,
             dataset: getSanityDataset(),
             apiVersion: '2024-01-01',
-            useCdn: true,
+            useCdn: false,
             perspective: 'published',
         });
     }
