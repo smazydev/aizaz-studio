@@ -225,13 +225,8 @@ const haiField = (() => {
 
   <main>
     <!-- 02 HERO -->
-    <section class="c-hero" aria-label="Hero" data-hero>
-      <div class="c-hero__art c-hero__art--back" aria-hidden="true">
-        <HeroSculpture layer="back" />
-      </div>
-      <div class="c-hero__art c-hero__art--rear" aria-hidden="true">
-        <HeroSculpture layer="rear" />
-      </div>
+    <section class="c-hero home-hero" aria-label="Hero" data-hero>
+      <HeroSculpture />
       <div class="c-hero__copy">
         <p class="c-micro c-hero__kicker c-hero__ui" data-reveal>AI-Driven Agency</p>
         <h1 class="c-hero__title" data-reveal="clip">Your AI Sprint<br />Team<br />on Demand</h1>
@@ -242,9 +237,6 @@ const haiField = (() => {
             <a class="c-btn c-btn--ghost" href="#pricing">View Pricing Plans</a>
           </div>
         </div>
-      </div>
-      <div class="c-hero__art c-hero__art--front" aria-hidden="true">
-        <HeroSculpture layer="front" />
       </div>
       <p class="c-hero__scroll c-hero__ui">Scroll for more</p>
     </section>

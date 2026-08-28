@@ -1,170 +1,118 @@
 ---
-interface Props {
-  layer?: 'back' | 'rear' | 'front';
-}
-const { layer = 'rear' } = Astro.props;
+import '../../styles/home-hero.css';
 ---
 
-{layer === 'back' && (
-  <div class="c-sculpt c-sculpt--back" data-sculpt-back>
-    <svg viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="hero-back-metal" x1="0.15" y1="0.05" x2="0.9" y2="1">
-          <stop offset="0" stop-color="#fffdf8" />
-          <stop offset="0.38" stop-color="#e8e2d6" />
-          <stop offset="0.7" stop-color="#b9b3a8" />
-          <stop offset="1" stop-color="#7a756c" />
-        </linearGradient>
-        <filter id="hero-back-soft">
-          <feGaussianBlur stdDeviation="18" />
-        </filter>
-      </defs>
-      <ellipse cx="980" cy="980" rx="520" ry="70" fill="rgba(28,22,16,0.1)" filter="url(#hero-back-soft)" />
-      <path
-        d="M420 720 C280 420 620 80 1020 140 C1380 200 1620 460 1520 760 C1420 1040 980 1160 620 980 C380 860 500 860 420 720Z"
-        fill="url(#hero-back-metal)"
-        opacity="0.72"
+<link rel="preload" as="image" href="/images/hero/aizaz-sentinel.webp" type="image/webp" />
+
+<div class="hero-sentinel-tech" aria-hidden="true">
+  <svg class="hero-sentinel-tech__svg" viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice">
+    <g class="hero-sentinel-tech__arcs" fill="none" stroke="currentColor" stroke-width="1.15">
+      <ellipse class="hero-sentinel-tech__draw" cx="1188" cy="360" rx="420" ry="420" />
+      <ellipse class="hero-sentinel-tech__draw" cx="1188" cy="360" rx="292" ry="292" />
+      <path class="hero-sentinel-tech__draw hero-sentinel-tech__draw--late" d="M720 210 A520 520 0 0 1 1588 640" />
+    </g>
+    <g class="hero-sentinel-tech__ticks" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M1188 28 v14" />
+      <path d="M1610 360 h14" />
+      <path d="M1188 788 v14" />
+      <path d="M766 360 h12" />
+    </g>
+    <path class="hero-sentinel-tech__route" d="M980 180 C1080 240 1120 320 1188 360" fill="none" />
+    <circle class="hero-sentinel-tech__node" cx="1188" cy="360" r="3.2" />
+  </svg>
+</div>
+
+<div class="hero-sentinel-stage" data-sentinel-stage>
+  <div class="hero-sentinel-wrap" data-sentinel>
+    <div class="hero-sentinel-backdrop" aria-hidden="true">
+      <span class="hero-sentinel-backdrop__head"></span>
+      <span class="hero-sentinel-backdrop__shoulder"></span>
+    </div>
+    <picture>
+      <source srcset="/images/hero/aizaz-sentinel.avif" type="image/avif" />
+      <source srcset="/images/hero/aizaz-sentinel.webp" type="image/webp" />
+      <img
+        class="hero-sentinel"
+        src="/images/hero/aizaz-sentinel.png"
+        alt=""
+        width="768"
+        height="1024"
+        decoding="async"
+        fetchpriority="high"
       />
-    </svg>
+    </picture>
+    <div class="hero-sentinel-light" aria-hidden="true"></div>
   </div>
-)}
+</div>
 
-{layer === 'front' && (
-  <div class="c-sculpt c-sculpt--front" data-sculpt-front>
-    <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="hero-front-metal" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#ffffff" />
-          <stop offset="0.28" stop-color="#f3eee6" />
-          <stop offset="0.62" stop-color="#c4beb3" />
-          <stop offset="1" stop-color="#5c5850" />
-        </linearGradient>
-        <linearGradient id="hero-front-red" x1="0.2" y1="0" x2="0.9" y2="1">
-          <stop offset="0" stop-color="#ff7a5c" />
-          <stop offset="0.5" stop-color="#e31c12" />
-          <stop offset="1" stop-color="#5a0c08" />
-        </linearGradient>
-        <filter id="hero-front-glow">
-          <feGaussianBlur stdDeviation="6" />
-        </filter>
-      </defs>
-      <path d="M80 250 C70 140 180 40 320 60 C470 82 600 170 590 280 C580 380 430 430 280 390 C150 356 90 330 80 250Z" fill="url(#hero-front-metal)" />
-      <path d="M120 268 C132 196 220 128 330 142 C430 154 520 214 516 286" fill="none" stroke="url(#hero-front-red)" stroke-width="18" stroke-linecap="round" />
-      <path d="M150 210 C240 150 400 160 470 230" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="7" stroke-linecap="round" />
-      <ellipse cx="250" cy="168" rx="70" ry="22" fill="rgba(255,255,255,0.35)" filter="url(#hero-front-glow)" />
-    </svg>
-  </div>
-)}
+<div class="hero-sentinel-hud" aria-hidden="true">
+  <span class="hero-sentinel-hud__item">01 / SYNTHETIC SYSTEM</span>
+  <span class="hero-sentinel-hud__item hero-sentinel-hud__item--live">CORE ONLINE</span>
+  <span class="hero-sentinel-hud__item">AI / OPS · SYSTEM READY</span>
+</div>
 
-{layer === 'rear' && (
-  <div class="c-sculpt" data-sculpt>
-    <svg viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="hero-hull" x1="0.12" y1="0.08" x2="0.86" y2="0.92">
-          <stop offset="0" stop-color="#ffffff" />
-          <stop offset="0.18" stop-color="#f7f2ea" />
-          <stop offset="0.42" stop-color="#d8d2c6" />
-          <stop offset="0.68" stop-color="#9a948a" />
-          <stop offset="1" stop-color="#3f3c38" />
-        </linearGradient>
-        <linearGradient id="hero-plate" x1="0.8" y1="0" x2="0.1" y2="1">
-          <stop offset="0" stop-color="#fbf8f2" />
-          <stop offset="0.45" stop-color="#cfc9be" />
-          <stop offset="1" stop-color="#6e6a62" />
-        </linearGradient>
-        <linearGradient id="hero-graphite" x1="0.2" y1="0" x2="0.9" y2="1">
-          <stop offset="0" stop-color="#3a3936" />
-          <stop offset="0.45" stop-color="#141412" />
-          <stop offset="1" stop-color="#050504" />
-        </linearGradient>
-        <linearGradient id="hero-red-lip" x1="0.15" y1="0.1" x2="0.85" y2="0.9">
-          <stop offset="0" stop-color="#ff8a70" />
-          <stop offset="0.42" stop-color="#e31c12" />
-          <stop offset="1" stop-color="#4a0a08" />
-        </linearGradient>
-        <radialGradient id="hero-spec" cx="32%" cy="22%" r="55%">
-          <stop offset="0" stop-color="rgba(255,255,255,0.7)" />
-          <stop offset="0.45" stop-color="rgba(255,255,255,0.12)" />
-          <stop offset="1" stop-color="rgba(255,255,255,0)" />
-        </radialGradient>
-        <filter id="hero-shadow">
-          <feGaussianBlur stdDeviation="16" />
-        </filter>
-        <filter id="hero-spec-blur">
-          <feGaussianBlur stdDeviation="8" />
-        </filter>
-      </defs>
+<script>
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const wrap = document.querySelector<HTMLElement>('[data-sentinel]');
+  if (hero && wrap && !hero.dataset.heroSentinel) {
+    hero.dataset.heroSentinel = '1';
 
-      <ellipse cx="920" cy="1020" rx="480" ry="56" fill="rgba(24,18,12,0.14)" filter="url(#hero-shadow)" />
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-      <!-- Outer machined enclosure — C-shell opening toward the headline -->
-      <path
-        fill="url(#hero-hull)"
-        fill-rule="evenodd"
-        d="M860 90
-           C1120 40 1480 160 1570 420
-           C1640 640 1520 900 1280 1020
-           C980 1160 520 1120 280 940
-           C80 780 70 560 220 430
-           C300 360 390 400 430 500
-           C490 640 640 760 860 790
-           C1120 830 1360 700 1380 500
-           C1400 320 1220 180 980 170
-           C920 166 880 140 860 90Z"
-      />
+    const setScroll = () => {
+      const rect = hero.getBoundingClientRect();
+      const span = Math.max(1, rect.height);
+      const progress = Math.min(1, Math.max(0, -rect.top / span));
+      hero.style.setProperty('--ss', (1 + progress * 0.025).toFixed(4));
+    };
+    setScroll();
 
-      <!-- Folded secondary plate -->
-      <path
-        fill="url(#hero-plate)"
-        d="M980 210
-           C1180 190 1400 300 1410 500
-           C1420 680 1240 820 1020 800
-           C820 780 740 620 790 460
-           C830 330 880 230 980 210Z"
-        opacity="0.92"
-      />
+    if (!reduce) {
+      window.addEventListener('scroll', setScroll, { passive: true });
 
-      <!-- Graphite chassis / inner structure -->
-      <path
-        fill="url(#hero-graphite)"
-        d="M240 700
-           C190 590 250 500 380 490
-           C340 620 380 760 280 830
-           C200 770 270 750 240 700Z"
-      />
-      <path
-        fill="url(#hero-graphite)"
-        d="M1140 500
-           C1220 490 1340 560 1340 660
-           C1340 750 1230 800 1130 770
-           C1040 740 1050 620 1140 500Z"
-        opacity="0.88"
-      />
+      if (fine) {
+        let tx = 0;
+        let ty = 0;
+        let cx = 0;
+        let cy = 0;
+        let raf = 0;
 
-      <!-- Red as cavity lining only -->
-      <path
-        fill="none"
-        stroke="url(#hero-red-lip)"
-        stroke-width="22"
-        stroke-linecap="round"
-        d="M560 560 C720 680 980 760 1220 720 C1340 696 1400 620 1410 540"
-      />
-      <path
-        fill="url(#hero-red-lip)"
-        d="M1280 560
-           C1320 610 1290 700 1180 730
-           C1250 670 1280 610 1280 560Z"
-        opacity="0.85"
-      />
+        const tick = () => {
+          cx += (tx - cx) * 0.08;
+          cy += (ty - cy) * 0.08;
+          wrap.style.setProperty('--px', `${(cx * 6).toFixed(2)}px`);
+          wrap.style.setProperty('--py', `${(cy * 5).toFixed(2)}px`);
+          wrap.style.setProperty('--ry', `${(cx * 1.2).toFixed(3)}deg`);
+          wrap.style.setProperty('--rx', `${(-cy * 0.8).toFixed(3)}deg`);
+          if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) {
+            raf = requestAnimationFrame(tick);
+          } else {
+            raf = 0;
+          }
+        };
 
-      <!-- Studio highlights -->
-      <path fill="url(#hero-spec)" d="M980 210 C1180 190 1380 300 1400 470 C1280 300 1080 220 980 210Z" />
-      <ellipse cx="1180" cy="340" rx="120" ry="36" fill="rgba(255,255,255,0.28)" filter="url(#hero-spec-blur)" />
-      <path d="M1040 280 C1180 250 1320 330 1340 470" fill="none" stroke="rgba(255,255,255,0.42)" stroke-width="6" stroke-linecap="round" />
-      <path d="M520 700 C720 790 1020 820 1240 740" fill="none" stroke="rgba(20,16,12,0.18)" stroke-width="3" />
-      <path d="M1120 390 C1160 430 1170 500 1140 560" fill="none" stroke="rgba(16,16,16,0.28)" stroke-width="2" />
-    </svg>
-    <span class="c-sculpt__light"></span>
-    <span class="c-sculpt__shade"></span>
-  </div>
-)}
+        hero.addEventListener(
+          'pointermove',
+          (event) => {
+            const r = hero.getBoundingClientRect();
+            tx = (event.clientX - r.left) / r.width - 0.5;
+            ty = (event.clientY - r.top) / r.height - 0.5;
+            if (!raf) raf = requestAnimationFrame(tick);
+          },
+          { passive: true },
+        );
+
+        hero.addEventListener(
+          'pointerleave',
+          () => {
+            tx = 0;
+            ty = 0;
+            if (!raf) raf = requestAnimationFrame(tick);
+          },
+          { passive: true },
+        );
+      }
+    }
+  }
+</script>
