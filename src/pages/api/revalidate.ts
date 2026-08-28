@@ -70,9 +70,15 @@ function tagsFromSanityPayload(body: RevalidateBody): string[] {
     if (slugValue && body._type === 'post') {
         const cleanSlug = normalizeBlogSlug(slugValue);
         if (cleanSlug) tags.add(`blog:${cleanSlug}`);
+        // /blog listing uses Cache-Tag cms,blog — must purge on publish/update.
+        tags.add('blog');
+        tags.add('cms');
     }
-    if (slugValue && body._type === 'caseStudy') tags.add(`case-study:${slugValue}`);
-    // List/index pages refresh via short browser TTL + SWR — avoid purging all CMS HTML.
+    if (slugValue && body._type === 'caseStudy') {
+        tags.add(`case-study:${slugValue}`);
+        tags.add('case-studies');
+        tags.add('cms');
+    }
     tags.add('sitemap');
     return Array.from(tags);
 }
@@ -143,7 +149,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
             workersCache: workers,
             zoneCache: zone,
             indexNow,
-            note: 'Cleared isolate Sanity map; targeted Workers Cache purge only. Lists rely on SWR.',
+            note: 'Cleared isolate Sanity map; purged article, blog listing, and sitemap cache tags.',
         }),
         {
             status: 200,

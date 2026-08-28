@@ -1,7 +1,7 @@
 import type { ImageMetadata } from 'astro';
+import { LEGACY_AUTHORS } from '../data/authors';
 import { blogs as legacyBlogs, type BlogPost as LegacyBlogPost } from '../data/blogs';
 import type { ContentAuthor } from './sanity/author';
-import { mapSanityAuthor } from './sanity/author';
 import { normalizeCategory } from './blog-categories';
 import { isNonIndexableContentSlug } from './blog-utils';
 import { isSanityConfigured } from './sanity/client';
@@ -54,8 +54,15 @@ const LEGACY_SEO_TITLES: Record<string, string> = {
         'AI Automation Workflow Examples for Operations Teams | Aizaz Studio',
 };
 
+function legacyDisplayDateToIso(display: string): string {
+    const ms = Date.parse(display);
+    if (Number.isNaN(ms)) return display;
+    return new Date(ms).toISOString();
+}
+
 function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {
-    const author = mapSanityAuthor(undefined, post.author);
+    const author = post.authorKey ? LEGACY_AUTHORS[post.authorKey] : undefined;
+    const dateIso = legacyDisplayDateToIso(post.date);
     return {
         id: post.id,
         slug: post.slug,
@@ -63,15 +70,17 @@ function mapLegacyPost(post: LegacyBlogPost): PublicBlogPost {
         excerpt: post.excerpt,
         content: post.content,
         date: post.date,
-        dateIso: post.date,
+        dateIso,
         author,
         readTime: post.readTime,
         category: normalizeCategory(post.category),
         tags: post.tags ?? [],
         image: post.image,
+        faqs: post.faqs,
         seoTitle: LEGACY_SEO_TITLES[post.slug] ?? post.title,
         metaDescription: post.excerpt,
         canonicalUrl: `/blog/${post.slug}`,
+        updatedAt: post.updatedAt,
         source: 'legacy',
         status: 'published',
     };

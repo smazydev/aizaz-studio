@@ -7,7 +7,12 @@ import BlogPostContent from '../../components/BlogPostContent.astro';
 import { buildArticleSchema, getLinkablePosts, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
 import { SITE_URL } from '../../data/seoPages';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
-import { isMalformedBlogSlug, normalizeBlogSlug, resolveMalformedBlogSlug } from '../../lib/blog-utils';
+import {
+  isMalformedBlogSlug,
+  normalizeBlogSlug,
+  resolveLegacyBlogRedirect,
+  resolveMalformedBlogSlug,
+} from '../../lib/blog-utils';
 
 export const prerender = false;
 
@@ -21,6 +26,11 @@ if (resolved && resolved !== raw) {
 const slug = normalizeBlogSlug(raw);
 if (!slug || isMalformedBlogSlug(slug)) {
   return new Response(null, { status: 404 });
+}
+
+const legacyRedirect = resolveLegacyBlogRedirect(slug);
+if (legacyRedirect) {
+  return Astro.redirect(`/blog/${legacyRedirect}`, 301);
 }
 
 const allPosts = await getPublishedPosts();
@@ -49,7 +59,6 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog', `blog:${blog.slug}`
   title={pageTitle}
   description={pageDescription}
   canonical={blog.canonicalUrl ?? `/blog/${blog.slug}`}
-  keywords={blog.tags}
   ogTitle={ogTitle}
   ogDescription={ogDescription}
   ogImage={ogImage}

@@ -1,3 +1,8 @@
+/** Retired legacy blog slugs → canonical replacement (301). */
+export const LEGACY_BLOG_REDIRECTS: Record<string, string> = {
+    'netsuite-integration-mistakes-growing-operations': 'netsuite-shopify-integration-pitfalls',
+};
+
 /** Known malformed Sanity slugs → clean slug (301 targets). User fixes source in Studio separately. */
 export const KNOWN_MALFORMED_BLOG_SLUG_REDIRECTS: Record<string, string> = {
     'Slug:%20automate-manual-business-workflow-with-ai': 'automate-manual-business-workflow-with-ai',
@@ -63,4 +68,8 @@ export function resolveMalformedBlogSlug(rawSlug: string): string | null {
         return normalized;
     }
     return null;
+}
+
+export function resolveLegacyBlogRedirect(slug: string): string | null {
+    return LEGACY_BLOG_REDIRECTS[slug] ?? null;
 }

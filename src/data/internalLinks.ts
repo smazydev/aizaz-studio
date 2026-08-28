@@ -111,8 +111,10 @@ const ARTICLE_LABELS: Record<string, string> = {
   'rescue-a-half-built-saas-product': 'Rescue a Half-Built SaaS Product',
   'when-to-move-from-vercel-to-aws': 'When to Move from Vercel to AWS',
   'cicd-checklist-early-stage-saas': 'CI/CD Checklist for Early-Stage SaaS',
-  'netsuite-integration-mistakes-growing-operations': 'NetSuite Integration Mistakes',
   'has-ai-made-software-development-cheaper': 'Has AI Made Software Development Cheaper?',
+  'bigcommerce-netsuite-integration-production-problems':
+    'BigCommerce + NetSuite Integration Problems',
+  'automate-manual-business-workflow-with-ai': 'Automate Manual Business Workflows With AI',
 };
 
 function mapSlugs(
@@ -221,12 +223,12 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
   'netsuite-erp-automation': {
     industries: ['netsuite-users', 'ecommerce-wholesale', 'ecommerce-operations'],
     technologies: ['nodejs-development', 'python-development'],
-    articles: ['netsuite-shopify-integration-pitfalls', 'netsuite-integration-mistakes-growing-operations'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
   },
   'netsuite-integration': {
     industries: ['netsuite-users', 'ecommerce-wholesale'],
     services: ['api-integration', 'crm-integration'],
-    articles: ['netsuite-shopify-integration-pitfalls', 'netsuite-integration-mistakes-growing-operations'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
   },
   'api-integration': {
     industries: ['ecommerce-operations', 'operations-teams', 'logistics'],
@@ -290,7 +292,7 @@ export const industryClusterExtras: Record<string, PageRelations> = {
   },
   'netsuite-users': {
     services: ['netsuite-integration', 'netsuite-erp-automation', 'api-integration'],
-    articles: ['netsuite-shopify-integration-pitfalls', 'netsuite-integration-mistakes-growing-operations'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
   },
   'healthtech-clinics': {
     services: ['ai-automation-systems', 'business-process-automation', 'web-app-saas-development'],
@@ -401,10 +403,25 @@ export const caseStudyCluster: Record<string, PageRelations> = {
 };
 
 export const articleCluster: Record<string, PageRelations> = {
+  'netsuite-shopify-integration-pitfalls': {
+    services: ['netsuite-integration', 'api-integration'],
+    industries: ['netsuite-users', 'ecommerce-wholesale'],
+    articles: ['bigcommerce-netsuite-integration-production-problems'],
+  },
+  'bigcommerce-netsuite-integration-production-problems': {
+    services: ['netsuite-integration', 'netsuite-erp-automation'],
+    industries: ['netsuite-users', 'ecommerce-wholesale'],
+    articles: ['netsuite-shopify-integration-pitfalls'],
+  },
+  'automate-manual-business-workflow-with-ai': {
+    services: ['ai-workflow-automation', 'ai-automation-systems'],
+    articles: ['ai-automation-workflows-for-operations-teams', 'identify-workflows-worth-automating-with-ai'],
+  },
   'ai-automation-workflows-for-operations-teams': {
     services: ['ai-automation-systems', 'business-process-automation', 'ai-workflow-automation'],
     industries: ['operations-teams'],
     pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
+    articles: ['automate-manual-business-workflow-with-ai', 'identify-workflows-worth-automating-with-ai'],
   },
   'identify-workflows-worth-automating-with-ai': {
     services: ['ai-workflow-automation', 'ai-automation-systems'],
@@ -437,14 +454,6 @@ export const articleCluster: Record<string, PageRelations> = {
   'cicd-checklist-early-stage-saas': {
     services: ['devops-consulting', 'aws-devops'],
     industries: ['saas-startups'],
-  },
-  'netsuite-shopify-integration-pitfalls': {
-    services: ['netsuite-integration', 'api-integration'],
-    industries: ['netsuite-users', 'ecommerce-wholesale'],
-  },
-  'netsuite-integration-mistakes-growing-operations': {
-    services: ['netsuite-integration', 'netsuite-erp-automation'],
-    industries: ['netsuite-users', 'operations-teams'],
   },
   'has-ai-made-software-development-cheaper': {
     services: ['ai-automation-systems', 'saas-mvp-development'],

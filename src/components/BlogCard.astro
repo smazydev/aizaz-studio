@@ -34,7 +34,17 @@ const { blog, featured = false } = Astro.props;
           decoding="async"
         />
       ) : (
-        <div class="w-full h-full bg-zinc-900 flex items-center justify-center text-zinc-600 text-sm">No image</div>
+        <div class="w-full h-full bg-zinc-900 flex items-center justify-center p-8">
+          <img
+            src="/aizaz-logo-white.png"
+            alt=""
+            class="max-h-16 w-auto opacity-40"
+            loading="lazy"
+            width="160"
+            height="40"
+            decoding="async"
+          />
+        </div>
       )}
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
       <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-primary-300 text-xs font-semibold uppercase tracking-wider">
