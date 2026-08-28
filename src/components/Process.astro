@@ -16,24 +16,17 @@ const { stepsOnly = false } = Astro.props;
     <div class:list={['grid gap-12 lg:gap-16 items-start', stepsOnly ? 'max-w-3xl mx-auto' : 'lg:grid-cols-12']}>
       {!stepsOnly && (
         <div class="lg:col-span-5 lg:sticky lg:top-28">
-          <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">How we work</div>
-          <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
-            From messy workflow to
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-200 to-primary-400"> live system</span>
-          </h2>
-          <p class="text-lg text-zinc-400 mb-6 leading-relaxed">
-            Whether it is a 14 day AI Systems Sprint or a full SaaS build, we follow the same delivery discipline: scoped, integrated, deployed, and documented.
+          <p class="c-micro c-red">How we work</p>
+          <h2 class="page-h2">From messy workflow to live system</h2>
+          <p class="c-lede page-hero__lede">
+            Whether it is a 14 day sprint or a full SaaS build, we follow the same delivery discipline: scoped, integrated, deployed, and documented.
           </p>
-          <p class="text-sm text-zinc-500 mb-8 leading-relaxed">
-            No pod assignment theatre. No slide deck handoffs. One senior team owns architecture, build, cloud, and automation end to end.
+          <p class="c-lede">
+            No pod assignment theatre. One senior team owns architecture, build, cloud, and automation.
           </p>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/ai-systems-sprint" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-600 text-white font-semibold hover:bg-primary-500 transition-colors">
-              14 Day Sprint →
-            </a>
-            <a href="/engineering-transformation" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-zinc-700 text-zinc-300 font-medium hover:bg-zinc-900 transition-colors">
-              Full process
-            </a>
+          <div class="page-hero__actions">
+            <a class="c-btn" href="/ai-systems-sprint">14 Day Sprint →</a>
+            <a class="c-btn c-btn--ghost" href="/engineering-transformation">Full process</a>
           </div>
         </div>
       )}

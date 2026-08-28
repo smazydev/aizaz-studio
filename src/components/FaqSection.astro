@@ -13,20 +13,16 @@ const { faqs, heading = 'Frequently Asked Questions' } = Astro.props;
 ---
 
 {faqs.length > 0 && (
-  <section class="pb-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-display font-bold text-white mb-8">{heading}</h2>
-      <div class="space-y-4">
-        {faqs.map((faq) => (
-          <details class="group p-6 rounded-2xl glass-card">
-            <summary class="cursor-pointer text-lg font-semibold text-white list-none flex items-center justify-between gap-4">
-              {faq.question}
-              <span class="text-primary-400 group-open:rotate-45 transition-transform text-2xl leading-none">+</span>
-            </summary>
-            <p class="mt-4 text-zinc-400 leading-relaxed">{faq.answer}</p>
-          </details>
-        ))}
-      </div>
+  <section class="c-faq">
+    <div class="c-wrap">
+      <p class="c-micro c-red">FAQs</p>
+      <h2 class="page-h2">{heading}</h2>
+      {faqs.map((faq) => (
+        <details>
+          <summary>{faq.question}<span>+</span></summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
     </div>
   </section>
 )}

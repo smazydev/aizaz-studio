@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import '../styles/clone.css';
+import '../styles/site-pages.css';
 import { SITE_URL } from '../data/seoPages';
 
 interface Props {
@@ -17,7 +19,7 @@ const {
   canonical,
   keywords = [],
   noindex = false,
-  theme = 'dark',
+  theme = 'light',
 } = Astro.props;
 
 function toCanonicalUrl(url: string): string {
@@ -98,10 +100,37 @@ const websiteSchema = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      (function () {
+        var KEY = 'aizaz-theme';
+        function apply(theme) {
+          var root = document.documentElement;
+          root.classList.remove('theme-light', 'theme-dark');
+          root.classList.add('theme-' + theme);
+          root.setAttribute('data-theme', theme);
+          root.style.colorScheme = theme;
+          if (document.body) {
+            document.body.classList.toggle('theme-light', theme === 'light');
+            document.body.classList.toggle('theme-dark', theme === 'dark');
+          }
+          try { localStorage.setItem(KEY, theme); } catch (e) {}
+        }
+        window.__aizazApplyTheme = apply;
+        window.__aizazToggleTheme = function () {
+          apply(document.documentElement.classList.contains('theme-dark') ? 'light' : 'dark');
+        };
+        document.documentElement.classList.add('js');
+        try {
+          var stored = localStorage.getItem(KEY);
+          apply(stored === 'dark' || stored === 'light' ? stored : 'light');
+        } catch (e) {
+          apply('light');
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
@@ -125,8 +154,12 @@ const websiteSchema = {
 </html>
 
 <script>
+  import { bindThemeToggle } from '../lib/theme';
+
+  bindThemeToggle();
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const homeOwnsReveal = document.body.classList.contains('theme-light');
+  const homeOwnsReveal = Boolean(document.querySelector('.clone'));
 
   if (homeOwnsReveal) {
     // Homepage motion is handled in src/lib/home-motion.ts

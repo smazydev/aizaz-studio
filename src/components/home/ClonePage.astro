@@ -1,8 +1,38 @@
 ---
-import HeroSculpture from './HeroSculpture.astro';
-import ProjectArt from './ProjectArt.astro';
+import { Image } from 'astro:assets';
+import { caseStudies } from '../../data/caseStudies';
+import Hero from './Hero.astro';
 import HomeWhy from './HomeWhy.astro';
 import HomeFeatures from './HomeFeatures.astro';
+import SiteNav from '../site/SiteNav.astro';
+import SiteFooter from '../site/SiteFooter.astro';
+
+const featuredWork = caseStudies
+  .filter((study) => study.slug !== 'investorsgonewild-investment-platform')
+  .flatMap((study) => {
+    const foci = study.category
+      .split('•')
+      .map((part) => part.trim())
+      .filter(Boolean);
+    const shots = [
+      { image: study.image, kind: 'cinema' as const },
+      ...(study.backgroundImages?.[0]
+        ? [{ image: study.backgroundImages[0], kind: 'wide' as const }]
+        : []),
+      ...(study.backgroundImages?.[1]
+        ? [{ image: study.backgroundImages[1], kind: 'square' as const }]
+        : []),
+    ];
+    return shots.map((shot, index) => ({
+      ...shot,
+      href: `/case-studies/${study.slug}`,
+      title: study.title,
+      name: study.title.split(':')[0].trim(),
+      focus: foci[index] ?? foci[0] ?? study.category,
+      system: study.subtitle,
+    }));
+  })
+  .slice(0, 3);
 
 const isDev = import.meta.env.DEV;
 const services = [
@@ -11,74 +41,35 @@ const services = [
     title: 'AI Automation',
     body: 'Agents and workflows that take work off your team — from intake to action, with evals and a human handoff.',
     items: ['Workflow mapping', 'Tool use & guardrails', 'Production evals'],
-    viz: 'flow',
+    href: '/services/ai-automation-systems',
   },
   {
     n: '02',
     title: 'Product Engineering',
     body: 'Web apps and SaaS products built to ship — architecture, UI, and the backend your users actually hit.',
     items: ['MVP to production', 'React / Node', 'Auth, billing, APIs'],
-    viz: 'product',
+    href: '/services/web-app-saas-development',
   },
   {
     n: '03',
     title: 'Systems Integration',
     body: 'CRM, helpdesk, warehouse, and internal tools connected so data stops living in five places.',
     items: ['API connectors', 'Event buses', 'Idempotent sync'],
-    viz: 'bus',
+    href: '/services/api-integration',
   },
   {
     n: '04',
     title: 'ERP / NetSuite',
     body: 'NetSuite and operations systems wired to the rest of the stack — orders, inventory, and finance in one flow.',
     items: ['NetSuite REST / SuiteQL', 'Order sync', 'Custom records'],
-    viz: 'erp',
+    href: '/services/netsuite-erp-automation',
   },
   {
     n: '05',
     title: 'Cloud Infrastructure',
     body: 'AWS environments that stay up: CI/CD, observability, and the reliability work that makes shipping safe.',
     items: ['AWS landing zone', 'Pipelines & canaries', 'Logs, traces, alerts'],
-    viz: 'cloud',
-  },
-];
-
-const projects = [
-  {
-    kind: 'wide',
-    viz: 'optical' as const,
-    title: 'Support Copilot for SaaS',
-    client: 'Cantos',
-    system: 'LLM agent + RAG',
-    year: '2026',
-    description: 'Draft replies and pulls account context; reduced first-response time by 38%.',
-  },
-  {
-    kind: 'square',
-    viz: 'product' as const,
-    title: 'Underwriting Risk Copilot',
-    client: 'Northline',
-    system: 'Triage assistant',
-    year: '2026',
-    description: 'Built a triage assistant to summarize claims; cut manual review time by 42%.',
-  },
-  {
-    kind: 'cinema',
-    viz: 'material' as const,
-    title: 'Clinical Note Summarizer',
-    client: 'Harbor Clinic',
-    system: 'Clinical RAG',
-    year: '2025',
-    description: 'Clinic-lobby assistant answering pre-visit questions; decreased front-desk calls by 28%.',
-  },
-  {
-    kind: 'wide',
-    viz: 'mesh' as const,
-    title: 'Catalog Intelligence Engine',
-    client: 'Atelier Market',
-    system: 'Embeddings pipeline',
-    year: '2026',
-    description: 'Launched a shopping copilot that understands attributes; raised add-to-cart by 12%.',
+    href: '/services/aws-devops',
   },
 ];
 
@@ -113,15 +104,6 @@ const faqs = [
   { q: 'What do we need to start?', a: 'A clear problem statement, success metrics, access to sample data, and a stakeholder who can make decisions. We’ll run a kickoff workshop to align scope.' },
   { q: 'Which models/stack do you use?', a: 'Modern, scalable stacks like React, Node.js, and cloud services. We choose models/APIs based on the use case, performance, and cost.' },
   { q: 'Are model/API costs included in pricing?', a: 'Model and API costs are usually billed separately based on usage. We share estimates upfront and help optimize costs.' },
-];
-
-const nav = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/case-studies', label: 'Works' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '/book-a-call', label: 'Contact' },
 ];
 
 const haiField = (() => {
@@ -207,39 +189,11 @@ const haiField = (() => {
     </>
   )}
 
-  <!-- 01 NAV -->
-  <header class="c-nav">
-    <input id="c-nav" type="checkbox" />
-    <div class="c-nav__inner">
-      <a class="c-nav__logo" href="/">AgenAI</a>
-      <nav class="c-nav__links" aria-label="Primary">
-        {nav.map((l) => <a href={l.href}>{l.label}</a>)}
-      </nav>
-      <a class="c-btn c-nav__cta" href="/book-a-call">Start a Project</a>
-      <label class="c-nav__burger" for="c-nav" aria-label="Open menu"><span></span></label>
-    </div>
-    <nav class="c-nav__mobile">
-      {nav.map((l) => <a href={l.href}>{l.label}</a>)}
-    </nav>
-  </header>
+  <SiteNav />
 
   <main>
     <!-- 02 HERO -->
-    <section class="c-hero home-hero" aria-label="Hero" data-hero>
-      <HeroSculpture />
-      <div class="c-hero__copy">
-        <p class="c-micro c-hero__kicker c-hero__ui" data-reveal>AI-Driven Agency</p>
-        <h1 class="c-hero__title" data-reveal="clip">Your AI Sprint<br />Team<br />on Demand</h1>
-        <div class="c-hero__ui" data-reveal>
-          <p class="c-hero__lede">From discovery to deployment — prototype, validate, launch.</p>
-          <div class="c-hero__cta">
-            <a class="c-btn" href="/services">Explore Services</a>
-            <a class="c-btn c-btn--ghost" href="#pricing">View Pricing Plans</a>
-          </div>
-        </div>
-      </div>
-      <p class="c-hero__scroll c-hero__ui">Scroll for more</p>
-    </section>
+    <Hero />
 
     <!-- 03 HUMAN CENTERED -->
     <section class="home-human-ai">
@@ -302,7 +256,7 @@ const haiField = (() => {
             </div>
             <div class="home-human-ai__caption">
               <p class="c-micro">Ava Collins</p>
-              <p>AgenAI’s Design Lead</p>
+              <p>Aizaz’s Design Lead</p>
             </div>
           </article>
         </div>
@@ -528,11 +482,11 @@ const haiField = (() => {
           </div>
           <div class="home-services__acc" role="list">
             {services.map((s, i) => (
-              <button
+              <a
                 class:list={['home-services__item', i === 0 && 'is-on']}
-                type="button"
+                href={s.href}
                 data-service={String(i)}
-                aria-expanded={i === 0 ? 'true' : 'false'}
+                aria-current={i === 0 ? 'true' : undefined}
               >
                 <span class="home-services__item-kicker">
                   <span class="home-services__idx">{s.n}</span>
@@ -543,9 +497,10 @@ const haiField = (() => {
                   <span class="home-services__item-inner">
                     {s.body}
                     <span class="home-services__item-meta">{s.items.join('  /  ')}</span>
+                    <span class="home-services__go">View service</span>
                   </span>
                 </span>
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -556,27 +511,39 @@ const haiField = (() => {
     <div class="c-wrap c-works-label">
       <p class="c-micro c-red">Featured Works</p>
     </div>
-    {projects.map((p) => (
+    {featuredWork.map((p) => (
       <article class={`c-project c-project--${p.kind}`} data-reveal="media">
-        <div class="c-project__frame">
-          <ProjectArt kind={p.viz} />
-        </div>
+        <a class="c-project__frame" href={p.href}>
+          <Image
+            class="c-project__shot"
+            src={p.image}
+            alt={p.title}
+            width={1920}
+            widths={[960, 1440, 1920]}
+            sizes="(min-width: 1200px) 1680px, 100vw"
+            quality={78}
+          />
+        </a>
         <div class="c-project__meta">
           <div>
             <p class="c-micro">Project</p>
-            <h3>{p.title}</h3>
+            <h3>
+              <a href={p.href}>{p.name}</a>
+            </h3>
           </div>
           <div>
-            <p class="c-micro">Industry</p>
-            <p class="c-project__val">{p.client}</p>
+            <p class="c-micro">Focus</p>
+            <p class="c-project__val">{p.focus}</p>
           </div>
           <div>
             <p class="c-micro">System</p>
             <p class="c-project__val">{p.system}</p>
           </div>
           <div>
-            <p class="c-micro">Year</p>
-            <p class="c-project__val">{p.year}</p>
+            <p class="c-micro">Case study</p>
+            <p class="c-project__val">
+              <a href={p.href}>View →</a>
+            </p>
           </div>
         </div>
       </article>
@@ -865,38 +832,5 @@ const haiField = (() => {
     </section>
   </main>
 
-  <!-- 19 FOOTER -->
-  <footer class="c-foot">
-    <div class="c-wrap">
-      <div class="c-foot__cols">
-        <div>
-          <h4>Studio</h4>
-          <p>AI-driven agency. From discovery to deployment.</p>
-        </div>
-        <div>
-          <h4>Pages</h4>
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/services">Services</a>
-          <a href="/case-studies">Works</a>
-        </div>
-        <div>
-          <h4>Social</h4>
-          <a href="#">Twitter / X</a>
-          <a href="#">Instagram</a>
-          <a href="#">LinkedIn</a>
-        </div>
-        <div>
-          <h4>Start</h4>
-          <a href="/book-a-call">Contact</a>
-          <a href="#pricing">Pricing</a>
-        </div>
-      </div>
-      <p class="c-foot__mark" aria-hidden="true">AIZAZ</p>
-      <div class="c-foot__base">
-        <span>© 2026 AgenAI. All Rights Reserved.</span>
-        <span>Based in Montréal, Canada</span>
-      </div>
-    </div>
-  </footer>
+  <SiteFooter />
 </div>

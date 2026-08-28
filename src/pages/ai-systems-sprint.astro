@@ -1,7 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import { aiSystemsSprintPage } from '../data/seoPages';
@@ -11,26 +9,19 @@ import { BOOKING_URL } from '../data/siteConfig';
 const page = aiSystemsSprintPage;
 ---
 
-<Layout
+<SiteShell
   title={page.metaTitle}
   description={page.metaDescription}
   canonical="/ai-systems-sprint"
   keywords={page.keywords}
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
       <PageHero
         eyebrow="Flagship Offer"
         title="AI Systems Sprint"
         highlight="One workflow. 14 days. Live system."
         description={page.heroSubtitle}
       >
-        <div class="flex flex-col sm:flex-row gap-4 mt-2 sm:mt-0 w-full sm:w-auto justify-center">
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" class="inline-flex justify-center px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors">
-            Book Sprint Discovery Call
-          </a>
-        </div>
+        <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book Sprint Discovery Call</a>
       </PageHero>
 
       <section class="pb-20 -mt-6">
@@ -118,10 +109,7 @@ const page = aiSystemsSprintPage;
       </section>
 
       <CTA client:visible />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+</SiteShell>
 
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',

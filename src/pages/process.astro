@@ -10,10 +10,8 @@ const c = processPage;
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/process">
   <PageHero eyebrow="How we work" title={c.title} description={c.intro}>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="/book-a-call" class="inline-flex justify-center px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors">Book a Call</a>
-      <a href="/engagement-models" class="inline-flex justify-center px-8 py-4 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">Engagement Models</a>
-    </div>
+    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement Models</a>
   </PageHero>
 
   <Process stepsOnly />

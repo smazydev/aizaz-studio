@@ -1,8 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
+import SiteShell from '../components/SiteShell.astro';
 import { WhyUs } from '../components/WhyUs';
-import { Footer } from '../components/Footer';
 import { CTA } from '../components/CTA';
 import { ClientReviews } from '../components/ClientReviews';
 import PageHero from '../components/PageHero.astro';
@@ -10,15 +8,12 @@ import { servicePages } from '../data/seoPages';
 import { deliverySteps, siteStats } from '../data/siteContent';
 ---
 
-<Layout
+<SiteShell
   title="About Aizaz.studio | AI, Cloud & Automation Engineering Studio"
   description="Learn about Aizaz.studio, an engineering studio helping startups and operations-heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
   canonical="/about"
   keywords={['about Aizaz.studio', 'AI automation studio', 'software development agency', 'NetSuite developers']}
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
       <PageHero
         eyebrow="About Us"
         title="We connect your business"
@@ -82,7 +77,4 @@ import { deliverySteps, siteStats } from '../data/siteContent';
       <WhyUs client:visible />
       <ClientReviews client:visible />
       <CTA client:visible />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+</SiteShell>

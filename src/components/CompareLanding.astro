@@ -9,19 +9,19 @@ interface Props {
 const { page } = Astro.props;
 ---
 
-<section class="pt-32 pb-16 relative overflow-hidden page-glow">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <nav class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 mb-8" aria-label="Breadcrumb">
-      <a href="/" class="hover:text-primary-400 transition-colors">Home</a>
+<section class="page-hero">
+  <div class="c-wrap">
+    <nav class="page-crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
       <span>/</span>
-      <a href="/compare" class="hover:text-primary-400 transition-colors">Compare</a>
+      <a href="/compare">Compare</a>
       <span>/</span>
-      <span class="text-zinc-300">{page.title}</span>
+      <span>{page.title}</span>
     </nav>
-    <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">Compare</div>
-    <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">{page.title}</h1>
-    <p class="text-xl text-zinc-400 leading-relaxed mb-8">{page.heroSubtitle}</p>
-    <p class="text-zinc-400 leading-relaxed">{page.intro}</p>
+    <p class="c-micro c-red">Compare</p>
+    <h1 class="page-title">{page.title}</h1>
+    <p class="c-lede page-hero__lede">{page.heroSubtitle}</p>
+    <p class="c-lede page-hero__lede">{page.intro}</p>
   </div>
 </section>
 
@@ -75,10 +75,10 @@ const { page } = Astro.props;
 <section class="pb-20">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="p-10 rounded-3xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20 text-center">
-      <p class="text-xl font-display font-bold text-white mb-6">{page.ctaText}</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/book-a-call" class="px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors">Book a Call</a>
-        <a href="/engagement-models" class="px-8 py-4 rounded-full bg-zinc-900 border border-zinc-700 text-white font-medium hover:bg-zinc-800 transition-colors">Engagement Models</a>
+      <p class="c-lede" style="margin-top: 0">{page.ctaText}</p>
+      <div class="page-hero__actions">
+        <a class="c-btn" href="/book-a-call">Book a Call</a>
+        <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement Models</a>
       </div>
     </div>
   </div>

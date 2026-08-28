@@ -1,7 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 
 const values = [
@@ -44,15 +42,12 @@ const jobs = [
 ];
 ---
 
-<Layout
+<SiteShell
   title="Careers | Aizaz.studio"
   description="Join Aizaz.studio, an AI, cloud, and automation engineering studio building systems for startups and operations-heavy businesses."
   canonical="/careers"
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
 
-    <main>
       <PageHero
         eyebrow="Careers"
         title="Build systems that"
@@ -113,7 +108,4 @@ const jobs = [
           </div>
         </div>
       </section>
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+</SiteShell>

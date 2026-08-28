@@ -39,7 +39,7 @@
   height: 252px;
   min-height: 252px;
   padding: 16px 18px 14px;
-  background: #faf8f2;
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 10px;
 }
@@ -88,19 +88,19 @@
 }
 
 .home-why__svg .box {
-  fill: rgba(16, 16, 16, 0.03);
-  stroke: rgba(16, 16, 16, 0.28);
+  fill: var(--plot-fill);
+  stroke: var(--plot-strong);
   stroke-width: 1;
 }
 
 .home-why__svg .box.hot {
-  fill: rgba(227, 28, 18, 0.08);
-  stroke: rgba(227, 28, 18, 0.6);
+  fill: rgba(78, 146, 216, 0.08);
+  stroke: rgba(78, 146, 216, 0.6);
 }
 
 .home-why__svg .ln {
   fill: none;
-  stroke: rgba(16, 16, 16, 0.22);
+  stroke: var(--plot-mid);
   stroke-width: 1;
 }
 
@@ -109,7 +109,7 @@
 }
 
 .home-why__svg text {
-  fill: rgba(16, 16, 16, 0.62);
+  fill: var(--plot-label);
   font-size: 13px;
   letter-spacing: 0.08em;
   font-family: inherit;
@@ -120,7 +120,7 @@
 }
 
 .home-why__svg circle {
-  fill: rgba(16, 16, 16, 0.28);
+  fill: var(--plot-strong);
 }
 
 .home-why__svg circle.hot {
@@ -159,9 +159,9 @@
   justify-content: center;
   min-width: 0;
   padding: 8px 6px;
-  border: 1px solid rgba(16, 16, 16, 0.18);
+  border: 1px solid var(--plot-mid);
   border-radius: 6px;
-  background: rgba(16, 16, 16, 0.02);
+  background: var(--plot-fill);
 }
 
 .home-why__step b {
@@ -179,8 +179,8 @@
 }
 
 .home-why__step.is-live {
-  border-color: rgba(227, 28, 18, 0.55);
-  background: rgba(227, 28, 18, 0.07);
+  border-color: rgba(78, 146, 216, 0.55);
+  background: rgba(78, 146, 216, 0.07);
 }
 
 .home-why__step.is-live span {
@@ -192,7 +192,7 @@
   flex: 0 0 10px;
   align-self: center;
   height: 1px;
-  background: rgba(16, 16, 16, 0.22);
+  background: var(--plot-mid);
 }
 
 .home-why__join.is-hot {
@@ -251,8 +251,8 @@
 }
 
 .home-why__card--eng:hover .home-why__step:nth-of-type(4) {
-  border-color: rgba(227, 28, 18, 0.55);
-  background: rgba(227, 28, 18, 0.07);
+  border-color: rgba(78, 146, 216, 0.55);
+  background: rgba(78, 146, 216, 0.07);
 }
 
 .home-why__card--eng:hover .home-why__step:nth-of-type(4) span {
@@ -268,7 +268,7 @@
 }
 
 .home-why__card--int:hover .home-why__svg .box:not(.hot) {
-  stroke: rgba(227, 28, 18, 0.4);
+  stroke: rgba(78, 146, 216, 0.4);
 }
 
 .home-why__card--ops:hover .home-why__svg .ln.hot {

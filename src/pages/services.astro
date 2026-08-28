@@ -1,21 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import { CTA } from '../components/CTA';
 import { servicePages, industryPages } from '../data/seoPages';
 import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout
+<SiteShell
   title="Services | AI, Cloud & Automation Engineering | Aizaz.studio"
   description="AI automation, web app development, AWS DevOps, NetSuite integrations, business process automation, trading technology, and product enablement for growing businesses."
   canonical="/services"
   keywords={['AI automation services', 'SaaS development', 'NetSuite integration', 'AWS DevOps', 'business automation']}
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
       <PageHero
         eyebrow="Services"
         title="Build smarter systems."
@@ -33,12 +28,7 @@ import PageHero from '../components/PageHero.astro';
                 In 14 days, we turn one manual workflow into a working AI assisted system, automation, dashboard, or internal tool.
               </p>
             </div>
-            <a
-              href="/ai-systems-sprint"
-              class="inline-flex justify-center px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors shrink-0"
-            >
-              View the Sprint Offer
-            </a>
+            <a class="c-btn" href="/ai-systems-sprint">View the Sprint Offer</a>
           </div>
         </div>
 
@@ -74,7 +64,4 @@ import PageHero from '../components/PageHero.astro';
       </section>
 
       <CTA client:visible />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+</SiteShell>

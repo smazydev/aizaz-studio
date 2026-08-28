@@ -1,3 +1,5 @@
+import { bindThemeToggle } from './theme';
+
 function overlay() {
   if (!import.meta.env.DEV) return;
   const root = document.querySelector<HTMLElement>('[data-ref-overlay]');
@@ -281,25 +283,25 @@ function aboutField() {
 function services() {
   const root = document.querySelector('[data-services]');
   if (!root) return;
-  const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-service]')];
+  const items = [...root.querySelectorAll<HTMLAnchorElement>('[data-service]')];
   const panels = root.querySelectorAll<HTMLElement>('[data-sv]');
 
   const activate = (id: string) => {
-    buttons.forEach((b) => {
-      const on = b.dataset.service === id;
-      b.classList.toggle('is-on', on);
-      b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    items.forEach((item) => {
+      const on = item.dataset.service === id;
+      item.classList.toggle('is-on', on);
+      if (on) item.setAttribute('aria-current', 'true');
+      else item.removeAttribute('aria-current');
     });
     panels.forEach((p) => p.classList.toggle('is-on', p.dataset.sv === id));
   };
 
-  buttons.forEach((btn, i) => {
-    const id = () => btn.dataset.service || '0';
-    btn.addEventListener('click', () => activate(id()));
-    btn.addEventListener('mouseenter', () => activate(id()));
-    btn.addEventListener('focus', () => activate(id()));
-    btn.addEventListener('keydown', (event) => {
-      const last = buttons.length - 1;
+  items.forEach((item, i) => {
+    const id = () => item.dataset.service || '0';
+    item.addEventListener('mouseenter', () => activate(id()));
+    item.addEventListener('focus', () => activate(id()));
+    item.addEventListener('keydown', (event) => {
+      const last = items.length - 1;
       let next = i;
       if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = i === last ? 0 : i + 1;
       else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = i === 0 ? last : i - 1;
@@ -307,7 +309,7 @@ function services() {
       else if (event.key === 'End') next = last;
       else return;
       event.preventDefault();
-      buttons[next].focus();
+      items[next].focus();
     });
   });
 }
@@ -499,6 +501,7 @@ function orbitParallax() {
 }
 
 export function mountHomeMotion() {
+  bindThemeToggle();
   overlay();
   reveals();
   heroMotion();

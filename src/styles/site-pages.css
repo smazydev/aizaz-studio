@@ -1,0 +1,282 @@
+/* Inner pages: same Figtree editorial type, buttons, and cards as the landing page. */
+
+.site-main {
+  font-family: var(--font);
+  font-size: var(--body);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.site-main .font-display,
+.site-main .font-sans,
+.site-main .font-mono {
+  font-family: var(--font);
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.page-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-stack {
+  display: grid;
+  gap: 10px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-card {
+  padding: 22px 24px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.page-card .c-micro {
+  margin-bottom: 8px;
+}
+
+.page-card__title {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.page-card .c-lede {
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .page-grid,
+  .page-list {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title,
+  .page-h2 {
+    max-width: none;
+  }
+}
+
+.site-main h1:not(.page-title) {
+  font-family: var(--font);
+  font-size: clamp(3rem, 6.2vw, 5.6rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  color: var(--ink);
+}
+
+.site-main h2:not(.page-h2):not(.c-h2):not(.page-card__title) {
+  font-family: var(--font);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+
+.site-main h2.text-sm,
+.site-main h2.text-xs {
+  font-size: var(--micro);
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: none;
+  text-transform: uppercase;
+}
+
+.site-main h2.text-lg,
+.site-main h2.text-xl,
+.site-main h2.text-2xl,
+.site-main h3.text-lg,
+.site-main h3.text-xl,
+.site-main h3.text-2xl {
+  font-size: 1.15rem;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  max-width: none;
+}
+
+.site-main .article-content h2 {
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  max-width: none;
+}
+
+.site-main .article-content h3 {
+  font-size: 1.15rem;
+}
+
+.site-main .text-white,
+.site-main .text-zinc-100,
+.site-main .text-zinc-200,
+.site-main .hover\:text-white:hover {
+  color: var(--ink);
+}
+
+.site-main .text-zinc-300,
+.site-main .text-zinc-400,
+.site-main .text-zinc-500,
+.site-main .text-zinc-600 {
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.site-main .text-xl,
+.site-main .text-lg {
+  font-size: var(--body);
+  line-height: 1.6;
+}
+
+.site-main .text-primary-300,
+.site-main .text-primary-400,
+.site-main .text-primary-500,
+.site-main .hover\:text-primary-300:hover,
+.site-main .hover\:text-primary-400:hover,
+.site-main .group:hover .group-hover\:text-primary-400 {
+  color: var(--red);
+}
+
+.site-main .text-gradient,
+.site-main .text-transparent {
+  background: none;
+  -webkit-text-fill-color: var(--navy);
+  color: var(--navy);
+}
+
+.site-main .uppercase.tracking-widest,
+.site-main .tracking-widest {
+  font-size: var(--micro);
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  color: var(--red);
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+.site-main .glass-card,
+.site-main .bg-zinc-900,
+.site-main .bg-zinc-900\/30,
+.site-main .bg-zinc-900\/40,
+.site-main .bg-zinc-900\/50,
+.site-main .bg-zinc-900\/60,
+.site-main .bg-zinc-950,
+.site-main .bg-zinc-950\/40,
+.site-main .bg-zinc-950\/95 {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: none;
+  color: var(--ink);
+}
+
+.site-main .border-zinc-700,
+.site-main .border-zinc-800,
+.site-main .border-zinc-900,
+.site-main .border-white\/5,
+.site-main .border-white\/10,
+.site-main .border-primary-500\/20,
+.site-main .border-primary-500\/30 {
+  border-color: var(--line);
+}
+
+.site-main .bg-primary-500\/10,
+.site-main .bg-primary-600\/10,
+.site-main .bg-primary-600\/20,
+.site-main .from-primary-600\/20 {
+  background: color-mix(in srgb, var(--red) 10%, var(--paper));
+  border-color: var(--line);
+}
+
+.site-main ol .rounded-2xl {
+  box-shadow: none;
+}
+
+.site-main .page-glow > .absolute {
+  display: none;
+}
+
+.site-main a.rounded-full {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.site-main a.rounded-full.bg-white,
+.site-main a.bg-white.text-black,
+.site-main a.bg-primary-600,
+.site-main a.bg-primary-500 {
+  background: var(--ink);
+  color: var(--bg);
+  border: 0;
+}
+
+.site-main a.rounded-full.border,
+.site-main a.border-zinc-700 {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.site-main .max-w-4xl,
+.site-main .max-w-5xl,
+.site-main .max-w-6xl,
+.site-main .max-w-7xl {
+  width: min(var(--page-max), 100%);
+  max-width: none;
+  padding-inline: var(--page-pad);
+  margin-inline: auto;
+}
+
+.site-main .article-content,
+.site-main .article-content p,
+.site-main .article-content li {
+  color: var(--muted);
+  font-size: var(--body);
+  line-height: 1.7;
+}
+
+.site-main .article-content h2,
+.site-main .article-content h3,
+.site-main .article-content strong {
+  color: var(--ink);
+}
+
+.site-main .article-content a {
+  color: var(--red);
+}
+
+.site-main .article-content code {
+  background: var(--bg-2);
+  color: var(--navy);
+}
+
+.site-main .article-content pre {
+  background: var(--paper);
+  border-color: var(--line);
+}

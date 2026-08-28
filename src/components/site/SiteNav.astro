@@ -1,0 +1,48 @@
+---
+import { siteNav } from '../../data/siteChrome';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+function isCurrent(href: string) {
+  if (href === '/') return path === '/';
+  return path === href || path.startsWith(`${href}/`);
+}
+---
+
+<header class="c-nav">
+  <input id="c-nav" type="checkbox" />
+  <div class="c-nav__inner">
+    <a class="c-nav__logo" href="/">
+      <img src="/aizaz-logo-white.png" alt="" width="34" height="34" />
+      Aizaz
+    </a>
+    <nav class="c-nav__links" aria-label="Primary">
+      {siteNav.map((l) => (
+        <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+    <div class="c-nav__end">
+      <button
+        class="c-theme"
+        type="button"
+        data-theme-toggle
+        aria-label="Switch color theme"
+        aria-pressed="false"
+      >
+        <svg class="c-theme__moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M21 14.3A8.5 8.5 0 0 1 9.7 3 9 9 0 1 0 21 14.3Z" />
+        </svg>
+        <svg class="c-theme__sun" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm0-16.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V2.5A.75.75 0 0 1 12 1.75Zm0-16.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75ZM22.25 12a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5H21.5a.75.75 0 0 1 .75.75ZM4 12a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5H3.25A.75.75 0 0 1 4 12Zm14.42-6.66a.75.75 0 0 1 0 1.06l-1.06 1.06a.75.75 0 1 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0ZM7.7 16.36a.75.75 0 0 1 0 1.06l-1.06 1.06a.75.75 0 1 1-1.06-1.06l1.06-1.06a.75.75 0 0 1 1.06 0Zm10.72 1.06a.75.75 0 0 1-1.06 0l-1.06-1.06a.75.75 0 0 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06ZM7.7 7.7a.75.75 0 0 1-1.06 0L5.58 6.64A.75.75 0 0 1 6.64 5.58L7.7 6.64a.75.75 0 0 1 0 1.06Z" />
+        </svg>
+      </button>
+      <a class="c-btn c-nav__cta" href="/book-a-call">Start a Project</a>
+      <label class="c-nav__burger" for="c-nav" aria-label="Open menu"><span></span></label>
+    </div>
+  </div>
+  <nav class="c-nav__mobile">
+    {siteNav.map((l) => (
+      <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
+    ))}
+  </nav>
+</header>

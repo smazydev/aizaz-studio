@@ -1,0 +1,35 @@
+---
+const poster = '/images/hero/aizaz-sentinel-poster.webp';
+const png = '/images/hero/aizaz-sentinel.png';
+---
+
+<link rel="preload" as="image" href={poster} type="image/webp" />
+<link rel="preload" href="/models/aizaz-sentinel.glb?v=2" as="fetch" crossorigin="anonymous" />
+
+<div class="hero3d" data-hero3d>
+  <canvas class="hero3d__canvas" data-hero-canvas aria-hidden="true"></canvas>
+  <div class="hero3d__poster" data-hero-poster>
+    <picture>
+      <source srcset={poster} type="image/webp" />
+      <img
+        class="hero-sentinel"
+        src={png}
+        alt=""
+        width="768"
+        height="1024"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </picture>
+  </div>
+</div>
+
+<script>
+  import { mountHeroSentinel } from './hero-sentinel';
+
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (hero && !hero.dataset.hero3dMounted) {
+    hero.dataset.hero3dMounted = '1';
+    void mountHeroSentinel(hero);
+  }
+</script>

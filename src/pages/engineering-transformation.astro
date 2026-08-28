@@ -1,20 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import Process from '../components/Process.astro';
 import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout
+<SiteShell
   title="How We Work | Aizaz.studio"
   description="Our process for discovery, architecture, build, deployment, and handoff, designed to ship reliable AI, automation, and software systems."
   canonical="/engineering-transformation"
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
 
-    <main class="pb-24">
+    <div class="pb-24">
       <PageHero
         eyebrow="How We Work"
         title="From manual workflow"
@@ -33,7 +29,5 @@ import PageHero from '../components/PageHero.astro';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
         <Process stepsOnly />
       </div>
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+    </div>
+</SiteShell>

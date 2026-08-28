@@ -1,7 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { Navbar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
+import SiteShell from '../../components/SiteShell.astro';
 import SeoLanding from '../../components/SeoLanding.astro';
 import { industryPages } from '../../data/seoPages';
 
@@ -15,24 +13,13 @@ export function getStaticPaths() {
 const { page } = Astro.props;
 ---
 
-<Layout
-  title={page.metaTitle}
-  description={page.metaDescription}
-  canonical={`/for/${page.slug}`}
-  keywords={page.keywords}
->
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
-      <SeoLanding
-        page={page}
-        badge="Industries We Serve"
-        breadcrumb={[
-          { label: 'Home', href: '/' },
-          { label: 'Industries', href: '/services' },
-        ]}
-      />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+<SiteShell title={page.metaTitle} description={page.metaDescription} canonical={`/for/${page.slug}`} keywords={page.keywords}>
+  <SeoLanding
+    page={page}
+    badge="Industries We Serve"
+    breadcrumb={[
+      { label: 'Home', href: '/' },
+      { label: 'Industries', href: '/services' },
+    ]}
+  />
+</SiteShell>

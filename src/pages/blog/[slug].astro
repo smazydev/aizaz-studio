@@ -1,7 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { Navbar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
+import SiteShell from '../../components/SiteShell.astro';
 import { CTA } from '../../components/CTA';
 import BlogCard from '../../components/BlogCard.astro';
 import { blogs, getRelatedBlogs } from '../../data/blogs';
@@ -21,17 +19,14 @@ const related = getRelatedBlogs(blog.slug);
 const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
 ---
 
-<Layout
+<SiteShell
   title={`${blog.title} | Aizaz.studio Blog`}
   description={blog.excerpt}
   canonical={`/blog/${blog.slug}`}
   keywords={blog.tags}
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-
-    <main class="pb-24">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28">
+    <div class="pb-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <a href="/blog" class="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors text-sm font-medium mb-10 group">
           <span class="group-hover:-translate-x-1 transition-transform">←</span>
           Back to Blog
@@ -149,10 +144,8 @@ const headings = [...blog.content.matchAll(/^## (.+)$/gm)].map((match) => match[
       <div class="mt-20">
         <CTA client:visible />
       </div>
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+    </div>
+</SiteShell>
 
 <script>
   document.querySelectorAll('.article-content h2.article-content h3').forEach((heading) => {

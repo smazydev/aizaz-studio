@@ -1,4 +1,5 @@
 import { blogs } from './blogs';
+import { caseStudies } from './caseStudies';
 import { extraServicePages } from './servicePagesExtra';
 import { extraIndustryPages } from './industryPagesExtra';
 import { comparePages } from './comparePages';
@@ -714,13 +715,7 @@ export function getAllSeoPaths(): string[] {
         ...comparePages.map((p) => `/compare/${p.slug}`),
         ...technologyPages.map((p) => `/technologies/${p.slug}`),
         ...blogs.map((b) => `/blog/${b.slug}`),
-        ...caseStudySlugs(),
+        ...caseStudies.map((study) => `/case-studies/${study.slug}`),
     ];
     return paths;
-}
-
-function caseStudySlugs(): string[] {
-    return ['1archiver compliance platform', 'investorsgonewild investment platform'].map(
-        (slug) => `/case-studies/${slug}`,
-    );
 }

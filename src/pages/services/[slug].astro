@@ -1,7 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { Navbar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
+import SiteShell from '../../components/SiteShell.astro';
 import SeoLanding from '../../components/SeoLanding.astro';
 import { servicePages, getServiceBySlug } from '../../data/seoPages';
 
@@ -18,24 +16,13 @@ const relatedServices = (page.relatedSlugs ?? [])
   .filter(Boolean);
 ---
 
-<Layout
-  title={page.metaTitle}
-  description={page.metaDescription}
-  canonical={`/services/${page.slug}`}
-  keywords={page.keywords}
->
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
-      <SeoLanding
-        page={page}
-        breadcrumb={[
-          { label: 'Home', href: '/' },
-          { label: 'Services', href: '/services' },
-        ]}
-        relatedServices={relatedServices}
-      />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+<SiteShell title={page.metaTitle} description={page.metaDescription} canonical={`/services/${page.slug}`} keywords={page.keywords}>
+  <SeoLanding
+    page={page}
+    breadcrumb={[
+      { label: 'Home', href: '/' },
+      { label: 'Services', href: '/services' },
+    ]}
+    relatedServices={relatedServices}
+  />
+</SiteShell>
