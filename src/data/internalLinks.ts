@@ -409,8 +409,8 @@ export const articleCluster: Record<string, PageRelations> = {
     articles: ['bigcommerce-netsuite-integration-production-problems'],
   },
   'bigcommerce-netsuite-integration-production-problems': {
-    services: ['netsuite-integration', 'netsuite-erp-automation'],
-    industries: ['netsuite-users', 'ecommerce-wholesale'],
+    services: ['netsuite-integration', 'api-integration'],
+    industries: ['netsuite-users', 'ecommerce-operations'],
     articles: ['netsuite-shopify-integration-pitfalls'],
   },
   'automate-manual-business-workflow-with-ai': {
@@ -456,11 +456,34 @@ export const articleCluster: Record<string, PageRelations> = {
     industries: ['saas-startups'],
   },
   'has-ai-made-software-development-cheaper': {
-    services: ['ai-automation-systems', 'saas-mvp-development'],
+    services: ['saas-mvp-development', 'web-app-saas-development'],
     pages: [
-      { href: '/ai-systems-sprint', label: 'AI Systems Sprint' },
       { href: '/engagement-models', label: 'Engagement Models' },
     ],
+  },
+};
+
+/** Category fallback when a post has no explicit articleCluster mapping. */
+const categoryArticleRelations: Record<string, PageRelations> = {
+  'NetSuite & ERP': {
+    services: ['netsuite-integration', 'api-integration'],
+    industries: ['netsuite-users', 'ecommerce-operations'],
+  },
+  'AI & Automation': {
+    services: ['ai-workflow-automation', 'ai-automation-systems'],
+    industries: ['operations-teams'],
+  },
+  'Cloud & DevOps': {
+    services: ['aws-cloud-engineering', 'devops-consulting'],
+    industries: ['saas-startups'],
+  },
+  'SaaS & Product': {
+    services: ['saas-mvp-development', 'web-app-saas-development'],
+    industries: ['saas-startups', 'startups'],
+  },
+  'Engineering Insights': {
+    services: ['technical-audit', 'project-rescue'],
+    pages: [{ href: '/engagement-models', label: 'Engagement Models' }],
   },
 };
 
@@ -531,8 +554,13 @@ export function getCaseStudyRelatedGroups(slug: string): RelatedGroup[] {
   return relationsToGroups(caseStudyCluster[slug] ?? {}, { excludeHref: `/case-studies/${slug}` });
 }
 
-export function getArticleRelatedGroups(slug: string): RelatedGroup[] {
-  return relationsToGroups(articleCluster[slug] ?? {}, { excludeHref: `/blog/${slug}` });
+export function getArticleRelatedGroups(slug: string, category?: string): RelatedGroup[] {
+  const explicit = articleCluster[slug];
+  const relations =
+    explicit ??
+    (category ? categoryArticleRelations[category] : undefined) ??
+    {};
+  return relationsToGroups(relations, { excludeHref: `/blog/${slug}` });
 }
 
 export function getCommercialRelatedGroups(key: string): RelatedGroup[] {

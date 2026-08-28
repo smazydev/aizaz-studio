@@ -8,6 +8,7 @@ import {
     normalizeBlogSlug,
 } from '../blog-utils';
 import { estimatePortableTextReadTime, portableTextToHtml, type PortableTextBlock } from '../portable-text';
+import { htmlHasHeadingStructure, markdownHasHeadings } from '../article-content';
 import { mapSanityAuthor } from './author';
 import { getSanityClient, cachedSanityFetch, urlForImage } from './client';
 import { postBySlugQuery, publishedPostsQuery } from './queries';
@@ -68,8 +69,12 @@ function mapSanityPost(post: SanityPost): PublicBlogPost | null {
     const author = mapSanityAuthor(post.authorDoc, legacyAuthorName);
     const publishedAt = post.publishedAt || post._updatedAt || post._createdAt || new Date().toISOString();
     const bodyHtml = portableTextToHtml(post.bodyBlocks);
-    const markdownBody = post.body ?? '';
-    const content = bodyHtml || markdownBody;
+    const markdownBody = post.body?.trim() ?? '';
+    const preferMarkdown =
+        Boolean(markdownBody && markdownHasHeadings(markdownBody)) &&
+        !htmlHasHeadingStructure(bodyHtml);
+    const content = preferMarkdown ? markdownBody : bodyHtml || markdownBody;
+    const contentHtml = preferMarkdown ? undefined : bodyHtml || undefined;
     const seo: PageSeo = mapSanitySeo(
         post.seo,
         {
@@ -93,13 +98,15 @@ function mapSanityPost(post: SanityPost): PublicBlogPost | null {
         title: post.title,
         excerpt: post.excerpt ?? '',
         content,
-        contentHtml: bodyHtml || undefined,
+        contentHtml: contentHtml || undefined,
         date: formatDisplayDate(publishedAt),
         dateIso: publishedAt,
         author,
-        readTime: bodyHtml
-            ? estimatePortableTextReadTime(post.bodyBlocks)
-            : calculateReadTime(markdownBody),
+        readTime: preferMarkdown
+            ? calculateReadTime(markdownBody)
+            : bodyHtml
+              ? estimatePortableTextReadTime(post.bodyBlocks)
+              : calculateReadTime(markdownBody),
         category: normalizeCategory(post.category ?? 'Engineering Insights'),
         tags: post.tags ?? [],
         imageUrl: coverUrl,

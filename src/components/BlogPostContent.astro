@@ -3,11 +3,13 @@ import type { PublicBlogPost } from '../lib/blog';
 import AuthorCard from './AuthorCard.astro';
 import BlogCard from './BlogCard.astro';
 import BlogFAQ from './BlogFAQ.astro';
-import { marked } from 'marked';
+import BlogShareCard from './BlogShareCard.astro';
 import LocalImage from './LocalImage.astro';
 import RelatedContent from './RelatedContent.astro';
 import { SITE_URL } from '../data/seoPages';
 import { getArticleRelatedGroups } from '../data/internalLinks';
+import { extractArticleHeadings, injectArticleHeadingIds } from '../lib/article-headings';
+import { resolveArticleHtml } from '../lib/article-content';
 
 interface Props {
   blog: PublicBlogPost;
@@ -16,11 +18,11 @@ interface Props {
 }
 
 const { blog, related = [], preview = false } = Astro.props;
-const contentHtml = blog.contentHtml ?? marked.parse(blog.content ?? '');
-const plainTextForHeadings = blog.contentHtml ? blog.content.replace(/<[^>]+>/g, '\n') : blog.content;
-const headings = [...(plainTextForHeadings ?? '').matchAll(/^## (.+)$/gm)].map((match) => match[1]);
+const rawContentHtml = resolveArticleHtml(blog.contentHtml, blog.content);
+const contentHtml = injectArticleHeadingIds(rawContentHtml);
+const headings = extractArticleHeadings(contentHtml);
 const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
-const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug);
+const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug, blog.category);
 ---
 
 <article>
@@ -111,33 +113,22 @@ const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug);
       {headings.length > 0 && (
         <div class="p-5 rounded-2xl glass-card">
           <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">On this page</div>
-          <nav class="space-y-2">
+          <nav class="space-y-2" aria-label="Table of contents">
             {headings.map((heading) => (
               <a
-                href={`#${heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                class="block text-sm text-zinc-400 hover:text-primary-400 transition-colors leading-snug"
+                href={`#${heading.id}`}
+                class={`block text-sm text-zinc-400 hover:text-primary-400 transition-colors leading-snug ${
+                  heading.level === 3 ? 'pl-4' : ''
+                }`}
               >
-                {heading}
+                {heading.text}
               </a>
             ))}
           </nav>
         </div>
       )}
 
-      {!preview && (
-        <div class="p-5 rounded-2xl glass-card">
-          <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">Share</div>
-          <p class="text-sm text-zinc-400 mb-4">Send this to someone drowning in manual ops.</p>
-          <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(shareUrl)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm font-medium text-primary-400 hover:text-primary-300"
-          >
-            Share on X →
-          </a>
-        </div>
-      )}
+      {!preview && <BlogShareCard url={shareUrl} title={blog.title} />}
     </aside>
   </div>
 </article>
@@ -154,11 +145,3 @@ const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug);
     </div>
   </section>
 )}
-
-<script>
-  document.querySelectorAll('.article-content h2, .article-content h3').forEach((heading) => {
-    if (heading instanceof HTMLElement && heading.textContent) {
-      heading.id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    }
-  });
-</script>
