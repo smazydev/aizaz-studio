@@ -14,7 +14,7 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   schemas?: Record<string, unknown>[];
-  /** Redesign pages force light chrome; blog/CMS pages default to dark theme toggle. */
+  /** @deprecated Theme is user-controlled; prop ignored to avoid flash/force. */
   theme?: 'dark' | 'light';
 }
 
@@ -27,7 +27,6 @@ const {
   ogImage,
   noindex = false,
   schemas = [],
-  theme,
 } = Astro.props;
 
 /** Sitewide policy: trailingSlash never — strip slash/.html so canonicals always 200. */
@@ -47,7 +46,6 @@ const resolvedOgDescription = ogDescription || description;
 const resolvedOgImage = ogImage ?? `${SITE_URL}/aizaz-logo-white.png`;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
 const isHome = canonicalPath === '/' || Astro.url.pathname === '/';
-const forcedTheme = theme === 'light' || theme === 'dark' ? theme : null;
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -88,22 +86,30 @@ const pageStructuredData =
 ---
 
 <!DOCTYPE html>
-<html
-  lang="en"
-  class:list={['scroll-smooth', forcedTheme === 'light' && 'theme-light']}
-  data-theme={forcedTheme ?? 'dark'}
->
+<html lang="en" class="scroll-smooth">
   <head>
-    {!forcedTheme && (
-      <script is:inline>
+    <script is:inline>
+      (function () {
         try {
-          var storedTheme = localStorage.getItem('theme');
-          document.documentElement.setAttribute('data-theme', storedTheme === 'light' ? 'light' : 'dark');
+          var stored = localStorage.getItem('aizaz-theme') || localStorage.getItem('theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark';
+          var root = document.documentElement;
+          root.classList.remove('theme-light', 'theme-dark');
+          root.classList.add('theme-' + theme);
+          root.setAttribute('data-theme', theme);
+          root.style.colorScheme = theme;
         } catch (e) {
           document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('theme-dark');
+          document.documentElement.style.colorScheme = 'dark';
         }
-      </script>
-    )}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
@@ -128,7 +134,7 @@ const pageStructuredData =
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
 
     {!pageStructuredData && (
       <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
@@ -157,6 +163,9 @@ const pageStructuredData =
 </html>
 
 <script>
+  import { bindThemeToggle } from '../lib/theme';
+  bindThemeToggle();
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduceMotion) {

@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
-
-type Theme = 'light' | 'dark';
-
-function getTheme(): Theme {
-  if (typeof document === 'undefined') return 'dark';
-  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-}
-
-function applyTheme(theme: Theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-}
+import { applyTheme, currentTheme, type Theme } from '../lib/theme';
 
 export const ThemeToggle: React.FC = () => {
   const [theme, setTheme] = useState<Theme>('dark');
 
   useEffect(() => {
-    setTheme(getTheme());
+    setTheme(currentTheme());
   }, []);
 
   const toggleTheme = () => {

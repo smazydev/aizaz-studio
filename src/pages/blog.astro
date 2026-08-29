@@ -1,9 +1,7 @@
 ---
 export const prerender = false;
 
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import BlogCard from '../components/BlogCard.astro';
@@ -18,78 +16,71 @@ const categories = getBlogFilterCategories();
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
 ---
 
-<Layout
+<SiteShell
   title="Blog | AI, Automation & Engineering Insights | Aizaz.studio"
   description="Practical insights on AI automation, SaaS engineering, NetSuite integrations, and building systems that help businesses scale without operational chaos."
   canonical="/blog"
 >
-  <div class="site-shell min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
+  <PageHero
+    eyebrow="Insights"
+    title="Playbooks for"
+    highlight="smarter operations"
+    description="What we've learned building, fixing, and operating real software systems — from AI and SaaS to NetSuite, integrations, and production failures."
+  />
 
-    <main>
-      <PageHero
-        eyebrow="Insights"
-        title="Playbooks for"
-        highlight="smarter operations"
-        description="What we've learned building, fixing, and operating real software systems — from AI and SaaS to NetSuite, integrations, and production failures."
-      />
-
-      <section class="pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="p-6 rounded-2xl glass-card flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <div class="text-sm font-semibold text-white mb-1">Want the short version?</div>
-              <p class="text-sm text-zinc-400">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
-            </div>
-            <a href="/ai-systems-sprint" class="inline-flex justify-center px-5 py-2.5 rounded-full bg-primary-600 text-white text-sm font-semibold hover:bg-primary-500 transition-colors shrink-0">
-              AI Systems Sprint →
-            </a>
-          </div>
+  <section class="pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="p-6 rounded-2xl glass-card flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="text-sm font-semibold text-white mb-1">Want the short version?</div>
+          <p class="text-sm text-zinc-400">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
         </div>
-      </section>
+        <a href="/ai-systems-sprint" class="inline-flex justify-center px-5 py-2.5 rounded-full bg-primary-600 text-white text-sm font-semibold hover:bg-primary-500 transition-colors shrink-0">
+          AI Systems Sprint →
+        </a>
+      </div>
+    </div>
+  </section>
 
-      <section class="pb-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {featured && (
-            <div class="mb-16">
-              <div class="flex items-center justify-between mb-6">
-                <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Featured</h2>
-              </div>
-              <BlogCard blog={featured} featured />
-            </div>
-          )}
-
-          <div class="flex flex-wrap gap-2 mb-10" id="blog-filters">
-            {categories.map((category, index) => (
-              <button
-                type="button"
-                data-filter={category}
-                class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  index === 0
-                    ? 'bg-white text-black'
-                    : 'bg-zinc-900/60 text-zinc-400 border border-white/5 hover:text-white hover:border-white/15'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+  <section class="pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {featured && (
+        <div class="mb-16">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Featured</h2>
           </div>
-
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid">
-            {rest.map((blog) => (
-              <div data-category={blog.category} class="blog-item">
-                <BlogCard blog={blog} />
-              </div>
-            ))}
-          </div>
+          <BlogCard blog={featured} featured />
         </div>
-      </section>
+      )}
 
-      <CTA client:visible />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+      <div class="flex flex-wrap gap-2 mb-10" id="blog-filters">
+        {categories.map((category, index) => (
+          <button
+            type="button"
+            data-filter={category}
+            class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              index === 0
+                ? 'bg-white text-black'
+                : 'bg-zinc-900/60 text-zinc-400 border border-white/5 hover:text-white hover:border-white/15'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid">
+        {rest.map((blog) => (
+          <div data-category={blog.category} class="blog-item">
+            <BlogCard blog={blog} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA client:visible />
+</SiteShell>
 
 <script>
   const filters = document.querySelectorAll('#blog-filters button');
