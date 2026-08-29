@@ -1,9 +1,10 @@
 ---
-import type { BlogPost } from '../data/blogs';
-import { Image } from 'astro:assets';
+import type { PublicBlogPost } from '../lib/blog';
+import AuthorCard from './AuthorCard.astro';
+import LocalImage from './LocalImage.astro';
 
 interface Props {
-  blog: BlogPost;
+  blog: PublicBlogPost;
   featured?: boolean;
 }
 
@@ -13,11 +14,38 @@ const { blog, featured = false } = Astro.props;
 <article class={`group relative flex flex-col h-full glass-card rounded-2xl overflow-hidden transition-all duration-500 hover:border-primary-500/30 hover:-translate-y-1 ${featured ? 'md:flex-row md:min-h-[320px]' : ''}`}>
   <a href={`/blog/${blog.slug}`} class={`overflow-hidden shrink-0 ${featured ? 'md:w-1/2' : ''}`}>
     <div class={`relative overflow-hidden ${featured ? 'h-full min-h-[220px] md:min-h-full' : 'aspect-[16/10]'}`}>
-      <Image
-        src={blog.image}
-        alt={blog.title}
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
+      {blog.image ? (
+        <LocalImage
+          src={blog.image}
+          alt={blog.title}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+          kind="card"
+          width={960}
+        />
+      ) : blog.imageUrl ? (
+        <img
+          src={blog.imageUrl}
+          alt={blog.title}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+          width="960"
+          height="600"
+          decoding="async"
+        />
+      ) : (
+        <div class="w-full h-full bg-zinc-900 flex items-center justify-center p-8">
+          <img
+            src="/aizaz-logo-white.png"
+            alt=""
+            class="max-h-16 w-auto opacity-40"
+            loading="lazy"
+            width="160"
+            height="40"
+            decoding="async"
+          />
+        </div>
+      )}
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
       <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-primary-300 text-xs font-semibold uppercase tracking-wider">
         {blog.category}
@@ -27,7 +55,7 @@ const { blog, featured = false } = Astro.props;
 
   <div class={`flex flex-col grow ${featured ? 'p-8 md:p-10 md:w-1/2 justify-center' : 'p-6'}`}>
     <div class="flex items-center gap-3 text-xs text-zinc-500 mb-4 font-medium">
-      <time datetime={blog.date}>{blog.date}</time>
+      <time datetime={blog.dateIso}>{blog.date}</time>
       <span>·</span>
       <span>{blog.readTime}</span>
     </div>
@@ -41,12 +69,7 @@ const { blog, featured = false } = Astro.props;
     </p>
 
     <div class="flex items-center justify-between pt-5 border-t border-white/5 mt-auto">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500/30 to-indigo-600/30 border border-white/10 flex items-center justify-center text-xs font-bold text-white">
-          {blog.author.charAt(0)}
-        </div>
-        <span class="text-sm text-zinc-400">{blog.author}</span>
-      </div>
+      {blog.author ? <AuthorCard author={blog.author} compact /> : <span />}
       <span class="text-sm font-medium text-primary-400 group-hover:translate-x-1 transition-transform">
         Read →
       </span>

@@ -98,7 +98,7 @@ export const engagementModels: EngagementModelsContent = {
         'Flexible engineering engagement models for AI automation, SaaS MVPs, cloud infrastructure, project rescue, and ongoing product development.',
     title: 'Flexible Engineering Engagements for AI, SaaS & Automation Projects',
     heroSubtitle:
-        'Whether you need one workflow live in two weeks or a senior team embedded for a platform build, every model follows the same discovery to deploy discipline.',
+        'Whether you need one workflow live in two weeks or a senior team embedded for a platform build — every model follows the same discovery to deploy discipline.',
     models: [
         {
             id: 'ai-systems-sprint',
@@ -108,7 +108,7 @@ export const engagementModels: EngagementModelsContent = {
             duration: '14 days',
             bestFor: [
                 'Teams validating AI or automation ROI before a larger build',
-                'Founders who need one workflow live, not another strategy deck',
+                'Founders who need one workflow live — not another strategy deck',
                 'Ops leaders replacing a single painful manual process',
             ],
             deliverables: [
@@ -123,7 +123,7 @@ export const engagementModels: EngagementModelsContent = {
             id: 'mvp-build',
             name: 'MVP Build',
             summary:
-                'Four to eight week SaaS or product build, auth, APIs, dashboards, billing hooks, and AWS deployment scoped in milestones your stakeholders can track.',
+                'Four to eight week SaaS or product build — auth, APIs, dashboards, billing hooks, and AWS deployment scoped in milestones your stakeholders can track.',
             duration: '4 to 8 weeks typical',
             bestFor: [
                 'SaaS founders launching v1 with paying customers in mind',
@@ -142,7 +142,7 @@ export const engagementModels: EngagementModelsContent = {
             id: 'engineering-retainer',
             name: 'Engineering Retainer',
             summary:
-                'Ongoing senior engineering for product, cloud, and automation work, features, infra, integrations, and the next workflow on your backlog.',
+                'Ongoing senior engineering for product, cloud, and automation work — features, infra, integrations, and the next workflow on your backlog.',
             duration: 'Monthly retainer',
             bestFor: [
                 'Scale ups shipping features weekly across backend and cloud',
@@ -161,7 +161,7 @@ export const engagementModels: EngagementModelsContent = {
             id: 'project-rescue',
             name: 'Project Rescue',
             summary:
-                'Audit, stabilize, and rebuild stalled or broken software, when previous devs left, deploys fail, or nobody trusts the codebase.',
+                'Audit, stabilize, and rebuild stalled or broken software — when previous devs left, deploys fail, or nobody trusts the codebase.',
             duration: '2 to 12 weeks typical',
             bestFor: [
                 'Half built SaaS or internal tools that stopped moving',
@@ -237,11 +237,11 @@ export const engagementModels: EngagementModelsContent = {
         ],
     },
     included: [
-        'Discovery and architecture before code, every engagement',
+        'Discovery and architecture before code — every engagement',
         'Direct access to senior engineers, not account manager layers',
         'Production minded delivery: logging, deploys, and handoff docs',
         'Async updates with clear milestones and visible progress',
-        'Stack fit guidance, we recommend tools based on your business, not trends',
+        'Stack fit guidance — we recommend tools based on your business, not trends',
     ],
     notIncluded: [
         'Open ended scope without milestones or written acceptance criteria',
@@ -253,7 +253,7 @@ export const engagementModels: EngagementModelsContent = {
     selectorGuide: [
         {
             heading: 'Start with the AI Systems Sprint if…',
-            body: 'You know automation or AI should help but need one working proof in production, connected to CRM, email, or internal tools, before committing to a platform budget.',
+            body: 'You know automation or AI should help but need one working proof in production — connected to CRM, email, or internal tools — before committing to a platform budget.',
         },
         {
             heading: 'Choose MVP & Platform Build if…',
@@ -261,21 +261,21 @@ export const engagementModels: EngagementModelsContent = {
         },
         {
             heading: 'Choose Integration & Automation Project if…',
-            body: 'Your product exists but data between NetSuite, Shopify, CRM, and warehouses is wrong, and you need reliable sync, webhooks, or middleware, not another manual export.',
+            body: 'Your product exists but data between NetSuite, Shopify, CRM, and warehouses is wrong — and you need reliable sync, webhooks, or middleware, not another manual export.',
         },
         {
             heading: 'Choose Dedicated Engineering if…',
-            body: 'You have a roadmap, paying customers or internal users, and need senior capacity embedded weekly, faster than hiring and safer than rotating freelancers.',
+            body: 'You have a roadmap, paying customers or internal users, and need senior capacity embedded weekly — faster than hiring and safer than rotating freelancers.',
         },
         {
             heading: 'Choose Ongoing Retainer if…',
-            body: 'Systems are live and generating value, you need someone to own monitoring, fixes, and the next small improvements without restarting a full project every time.',
+            body: 'Systems are live and generating value — you need someone to own monitoring, fixes, and the next small improvements without restarting a full project every time.',
         },
     ],
     faqs: [
         {
             question: 'Can we start with a sprint and expand into a platform build?',
-            answer: 'Yes, that is one of our most common paths. The sprint proves value on one workflow; the platform build extends the same architecture across your product.',
+            answer: 'Yes — that is one of our most common paths. The sprint proves value on one workflow; the platform build extends the same architecture across your product.',
         },
         {
             question: 'Do you sign NDAs and work with existing codebases?',
@@ -283,7 +283,7 @@ export const engagementModels: EngagementModelsContent = {
         },
         {
             question: 'How do you price engagements?',
-            answer: 'Sprints are fixed scope. Projects are quoted after discovery. Dedicated pods and retainers are monthly, aligned to hours and seniority, shared upfront before work begins.',
+            answer: 'Sprints are fixed scope. Projects are quoted after discovery. Dedicated pods and retainers are monthly — aligned to hours and seniority, shared upfront before work begins.',
         },
         {
             question: 'Are you timezone friendly for remote teams?',
@@ -307,7 +307,7 @@ export const bookACall: BookACallContent = {
         'Book a technical discovery call with Aizaz Studio to discuss your AI, SaaS, automation, cloud, or software project.',
     title: 'Book a Technical Discovery Call',
     heroSubtitle:
-        'A 30 minute conversation to map your workflow, stack, and timeline, no pitch deck, no pressure. You leave knowing whether we can help and what a sensible first step looks like.',
+        'A 30 minute conversation to map your workflow, stack, and timeline — no pitch deck, no pressure. You leave knowing whether we can help and what a sensible first step looks like.',
     sections: {
         whoFor: {
             heading: 'Who this call is for',
@@ -322,16 +322,16 @@ export const bookACall: BookACallContent = {
             heading: 'What we cover on the call',
             items: [
                 'Your highest impact manual workflow or product milestone',
-                'Current stack, CRM, ERP, cloud, and where data breaks today',
+                'Current stack — CRM, ERP, cloud, and where data breaks today',
                 'Timeline, budget range, and what success looks like in plain language',
                 'Which engagement model fits: sprint, project, pod, or retainer',
-                'Honest fit assessment, we refer out when we are not the right team',
+                'Honest fit assessment — we refer out when we are not the right team',
             ],
         },
         whatToPrepare: {
             heading: 'What to prepare (optional but helpful)',
             items: [
-                'A short description of the problem, even a Loom or bullet list works',
+                'A short description of the problem — even a Loom or bullet list works',
                 'Names of tools you use today (HubSpot, NetSuite, Shopify, AWS, etc.)',
                 'Any hard deadlines: launch date, audit, funding milestone',
                 'Links to existing product, repo, or workflow docs if available',
@@ -340,7 +340,7 @@ export const bookACall: BookACallContent = {
         goodFit: {
             heading: 'Good fit signals',
             items: [
-                'You want production software, not a demo that stalls after the kickoff',
+                'You want production software — not a demo that stalls after the kickoff',
                 'You can share access to stakeholders or systems within a reasonable window',
                 'You value direct senior engineering over large agency overhead',
                 'You are ready to start within the next few weeks, not indefinitely researching',
@@ -358,11 +358,11 @@ export const bookACall: BookACallContent = {
         faqs: [
             {
                 question: 'Is the discovery call free?',
-                answer: 'Yes. It is a fit and scope conversation, not a paid consultation. If we proceed, pricing follows the engagement model we recommend.',
+                answer: 'Yes. It is a fit and scope conversation — not a paid consultation. If we proceed, pricing follows the engagement model we recommend.',
             },
             {
                 question: 'Will I get a proposal after the call?',
-                answer: 'If there is a clear fit, we send a written scope outline, timeline, and pricing within a few business days, often same week for sprint candidates.',
+                answer: 'If there is a clear fit, we send a written scope outline, timeline, and pricing within a few business days — often same week for sprint candidates.',
             },
             {
                 question: 'Can multiple stakeholders join?',
@@ -370,26 +370,26 @@ export const bookACall: BookACallContent = {
             },
             {
                 question: 'What if we are not ready to build yet?',
-                answer: 'We still help you clarify next steps. If timing is early, we may suggest a lighter sprint later or point you to resources, no hard sell.',
+                answer: 'We still help you clarify next steps. If timing is early, we may suggest a lighter sprint later or point you to resources — no hard sell.',
             },
         ],
     },
 };
 
 export const portfolio: PortfolioContent = {
-    metaTitle: 'Portfolio | SaaS, Compliance & FinTech Builds | Aizaz.studio',
+    metaTitle: 'Portfolio — SaaS, Compliance & FinTech Builds | Aizaz.studio',
     metaDescription:
-        'Selected Aizaz.studio portfolio work: compliance grade platforms, investment intelligence systems, and production SaaS, built for scale, security, and real business outcomes.',
+        'Selected portfolio work from Aizaz.studio: compliance platforms, SaaS products, and production systems built for scale and real business outcomes.',
     title: 'Portfolio',
     intro:
-        'These projects represent production systems, not concept work. Each started with a hard operational or compliance problem and shipped as software teams could run, audit, and extend.',
+        'These projects represent production systems — not concept work. Each started with a hard operational or compliance problem and shipped as software teams could run, audit, and extend.',
     projects: [
         {
             slug: '1archiver-compliance-platform',
             name: '1Archiver',
             category: 'Compliance • eDiscovery • Data Retention',
             summary:
-                'Enterprise grade email archiving and compliance platform designed for tens of terabytes, multiple mail providers, and audit defensible retention, built as systems engineering, not a simple CRUD app.',
+                'Enterprise grade email archiving and compliance platform designed for tens of terabytes, multiple mail providers, and audit defensible retention — built as systems engineering, not a simple CRUD app.',
             outcomes: [
                 'Secure, verifiable email ingestion across IMAP, Exchange, and Gmail',
                 'Horizontal scale via streaming ingestion and decoupled search indexes',
@@ -399,49 +399,34 @@ export const portfolio: PortfolioContent = {
             stack: ['Node.js', 'PostgreSQL', 'AWS', 'Message queues', 'Search indexes'],
             href: '/case-studies/1archiver-compliance-platform',
         },
-        {
-            slug: 'investorsgonewild-investment-platform',
-            name: 'InvestorsGoWild',
-            category: 'FinTech • Investment Intelligence • Analytics',
-            summary:
-                'Unified investment intelligence platform spanning stocks, crypto, and real estate, metadata driven like an enterprise CRM so power users customize views without constant code changes.',
-            outcomes: [
-                'Multi asset data unified under one queryable experience',
-                'Integration first architecture with Bloomberg, Gemini, and BatchData',
-                'Metadata driven entities and dashboards for evolving investor strategies',
-                'AI assisted insights layered on trusted market and property data',
-            ],
-            stack: ['React', 'Node.js', 'PostgreSQL', 'External market APIs', 'AWS'],
-            href: '/case-studies/investorsgonewild-investment-platform',
-        },
     ],
 };
 
 export const reviews: ReviewsContent = {
     metaTitle: 'Client Reviews | Aizaz.studio',
     metaDescription:
-        'Client reviews and testimonials for Aizaz.studio, SaaS development, AI automation, and integration delivery. Replace placeholders with approved quotes as they are collected.',
+        'Client feedback on Aizaz.studio delivery for SaaS development, AI automation, and integration projects.',
     title: 'Client Reviews',
     intro:
-        'We measure success in production deployments and hours recovered, not slide decks. Testimonials below include placeholders until final client approvals are on file.',
+        'We measure success in production deployments and hours recovered — not slide decks. Approved client quotes will appear here as they are cleared for publication.',
     placeholderQuotes: [
         {
-            quote: 'Client quote placeholder, replace with approved testimonial.',
-            author: 'Placeholder Name',
+            quote: 'Approved client testimonial coming soon.',
+            author: 'Client',
             role: 'Founder',
             company: '1Archiver',
         },
         {
-            quote: 'Client quote placeholder, replace with approved testimonial.',
-            author: 'Placeholder Name',
+            quote: 'Approved client testimonial coming soon.',
+            author: 'Client',
             role: 'Founder',
-            company: 'InvestorsGoWild',
+            company: 'SaaS Client',
         },
         {
-            quote: 'Client quote placeholder, replace with approved testimonial.',
-            author: 'Placeholder Name',
+            quote: 'Approved client testimonial coming soon.',
+            author: 'Client',
             role: 'Operations Lead',
-            company: 'SaaS Client',
+            company: 'Ops Client',
         },
     ],
 };
@@ -449,19 +434,19 @@ export const reviews: ReviewsContent = {
 export const security: SecurityContent = {
     metaTitle: 'Security & Data Handling | Aizaz.studio',
     metaDescription:
-        'How Aizaz.studio handles security, access, data, and cloud delivery for SaaS and automation clients. Practical practices for production systems, not checkbox compliance theater.',
+        'How Aizaz.studio handles security, access, and data for SaaS and automation clients — practical production practices, not checkbox theater.',
     title: 'Security & Data Handling',
     heroSubtitle:
-        'We build systems that touch customer, financial, and operational data, security is part of delivery, not a document you receive after launch.',
+        'We build systems that touch customer, financial, and operational data — security is part of delivery, not a document you receive after launch.',
     sections: [
         {
             heading: 'Access & least privilege',
             paragraphs: [
-                'We request the minimum access needed for each engagement, separate staging credentials where possible, time bound access for production, and no shared passwords in chat or email.',
+                'We request the minimum access needed for each engagement — separate staging credentials where possible, time bound access for production, and no shared passwords in chat or email.',
             ],
             bullets: [
                 'Individual accounts and MFA on client systems we touch',
-                'Secrets stored in environment managers or parameter stores, never in repos',
+                'Secrets stored in environment managers or parameter stores — never in repos',
                 'Access revoked or rotated at project end unless retainer continues',
             ],
         },
@@ -490,7 +475,7 @@ export const security: SecurityContent = {
         {
             heading: 'Cloud & infrastructure',
             paragraphs: [
-                'AWS deployments use VPC isolation, encrypted storage, IAM roles over long lived keys, and backups with tested restore paths, standard on SaaS and integration projects we operate.',
+                'AWS deployments use VPC isolation, encrypted storage, IAM roles over long lived keys, and backups with tested restore paths — standard on SaaS and integration projects we operate.',
             ],
             bullets: [
                 'TLS in transit for public endpoints and internal service communication',
@@ -512,7 +497,7 @@ export const security: SecurityContent = {
         {
             heading: 'Compliance scope',
             paragraphs: [
-                'We implement technical controls that support your compliance goals, encryption, access logs, retention policies, but we do not act as your legal counsel or certify SOC 2 on your behalf. We coordinate with your compliance team when audits require evidence.',
+                'We implement technical controls that support your compliance goals — encryption, access logs, retention policies — but we do not act as your legal counsel or certify SOC 2 on your behalf. We coordinate with your compliance team when audits require evidence.',
             ],
         },
     ],
@@ -521,10 +506,10 @@ export const security: SecurityContent = {
 export const processPage: ProcessPageContent = {
     metaTitle: 'Our Delivery Process | Aizaz.studio',
     metaDescription:
-        'How Aizaz.studio delivers SaaS, AI automation, and integration projects: workflow discovery, architecture, build, deploy, and handoff, the same discipline on every engagement.',
+        'How Aizaz.studio delivers SaaS, AI automation, and integration work: discovery, architecture, build, deploy, and handoff on every engagement.',
     title: 'Our Engineering Process',
     intro:
-        'Every engagement, sprint, MVP, or dedicated pod, follows the same five phases. Discovery finds the highest leverage problem; architecture prevents rebuilds; delivery ends with software your team can run.',
+        'Every engagement — sprint, MVP, or dedicated pod — follows the same five phases. Discovery finds the highest leverage problem; architecture prevents rebuilds; delivery ends with software your team can run.',
     steps: processSteps.map((step) => ({
         step: step.step,
         title: step.title,

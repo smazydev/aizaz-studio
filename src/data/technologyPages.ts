@@ -17,9 +17,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Node.js Development for SaaS and API Platforms',
         metaTitle: 'Node.js Development for SaaS & APIs | Aizaz.studio',
         metaDescription:
-            'Senior Node.js development for SaaS products, REST and GraphQL APIs, real time dashboards, and automation backends. Production ready architecture from day one.',
+            'Senior Node.js development for SaaS products, REST and GraphQL APIs, real-time dashboards, and automation backends.',
         heroSubtitle:
-            'Build fast, scalable backends and APIs that power SaaS products, internal tools, and workflow automation, without fragile scripts holding your business together.',
+            'Build fast, scalable backends and APIs that power SaaS products, internal tools, and workflow automation — without fragile scripts holding your business together.',
         outcomes: [
             'Ship SaaS backends with auth, billing hooks, and role based access',
             'Replace manual spreadsheet workflows with reliable API driven systems',
@@ -50,7 +50,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'Can you extend an existing Node.js codebase?',
-                answer: 'Yes. We audit architecture, add tests where missing, and ship features without a full rewrite, common for founders who outgrew their first MVP backend.',
+                answer: 'Yes. We audit architecture, add tests where missing, and ship features without a full rewrite — common for founders who outgrew their first MVP backend.',
             },
             {
                 question: 'Do you build Node.js APIs for AI and automation workflows?',
@@ -67,9 +67,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Python Development for AI, Data, and Automation',
         metaTitle: 'Python Development for AI & Automation | Aizaz.studio',
         metaDescription:
-            'Python development for AI pipelines, data processing, internal automation, and API services. Connect models, databases, and business tools with production grade code.',
+            'Python development for AI pipelines, data processing, internal automation, and API services with production-grade code.',
         heroSubtitle:
-            'Use Python where it wins, AI workflows, data pipelines, scraping, and backend services that turn raw information into automated business decisions.',
+            'Use Python where it wins — AI workflows, data pipelines, scraping, and backend services that turn raw information into automated business decisions.',
         outcomes: [
             'Automate document processing, reporting, and data enrichment at scale',
             'Build AI pipelines that feed CRMs, dashboards, and internal tools',
@@ -100,7 +100,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'Can you migrate our spreadsheet automations to Python?',
-                answer: 'That is a common engagement. We map manual steps, rebuild them as scheduled jobs or APIs, and add logging so failures are visible, not silent.',
+                answer: 'That is a common engagement. We map manual steps, rebuild them as scheduled jobs or APIs, and add logging so failures are visible — not silent.',
             },
             {
                 question: 'Do you write Python for NetSuite and ecommerce integrations?',
@@ -119,7 +119,7 @@ export const technologyPages: TechnologyPage[] = [
         metaDescription:
             'React development for SaaS dashboards, admin portals, customer facing apps, and internal tools. Fast UX, clean architecture, and API ready frontends.',
         heroSubtitle:
-            'Ship interfaces your users actually enjoy, admin panels, customer portals, and operational dashboards wired to real APIs and live data.',
+            'Ship interfaces your users actually enjoy — admin panels, customer portals, and operational dashboards wired to real APIs and live data.',
         outcomes: [
             'Launch founder MVPs with polished, responsive React interfaces',
             'Replace legacy admin UIs with maintainable component driven code',
@@ -150,7 +150,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'Can React connect to our existing backend?',
-                answer: 'Yes. We integrate with REST, GraphQL, WebSockets, and third party SDKs, whether your API is Node.js, Python, or a legacy system.',
+                answer: 'Yes. We integrate with REST, GraphQL, WebSockets, and third party SDKs — whether your API is Node.js, Python, or a legacy system.',
             },
             {
                 question: 'Should we use React or Next.js for our SaaS?',
@@ -167,9 +167,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Next.js Development for SaaS and Marketing Sites',
         metaTitle: 'Next.js Development for SaaS Products | Aizaz.studio',
         metaDescription:
-            'Next.js development for SaaS landing pages, authenticated app routes, SEO friendly marketing sites, and full stack products with API routes and server actions.',
+            'Next.js development for SaaS apps, authenticated routes, SEO marketing sites, and full-stack products with API routes.',
         heroSubtitle:
-            'One framework for your marketing site, authenticated app, and API layer, built for SEO, performance, and the speed SaaS founders need at launch.',
+            'One framework for your marketing site, authenticated app, and API layer — built for SEO, performance, and the speed SaaS founders need at launch.',
         outcomes: [
             'Launch SEO optimized marketing pages alongside your product app',
             'Reduce frontend and backend fragmentation with Next.js API routes',
@@ -200,11 +200,11 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'Can Next.js replace a separate Node.js backend?',
-                answer: 'For many MVPs, yes. API routes and server actions cover auth, webhooks, and CRUD. Larger products may still use a dedicated Node.js or Python service, we design for growth.',
+                answer: 'For many MVPs, yes. API routes and server actions cover auth, webhooks, and CRUD. Larger products may still use a dedicated Node.js or Python service — we design for growth.',
             },
             {
                 question: 'Do you handle Next.js performance and Core Web Vitals?',
-                answer: 'Yes. Image optimization, caching, and bundle analysis are part of delivery, not optional polish after launch.',
+                answer: 'Yes. Image optimization, caching, and bundle analysis are part of delivery — not optional polish after launch.',
             },
             {
                 question: 'How does Next.js fit with Stripe billing and Supabase auth?',
@@ -217,7 +217,7 @@ export const technologyPages: TechnologyPage[] = [
         title: 'NestJS Development for Enterprise APIs and SaaS Backends',
         metaTitle: 'NestJS Development for SaaS & APIs | Aizaz.studio',
         metaDescription:
-            'NestJS development for structured SaaS backends, microservices, GraphQL APIs, and integration layers. Modular architecture built for growing engineering teams.',
+            'NestJS development for structured SaaS backends, microservices, GraphQL APIs, and modular integration layers.',
         heroSubtitle:
             'When your API surface grows beyond a single file, NestJS gives you modules, guards, and patterns that keep SaaS backends maintainable as the team scales.',
         outcomes: [
@@ -246,7 +246,7 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'When is NestJS worth it over plain Express?',
-                answer: 'When you have multiple engineers, complex domains, or long lived APIs. NestJS pays off as modules, auth, and integrations accumulate, typical for B2B SaaS past MVP.',
+                answer: 'When you have multiple engineers, complex domains, or long lived APIs. NestJS pays off as modules, auth, and integrations accumulate — typical for B2B SaaS past MVP.',
             },
             {
                 question: 'Can you refactor an Express app into NestJS?',
@@ -267,9 +267,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'FastAPI Development for AI APIs and High Speed Backends',
         metaTitle: 'FastAPI Development for AI & APIs | Aizaz.studio',
         metaDescription:
-            'FastAPI development for AI endpoints, data services, and automation APIs. Async Python backends with automatic docs, validation, and cloud ready deployment.',
+            'FastAPI development for AI endpoints, data services, and automation APIs with async Python, validation, and cloud-ready deploy.',
         heroSubtitle:
-            'Fast, typed Python APIs for AI features, data services, and automation, with OpenAPI docs your frontend and partner teams can actually use.',
+            'Fast, typed Python APIs for AI features, data services, and automation — with OpenAPI docs your frontend and partner teams can actually use.',
         outcomes: [
             'Expose AI and ML capabilities through secure, documented APIs',
             'Build async ingestion endpoints for webhooks and file uploads',
@@ -296,11 +296,11 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'Why FastAPI for AI powered SaaS features?',
-                answer: 'FastAPI handles async IO, streaming, and validation cleanly, ideal for LLM endpoints, embeddings, and file processing that would block a synchronous stack.',
+                answer: 'FastAPI handles async IO, streaming, and validation cleanly — ideal for LLM endpoints, embeddings, and file processing that would block a synchronous stack.',
             },
             {
                 question: 'Can FastAPI sit behind our existing Node.js gateway?',
-                answer: 'Yes. Common pattern: Node.js for auth and billing, FastAPI for AI and data heavy routes, unified behind one API domain.',
+                answer: 'Yes. Common pattern: Node.js for auth and billing, FastAPI for AI and data heavy routes — unified behind one API domain.',
             },
             {
                 question: 'Do you generate API documentation for our team?',
@@ -308,7 +308,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'How do you secure FastAPI endpoints in production?',
-                answer: 'API keys, JWT validation, rate limits, and network isolation on AWS. Secrets never live in code, they come from parameter store or env management.',
+                answer: 'API keys, JWT validation, rate limits, and network isolation on AWS. Secrets never live in code — they come from parameter store or env management.',
             },
         ],
     },
@@ -317,9 +317,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'AWS Cloud Infrastructure for SaaS and Automation Platforms',
         metaTitle: 'AWS Cloud & Infrastructure for SaaS | Aizaz.studio',
         metaDescription:
-            'AWS architecture, deployment, and DevOps for SaaS products, automation pipelines, and API platforms. Reliable cloud infrastructure your business can depend on.',
+            'AWS architecture, deployment, and DevOps for SaaS products, automation pipelines, and API platforms.',
         heroSubtitle:
-            'Move from fragile manual deploys to AWS infrastructure with monitoring, backups, and pipelines, so your SaaS and automation systems survive real traffic.',
+            'Move from fragile manual deploys to AWS infrastructure with monitoring, backups, and pipelines — so your SaaS and automation systems survive real traffic.',
         outcomes: [
             'Deploy SaaS and API workloads with autoscaling and health checks',
             'Cut downtime with CI/CD, rollback strategies, and alert driven ops',
@@ -333,7 +333,7 @@ export const technologyPages: TechnologyPage[] = [
             'Compliance oriented logging and backup for regulated industries',
         ],
         stackNotes: [
-            'ECS, EC2, or Lambda chosen by workload, not resume driven defaults',
+            'ECS, EC2, or Lambda chosen by workload — not resume driven defaults',
             'RDS PostgreSQL, S3, CloudWatch, and IAM as core building blocks',
             'Terraform or CloudFormation for reproducible infrastructure',
             'GitHub Actions or CodePipeline for test gated deployments',
@@ -346,11 +346,11 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'Do you only work with AWS?',
-                answer: 'AWS is our primary cloud for SaaS and automation clients. We focus depth there, ECS, RDS, Lambda, S3, and CloudWatch, rather than spreading thin across every provider.',
+                answer: 'AWS is our primary cloud for SaaS and automation clients. We focus depth there — ECS, RDS, Lambda, S3, and CloudWatch — rather than spreading thin across every provider.',
             },
             {
                 question: 'Can you fix our existing AWS setup without a full rebuild?',
-                answer: 'Often. We start with deploy reliability, cost leaks, and missing alerts, then improve architecture where it blocks growth.',
+                answer: 'Often. We start with deploy reliability, cost leaks, and missing alerts — then improve architecture where it blocks growth.',
             },
             {
                 question: 'How does AWS support AI and automation workloads?',
@@ -367,9 +367,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'PostgreSQL for SaaS Data Models and Reliable Analytics',
         metaTitle: 'PostgreSQL for SaaS & Data Platforms | Aizaz.studio',
         metaDescription:
-            'PostgreSQL database design, optimization, and integration for SaaS products, automation systems, and analytics. Durable data layers your business can trust.',
+            'PostgreSQL design, optimization, and integration for SaaS products, automation systems, and analytics workloads.',
         heroSubtitle:
-            'Your SaaS, automation, and AI features need a database that stays correct under load, PostgreSQL is our default for transactional truth and rich queries.',
+            'Your SaaS, automation, and AI features need a database that stays correct under load — PostgreSQL is our default for transactional truth and rich queries.',
         outcomes: [
             'Design multi tenant schemas that scale without painful migrations',
             'Keep CRM, billing, and automation data consistent and queryable',
@@ -396,11 +396,11 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'PostgreSQL or MongoDB for our SaaS?',
-                answer: 'PostgreSQL wins when relationships, transactions, and reporting matter, which is most B2B SaaS. We use document patterns inside Postgres JSONB when flexibility is needed.',
+                answer: 'PostgreSQL wins when relationships, transactions, and reporting matter — which is most B2B SaaS. We use document patterns inside Postgres JSONB when flexibility is needed.',
             },
             {
                 question: 'Can you optimize an existing PostgreSQL database?',
-                answer: 'Yes. We analyze slow queries, fix indexing, review schema design, and add pooling, common after MVPs outgrow their first data model.',
+                answer: 'Yes. We analyze slow queries, fix indexing, review schema design, and add pooling — common after MVPs outgrow their first data model.',
             },
             {
                 question: 'Does PostgreSQL work with AI and vector search?',
@@ -408,7 +408,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'How do you handle backups and disaster recovery?',
-                answer: 'Automated RDS snapshots, point in time recovery, and tested restore runbooks, configured as part of production delivery, not as a later phase.',
+                answer: 'Automated RDS snapshots, point in time recovery, and tested restore runbooks — configured as part of production delivery, not as a later phase.',
             },
         ],
     },
@@ -419,7 +419,7 @@ export const technologyPages: TechnologyPage[] = [
         metaDescription:
             'Supabase for SaaS authentication, PostgreSQL backends, realtime subscriptions, and storage. Ship founder MVPs faster without sacrificing a path to scale.',
         heroSubtitle:
-            'Launch SaaS MVPs with auth, database, and APIs in days, then extend with custom backend logic, Stripe billing, and AWS as you grow.',
+            'Launch SaaS MVPs with auth, database, and APIs in days — then extend with custom backend logic, Stripe billing, and AWS as you grow.',
         outcomes: [
             'Ship founder MVPs with email, OAuth, and row level security fast',
             'Reduce backend boilerplate while keeping PostgreSQL as source of truth',
@@ -446,7 +446,7 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'Is Supabase only for prototypes?',
-                answer: 'No, many production SaaS products run on Supabase through early scale. We design RLS, migrations, and escape hatches so you are not trapped at growth.',
+                answer: 'No — many production SaaS products run on Supabase through early scale. We design RLS, migrations, and escape hatches so you are not trapped at growth.',
             },
             {
                 question: 'Can Supabase integrate with Stripe and external APIs?',
@@ -454,7 +454,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'How do you secure multi tenant data on Supabase?',
-                answer: 'Row level security policies, service role isolation, and audited migrations, treated as production security, not demo defaults.',
+                answer: 'Row level security policies, service role isolation, and audited migrations — treated as production security, not demo defaults.',
             },
             {
                 question: 'When should we move off Supabase to self hosted Postgres?',
@@ -467,9 +467,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'OpenAI Integration for Business Automation and SaaS AI',
         metaTitle: 'OpenAI Integration for Business Automation | Aizaz.studio',
         metaDescription:
-            'OpenAI API integration for chatbots, document AI, lead qualification, and SaaS copilots. Production ready LLM features connected to your CRM, ERP, and workflows.',
+            'OpenAI API integration for chatbots, document AI, lead qualification, and SaaS copilots connected to your CRM and workflows.',
         heroSubtitle:
-            'Turn OpenAI from a demo into business software, lead scoring, support triage, document extraction, and copilots wired to the tools your team already uses.',
+            'Turn OpenAI from a demo into business software — lead scoring, support triage, document extraction, and copilots wired to the tools your team already uses.',
         outcomes: [
             'Automate lead qualification and routing with CRM connected AI',
             'Reduce support load with triage, summarization, and smart handoff',
@@ -504,11 +504,11 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'What about data privacy and OpenAI?',
-                answer: 'We configure API usage per your policy, zero retention where available, VPC options for enterprise, and no training on your data when using standard API terms.',
+                answer: 'We configure API usage per your policy — zero retention where available, VPC options for enterprise, and no training on your data when using standard API terms.',
             },
             {
                 question: 'How fast can we launch a first OpenAI workflow?',
-                answer: 'Our 14 day AI Systems Sprint delivers one production workflow, scoped, integrated, monitored, and ready for daily use.',
+                answer: 'Our 14 day AI Systems Sprint delivers one production workflow — scoped, integrated, monitored, and ready for daily use.',
             },
         ],
     },
@@ -517,9 +517,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'LangChain for Multi Step AI Agents and Workflow Automation',
         metaTitle: 'LangChain Development for AI Agents | Aizaz.studio',
         metaDescription:
-            'LangChain development for AI agents, RAG pipelines, and multi step automations. Connect LLMs to databases, APIs, and business tools with observable, maintainable chains.',
+            'LangChain development for AI agents, RAG pipelines, and multi-step automations connected to databases, APIs, and business tools.',
         heroSubtitle:
-            'When a single prompt is not enough, LangChain orchestrates multi step AI agents, retrieval, tool use, and memory, tied to real business outcomes.',
+            'When a single prompt is not enough, LangChain orchestrates multi step AI agents — retrieval, tool use, and memory — tied to real business outcomes.',
         outcomes: [
             'Build agents that query internal docs and databases with citations',
             'Orchestrate multi tool workflows across CRM, email, and APIs',
@@ -546,15 +546,15 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'Do we need LangChain or is OpenAI function calling enough?',
-                answer: 'Simple flows need only function calling. LangChain helps when you have retrieval, multiple tools, branching logic, and long running agent state, typical in ops automation.',
+                answer: 'Simple flows need only function calling. LangChain helps when you have retrieval, multiple tools, branching logic, and long running agent state — typical in ops automation.',
             },
             {
                 question: 'Can LangChain agents write to our production systems?',
-                answer: 'Yes, with strict tool schemas, approval gates, and audit logs. We treat agent actions like any integration, idempotent, validated, and reversible where possible.',
+                answer: 'Yes, with strict tool schemas, approval gates, and audit logs. We treat agent actions like any integration — idempotent, validated, and reversible where possible.',
             },
             {
                 question: 'How do you keep RAG answers accurate for our business?',
-                answer: 'Chunking strategy, metadata filters, hybrid search, and eval sets tuned on your real questions, not generic demo documents.',
+                answer: 'Chunking strategy, metadata filters, hybrid search, and eval sets tuned on your real questions — not generic demo documents.',
             },
             {
                 question: 'LangChain in Python or JavaScript?',
@@ -567,9 +567,9 @@ export const technologyPages: TechnologyPage[] = [
         title: 'Stripe Integration for SaaS Billing and Subscription Revenue',
         metaTitle: 'Stripe Integration for SaaS Billing | Aizaz.studio',
         metaDescription:
-            'Stripe integration for SaaS subscriptions, usage billing, customer portals, and webhook automation. Reliable payments connected to your product and ops workflows.',
+            'Stripe integration for SaaS subscriptions, usage billing, customer portals, and webhook automation connected to your product.',
         heroSubtitle:
-            'Get subscription billing, invoicing, and payment webhooks right, so revenue flows into your SaaS product and CRM without manual reconciliation every month.',
+            'Get subscription billing, invoicing, and payment webhooks right — so revenue flows into your SaaS product and CRM without manual reconciliation every month.',
         outcomes: [
             'Launch Stripe Checkout or embedded billing with minimal friction',
             'Sync subscription state to your database and CRM automatically',
@@ -596,7 +596,7 @@ export const technologyPages: TechnologyPage[] = [
         faqs: [
             {
                 question: 'Can you add Stripe to an existing SaaS without downtime?',
-                answer: 'Yes. We migrate customers carefully, run parallel billing tests, and use feature flags so cutover is controlled, not a weekend gamble.',
+                answer: 'Yes. We migrate customers carefully, run parallel billing tests, and use feature flags so cutover is controlled — not a weekend gamble.',
             },
             {
                 question: 'Do you integrate Stripe webhooks with our CRM?',
@@ -608,7 +608,7 @@ export const technologyPages: TechnologyPage[] = [
             },
             {
                 question: 'How do you handle failed payments and dunning?',
-                answer: 'Stripe Billing settings plus app side grace periods and email automations, so churn from card failures drops without manual chasing.',
+                answer: 'Stripe Billing settings plus app side grace periods and email automations — so churn from card failures drops without manual chasing.',
             },
         ],
     },
@@ -619,7 +619,7 @@ export const technologyPages: TechnologyPage[] = [
         metaDescription:
             'Twilio integration for SMS alerts, voice workflows, WhatsApp business messaging, and customer communication automation connected to your CRM and ops stack.',
         heroSubtitle:
-            'Reach customers and ops teams where they respond, SMS, voice, and WhatsApp, automated and logged, not scattered across personal phones and spreadsheets.',
+            'Reach customers and ops teams where they respond — SMS, voice, and WhatsApp — automated and logged, not scattered across personal phones and spreadsheets.',
         outcomes: [
             'Automate appointment reminders, OTP, and transactional notifications',
             'Route inbound SMS and WhatsApp to CRM records and support queues',
@@ -645,16 +645,16 @@ export const technologyPages: TechnologyPage[] = [
         ],
         faqs: [
             {
-                question: 'WhatsApp automation for lead gen, is that supported?',
-                answer: 'Yes. We build WhatsApp flows for qualification and support with template messages, handoff to humans, and CRM logging, common for ecommerce and services businesses.',
+                question: 'WhatsApp automation for lead gen — is that supported?',
+                answer: 'Yes. We build WhatsApp flows for qualification and support with template messages, handoff to humans, and CRM logging — common for ecommerce and services businesses.',
             },
             {
                 question: 'Can Twilio trigger our existing automation workflows?',
-                answer: 'Inbound messages hit webhooks that update databases, create tickets, and kick off AI triage, same patterns we use for email and form automations.',
+                answer: 'Inbound messages hit webhooks that update databases, create tickets, and kick off AI triage — same patterns we use for email and form automations.',
             },
             {
                 question: 'How do you handle message deliverability and compliance?',
-                answer: 'Registered sender IDs, template approval where required, opt in tracking, and rate limits, configured before campaigns go live.',
+                answer: 'Registered sender IDs, template approval where required, opt in tracking, and rate limits — configured before campaigns go live.',
             },
             {
                 question: 'Twilio plus OpenAI for conversational support?',

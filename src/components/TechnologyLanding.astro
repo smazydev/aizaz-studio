@@ -1,85 +1,89 @@
 ---
 import type { TechnologyPage } from '../data/technologyPages';
 import FaqSection from './FaqSection.astro';
+import RelatedContent from './RelatedContent.astro';
+import { getTechnologyRelatedGroups } from '../data/internalLinks';
 
 interface Props {
   page: TechnologyPage;
 }
 
 const { page } = Astro.props;
+const clusterGroups = getTechnologyRelatedGroups(page.slug).filter((g) => g.title !== 'Related Services');
 ---
 
-<section class="page-hero">
-  <div class="c-wrap">
-    <nav class="page-crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a>
+<section class="pt-32 pb-16 relative overflow-hidden page-glow">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <nav class="flex flex-wrap items-center gap-2 text-sm text-zinc-500 mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-primary-400 transition-colors">Home</a>
       <span>/</span>
-      <a href="/technologies">Technologies</a>
+      <a href="/technologies" class="hover:text-primary-400 transition-colors">Technologies</a>
       <span>/</span>
-      <span>{page.title}</span>
+      <span class="text-zinc-300">{page.title}</span>
     </nav>
-    <p class="c-micro c-red">Technology</p>
-    <h1 class="page-title">{page.title}</h1>
-    <p class="c-lede page-hero__lede">{page.heroSubtitle}</p>
-    <div class="page-hero__actions">
-      <a class="c-btn" href="/book-a-call">Book a Call</a>
-      <a class="c-btn c-btn--ghost" href="/services">View Services</a>
+    <div class="text-primary-500 font-bold tracking-widest text-sm mb-4 uppercase">Technology</div>
+    <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">{page.title}</h1>
+    <p class="text-xl text-zinc-400 leading-relaxed mb-8">{page.heroSubtitle}</p>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="/book-a-call" class="inline-flex justify-center px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors">Book a Call</a>
+      <a href="/services" class="inline-flex justify-center px-6 py-3 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">View Services</a>
     </div>
   </div>
 </section>
 
 <section class="pb-16">
-  <div class="c-wrap">
-    <p class="c-micro">Outcomes</p>
-    <h2 class="page-h2">What we build with it</h2>
-    <ul class="page-list">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">Business outcomes we build with {page.title.replace(' Development', '').replace(' Services', '')}</h2>
+    <ul class="grid md:grid-cols-2 gap-4">
       {page.outcomes.map((item) => (
-        <li class="c-card page-card">{item}</li>
+        <li class="flex items-start gap-3 p-4 rounded-xl glass-card">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-primary-500 shrink-0"></span>
+          <span class="text-zinc-300">{item}</span>
+        </li>
       ))}
     </ul>
   </div>
 </section>
 
 <section class="pb-16">
-  <div class="c-wrap">
-    <p class="c-micro">Use cases</p>
-    <h2 class="page-h2">Example use cases</h2>
-    <div class="page-stack">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">Example use cases</h2>
+    <div class="space-y-3">
       {page.useCases.map((item) => (
-        <div class="c-card page-card">{item}</div>
+        <div class="p-4 rounded-xl glass-card text-zinc-300 text-sm md:text-base">{item}</div>
       ))}
     </div>
   </div>
 </section>
 
 <section class="pb-16">
-  <div class="c-wrap">
-    <p class="c-micro">Production</p>
-    <h2 class="page-h2">How we use it</h2>
-    <ul class="page-stack">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">How we use it in production</h2>
+    <ul class="space-y-3">
       {page.stackNotes.map((note) => (
-        <li class="c-lede" style="border-left: 1px solid var(--line); padding-left: 16px;">{note}</li>
+        <li class="text-zinc-400 leading-relaxed pl-4 border-l-2 border-primary-500/30">{note}</li>
       ))}
     </ul>
   </div>
 </section>
 
 <section class="pb-16">
-  <div class="c-wrap">
-    <p class="c-micro">Next</p>
-    <h2 class="page-h2">Related services</h2>
-    <div class="page-hero__actions">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-display font-bold text-white mb-6">Related services</h2>
+    <div class="flex flex-wrap gap-3">
       {page.relatedServices.map((link) => (
-        <a class="c-btn c-btn--ghost" href={link.href}>{link.label}</a>
+        <a href={link.href} class="px-4 py-2 rounded-full border border-zinc-700 text-sm text-zinc-300 hover:border-primary-500/40 hover:text-white transition-colors">{link.label}</a>
       ))}
     </div>
   </div>
 </section>
+
+<RelatedContent groups={clusterGroups} />
 
 <FaqSection faqs={page.faqs} />
 
-<section class="page-hero" style="padding-top: 0">
-  <div class="c-wrap">
-    <a class="c-btn" href="/book-a-call">Discuss your stack</a>
+<section class="pb-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <a href="/book-a-call" class="inline-flex px-8 py-4 rounded-full bg-primary-600 text-white font-bold hover:bg-primary-500 transition-colors">Discuss your stack</a>
   </div>
 </section>

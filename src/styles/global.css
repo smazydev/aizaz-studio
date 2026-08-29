@@ -150,6 +150,18 @@ body {
   .article-content hr {
     @apply border-white/10 my-12;
   }
+
+  .article-content figure {
+    @apply my-10;
+  }
+
+  .article-content img {
+    @apply rounded-xl max-w-full h-auto;
+  }
+
+  .article-content figcaption {
+    @apply mt-3 text-sm text-zinc-500 text-center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

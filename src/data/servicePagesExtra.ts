@@ -6,7 +6,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Rescue a Stalled, Broken, or Overcomplicated Software Project',
         metaTitle: 'Software Project Rescue Services | Aizaz.studio',
         metaDescription:
-            'Stabilize failing software projects with senior engineering. We audit codebases, fix critical bugs, restore deployments, and get your product back on track without starting over.',
+            'Stabilize failing software projects with senior engineering: audit codebases, fix critical bugs, restore deploys, and get products back on track.',
         heroSubtitle:
             'When deadlines slip, bugs pile up, and nobody trusts the codebase, senior engineers step in to stabilize, ship, and set a path forward.',
         keywords: [
@@ -51,7 +51,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'Can you rescue a project without a full rewrite?',
-                answer: 'Usually yes. Most rescue work targets critical paths, deployment reliability, and architecture debt, not rebuilding from scratch unless the codebase is truly beyond repair.',
+                answer: 'Usually yes. Most rescue work targets critical paths, deployment reliability, and architecture debt — not rebuilding from scratch unless the codebase is truly beyond repair.',
             },
             {
                 question: 'What deliverables do we get at the end of a rescue?',
@@ -65,7 +65,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Technical Audit',
         metaTitle: 'Technical Audit for Software & Cloud Systems | Aizaz.studio',
         metaDescription:
-            'Independent technical audits for codebases, cloud infrastructure, security posture, and architecture. Get a clear risk report and prioritized action plan from senior engineers.',
+            'Independent technical audits for codebases, cloud, security, and architecture — clear risk reports and prioritized action plans.',
         heroSubtitle:
             'Know exactly what is broken, what is risky, and what to fix first before you invest more time and budget.',
         keywords: [
@@ -77,9 +77,9 @@ export const extraServicePages: SeoPage[] = [
             'architecture review',
         ],
         problem:
-            'You are about to invest in a rebuild, hire a team, or sign another development contract, but nobody has an honest picture of code quality, security gaps, or infrastructure risk. Decisions are based on hope, not evidence.',
+            'You are about to invest in a rebuild, hire a team, or sign another development contract — but nobody has an honest picture of code quality, security gaps, or infrastructure risk. Decisions are based on hope, not evidence.',
         solution:
-            'We deliver independent technical audits led by senior engineers who have shipped and rescued real products. You get a structured report covering architecture, code health, security, DevOps, and integrations, with a prioritized fix list, not vague recommendations.',
+            'We deliver independent technical audits led by senior engineers who have shipped and rescued real products. You get a structured report covering architecture, code health, security, DevOps, and integrations — with a prioritized fix list, not vague recommendations.',
         capabilities: [
             'Codebase quality and maintainability review',
             'Architecture and scalability assessment',
@@ -124,9 +124,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'AI Agent Development',
         metaTitle: 'Custom AI Agent Development | Aizaz.studio',
         metaDescription:
-            'Build production AI agents that research, decide, and act inside your business tools. Connected to CRMs, email, databases, and APIs, not chat demos.',
+            'Build production AI agents that research, decide, and act inside your business tools. Connected to CRMs, email, databases, and APIs — not chat demos.',
         heroSubtitle:
-            'Deploy AI agents that complete real work inside your stack, qualifying leads, triaging support, processing documents, and triggering workflows.',
+            'Deploy AI agents that complete real work inside your stack — qualifying leads, triaging support, processing documents, and triggering workflows.',
         keywords: [
             'AI agent development',
             'custom AI agents',
@@ -138,7 +138,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Generic chatbots answer questions but do not move work forward. Your team still copies data between systems, qualifies leads manually, and routes requests by hand. AI demos impress in meetings but never reach production.',
         solution:
-            'We build custom AI agents with defined goals, tool access, and guardrails. Each agent connects to your CRM, email, databases, and internal APIs so it can research, decide, and execute, with human approval where it matters.',
+            'We build custom AI agents with defined goals, tool access, and guardrails. Each agent connects to your CRM, email, databases, and internal APIs so it can research, decide, and execute — with human approval where it matters.',
         capabilities: [
             'Goal driven agent architecture and orchestration',
             'Tool use integrations with CRM, ERP, and internal APIs',
@@ -157,7 +157,7 @@ export const extraServicePages: SeoPage[] = [
         faqs: [
             {
                 question: 'How is an AI agent different from a chatbot?',
-                answer: 'Chatbots respond to messages. Agents pursue goals, they call APIs, update records, trigger workflows, and loop until a task is done or escalated.',
+                answer: 'Chatbots respond to messages. Agents pursue goals — they call APIs, update records, trigger workflows, and loop until a task is done or escalated.',
             },
             {
                 question: 'Which LLM providers do you work with?',
@@ -173,7 +173,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'How quickly can we deploy a first agent?',
-                answer: 'Our AI Systems Sprint delivers one production agent workflow in 14 days, scoped, integrated, monitored, and ready for daily use.',
+                answer: 'Our AI Systems Sprint delivers one production agent workflow in 14 days — scoped, integrated, monitored, and ready for daily use.',
             },
         ],
         relatedSlugs: ['ai-chatbot-development', 'ai-workflow-automation', 'llm-app-development', 'crm-integration'],
@@ -183,7 +183,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'AI Chatbot Development',
         metaTitle: 'AI Chatbot Development for Business | Aizaz.studio',
         metaDescription:
-            'Custom AI chatbots for websites, WhatsApp, and internal support. Connected to your CRM and knowledge base with lead capture, triage, and human handoff built in.',
+            'Custom AI chatbots for websites, WhatsApp, and internal support — CRM-connected with lead capture, triage, and human handoff.',
         heroSubtitle:
             'Launch AI chatbots that capture leads, answer accurately from your content, and hand off to humans when conversations need a real person.',
         keywords: [
@@ -197,7 +197,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Visitors leave without converting. Support teams answer the same questions repeatedly. Off the shelf chatbots feel generic, cannot access your product data, and frustrate customers with wrong answers.',
         solution:
-            'We build AI chatbots grounded in your content, products, and policies, deployed on your website, WhatsApp, or internal tools. Every conversation can capture leads, create tickets, and route to the right person when automation ends.',
+            'We build AI chatbots grounded in your content, products, and policies — deployed on your website, WhatsApp, or internal tools. Every conversation can capture leads, create tickets, and route to the right person when automation ends.',
         capabilities: [
             'Website and in app chatbot widgets',
             'WhatsApp and messaging channel integrations',
@@ -220,7 +220,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'What happens when the chatbot cannot answer?',
-                answer: 'We configure graceful handoff to live agents, ticket creation, or scheduled callbacks, never a dead end loop.',
+                answer: 'We configure graceful handoff to live agents, ticket creation, or scheduled callbacks — never a dead end loop.',
             },
             {
                 question: 'Do you support WhatsApp Business API?',
@@ -254,9 +254,9 @@ export const extraServicePages: SeoPage[] = [
             'operations automation AI',
         ],
         problem:
-            'Your workflows span five tools and three people. Someone copies data, someone approves, someone updates the CRM, and errors slip through every day. Basic Zapier flows break when logic gets complex or volume grows.',
+            'Your workflows span five tools and three people. Someone copies data, someone approves, someone updates the CRM — and errors slip through every day. Basic Zapier flows break when logic gets complex or volume grows.',
         solution:
-            'We design AI workflow automation that handles judgment calls, document understanding, and multi system orchestration in one reliable pipeline. Senior engineers build it as production software with logging, retries, and alerts, not fragile no code chains.',
+            'We design AI workflow automation that handles judgment calls, document understanding, and multi system orchestration in one reliable pipeline. Senior engineers build it as production software with logging, retries, and alerts — not fragile no code chains.',
         capabilities: [
             'Multi step workflow design and orchestration',
             'AI decision nodes for classification and extraction',
@@ -301,7 +301,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'LLM App Development',
         metaTitle: 'LLM Application Development | Aizaz.studio',
         metaDescription:
-            'Build custom LLM powered applications, internal copilots, document tools, search interfaces, and AI features inside your SaaS product. Production architecture, not prototypes.',
+            'Build custom LLM apps — copilots, document tools, search, and AI features inside SaaS products. Production architecture, not prototypes.',
         heroSubtitle:
             'Ship LLM powered features and standalone apps with the retrieval, auth, monitoring, and UX your users and investors expect.',
         keywords: [
@@ -313,7 +313,7 @@ export const extraServicePages: SeoPage[] = [
             'generative AI product development',
         ],
         problem:
-            'You want LLM features in your product but prototypes feel slow, hallucinate, and lack proper auth and billing. Wrapping ChatGPT in a UI is not a product, and investors and customers can tell.',
+            'You want LLM features in your product but prototypes feel slow, hallucinate, and lack proper auth and billing. Wrapping ChatGPT in a UI is not a product — and investors and customers can tell.',
         solution:
             'We build LLM applications with production foundations: retrieval pipelines, prompt orchestration, user permissions, usage tracking, and monitoring. Whether it is an internal copilot or a customer facing AI feature, we ship software your team can maintain.',
         capabilities: [
@@ -338,7 +338,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'How do you reduce hallucinations in production?',
-                answer: 'Retrieval grounding, structured outputs, validation layers, and evaluation suites tuned on your real data, not generic prompt tricks.',
+                answer: 'Retrieval grounding, structured outputs, validation layers, and evaluation suites tuned on your real data — not generic prompt tricks.',
             },
             {
                 question: 'Can we use our own documents and databases as context?',
@@ -360,9 +360,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'SaaS MVP Development',
         metaTitle: 'SaaS MVP Development for Startups | Aizaz.studio',
         metaDescription:
-            'Launch investor ready SaaS MVPs in weeks with auth, payments, core workflows, and deployable architecture. Senior engineers, not a rotating freelancer bench.',
+            'Launch investor-ready SaaS MVPs in weeks with auth, payments, core workflows, and deployable architecture — senior engineers only.',
         heroSubtitle:
-            'Ship a SaaS MVP that real users can sign up for, pay for, and rely on, built with architecture that survives your first growth spike.',
+            'Ship a SaaS MVP that real users can sign up for, pay for, and rely on — built with architecture that survives your first growth spike.',
         keywords: [
             'SaaS MVP development',
             'startup MVP development',
@@ -419,9 +419,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'B2B SaaS Development',
         metaTitle: 'B2B SaaS Development Studio | Aizaz.studio',
         metaDescription:
-            'Build B2B SaaS platforms with multi tenant architecture, role based access, billing, integrations, and admin tooling. Senior full stack execution for growth stage products.',
+            'Build B2B SaaS platforms with multi-tenant architecture, RBAC, billing, integrations, and admin tooling for growth-stage products.',
         heroSubtitle:
-            'Build B2B SaaS that enterprise buyers trust, with proper tenancy, permissions, integrations, and ops tooling from day one.',
+            'Build B2B SaaS that enterprise buyers trust — with proper tenancy, permissions, integrations, and ops tooling from day one.',
         keywords: [
             'B2B SaaS development',
             'B2B software development',
@@ -431,7 +431,7 @@ export const extraServicePages: SeoPage[] = [
             'B2B startup development',
         ],
         problem:
-            'B2B buyers expect SSO, role based access, audit logs, and integrations, not a consumer style app with a login form. Teams bolt on enterprise features late and lose deals to competitors who planned for scale.',
+            'B2B buyers expect SSO, role based access, audit logs, and integrations — not a consumer style app with a login form. Teams bolt on enterprise features late and lose deals to competitors who planned for scale.',
         solution:
             'We build B2B SaaS platforms with multi tenant architecture, granular permissions, billing, API access, and integration hooks baked in. Senior engineers own frontend, backend, and infrastructure so your product holds up in procurement conversations.',
         capabilities: [
@@ -478,7 +478,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Backend Engineering',
         metaTitle: 'Backend Engineering Services | Aizaz.studio',
         metaDescription:
-            'Senior backend engineering for APIs, databases, background jobs, and scalable server architecture. Node.js, PostgreSQL, AWS, built for products that need to perform under load.',
+            'Senior backend engineering for APIs, databases, background jobs, and scalable architecture with Node.js, PostgreSQL, and AWS.',
         heroSubtitle:
             'Build backends that handle real traffic, clean data models, and integrations your frontend and partners can depend on.',
         keywords: [
@@ -492,7 +492,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Frontend looks polished but the backend creaks under load. Queries timeout, jobs fail silently, and every new feature risks breaking existing APIs. You need senior backend work, not another layer on a shaky foundation.',
         solution:
-            'Aizaz.studio delivers backend engineering with clear data models, reliable APIs, background processing, and observability. We design for the traffic you have and the growth you are planning, with documentation your team can build on.',
+            'Aizaz.studio delivers backend engineering with clear data models, reliable APIs, background processing, and observability. We design for the traffic you have and the growth you are planning — with documentation your team can build on.',
         capabilities: [
             'REST and GraphQL API design and implementation',
             'PostgreSQL and relational data modeling',
@@ -527,7 +527,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'Can backend work run parallel to frontend development?',
-                answer: 'Yes. We define API contracts early so frontend and backend teams, or our full stack team, ship in parallel without blocking.',
+                answer: 'Yes. We define API contracts early so frontend and backend teams — or our full stack team — ship in parallel without blocking.',
             },
         ],
         relatedSlugs: ['api-integration', 'aws-cloud-engineering', 'b2b-saas-development', 'platform-engineering'],
@@ -537,9 +537,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'AWS Cloud Engineering',
         metaTitle: 'AWS Cloud Engineering Services | Aizaz.studio',
         metaDescription:
-            'Design and build production AWS infrastructure, EC2, ECS, Lambda, RDS, S3, networking, and security. Architecture your product can scale on without surprise bills or outages.',
+            'Design and build production AWS infrastructure — EC2, ECS, Lambda, RDS, S3, networking, and security your product can scale on.',
         heroSubtitle:
-            'Get AWS infrastructure designed by engineers who ship products on it daily, not generic diagrams that fall apart in production.',
+            'Get AWS infrastructure designed by engineers who ship products on it daily — not generic diagrams that fall apart in production.',
         keywords: [
             'AWS cloud engineering',
             'AWS architecture',
@@ -551,7 +551,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Your AWS bill grows every month but reliability does not. Resources are over provisioned, security groups are wide open, and nobody documented why things were set up this way. Scaling events become emergencies.',
         solution:
-            'We engineer AWS environments matched to your workload: right sized compute, managed databases, secure networking, and cost visibility. Senior engineers build and document infrastructure your team can operate, with IaC, monitoring, and runbooks included.',
+            'We engineer AWS environments matched to your workload: right sized compute, managed databases, secure networking, and cost visibility. Senior engineers build and document infrastructure your team can operate — with IaC, monitoring, and runbooks included.',
         capabilities: [
             'AWS architecture design and workload mapping',
             'EC2, ECS, and Lambda deployment patterns',
@@ -596,7 +596,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'DevOps Consulting',
         metaTitle: 'DevOps Consulting Services | Aizaz.studio',
         metaDescription:
-            'DevOps consulting for CI/CD pipelines, containerization, monitoring, and release automation. Turn fragile deploys into reliable shipping cadence your whole team trusts.',
+            'DevOps consulting for CI/CD, containers, monitoring, and release automation — turn fragile deploys into a reliable shipping cadence.',
         heroSubtitle:
             'Stop dreading releases. Get CI/CD, monitoring, and deployment practices that let your team ship daily without breaking production.',
         keywords: [
@@ -610,7 +610,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Deployments are manual, scary, and owned by one person who is always busy. Staging does not match production. When something breaks, nobody knows until customers complain. Velocity dies in release anxiety.',
         solution:
-            'Our DevOps consulting embeds senior engineers who build automated pipelines, staging parity, observability, and runbooks. You get a release process the whole team can execute, with rollbacks, alerts, and documentation that outlast any single hire.',
+            'Our DevOps consulting embeds senior engineers who build automated pipelines, staging parity, observability, and runbooks. You get a release process the whole team can execute — with rollbacks, alerts, and documentation that outlast any single hire.',
         capabilities: [
             'CI/CD pipeline design and implementation',
             'Docker containerization and image management',
@@ -655,7 +655,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'Cloud Migration',
         metaTitle: 'Cloud Migration Services | Aizaz.studio',
         metaDescription:
-            'Migrate applications, databases, and workloads to AWS with minimal downtime. Assessment, planning, execution, and validation from engineers who run production systems daily.',
+            'Migrate apps, databases, and workloads to AWS with minimal downtime — assessment, planning, execution, and validation.',
         heroSubtitle:
             'Move off legacy servers, cramped hosting, or messy multi cloud setups with a migration plan that protects uptime and data integrity.',
         keywords: [
@@ -667,7 +667,7 @@ export const extraServicePages: SeoPage[] = [
             'legacy system cloud migration',
         ],
         problem:
-            'Your product still runs on aging servers, a single VPS, or a cloud setup nobody fully understands. Leadership wants migration benefits, scale, security, cost control, but the risk of downtime or data loss blocks every decision.',
+            'Your product still runs on aging servers, a single VPS, or a cloud setup nobody fully understands. Leadership wants migration benefits — scale, security, cost control — but the risk of downtime or data loss blocks every decision.',
         solution:
             'We plan and execute cloud migrations with phased cutovers, rollback options, and validation at every step. Senior engineers map dependencies, migrate data safely, and leave you with documented AWS infrastructure your team can operate.',
         capabilities: [
@@ -714,9 +714,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'Platform Engineering',
         metaTitle: 'Platform Engineering Services | Aizaz.studio',
         metaDescription:
-            'Build internal developer platforms, shared infrastructure, and self serve tooling that helps your engineering team ship faster with guardrails, not gatekeepers.',
+            'Build internal developer platforms and self-serve tooling so engineering ships faster with guardrails, not gatekeepers.',
         heroSubtitle:
-            'Give your developers a paved road, environments, templates, CI/CD, and observability, so product teams ship without reinventing infrastructure every sprint.',
+            'Give your developers a paved road — environments, templates, CI/CD, and observability — so product teams ship without reinventing infrastructure every sprint.',
         keywords: [
             'platform engineering',
             'internal developer platform',
@@ -728,7 +728,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Every product team sets up deploys, environments, and monitoring differently. Engineers waste sprint time on boilerplate infrastructure. Security and compliance are afterthoughts because there is no shared platform.',
         solution:
-            'We build platform engineering foundations: golden path templates, self serve environments, standardized CI/CD, and shared observability. Your developers get speed with guardrails, and leadership gets consistency, security, and auditability.',
+            'We build platform engineering foundations: golden path templates, self serve environments, standardized CI/CD, and shared observability. Your developers get speed with guardrails — and leadership gets consistency, security, and auditability.',
         capabilities: [
             'Internal developer portal and service catalog',
             'Environment provisioning and ephemeral previews',
@@ -763,7 +763,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'How do you measure platform engineering success?',
-                answer: 'Deploy frequency, lead time, environment setup time, and developer satisfaction, tracked before and after platform rollout.',
+                answer: 'Deploy frequency, lead time, environment setup time, and developer satisfaction — tracked before and after platform rollout.',
             },
         ],
         relatedSlugs: ['devops-consulting', 'aws-cloud-engineering', 'backend-engineering', 'b2b-saas-development'],
@@ -773,9 +773,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'API Integration',
         metaTitle: 'API Integration Development Services | Aizaz.studio',
         metaDescription:
-            'Connect your product to third party APIs, webhooks, and partner systems. Reliable integrations with error handling, retries, monitoring, and documentation your team can maintain.',
+            'Connect products to third-party APIs, webhooks, and partner systems with retries, monitoring, and documentation your team can maintain.',
         heroSubtitle:
-            'Make your product talk to everything it needs to, payment providers, CRMs, ERPs, shipping APIs, without brittle scripts that break on every vendor update.',
+            'Make your product talk to everything it needs to — payment providers, CRMs, ERPs, shipping APIs — without brittle scripts that break on every vendor update.',
         keywords: [
             'API integration',
             'API integration services',
@@ -832,9 +832,9 @@ export const extraServicePages: SeoPage[] = [
         title: 'CRM Integration',
         metaTitle: 'CRM Integration Services | Aizaz.studio',
         metaDescription:
-            'Integrate HubSpot, Salesforce, Pipedrive, and custom CRMs with your product, ecommerce, and ops tools. Sync contacts, deals, and activities with reliable two way data flows.',
+            'Integrate HubSpot, Salesforce, Pipedrive, and custom CRMs with your product and ops tools — reliable two-way contact and deal sync.',
         heroSubtitle:
-            'Keep your CRM accurate automatically, sync leads, deals, and customer activity from every channel without manual data entry.',
+            'Keep your CRM accurate automatically — sync leads, deals, and customer activity from every channel without manual data entry.',
         keywords: [
             'CRM integration',
             'CRM integration services',
@@ -846,7 +846,7 @@ export const extraServicePages: SeoPage[] = [
         problem:
             'Sales lives in the CRM but product, support, and marketing data never reaches it. Reps update deals manually. Leads fall through cracks between website forms, chat tools, and the pipeline. Reporting is always stale.',
         solution:
-            'We build CRM integrations that sync the data sales and success teams need, leads from your website, usage from your product, tickets from support, into HubSpot, Salesforce, or your custom CRM with validation and conflict handling.',
+            'We build CRM integrations that sync the data sales and success teams need — leads from your website, usage from your product, tickets from support — into HubSpot, Salesforce, or your custom CRM with validation and conflict handling.',
         capabilities: [
             'HubSpot, Salesforce, and Pipedrive integrations',
             'Two way contact, deal, and activity sync',
@@ -891,7 +891,7 @@ export const extraServicePages: SeoPage[] = [
         title: 'NetSuite Integration',
         metaTitle: 'NetSuite Integration Services | Aizaz.studio',
         metaDescription:
-            'NetSuite integrations for ecommerce, CRM, 3PL, and custom apps. Order sync, inventory, fulfillment, and finance data flows with SuiteScript, REST, and middleware you can trust.',
+            'NetSuite integrations for ecommerce, CRM, 3PL, and custom apps — order, inventory, fulfillment, and finance sync you can trust.',
         heroSubtitle:
             'Connect NetSuite to Shopify, CRMs, warehouses, and internal tools so orders, inventory, and finance data stay aligned across every channel.',
         keywords: [

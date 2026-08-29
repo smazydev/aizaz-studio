@@ -7,7 +7,6 @@ export const siteStats = [
 
 export const clientLogos = [
     '1Archiver',
-    'InvestorsGoneWild',
     'TradingDojo',
     'VamsBiome',
     'EthicalAI',
@@ -51,7 +50,7 @@ export const problemPoints = [
     },
     {
         title: 'Manual work on repeat',
-        description: 'Leads, orders, reports, and follow ups get rebuilt by hand every day, work that should run in the background.',
+        description: 'Leads, orders, reports, and follow ups get rebuilt by hand every day — work that should run in the background.',
     },
     {
         title: 'Fragile deployments',
@@ -68,7 +67,7 @@ export const deliverySteps = [
     {
         step: '02',
         title: 'Architecture & build',
-        description: 'Senior engineers design the system, connect your tools, and ship working software, not slide decks.',
+        description: 'Senior engineers design the system, connect your tools, and ship working software — not slide decks.',
     },
     {
         step: '03',

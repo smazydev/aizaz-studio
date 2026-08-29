@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/light-theme.css';
 import '../styles/clone.css';
 import '../styles/site-pages.css';
 import { SITE_URL } from '../data/seoPages';
@@ -8,42 +9,45 @@ interface Props {
   title?: string;
   description?: string;
   canonical?: string;
-  keywords?: string[];
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
   noindex?: boolean;
+  schemas?: Record<string, unknown>[];
+  /** Redesign pages force light chrome; blog/CMS pages default to dark theme toggle. */
   theme?: 'dark' | 'light';
 }
 
 const {
   title = 'Aizaz.studio | AI, Cloud & Automation Engineering',
-  description = 'Aizaz.studio builds AI powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
+  description = 'Aizaz.studio builds AI-powered web apps, cloud infrastructure, and automation systems for businesses that want to scale without operational chaos.',
   canonical,
-  keywords = [],
+  ogTitle,
+  ogDescription,
+  ogImage,
   noindex = false,
-  theme = 'light',
+  schemas = [],
+  theme,
 } = Astro.props;
 
-function toCanonicalUrl(url: string): string {
-  try {
-    const parsed = new URL(url, SITE_URL);
-    // Keep file URLs (e.g. sitemap.xml, .png) as-is
-    if (/\.[a-z0-9]+$/i.test(parsed.pathname)) return parsed.toString();
-    if (parsed.pathname === '/' || parsed.pathname === '') return `${SITE_URL}/`;
-    parsed.pathname = parsed.pathname.replace(/\/$/, '');
-    return parsed.toString();
-  } catch {
-    return url === `${SITE_URL}/` || url === '/' ? `${SITE_URL}/` : url.replace(/\/$/, '');
-  }
+/** Sitewide policy: trailingSlash never — strip slash/.html so canonicals always 200. */
+function toCanonicalPath(path: string): string {
+  const trimmed = path.trim();
+  if (!trimmed || trimmed === '/') return '/';
+  const withoutHtml = trimmed.replace(/\.html$/i, '');
+  const withoutSlash = withoutHtml.replace(/\/+$/, '');
+  return withoutSlash.startsWith('/') ? withoutSlash || '/' : `/${withoutSlash}`;
 }
 
-const rawCanonical = canonical
-  ? `${SITE_URL}${canonical}`
-  : Astro.url.href.startsWith('http')
-    ? Astro.url.href
-    : `${SITE_URL}${Astro.url.pathname}`;
-const canonicalUrl = toCanonicalUrl(rawCanonical);
-const keywordContent = keywords.length > 0 ? keywords.join(', ') : 'AI automation, SaaS development, AWS DevOps, NetSuite integration, business process automation';
+const fallbackPath = Astro.url.pathname || '/';
+const canonicalPath = toCanonicalPath(canonical ?? fallbackPath);
+const canonicalUrl = canonicalPath === '/' ? `${SITE_URL}/` : `${SITE_URL}${canonicalPath}`;
+const resolvedOgTitle = ogTitle || title;
+const resolvedOgDescription = ogDescription || description;
+const resolvedOgImage = ogImage ?? `${SITE_URL}/aizaz-logo-white.png`;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
-const isHome = canonicalUrl === `${SITE_URL}/` || Astro.url.pathname === '/';
+const isHome = canonicalPath === '/' || Astro.url.pathname === '/';
+const forcedTheme = theme === 'light' || theme === 'dark' ? theme : null;
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -73,16 +77,37 @@ const websiteSchema = {
   url: SITE_URL,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+const pageStructuredData =
+  schemas.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@graph': schemas,
+      }
+    : null;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class:list={['scroll-smooth', theme === 'light' && 'theme-light']}>
+<html
+  lang="en"
+  class:list={['scroll-smooth', forcedTheme === 'light' && 'theme-light']}
+  data-theme={forcedTheme ?? 'dark'}
+>
   <head>
+    {!forcedTheme && (
+      <script is:inline>
+        try {
+          var storedTheme = localStorage.getItem('theme');
+          document.documentElement.setAttribute('data-theme', storedTheme === 'light' ? 'light' : 'dark');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      </script>
+    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywordContent} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     {!noindex && <meta name="robots" content="index, follow" />}
     <link rel="canonical" href={canonicalUrl} />
@@ -91,49 +116,27 @@ const websiteSchema = {
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Aizaz.studio" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={resolvedOgTitle} />
+    <meta property="og:description" content={resolvedOgDescription} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={`${SITE_URL}/aizaz-logo-white.png`} />
+    <meta property="og:image" content={resolvedOgImage} />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={resolvedOgTitle} />
+    <meta name="twitter:description" content={resolvedOgDescription} />
+    <meta name="twitter:image" content={resolvedOgImage} />
 
-    <script is:inline>
-      (function () {
-        var KEY = 'aizaz-theme';
-        function apply(theme) {
-          var root = document.documentElement;
-          root.classList.remove('theme-light', 'theme-dark');
-          root.classList.add('theme-' + theme);
-          root.setAttribute('data-theme', theme);
-          root.style.colorScheme = theme;
-          if (document.body) {
-            document.body.classList.toggle('theme-light', theme === 'light');
-            document.body.classList.toggle('theme-dark', theme === 'dark');
-          }
-          try { localStorage.setItem(KEY, theme); } catch (e) {}
-        }
-        window.__aizazApplyTheme = apply;
-        window.__aizazToggleTheme = function () {
-          apply(document.documentElement.classList.contains('theme-dark') ? 'light' : 'dark');
-        };
-        document.documentElement.classList.add('js');
-        try {
-          var stored = localStorage.getItem(KEY);
-          apply(stored === 'dark' || stored === 'light' ? stored : 'light');
-        } catch (e) {
-          apply('light');
-        }
-      })();
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet" />
 
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {!pageStructuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    )}
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
+    {pageStructuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(pageStructuredData)} />
+    )}
 
     <!-- Google Analytics 4 (gtag.js) on every page -->
     {gaId && (
@@ -148,22 +151,15 @@ const websiteSchema = {
       </>
     )}
   </head>
-  <body class:list={[theme === 'light' && 'theme-light']}>
+  <body>
     <slot />
   </body>
 </html>
 
 <script>
-  import { bindThemeToggle } from '../lib/theme';
-
-  bindThemeToggle();
-
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const homeOwnsReveal = Boolean(document.querySelector('.clone'));
 
-  if (homeOwnsReveal) {
-    // Homepage motion is handled in src/lib/home-motion.ts
-  } else if (!reduceMotion) {
+  if (!reduceMotion) {
     const revealElements = document.querySelectorAll('[data-reveal]');
 
     if (revealElements.length > 0) {

@@ -3,15 +3,15 @@ import type { SeoExtra } from '../data/seoExtras';
 import { deliverySteps } from '../data/siteContent';
 
 interface Props {
-  extras?: SeoExtra;
+  extras: SeoExtra;
   slug: string;
 }
 
 const { extras, slug } = Astro.props;
-const steps = extras?.processSteps ?? deliverySteps.slice(0, 3);
+const steps = extras.processSteps ?? deliverySteps.slice(0, 3);
 ---
 
-{extras && extras.benefits.length > 0 && (
+{extras.benefits.length > 0 && (
   <section class="pb-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-3xl font-display font-bold text-white mb-8">Why teams choose us for this</h2>
@@ -27,7 +27,7 @@ const steps = extras?.processSteps ?? deliverySteps.slice(0, 3);
   </section>
 )}
 
-{extras && extras.seoSections.length > 0 && (
+{extras.seoSections.length > 0 && (
   <section class="pb-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {extras.seoSections.map((section) => (

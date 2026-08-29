@@ -1,14 +1,17 @@
 {
 	"main": "dist/_worker.js/index.js",
 	"name": "aizaz-studio",
-  "compatibility_date": "2026-01-06",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
+	"compatibility_date": "2026-01-06",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
 	"assets": {
 		"binding": "ASSETS",
-		"directory": "./dist"
+		"directory": "./dist",
+		"html_handling": "drop-trailing-slash"
+		// Host normalization (www→apex, HTTP→HTTPS) is handled at Cloudflare zone level.
+		// Do not set run_worker_first globally — prerendered Assets should serve directly.
 	},
 	"routes": [
 		{
@@ -20,9 +23,13 @@
 			"custom_domain": true
 		}
 	],
-	// Keep workers.dev available while custom domain DNS is being fixed
 	"workers_dev": true,
+	// Workers Cache sits in front of the Worker. Required for Cache-Control on SSR
+	// HTML to skip Worker/Sanity on subsequent anonymous requests.
+	"cache": {
+		"enabled": true
+	},
 	"observability": {
-    "enabled": true
-  }
+		"enabled": true
+	}
 }

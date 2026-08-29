@@ -12,6 +12,24 @@ dist
 dist-ssr
 *.local
 
+# Build-generated local image derivatives (written by optimize-local-images integration)
+public/optimized/
+
+# DEV-only reference overlay (never ship)
+public/dev/
+
+# Local secrets and Cloudflare dev state
+.dev.vars
+.env
+.wrangler/
+cookies.txt
+
+# Sanity studio
+studio/.env
+studio/node_modules/
+studio/dist/
+studio/.sanity/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,6 +40,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# DEV-only reference overlay (never ship)
-public/dev/

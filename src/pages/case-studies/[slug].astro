@@ -1,47 +1,230 @@
 ---
-import SiteShell from '../../components/SiteShell.astro';
-import { CTA } from '../../components/CTA';
-import { caseStudies } from '../../data/caseStudies';
-import { Image } from 'astro:assets';
+export const prerender = false;
 
-export function getStaticPaths() {
-  return caseStudies.map(study => ({
-    params: { slug: study.slug },
-    props: { study },
-  }));
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '../../components/Navbar';
+import { Footer } from '../../components/Footer';
+import { CTA } from '../../components/CTA';
+import { SITE_URL } from '../../data/seoPages';
+import { BOOKING_URL } from '../../data/siteConfig';
+import { getCaseStudyBySlug } from '../../lib/sanity/caseStudies';
+import AuthorCard from '../../components/AuthorCard.astro';
+import LocalImage from '../../components/LocalImage.astro';
+import RelatedContent from '../../components/RelatedContent.astro';
+import { applyCmsCacheHeaders } from '../../lib/cms-cache';
+import { getCaseStudyRelatedGroups } from '../../data/internalLinks';
+
+const { slug } = Astro.params;
+const study = await getCaseStudyBySlug(slug!);
+
+if (!study) {
+  return new Response(null, { status: 404 });
 }
 
-const { study } = Astro.props;
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies', `case-study:${study.slug}`]);
+const relatedGroups = getCaseStudyRelatedGroups(study.slug);
+const pageTitle = study.seoTitle ?? `${study.title} | Aizaz Studio`;
+const pageDescription = study.seoDescription ?? study.description;
+const canonicalPath = study.canonicalPath ?? `/case-studies/${study.slug}`;
+const ogTitle = study.ogTitle ?? pageTitle;
+const ogDescription = study.ogDescription ?? pageDescription;
+const ogImage = study.ogImageUrl
+  ? study.ogImageUrl.startsWith('http')
+    ? study.ogImageUrl
+    : `${SITE_URL}${study.ogImageUrl}`
+  : study.imageUrl;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: study.title,
+  description: pageDescription,
+  ...(study.author
+    ? {
+        author: {
+          '@type': 'Person',
+          name: study.author.name,
+          ...(study.author.role ? { jobTitle: study.author.role } : {}),
+          ...(study.author.photoUrl ? { image: study.author.photoUrl } : {}),
+          ...((() => {
+            const sameAs = [
+              study.author.linkedin,
+              study.author.xUrl,
+              study.author.githubUrl,
+            ].filter((url): url is string => Boolean(url));
+            return sameAs.length ? { sameAs } : {};
+          })()),
+        },
+      }
+    : {
+        author: {
+          '@type': 'Organization',
+          name: 'Aizaz Studio',
+          url: SITE_URL,
+        },
+      }),
+  publisher: {
+    '@type': 'Organization',
+    name: 'Aizaz Studio',
+    url: SITE_URL,
+  },
+  mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
+  ...(ogImage ? { image: ogImage } : {}),
+};
 ---
 
-<SiteShell
-  title={`${study.title} | Aizaz.studio`}
-  description={study.description}
-  canonical={`/case-studies/${study.slug}`}
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalPath}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+  ogImage={ogImage}
+  noindex={study.noindex}
 >
-    <div class="pt-10 pb-20">
-      <section class="page-hero" style="padding-bottom: 40px">
-        <div class="c-wrap">
-          <p class="c-micro c-red">{study.category}</p>
-          <h1 class="page-title">{study.subtitle}</h1>
-          <p class="c-lede page-hero__lede">{study.description}</p>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
+    <Navbar client:load />
+    
+    <main class="pt-32 pb-20">
+      {/* Header */}
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
+        <div class="inline-block px-4 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-primary-400 text-sm font-medium mb-6">
+          {study.category}
         </div>
-      </section>
+        <h1 class="text-4xl md:text-6xl font-display font-bold mb-6 text-white">
+          {study.subtitle}
+        </h1>
+        <p class="text-xl text-zinc-400 max-w-3xl mx-auto">
+          {study.description}
+        </p>
+        {study.author && (
+          <div class="mt-8 flex justify-center">
+            <AuthorCard author={study.author} wrapperClass="text-left" />
+          </div>
+        )}
+        {study.deliveredBy && (
+          <p class="mt-4 text-sm text-zinc-500 max-w-2xl mx-auto">
+            Delivered by {study.deliveredBy}
+          </p>
+        )}
+        {study.engagementNote && (
+          <p class="mt-3 text-sm text-zinc-500 max-w-2xl mx-auto">
+            {study.engagementNote}
+          </p>
+        )}
+        {(study.client || study.location || study.industry || study.projectValue) && (
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
+            {study.client && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Client</div>
+                <div class="text-sm text-white font-medium">{study.client}</div>
+              </div>
+            )}
+            {study.location && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Location</div>
+                <div class="text-sm text-white font-medium">{study.location}</div>
+              </div>
+            )}
+            {study.industry && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Industry</div>
+                <div class="text-sm text-white font-medium">{study.industry}</div>
+              </div>
+            )}
+            {study.projectValue && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Engagement</div>
+                <div class="text-sm text-white font-medium">{study.projectValue}</div>
+              </div>
+            )}
+            {study.deliveryDuration && (
+              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
+                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Delivery</div>
+                <div class="text-sm text-white font-medium">{study.deliveryDuration}</div>
+              </div>
+            )}
+          </div>
+        )}
+        {study.atAGlance && study.atAGlance.length > 0 && (
+          <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {study.atAGlance.map((item) => (
+              <div class="px-5 py-5 rounded-2xl bg-zinc-900/30 border border-white/10 text-center">
+                <div class="text-2xl md:text-3xl font-display font-bold text-white mb-2">{item.value}</div>
+                <div class="text-sm text-zinc-400">{item.label}</div>
+                {item.sublabel && <div class="text-xs text-zinc-500 mt-1">{item.sublabel}</div>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Hero Image */}
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-primary-500/10 aspect-video">
-          <Image 
-            src={study.image} 
-            alt={study.title}
-            class="w-full h-full object-cover"
-          />
+          {study.imageUrl ? (
+            <img
+              src={study.imageUrl}
+              alt={study.title}
+              class="w-full h-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+              width="1600"
+              height="900"
+            />
+          ) : (
+            <LocalImage
+              src={study.image}
+              alt={study.title}
+              class="w-full h-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+              kind="hero"
+              width={1600}
+            />
+          )}
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
       </div>
 
       {/* Content Sections */}
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+        {study.testimonial && (
+          <section>
+            <div class="bg-zinc-900/30 border border-white/10 rounded-3xl p-8 md:p-12">
+              <div class="text-primary-400 font-semibold mb-6">{study.testimonial.rating}</div>
+              <blockquote class="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">
+                "{study.testimonial.quote}"
+              </blockquote>
+              <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <div>
+                  <div class="font-bold text-white text-lg">
+                    — {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
+                  </div>
+                  <div class="text-sm text-primary-400 mt-2">{study.testimonial.source}</div>
+                </div>
+                {study.testimonial.engagementMeta && (
+                  <div class="text-sm text-zinc-500">{study.testimonial.engagementMeta}</div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {study.engagement && study.engagement.length > 0 && (
+          <section>
+            <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">Project Details</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              {study.engagement.map((detail) => (
+                <div class="px-5 py-4 rounded-2xl bg-zinc-900/30 border border-white/5">
+                  <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">{detail.label}</div>
+                  <div class="text-sm text-white font-medium">{detail.value}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Detailed Content Sections */}
         {study.detailedContent?.map((section) => (
           <section>
@@ -71,12 +254,43 @@ const { study } = Astro.props;
                           ))}
                         </ul>
                       )}
+                      {item.table && (
+                        <div class="overflow-hidden rounded-xl border border-white/10 mb-4">
+                          <table class="w-full text-left">
+                            <thead class="bg-zinc-900/80">
+                              <tr>
+                                <th class="px-5 py-3 text-sm font-semibold text-zinc-300">
+                                  {item.tableHeaders?.left ?? 'Agent Network'}
+                                </th>
+                                <th class="px-5 py-3 text-sm font-semibold text-zinc-300">
+                                  {item.tableHeaders?.right ?? 'Third-Party SaaS Cost'}
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.table.map((row) => (
+                                <tr class="border-t border-white/5">
+                                  <td class="px-5 py-3 text-zinc-300">{row.label}</td>
+                                  <td class="px-5 py-3 text-white font-medium">{row.value}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                      {item.tableCaption && (
+                        <p class="text-sm text-zinc-500 mb-8">{item.tableCaption}</p>
+                      )}
                     </div>
-                    {item.image && (
+                    {item.image ? (
                       <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                        <Image src={item.image} alt={item.title} class="w-full h-auto object-cover" />
+                        <LocalImage src={item.image} alt={item.title} class="w-full h-auto object-cover" kind="content" width={1200} />
                       </div>
-                    )}
+                    ) : item.imageUrl ? (
+                      <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src={item.imageUrl} alt={item.title} class="w-full h-auto object-cover" loading="lazy" width="1200" height="800" />
+                      </div>
+                    ) : null}
                   </div>
                 ))}
               </div>
@@ -142,8 +356,27 @@ const { study } = Astro.props;
         )}
       </div>
 
+      <RelatedContent groups={relatedGroups} />
+
+      {study.cta && (
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+          <div class="text-center p-10 md:p-12 rounded-3xl bg-zinc-900/30 border border-white/10">
+            <p class="text-xl md:text-2xl text-zinc-200 mb-8 leading-relaxed">{study.cta.headline}</p>
+            <a
+              href={study.cta.buttonHref ?? BOOKING_URL}
+              class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-zinc-100 transition-all"
+            >
+              {study.cta.buttonText}
+            </a>
+          </div>
+        </div>
+      )}
+
       <div class="mt-32">
         <CTA client:visible />
       </div>
-    </div>
-</SiteShell>
+    </main>
+    <Footer client:visible />
+
+  </div>
+</Layout>

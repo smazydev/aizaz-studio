@@ -1,0 +1,10 @@
+# Sanity CMS (blogs + case studies)
+SANITY_PROJECT_ID=bmcdpga9
+SANITY_DATASET=production
+
+# Webhook: POST /api/revalidate — Authorization: Bearer <secret>
+REVALIDATE_SECRET=change-me-to-a-long-random-string
+
+# Optional: purge Cloudflare edge cache for CMS URLs after webhook
+# CLOUDFLARE_ZONE_ID=
+# CLOUDFLARE_API_TOKEN=

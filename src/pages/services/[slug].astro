@@ -1,7 +1,10 @@
 ---
+export const prerender = true;
 import SiteShell from '../../components/SiteShell.astro';
 import SeoLanding from '../../components/SeoLanding.astro';
 import { servicePages, getServiceBySlug } from '../../data/seoPages';
+import { buildSeoPageSchemas } from '../../lib/seoSchema';
+import { getServiceRelatedGroups } from '../../data/internalLinks';
 
 export function getStaticPaths() {
   return servicePages.map((page) => ({
@@ -11,12 +14,27 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const canonicalPath = `/services/${page.slug}`;
 const relatedServices = (page.relatedSlugs ?? [])
   .map((slug) => getServiceBySlug(slug))
   .filter(Boolean);
+const relatedGroups = getServiceRelatedGroups(page.slug, page.relatedSlugs ?? []);
+const schemas = buildSeoPageSchemas(
+  page,
+  [
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/services' },
+  ],
+  canonicalPath,
+);
 ---
 
-<SiteShell title={page.metaTitle} description={page.metaDescription} canonical={`/services/${page.slug}`} keywords={page.keywords}>
+<SiteShell
+  title={page.metaTitle}
+  description={page.metaDescription}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
   <SeoLanding
     page={page}
     breadcrumb={[
@@ -24,5 +42,6 @@ const relatedServices = (page.relatedSlugs ?? [])
       { label: 'Services', href: '/services' },
     ]}
     relatedServices={relatedServices}
+    relatedGroups={relatedGroups}
   />
 </SiteShell>

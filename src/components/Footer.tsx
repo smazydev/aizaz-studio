@@ -1,5 +1,12 @@
 import React from 'react';
-import { Linkedin, Github, Twitter, Mail, PhoneCall } from 'lucide-react';
+import { Linkedin, Instagram, Twitter, Mail, PhoneCall } from 'lucide-react';
+import { SOCIAL_LINKS } from '../data/siteConfig';
+
+const socialItems = [
+  { href: SOCIAL_LINKS.linkedin, label: 'LinkedIn', Icon: Linkedin },
+  { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Instagram },
+  { href: SOCIAL_LINKS.twitter, label: 'X (Twitter)', Icon: Twitter },
+] as const;
 
 export const Footer: React.FC = () => {
   return (
@@ -7,19 +14,25 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded bg-gradient-to-br from-primary-400 to-indigo-600 flex items-center justify-center font-bold text-white text-xs font-display">
-                A
-              </div>
+            <a href="/" className="flex items-center gap-2 mb-4 w-fit">
+              <img src="/aizaz-logo-white.png" alt="Aizaz Studio" className="w-8 h-8 object-contain" />
               <span className="text-lg font-display font-bold text-white">Aizaz Studio</span>
-            </div>
+            </a>
             <p className="text-zinc-500 text-sm leading-relaxed mb-6">
-              AI, cloud, and automation engineering for growing businesses. Senior execution for systems that ship, not rented developers.
+              AI, cloud, and automation engineering for growing businesses. Senior execution for systems that ship — not rented developers.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Linkedin size={20} /></a>
-              <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Github size={20} /></a>
-              <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Twitter size={20} /></a>
+              {socialItems.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  {...(href !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  <Icon size={20} />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -39,10 +52,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-bold mb-4">Industries</h4>
             <ul className="space-y-2 text-sm text-zinc-500">
-              <li><a href="/for/startups" className="hover:text-primary-400 transition-colors">Startups</a></li>
+              <li><a href="/for/saas-startups" className="hover:text-primary-400 transition-colors">SaaS Startups</a></li>
               <li><a href="/for/b2b-saas" className="hover:text-primary-400 transition-colors">B2B SaaS</a></li>
               <li><a href="/for/operations-teams" className="hover:text-primary-400 transition-colors">Operations Teams</a></li>
-              <li><a href="/for/healthtech" className="hover:text-primary-400 transition-colors">Healthtech</a></li>
+              <li><a href="/for/netsuite-users" className="hover:text-primary-400 transition-colors">NetSuite Users</a></li>
               <li><a href="/for/fintech" className="hover:text-primary-400 transition-colors">Fintech</a></li>
               <li><a href="/for/ecommerce-operations" className="hover:text-primary-400 transition-colors">Ecommerce Operations</a></li>
             </ul>
@@ -54,6 +67,7 @@ export const Footer: React.FC = () => {
               <li><a href="/about" className="hover:text-primary-400 transition-colors">About</a></li>
               <li><a href="/portfolio" className="hover:text-primary-400 transition-colors">Portfolio</a></li>
               <li><a href="/case-studies" className="hover:text-primary-400 transition-colors">Case Studies</a></li>
+              <li><a href="/technologies" className="hover:text-primary-400 transition-colors">Technologies</a></li>
               <li><a href="/reviews" className="hover:text-primary-400 transition-colors">Reviews</a></li>
               <li><a href="/careers" className="hover:text-primary-400 transition-colors">Careers</a></li>
               <li><a href="/blog" className="hover:text-primary-400 transition-colors">Blog</a></li>

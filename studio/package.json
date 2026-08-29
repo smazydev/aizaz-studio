@@ -1,0 +1,29 @@
+{
+  "name": "aizaz-studio-studio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy --yes --schema-required",
+    "deploy:schema": "sanity schema deploy --yes",
+    "deploy:studio": "sanity deploy --yes --schema-required",
+    "start": "sanity start",
+    "verify:author-schema": "npx --yes tsx scripts/verify-author-schema.ts",
+    "migrate:authors": "sanity exec scripts/migrate-author-strings.ts --with-user-token",
+    "seed:authors": "sanity exec scripts/seed-authors.ts --with-user-token",
+    "seed:homepage": "sanity exec scripts/seed-homepage.ts --with-user-token",
+    "seed:ayaz-blog-faqs": "sanity exec scripts/seed-ayaz-blog-faqs.ts --with-user-token"
+  },
+  "dependencies": {
+    "@sanity/vision": "^6.9.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sanity": "^6.9.1",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "typescript": "^5.8.2"
+  }
+}

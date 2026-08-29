@@ -1,3 +1,10 @@
+/** Social profile URLs — update instagram and twitter when ready */
+export const SOCIAL_LINKS = {
+    linkedin: 'https://www.linkedin.com/company/aizaz-studio/',
+    instagram: '#',
+    twitter: '#',
+} as const;
+
 /** Google Calendar appointment booking (Strategy Call) */
 export const BOOKING_URL =
     'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1yvprFeBWNlVaAt03V10kuIhDfRiH0lPlE32qE0Bng4l1T9T-N-7yQp96s2puuPmvBjTCblaEk';
