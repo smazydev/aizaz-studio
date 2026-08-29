@@ -1,7 +1,6 @@
 ---
 import type { PublicBlogPost } from '../lib/blog';
 import AuthorCard from './AuthorCard.astro';
-import BlogCard from './BlogCard.astro';
 import BlogFAQ from './BlogFAQ.astro';
 import BlogShareCard from './BlogShareCard.astro';
 import LocalImage from './LocalImage.astro';
@@ -23,109 +22,95 @@ const contentHtml = injectArticleHeadingIds(rawContentHtml);
 const headings = extractArticleHeadings(contentHtml);
 const shareUrl = `${SITE_URL}${blog.canonicalUrl ?? `/blog/${blog.slug}`}`;
 const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug, blog.category);
+
+const endGroups = [...commercialGroups];
+const hasFurtherReading = endGroups.some((group) => /further|reading|related articles/i.test(group.title));
+if (!preview && related.length > 0 && !hasFurtherReading) {
+  endGroups.push({
+    title: 'Further reading',
+    links: related.map((post) => ({
+      href: `/blog/${post.slug}`,
+      label: post.title,
+      description: post.excerpt,
+    })),
+  });
+}
 ---
 
-<article>
-  <header class="mb-10">
-    <div class="flex flex-wrap items-center gap-3 mb-6">
-      <span class="px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs font-bold uppercase tracking-wider">
-        {blog.category}
-      </span>
-      <time class="text-zinc-500 text-sm" datetime={blog.dateIso}>{blog.date}</time>
-      <span class="text-zinc-600">·</span>
-      <span class="text-zinc-500 text-sm">{blog.readTime}</span>
-      {preview && (
-        <>
-          <span class="text-zinc-600">·</span>
-          <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">
-            Preview
-          </span>
-        </>
-      )}
+<article class="blog-article">
+  <header class="blog-article__header">
+    <div class="blog-article__meta">
+      <span class="c-micro c-red">{blog.category}</span>
+      <time datetime={blog.dateIso}>{blog.date}</time>
+      <span>·</span>
+      <span>{blog.readTime}</span>
+      {preview && <span class="c-micro">Preview</span>}
     </div>
 
-    <h1 class="text-3xl md:text-5xl lg:text-[3.25rem] font-display font-bold text-white mb-4 leading-[1.1]">
-      {blog.title}
-    </h1>
+    <h1 class="page-title blog-article__title">{blog.title}</h1>
 
-    {blog.excerpt && (
-      <p class="text-xl text-zinc-400 mb-8 leading-relaxed">{blog.excerpt}</p>
-    )}
+    {blog.excerpt && <p class="c-lede page-hero__lede">{blog.excerpt}</p>}
 
-    <div class="flex items-start gap-4 pb-8 border-b border-white/10">
-      {blog.author ? (
-        <AuthorCard author={blog.author} showBio />
-      ) : null}
+    <div class="blog-article__byline">
+      {blog.author ? <AuthorCard author={blog.author} showBio /> : null}
     </div>
   </header>
 
   {(blog.image || blog.imageUrl) && (
-    <div class="mb-12 rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
+    <div class="blog-article__hero">
       {blog.image ? (
-        <LocalImage src={blog.image} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="eager" fetchpriority="high" kind="hero" width={1400} />
+        <LocalImage src={blog.image} alt={blog.title} class="blog-article__hero-img" loading="eager" fetchpriority="high" kind="hero" width={1400} />
       ) : (
-        <img src={blog.imageUrl} alt={blog.title} class="w-full aspect-[21/9] object-cover" loading="eager" fetchpriority="high" width="1400" height="600" decoding="async" />
+        <img src={blog.imageUrl} alt={blog.title} class="blog-article__hero-img" loading="eager" fetchpriority="high" width="1400" height="600" decoding="async" />
       )}
     </div>
   )}
 
-  <div class="grid lg:grid-cols-[1fr_240px] gap-12 items-start">
-    <div>
+  <div class="blog-article__layout">
+    <div class="blog-article__main">
       <div class="article-content" set:html={contentHtml} />
 
       <BlogFAQ faqs={blog.faqs ?? []} />
 
       {blog.tags.length > 0 && (
-        <div class="mt-16 pt-8 border-t border-white/10">
-          <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Topics</div>
-          <div class="flex flex-wrap gap-2">
+        <div class="blog-article__tags">
+          <p class="c-micro">Topics</p>
+          <div class="blog-article__taglist">
             {blog.tags.map((tag) => (
-              <span class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/5 text-sm text-zinc-400">
-                {tag}
-              </span>
+              <span>{tag}</span>
             ))}
           </div>
         </div>
       )}
 
       {!preview && (
-        <div class="mt-12 p-8 rounded-2xl glass-card border-primary-500/20">
-          <h3 class="text-xl font-display font-bold text-white mb-2">Want help implementing this?</h3>
-          <p class="text-zinc-400 mb-6">
-            We turn manual workflows into working AI systems, automations, and internal tools, often starting with a 14 day sprint.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a
-              href="/book-a-call"
-              class="inline-flex justify-center px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-100 transition-colors"
-            >
-              Book a Free Call
-            </a>
-            <a href="/ai-systems-sprint" class="inline-flex justify-center px-6 py-3 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">
-              AI Systems Sprint
-            </a>
+        <div class="sp-promo blog-article__cta">
+          <div class="sp-promo__copy">
+            <h3 class="sp-card__title">Want help implementing this?</h3>
+            <p class="c-lede">
+              We turn manual workflows into working systems, automations, and internal tools — often starting with a focused sprint.
+            </p>
+          </div>
+          <div class="page-hero__actions" style="margin:0">
+            <a class="c-btn" href="/book-a-call">Book a Free Call</a>
+            <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
           </div>
         </div>
       )}
     </div>
 
-    <aside class="hidden lg:block sticky top-28 space-y-8">
+    <aside class="blog-article__aside">
       {headings.length > 0 && (
-        <div class="p-5 rounded-2xl glass-card">
-          <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">On this page</div>
-          <nav class="space-y-2" aria-label="Table of contents">
+        <nav class="blog-toc" aria-label="Table of contents">
+          <p class="c-micro">On this page</p>
+          <ul>
             {headings.map((heading) => (
-              <a
-                href={`#${heading.id}`}
-                class={`block text-sm text-zinc-400 hover:text-primary-400 transition-colors leading-snug ${
-                  heading.level === 3 ? 'pl-4' : ''
-                }`}
-              >
-                {heading.text}
-              </a>
+              <li class:list={[heading.level === 3 && 'is-h3']}>
+                <a href={`#${heading.id}`}>{heading.text}</a>
+              </li>
             ))}
-          </nav>
-        </div>
+          </ul>
+        </nav>
       )}
 
       {!preview && <BlogShareCard url={shareUrl} title={blog.title} />}
@@ -133,15 +118,4 @@ const commercialGroups = preview ? [] : getArticleRelatedGroups(blog.slug, blog.
   </div>
 </article>
 
-{!preview && <RelatedContent groups={commercialGroups} />}
-
-{related.length > 0 && !preview && (
-  <section class="mt-24 pt-16 border-t border-white/10">
-    <h2 class="text-2xl font-display font-bold text-white mb-8">Continue Reading</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      {related.map((post) => (
-        <BlogCard blog={post} />
-      ))}
-    </div>
-  </section>
-)}
+{!preview && endGroups.length > 0 && <RelatedContent groups={endGroups} />}
