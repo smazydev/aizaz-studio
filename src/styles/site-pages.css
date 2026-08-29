@@ -323,6 +323,49 @@ html.theme-dark .sp-section--dark {
   color: inherit;
 }
 
+/* Leadership cards: theme-aware surfaces (avoid light paper + inherited light text) */
+.sp-section--dark .sp-person {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(245, 247, 250, 0.18);
+  color: #f5f7fa;
+}
+
+.sp-section--dark .sp-person__name {
+  color: #f5f7fa;
+}
+
+.sp-section--dark .sp-person__role {
+  color: rgba(245, 247, 250, 0.72);
+}
+
+.sp-section--dark .sp-person img {
+  border-color: rgba(245, 247, 250, 0.22);
+  background: #1a1a1a;
+}
+
+html[data-theme='dark'] .sp-section--dark .sp-person,
+html.theme-dark .sp-section--dark .sp-person {
+  background: #1c232f;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+html[data-theme='dark'] .sp-section--dark .sp-person__name,
+html.theme-dark .sp-section--dark .sp-person__name {
+  color: var(--ink);
+}
+
+html[data-theme='dark'] .sp-section--dark .sp-person__role,
+html.theme-dark .sp-section--dark .sp-person__role {
+  color: color-mix(in srgb, var(--ink) 72%, transparent);
+}
+
+html[data-theme='dark'] .sp-section--dark .sp-person img,
+html.theme-dark .sp-section--dark .sp-person img {
+  border-color: var(--line);
+  background: #151921;
+}
+
 .sp-header {
   margin-bottom: clamp(28px, 4vw, 48px);
   max-width: 42rem;

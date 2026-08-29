@@ -4,8 +4,11 @@ import { caseStudies } from '../../data/caseStudies';
 import Hero from './Hero.astro';
 import HomeWhy from './HomeWhy.astro';
 import HomeFeatures from './HomeFeatures.astro';
+import HomeTechStrip from './HomeTechStrip.astro';
 import SiteNav from '../site/SiteNav.astro';
 import SiteFooter from '../site/SiteFooter.astro';
+import { LEGACY_AUTHORS } from '../../data/authors';
+import { siteFooter } from '../../data/siteChrome';
 
 const featuredWork = caseStudies
   .filter((study) => study.slug !== 'investorsgonewild-investment-platform')
@@ -82,16 +85,15 @@ const process = [
   { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
 ];
 
-const tools = ['OpenAI', 'Anthropic', 'LangChain', 'Pinecone', 'AWS', 'Postgres', 'Stripe', 'NetSuite'];
-
-/** Discipline labels — not individual employee names. */
-const disciplines = [
-  { name: 'Product Engineering', role: 'Web / SaaS / APIs', hot: true },
-  { name: 'AI & Automation', role: 'Agents / Workflows', hot: false },
-  { name: 'Integrations', role: 'ERP / CRM / Data', hot: false },
-  { name: 'Cloud & Ops', role: 'AWS / CI / Observe', hot: true },
-  { name: 'Delivery', role: 'Scope / Ship / Own', hot: false },
+const leaders = [
+  { ...LEGACY_AUTHORS.ali, hot: true },
+  { ...LEGACY_AUTHORS.nasir, hot: false },
+  { ...LEGACY_AUTHORS.ayaz, hot: false },
 ];
+
+const contactEmail = siteFooter.studio.email;
+const contactPhone = siteFooter.studio.phone;
+const contactPhoneHref = siteFooter.studio.phoneHref;
 
 /** Real project foci from shipped work — not awards. */
 const proofPoints = [
@@ -629,53 +631,32 @@ const haiField = (() => {
     <!-- 11 FEATURES -->
     <HomeFeatures />
 
-    <!-- 12 TOOLS -->
-    <section class="c-tools">
-      <div class="c-wrap">
-        <p class="c-micro c-red">Tools</p>
-        <h2 class="c-h2">Tools we actually ship with</h2>
-        <p class="c-lede">
-          Modern product and ops stacks — LLMs when they earn their place, plus the cloud, data, and ERP systems your business already runs.
-        </p>
-        <div class="c-orbit" data-orbit>
-          {tools.map((t, i) => {
-            const angle = (i / tools.length) * Math.PI * 2 - Math.PI / 2;
-            const depth = (i % 3) + 1;
-            const radius = depth === 1 ? 30 : depth === 2 ? 38 : 44;
-            const x = 50 + Math.cos(angle) * radius;
-            const y = 50 + Math.sin(angle) * (radius * 0.82);
-            return (
-              <span
-                class="c-orbit__pill"
-                data-depth={String(depth)}
-                style={`left: ${x}%; top: ${y}%;`}
-              >
-                {t}
-              </span>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <!-- 12 SELECTED TECHNOLOGIES -->
+    <HomeTechStrip />
 
     <!-- 13–15 DARK / METRIC / TESTIMONIAL -->
     <section class="c-dark">
       <div class="c-wrap">
         <div class="c-dark__intro">
           <div>
-            <p class="c-micro">How we work</p>
+            <p class="c-micro">Meet the team</p>
             <h2 class="c-h1">A studio built<br />to ship systems</h2>
           </div>
-          <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production — without a bloated agency layer.</p>
+          <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
         </div>
 
         <div class="c-dash">
           <div class="c-people">
-            {disciplines.map((p) => (
+            {leaders.map((p) => (
               <figure class:list={['c-person', p.hot && 'c-person--hot']}>
-                <span class="c-person__face"></span>
+                {p.photoUrl ? (
+                  <img class="c-person__photo" src={p.photoUrl} alt="" width="400" height="400" loading="lazy" decoding="async" />
+                ) : (
+                  <span class="c-person__face" aria-hidden="true"></span>
+                )}
                 <figcaption>
-                  {p.name}<br />{p.role}
+                  <strong>{p.name}</strong>
+                  <span>{p.role}</span>
                 </figcaption>
               </figure>
             ))}
@@ -813,22 +794,39 @@ const haiField = (() => {
           <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
           <div class="c-cta__copy">
             <p class="c-micro">Contact</p>
-            <h2 class="c-h1">Let’s build the next system</h2>
-            <p class="c-lede" style="margin-top: 16px; max-width: 28ch; color: rgba(245,245,240,0.65)">
-              Tell us what you need to ship. hello@aizaz.studio · +92 334 2056691
+            <h2 class="c-h1">Let’s build<br />the next<br />system</h2>
+            <p class="c-cta__lede">
+              Tell us what you need to ship.
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+              <span aria-hidden="true"> · </span>
+              <a href={contactPhoneHref}>{contactPhone}</a>
             </p>
           </div>
           <form data-home-form>
-            <input name="name" placeholder="Your Name" required autocomplete="name" />
-            <input name="email" type="email" placeholder="Email" required autocomplete="email" />
-            <select name="interest">
-              <option>You are interested in</option>
-              <option>Starter Plan</option>
-              <option>Enterprise Plan</option>
-              <option>A custom sprint</option>
-            </select>
-            <textarea name="message" placeholder="More About The Project" required></textarea>
-            <button class="c-btn c-btn--light" type="submit">Submit Message</button>
+            <label class="c-cta__field">
+              <span class="visually-hidden">Your name</span>
+              <input name="name" placeholder="Your name" required autocomplete="name" />
+            </label>
+            <label class="c-cta__field">
+              <span class="visually-hidden">Email</span>
+              <input name="email" type="email" placeholder="Email" required autocomplete="email" />
+            </label>
+            <label class="c-cta__field">
+              <span class="visually-hidden">What are you interested in</span>
+              <select name="interest" required>
+                <option value="" disabled selected>What are you interested in</option>
+                <option value="AI Systems Sprint">AI Systems Sprint</option>
+                <option value="Product / SaaS build">Product / SaaS build</option>
+                <option value="ERP / NetSuite integration">ERP / NetSuite integration</option>
+                <option value="Cloud / AWS">Cloud / AWS</option>
+                <option value="Technical audit">Technical audit</option>
+              </select>
+            </label>
+            <label class="c-cta__field">
+              <span class="visually-hidden">Project details</span>
+              <textarea name="message" placeholder="More about the project" required rows="4"></textarea>
+            </label>
+            <button class="c-btn c-btn--light" type="submit">Submit message</button>
           </form>
         </div>
       </div>

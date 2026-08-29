@@ -28,6 +28,18 @@
   --font: 'Figtree', 'Instrument Sans', system-ui, sans-serif;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .clone,
 .site {
   background: var(--bg);
@@ -220,7 +232,9 @@ html.theme-dark .clone .c-awards {
 }
 
 html.theme-dark .clone .c-person {
-  background: #242b38;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 42%),
+    #242b38;
   border-color: var(--line);
 }
 
@@ -244,6 +258,27 @@ html.theme-dark .clone .c-person--hot {
   background:
     radial-gradient(ellipse at 70% 18%, rgba(78, 146, 216, 0.85), transparent 52%),
     #1a1418;
+}
+
+html.theme-dark .clone .c-person__photo {
+  filter: grayscale(0.22) contrast(1.04) saturate(0.88);
+}
+
+html.theme-dark .clone .c-person::after {
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(10, 14, 20, 0.55) 70%,
+    rgba(10, 14, 20, 0.9) 100%
+  );
+}
+
+html.theme-dark .clone .c-person figcaption {
+  color: #f5f7fa;
+}
+
+html.theme-dark .clone .c-person figcaption span {
+  color: rgba(245, 247, 250, 0.72);
 }
 
 html.theme-dark .clone .c-project__frame {
@@ -1596,86 +1631,7 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
 .c-hub__item:nth-child(6) { grid-column: 1; grid-row: 3; justify-self: end; align-self: end; }
 .c-hub__item:nth-child(7) { grid-column: 3; grid-row: 3; align-self: end; }
 
-/* TOOLS */
-.c-tools {
-  padding: 0 0 clamp(180px, 20vw, 320px);
-  text-align: center;
-}
-
-.c-orbit {
-  position: relative;
-  min-height: 880px;
-  display: grid;
-  place-items: center;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.c-orbit::before {
-  content: '';
-  width: min(420px, 52vw);
-  height: min(420px, 52vw);
-  border-radius: 46% 54% 48% 52%;
-  background:
-    radial-gradient(circle at 30% 28%, #fff, #e8e4db 42%, #b8b3a8 78%, #8a857c);
-  box-shadow:
-    0 40px 80px rgba(20, 16, 12, 0.12),
-    inset 0 1px 0 rgba(255,255,255,0.7);
-  opacity: 0.95;
-}
-
-.c-tools h2 {
-  margin: 0 auto 18px;
-  max-width: 18ch;
-}
-
-.c-tools .c-lede {
-  max-width: 40rem;
-  margin: 0 auto 48px;
-}
-
-.c-orbit__pill {
-  position: absolute;
-  z-index: 1;
-  padding: 14px 22px;
-  border: 1px solid var(--line);
-  background: var(--paper);
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  will-change: transform;
-  transform: translate(-50%, -50%);
-}
-
-.c-orbit__pill[data-depth='1'] {
-  transform: translate(-50%, -50%) scale(0.86);
-  opacity: 0.55;
-  z-index: 0;
-}
-
-.c-orbit__pill[data-depth='2'] {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 0.92;
-}
-
-.c-orbit__pill[data-depth='3'] {
-  transform: translate(-50%, -50%) scale(1.08);
-  opacity: 1;
-  box-shadow: 0 10px 24px rgba(16,16,16,0.06);
-}
-
-@keyframes orbit-drift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 6px -8px; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .c-orbit__pill {
-    animation: orbit-drift 14s ease-in-out infinite;
-  }
-  .c-orbit__pill:nth-child(odd) { animation-duration: 18s; }
-  .c-orbit__pill:nth-child(3n) { animation-duration: 22s; animation-direction: reverse; }
-}
+/* TOOLS orbit removed — see home-tech.css */
 
 /* DARK */
 .c-dark {
@@ -1710,34 +1666,61 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
   display: grid;
   grid-template-columns: 1.45fr 0.85fr;
   gap: 18px;
-  min-height: 680px;
+  min-height: 520px;
 }
 
 .c-people {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1.35fr 1fr 1fr;
   gap: 12px;
-  min-height: 680px;
+  min-height: 520px;
 }
 
 .c-person {
   border-radius: var(--radius);
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: #161616;
-  min-height: 170px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 42%),
+    #1a1a1a;
+  min-height: 280px;
+  isolation: isolate;
 }
 
 .c-person:first-child {
-  grid-row: 1 / 3;
+  min-height: 520px;
 }
 
 .c-person--hot {
   background:
-    radial-gradient(ellipse at 70% 18%, rgba(78, 146, 216, 0.85), transparent 52%),
+    radial-gradient(ellipse at 70% 18%, rgba(78, 146, 216, 0.72), transparent 52%),
     #180c09;
+}
+
+.c-person__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(0.18) contrast(1.06) saturate(0.92);
+  z-index: 0;
+}
+
+.c-person::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 42%,
+    rgba(8, 8, 8, 0.55) 72%,
+    rgba(8, 8, 8, 0.88) 100%
+  );
 }
 
 .c-person__face {
@@ -1749,16 +1732,80 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
   transform: translate(-50%, -50%);
   border-radius: 46% 54% 40% 60% / 36% 40% 60% 64%;
   background: radial-gradient(circle at 35% 28%, #d9c4b6, #6a4034 60%, #1a0c08);
+  z-index: 0;
 }
 
 .c-person figcaption {
   position: absolute;
   left: 14px;
-  bottom: 12px;
-  font-size: var(--micro);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  right: 14px;
+  bottom: 14px;
   z-index: 2;
+  display: grid;
+  gap: 4px;
+  color: #f5f5f0;
+  font-size: var(--micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.c-person figcaption strong {
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.c-person figcaption span {
+  color: rgba(245, 245, 240, 0.72);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  font-size: 0.78rem;
+}
+
+/* Light theme: keep cinematic dark band, sharpen portrait cards */
+html.theme-light .clone .c-dark,
+html[data-theme='light'] .clone .c-dark {
+  background: #0a0a0a;
+  color: #f5f5f0;
+}
+
+html.theme-light .clone .c-person,
+html[data-theme='light'] .clone .c-person {
+  background: #141414;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+html.theme-light .clone .c-person--hot,
+html[data-theme='light'] .clone .c-person--hot {
+  background:
+    radial-gradient(ellipse at 70% 18%, rgba(78, 146, 216, 0.78), transparent 52%),
+    #120e10;
+}
+
+html.theme-light .clone .c-person__photo,
+html[data-theme='light'] .clone .c-person__photo {
+  filter: grayscale(0.05) contrast(1.08) saturate(1);
+}
+
+html.theme-light .clone .c-person::after,
+html[data-theme='light'] .clone .c-person::after {
+  background: linear-gradient(
+    180deg,
+    transparent 38%,
+    rgba(6, 6, 6, 0.5) 68%,
+    rgba(6, 6, 6, 0.92) 100%
+  );
+}
+
+html.theme-light .clone .c-person figcaption,
+html[data-theme='light'] .clone .c-person figcaption {
+  color: #f7f7f2;
+}
+
+html.theme-light .clone .c-person figcaption span,
+html[data-theme='light'] .clone .c-person figcaption span {
+  color: rgba(247, 247, 242, 0.78);
 }
 
 .c-dark__side {
@@ -2153,7 +2200,7 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
 
 .c-cta__panel {
   border-radius: var(--radius-lg);
-  min-height: min(86vh, 860px);
+  min-height: 0;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   overflow: hidden;
@@ -2171,13 +2218,15 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
 .c-cta form {
   position: relative;
   z-index: 1;
-  padding: clamp(32px, 5vw, 64px);
+  padding: clamp(32px, 5vw, 56px);
 }
 
 .c-cta__copy {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  gap: 0;
+  padding-block: clamp(40px, 6vw, 64px);
 }
 
 .c-cta__copy h2 {
@@ -2185,18 +2234,45 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
   max-width: 10ch;
 }
 
+.c-cta__lede {
+  margin: 18px 0 0;
+  max-width: 32ch;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: rgba(245, 245, 240, 0.82);
+}
+
+.c-cta__lede a {
+  color: #f5f5f0;
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 245, 240, 0.35);
+  text-underline-offset: 0.18em;
+}
+
+.c-cta__lede a:hover,
+.c-cta__lede a:focus-visible {
+  text-decoration-color: rgba(245, 245, 240, 0.85);
+  outline: none;
+}
+
 .c-cta form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 14px;
-  margin: 48px 40px 48px 12px;
-  padding: clamp(28px, 4vw, 44px) !important;
+  justify-content: flex-start;
+  gap: 12px;
+  align-self: center;
+  margin: clamp(28px, 4vw, 40px) clamp(20px, 3vw, 36px) clamp(28px, 4vw, 40px) 12px;
+  padding: clamp(24px, 3.5vw, 36px) !important;
   background: rgba(12, 8, 7, 0.46);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+}
+
+.c-cta__field {
+  display: block;
+  width: 100%;
 }
 
 .c-cta input,
@@ -2211,9 +2287,47 @@ html.js .c-hero.is-ready:not(.is-settled) .c-hero__art--front {
   font-size: 0.95rem;
 }
 
+.c-cta select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.7) 50%),
+    linear-gradient(135deg, rgba(255,255,255,0.7) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+.c-cta select option {
+  color: #111;
+  background: #fff;
+}
+
+.c-cta input::placeholder,
+.c-cta textarea::placeholder {
+  color: rgba(245, 245, 240, 0.48);
+}
+
+.c-cta input:focus-visible,
+.c-cta textarea:focus-visible,
+.c-cta select:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 1px;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
 .c-cta textarea {
-  min-height: 110px;
+  min-height: 96px;
   resize: vertical;
+}
+
+.c-cta form .c-btn {
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+.c-cta form .c-btn:hover,
+.c-cta form .c-btn:focus-visible {
+  filter: brightness(1.06);
 }
 
 html.theme-dark .c-cta__panel {
@@ -2222,6 +2336,15 @@ html.theme-dark .c-cta__panel {
 
 html.theme-dark .c-cta form {
   background: rgba(7, 10, 16, 0.55);
+}
+
+html.theme-dark .c-cta__lede {
+  color: rgba(245, 247, 250, 0.84);
+}
+
+html.theme-dark .c-cta select option {
+  color: #f5f7fa;
+  background: #1a202b;
 }
 
 /* FOOTER */
@@ -3120,11 +3243,14 @@ body.ref-on .ref-chip::after {
   }
 
   .c-people {
-    grid-template-rows: 280px 160px;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    min-height: 0;
   }
 
+  .c-person,
   .c-person:first-child {
-    grid-row: auto;
+    min-height: 320px;
   }
 
   .c-project--square .c-project__frame {

@@ -407,8 +407,11 @@ function ctaForm() {
     const data = new FormData(form);
     const name = String(data.get('name') || '').trim();
     const email = String(data.get('email') || '').trim();
+    const interest = String(data.get('interest') || '').trim();
     const message = String(data.get('message') || '').trim();
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nInterest: ${interest}\n\n${message}`,
+    );
     window.location.href = `mailto:hello@aizaz.studio?subject=${encodeURIComponent('Project inquiry')}&body=${body}`;
   });
 }
@@ -489,17 +492,6 @@ function meshFields() {
   });
 }
 
-function orbitParallax() {
-  const root = document.querySelector<HTMLElement>('[data-orbit]');
-  if (!root || reduce()) return;
-  root.addEventListener('pointermove', (event) => {
-    const r = root.getBoundingClientRect();
-    const x = (event.clientX - r.left) / r.width - 0.5;
-    const y = (event.clientY - r.top) / r.height - 0.5;
-    root.style.transform = `translate3d(${x * 10}px, ${y * 6}px, 0)`;
-  }, { passive: true });
-}
-
 export function mountHomeMotion() {
   bindThemeToggle();
   overlay();
@@ -512,5 +504,4 @@ export function mountHomeMotion() {
   ctaForm();
   ctaMove();
   meshFields();
-  orbitParallax();
 }
