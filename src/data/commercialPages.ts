@@ -509,7 +509,7 @@ export const processPage: ProcessPageContent = {
         'How Aizaz.studio delivers SaaS, AI automation, and integration work: discovery, architecture, build, deploy, and handoff on every engagement.',
     title: 'Our Engineering Process',
     intro:
-        'Every engagement — sprint, MVP, or dedicated pod — follows the same five phases. Discovery finds the highest leverage problem; architecture prevents rebuilds; delivery ends with software your team can run.',
+        'Every engagement — sprint, MVP, or dedicated pod — follows the same lifecycle: discover, design, build, integrate, ship, and observe. Discovery finds the highest-leverage problem; design prevents rebuilds; delivery ends with software your team can run.',
     steps: processSteps.map((step) => ({
         step: step.step,
         title: step.title,

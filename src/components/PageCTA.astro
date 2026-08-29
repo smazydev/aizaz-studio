@@ -1,0 +1,35 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const {
+  eyebrow = 'Start here',
+  title = 'Turn one workflow into a working system.',
+  lede = 'Book a call to map the highest-impact automation, or start with a focused sprint and ship something your team can use.',
+  primaryHref = '/book-a-call',
+  primaryLabel = 'Book a Call',
+  secondaryHref = '/ai-systems-sprint',
+  secondaryLabel = 'See the Sprint Offer',
+} = Astro.props;
+---
+
+<section class="sp-cta">
+  <div class="c-wrap">
+    <p class="c-micro c-red">{eyebrow}</p>
+    <h2 class="page-h2">{title}</h2>
+    {lede && <p class="c-lede page-hero__lede">{lede}</p>}
+    <div class="page-hero__actions">
+      <a class="c-btn" href={primaryHref}>{primaryLabel}</a>
+      {secondaryHref && secondaryLabel && (
+        <a class="c-btn c-btn--ghost" href={secondaryHref}>{secondaryLabel}</a>
+      )}
+    </div>
+  </div>
+</section>
