@@ -239,6 +239,7 @@ export type HeroSentinelHandle = {
 export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinelHandle> {
   const canvas = hero.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
   const poster = hero.querySelector<HTMLElement>('[data-hero-poster]');
+  const loadEl = hero.querySelector<HTMLElement>('[data-hero-load]');
   const empty: HeroSentinelHandle = { dispose() {}, live: false };
   if (!canvas || !poster) return empty;
 
@@ -248,16 +249,31 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
   const q = quality();
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+  const showPosterFallback = () => {
+    poster.hidden = false;
+    poster.classList.remove('is-hidden');
+    loadEl?.setAttribute('hidden', '');
+    hero.classList.remove('is-loading');
+    hero.classList.add('is-fallback');
+  };
+
   const fallback = (reason: string, err?: unknown) => {
     console.warn(`[hero3d] fallback: ${reason}`, err ?? '');
-    hero.classList.add('is-fallback');
+    showPosterFallback();
     hero.dataset.hero3dState = 'fallback';
     return empty;
   };
 
-  if (saveData || !hasWebGL()) {
-    return fallback('capability', { saveData, webgl: hasWebGL() });
+  /* Reduced motion / no WebGL / save-data: keep poster only, skip Three + GLB. */
+  if (reduced || saveData || !hasWebGL()) {
+    return fallback('capability', { reduced, saveData, webgl: hasWebGL() });
   }
+
+  hero.classList.add('is-loading');
+  hero.dataset.hero3dState = 'loading';
+  loadEl?.removeAttribute('hidden');
+  poster.hidden = true;
+  poster.classList.add('is-hidden');
 
   let THREE: ThreeNS;
   try {
@@ -549,9 +565,12 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
 
     if (!revealed) {
       revealed = true;
+      hero.classList.remove('is-loading');
+      loadEl?.setAttribute('hidden', '');
+      poster.hidden = true;
+      poster.classList.add('is-hidden');
       hero.classList.add('is-webgl');
       hero.dataset.hero3dState = 'live';
-      poster.classList.add('is-hidden');
     }
 
     frames += 1;

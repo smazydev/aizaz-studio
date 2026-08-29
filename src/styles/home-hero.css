@@ -68,13 +68,67 @@
   height: 100%;
   display: block;
   opacity: 0;
-  transition: opacity 0.42s ease;
+  transition: opacity 0.4s ease;
   z-index: 0;
+  pointer-events: none;
 }
 
 .home-hero.is-webgl .hero3d__canvas {
   opacity: 1;
   z-index: 2;
+}
+
+.hero3d__load {
+  position: absolute;
+  z-index: 3;
+  right: max(4%, 24px);
+  bottom: max(18%, 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.home-hero.is-loading .hero3d__load {
+  opacity: 1;
+}
+
+.home-hero.is-webgl .hero3d__load,
+.home-hero.is-fallback .hero3d__load,
+.hero3d__load[hidden] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hero3d__load-mark {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 42%, transparent);
+}
+
+.hero3d__load-bar {
+  display: block;
+  width: 88px;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
+  overflow: hidden;
+}
+
+.hero3d__load-bar i {
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: var(--hero-blue, #4e92d8);
+  animation: hero3d-load 1.1s ease-in-out infinite;
+}
+
+@keyframes hero3d-load {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(280%); }
 }
 
 .hero3d__poster {
@@ -85,16 +139,28 @@
   height: clamp(720px, 92vh, 1120px);
   aspect-ratio: 768 / 1024;
   pointer-events: none;
-  transition: opacity 0.45s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
 }
 
-.home-hero.is-webgl .hero3d__poster.is-hidden {
-  opacity: 0;
-  z-index: 0;
+.home-hero.is-fallback .hero3d__poster:not([hidden]),
+.home-hero.is-fallback .hero3d__poster {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
 }
 
-.hero3d__poster.is-hidden {
-  opacity: 0;
+.hero3d__poster.is-hidden,
+.hero3d__poster[hidden] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
+}
+
+.home-hero.is-webgl .hero3d__poster {
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 .home-hero .hero-sentinel {
@@ -171,22 +237,9 @@
   color: var(--hero-blue);
 }
 
-html.js .home-hero:not(.is-ready) .hero3d__poster {
-  opacity: 0;
-  transform: translate3d(40px, 15px, 0) scale(1.015);
-}
-
 html.js .home-hero:not(.is-ready) .hero-sentinel-tech,
 html.js .home-hero:not(.is-ready) .hero-sentinel-hud {
   opacity: 0;
-}
-
-html.js .home-hero.is-ready .hero3d__poster {
-  opacity: 1;
-  transform: none;
-  transition:
-    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 1.05s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.js .home-hero.is-ready .hero-sentinel-tech {
@@ -208,22 +261,15 @@ html.js .home-hero.is-ready .hero-sentinel-tech__draw--late {
 }
 
 html.js .home-hero.is-webgl [data-reveal='clip'] {
-  transition-delay: 0.85s;
+  transition-delay: 0.2s;
 }
 
 html.js .home-hero.is-webgl [data-reveal]:not([data-reveal='clip']) {
-  transition-delay: 1.15s;
+  transition-delay: 0.35s;
 }
 
-html.js .home-hero.is-webgl.is-ready .hero3d__poster,
-html.js .home-hero.is-webgl.is-ready .hero3d__poster.is-hidden,
-.home-hero.is-webgl .hero3d__poster.is-hidden {
-  opacity: 0;
-  z-index: 0;
-}
-
-html.js .home-hero.is-settled .hero3d__poster {
-  transition: opacity 0.45s ease;
+html.js .home-hero.is-settled .hero3d__canvas {
+  transition: opacity 0.4s ease;
 }
 
 .hero3d-debug {
@@ -331,10 +377,8 @@ html.js .home-hero.is-settled .hero3d__poster {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.js .home-hero:not(.is-ready) .hero3d__poster,
   html.js .home-hero:not(.is-ready) .hero-sentinel-tech,
   html.js .home-hero:not(.is-ready) .hero-sentinel-hud,
-  html.js .home-hero.is-ready .hero3d__poster,
   html.js .home-hero.is-ready .hero-sentinel-tech,
   html.js .home-hero.is-ready .hero-sentinel-hud {
     opacity: 1;
@@ -352,9 +396,9 @@ html.js .home-hero.is-settled .hero3d__poster {
     transition-delay: 0s;
   }
 
-  html.js .home-hero.is-webgl.is-ready .hero3d__poster,
-  html.js .home-hero.is-webgl.is-ready .hero3d__poster.is-hidden {
-    opacity: 0;
+  .hero3d__load-bar i {
+    animation: none;
+    width: 100%;
   }
 
   .hero-sentinel-tech,
@@ -362,5 +406,10 @@ html.js .home-hero.is-settled .hero3d__poster {
   .hero3d__canvas {
     transform: none;
     transition: none;
+  }
+
+  .home-hero.is-fallback .hero3d__poster {
+    opacity: 1;
+    visibility: visible;
   }
 }
