@@ -642,8 +642,8 @@ const haiField = (() => {
           <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
         </div>
 
-        <div class="c-dash" data-team>
-          <div class="c-people" role="tablist" aria-label="Leadership">
+        <div class="c-roster" data-team data-active="0">
+          <div class="c-roster__people" role="tablist" aria-label="Leadership">
             {leaders.map((p, index) => (
               <button
                 type="button"
@@ -667,45 +667,43 @@ const haiField = (() => {
               </button>
             ))}
           </div>
-          <div class="c-dark__side">
-            <div class="c-profile" data-team-panels>
-              {leaders.map((p, index) => (
-                <article
-                  class:list={['c-profile__panel', index === 0 && 'is-active']}
-                  id={`team-panel-${p.id}`}
-                  role="tabpanel"
-                  aria-labelledby={`team-tab-${p.id}`}
-                  data-team-panel
-                  data-team-index={String(index)}
-                  aria-hidden={index === 0 ? 'false' : 'true'}
-                >
-                  <p class="c-micro c-profile__eyebrow">Active profile</p>
-                  <h3 class="c-profile__name">{p.name}</h3>
-                  <p class="c-profile__role">{p.role}</p>
-                  <p class="c-profile__bio">{p.bio}</p>
-                  <div class="c-profile__focus">
-                    <p class="c-micro">Focus</p>
-                    <ul>
-                      {p.focus.map((item) => (
-                        <li>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div class="c-profile__links">
-                    {p.linkedin && (
-                      <a href={p.linkedin} target="_blank" rel="noopener noreferrer">
-                        LinkedIn <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                    {'githubUrl' in p && p.githubUrl && (
-                      <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">
-                        GitHub <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
+          <div class="c-profile" data-team-profile>
+            {leaders.map((p, index) => (
+              <article
+                class:list={['c-profile__panel', index === 0 && 'is-active']}
+                id={`team-panel-${p.id}`}
+                role="tabpanel"
+                aria-labelledby={`team-tab-${p.id}`}
+                data-team-panel
+                data-team-index={String(index)}
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
+                <p class="c-micro c-profile__eyebrow">Active profile</p>
+                <h3 class="c-profile__name">{p.name}</h3>
+                <p class="c-profile__role">{p.role}</p>
+                <p class="c-profile__bio">{p.bio}</p>
+                <div class="c-profile__focus">
+                  <p class="c-micro">Focus</p>
+                  <ul>
+                    {p.focus.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="c-profile__links">
+                  {p.linkedin && (
+                    <a href={p.linkedin} target="_blank" rel="noopener noreferrer">
+                      LinkedIn <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {'githubUrl' in p && p.githubUrl && (
+                    <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">
+                      GitHub <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 

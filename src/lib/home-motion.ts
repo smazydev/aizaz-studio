@@ -498,16 +498,31 @@ function teamProfiles() {
 
   const people = Array.from(root.querySelectorAll<HTMLElement>('[data-team-person]'));
   const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-team-panel]'));
-  if (!people.length || people.length !== panels.length) return;
+  const profile = root.querySelector<HTMLElement>('[data-team-profile]');
+  if (!people.length || people.length !== panels.length || !profile) return;
 
   let index = 0;
   let timer: number | null = null;
+  let resumeTimer: number | null = null;
   let paused = false;
   let inView = false;
+  let moving = false;
   const reduceMotion = reduce();
+  const movers = [...people, profile];
 
-  const setActive = (next: number) => {
-    index = ((next % people.length) + people.length) % people.length;
+  const capture = () =>
+    new Map(
+      movers.map((el) => [el, el.getBoundingClientRect()] as const),
+    );
+
+  const flipTo = (next: number) => {
+    const target = ((next % people.length) + people.length) % people.length;
+    if (target === index) return;
+
+    const first = reduceMotion || moving ? null : capture();
+    index = target;
+    root.dataset.active = String(index);
+
     people.forEach((el, i) => {
       const on = i === index;
       el.classList.toggle('is-active', on);
@@ -519,6 +534,32 @@ function teamProfiles() {
       el.classList.toggle('is-active', on);
       el.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
+
+    if (!first || reduceMotion) return;
+
+    moving = true;
+    movers.forEach((el) => {
+      const prev = first.get(el);
+      if (!prev) return;
+      const last = el.getBoundingClientRect();
+      const dx = prev.left - last.left;
+      const dy = prev.top - last.top;
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+      el.animate(
+        [
+          { transform: `translate(${dx}px, ${dy}px)` },
+          { transform: 'translate(0, 0)' },
+        ],
+        {
+          duration: 560,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          fill: 'both',
+        },
+      );
+    });
+    window.setTimeout(() => {
+      moving = false;
+    }, 580);
   };
 
   const clearTimer = () => {
@@ -528,11 +569,18 @@ function teamProfiles() {
     }
   };
 
+  const clearResume = () => {
+    if (resumeTimer != null) {
+      window.clearTimeout(resumeTimer);
+      resumeTimer = null;
+    }
+  };
+
   const schedule = () => {
     clearTimer();
     if (reduceMotion || paused || !inView) return;
     timer = window.setTimeout(() => {
-      setActive(index + 1);
+      flipTo(index + 1);
       schedule();
     }, 4000);
   };
@@ -547,37 +595,42 @@ function teamProfiles() {
     schedule();
   };
 
+  const selectManual = (i: number) => {
+    flipTo(i);
+    pause();
+    clearResume();
+    resumeTimer = window.setTimeout(resume, 8000);
+  };
+
   people.forEach((el, i) => {
     el.tabIndex = i === 0 ? 0 : -1;
-    el.addEventListener('click', () => {
-      setActive(i);
-      pause();
-      window.setTimeout(resume, 6000);
-    });
+    el.addEventListener('click', () => selectManual(i));
     el.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
         event.preventDefault();
-        setActive(index + 1);
+        selectManual(index + 1);
         people[index]?.focus();
-        pause();
-        window.setTimeout(resume, 6000);
       }
       if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
         event.preventDefault();
-        setActive(index - 1);
+        selectManual(index - 1);
         people[index]?.focus();
-        pause();
-        window.setTimeout(resume, 6000);
       }
     });
   });
 
   root.addEventListener('pointerenter', pause);
-  root.addEventListener('pointerleave', resume);
+  root.addEventListener('pointerleave', () => {
+    clearResume();
+    resume();
+  });
   root.addEventListener('focusin', pause);
   root.addEventListener('focusout', (event) => {
     const next = event.relatedTarget as Node | null;
-    if (!next || !root.contains(next)) resume();
+    if (!next || !root.contains(next)) {
+      clearResume();
+      resume();
+    }
   });
 
   const io = new IntersectionObserver(
@@ -591,7 +644,8 @@ function teamProfiles() {
     { threshold: 0.28 },
   );
   io.observe(root);
-  setActive(0);
+  index = -1;
+  flipTo(0);
 }
 
 export function mountHomeMotion() {
