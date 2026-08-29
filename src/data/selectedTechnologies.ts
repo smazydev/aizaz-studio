@@ -1,67 +1,43 @@
-export type TechItem = {
+import { techIconPaths, type TechIconId } from './techIconPaths';
+
+export type TechLogoItem = {
+  id: TechIconId;
   name: string;
-  hint: string;
   href?: string;
 };
 
-export type TechGroup = {
-  id: string;
-  label: string;
-  items: TechItem[];
-};
-
 /**
- * Compact homepage credibility strip.
+ * Homepage logo strip — tools we work with (not partnerships).
  * Links only to existing /technologies/[slug] routes.
  */
-export const selectedTechGroups: TechGroup[] = [
-  {
-    id: 'product',
-    label: 'Product',
-    items: [
-      { name: 'TypeScript', hint: 'Typed application code' },
-      { name: 'React', hint: 'Product UI', href: '/technologies/react-development' },
-      { name: 'Next.js', hint: 'App delivery', href: '/technologies/nextjs-development' },
-      { name: 'Astro', hint: 'Content & marketing sites' },
-    ],
-  },
-  {
-    id: 'backend',
-    label: 'Backend & systems',
-    items: [
-      { name: 'Node.js', hint: 'APIs & services', href: '/technologies/nodejs-development' },
-      { name: 'Python', hint: 'Services & automation', href: '/technologies/python-development' },
-      { name: 'NestJS', hint: 'API frameworks', href: '/technologies/nestjs-development' },
-      { name: 'Rust', hint: 'Backend & systems' },
-    ],
-  },
-  {
-    id: 'ai',
-    label: 'AI & automation',
-    items: [
-      { name: 'OpenAI', hint: 'Model APIs', href: '/technologies/openai' },
-      { name: 'Anthropic', hint: 'Model APIs' },
-      { name: 'LangChain', hint: 'Agent orchestration', href: '/technologies/langchain' },
-    ],
-  },
-  {
-    id: 'erp',
-    label: 'ERP & commerce',
-    items: [
-      { name: 'NetSuite', hint: 'ERP & commerce integrations' },
-      { name: 'Shopify', hint: 'Commerce integrations' },
-      { name: 'BigCommerce', hint: 'Commerce integrations' },
-    ],
-  },
-  {
-    id: 'cloud',
-    label: 'Cloud & infra',
-    items: [
-      { name: 'AWS', hint: 'Cloud infrastructure', href: '/technologies/aws' },
-      { name: 'Azure', hint: 'Cloud infrastructure' },
-      { name: 'Cloudflare', hint: 'Edge / delivery infrastructure' },
-      { name: 'Terraform', hint: 'Infrastructure as code' },
-      { name: 'Docker', hint: 'Container delivery' },
-    ],
-  },
+export const techLogoItems: TechLogoItem[] = [
+  { id: 'openai', name: 'OpenAI', href: '/technologies/openai' },
+  { id: 'anthropic', name: 'Anthropic' },
+  { id: 'langchain', name: 'LangChain', href: '/technologies/langchain' },
+  { id: 'netsuite', name: 'NetSuite' },
+  { id: 'shopify', name: 'Shopify' },
+  { id: 'bigcommerce', name: 'BigCommerce' },
+  { id: 'aws', name: 'AWS', href: '/technologies/aws' },
+  { id: 'azure', name: 'Azure' },
+  { id: 'cloudflare', name: 'Cloudflare' },
+  { id: 'docker', name: 'Docker' },
+  { id: 'terraform', name: 'Terraform' },
+  { id: 'typescript', name: 'TypeScript' },
+  { id: 'react', name: 'React', href: '/technologies/react-development' },
+  { id: 'nextjs', name: 'Next.js', href: '/technologies/nextjs-development' },
+  { id: 'nodejs', name: 'Node.js', href: '/technologies/nodejs-development' },
+  { id: 'python', name: 'Python', href: '/technologies/python-development' },
+  { id: 'nestjs', name: 'NestJS', href: '/technologies/nestjs-development' },
+  { id: 'rust', name: 'Rust' },
+  { id: 'postgresql', name: 'PostgreSQL', href: '/technologies/postgresql' },
 ];
+
+/** Split into two marquee rows for opposite scroll. */
+export const techLogoRows: [TechLogoItem[], TechLogoItem[]] = [
+  techLogoItems.slice(0, 10),
+  techLogoItems.slice(10),
+];
+
+export function getTechIcon(id: TechIconId) {
+  return techIconPaths[id];
+}
