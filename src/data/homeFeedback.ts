@@ -47,11 +47,10 @@ function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | 
   const role = t.role?.trim() && t.role.trim() !== location ? t.role.trim() : undefined;
 
   const projectTitle = study.title.split('—')[0]?.split(':')[0]?.trim() || study.title;
-  const work =
-    engagementValue(study, 'Engagement type') ||
-    (/mvp/i.test(`${study.title} ${study.subtitle}`)
-      ? 'SaaS MVP'
-      : study.category.split('•')[0]?.trim());
+  const workHint = /mvp/i.test(`${study.title} ${study.subtitle} ${study.category}`)
+    ? 'SaaS MVP'
+    : study.category.split('•')[0]?.trim();
+  const work = workHint || engagementValue(study, 'Engagement type') || undefined;
 
   return {
     quote: t.quote,
