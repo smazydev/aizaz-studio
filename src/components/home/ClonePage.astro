@@ -4,11 +4,12 @@ import { caseStudies } from '../../data/caseStudies';
 import Hero from './Hero.astro';
 import HomeWhy from './HomeWhy.astro';
 import HomeFeatures from './HomeFeatures.astro';
-import HomeTechStrip from './HomeTechStrip.astro';
+import TechLogoStrip from './TechLogoStrip.astro';
 import SiteNav from '../site/SiteNav.astro';
 import SiteFooter from '../site/SiteFooter.astro';
-import { LEGACY_AUTHORS } from '../../data/authors';
 import { siteFooter } from '../../data/siteChrome';
+import { leadershipProfiles } from '../../data/leadership';
+import { featuredFeedback, secondaryFeedback, displayQuote } from '../../data/homeFeedback';
 
 const featuredWork = caseStudies
   .filter((study) => study.slug !== 'investorsgonewild-investment-platform')
@@ -85,11 +86,7 @@ const process = [
   { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
 ];
 
-const leaders = [
-  { ...LEGACY_AUTHORS.ali, hot: true },
-  { ...LEGACY_AUTHORS.nasir, hot: false },
-  { ...LEGACY_AUTHORS.ayaz, hot: false },
-];
+const leaders = leadershipProfiles;
 
 const contactEmail = siteFooter.studio.email;
 const contactPhone = siteFooter.studio.phone;
@@ -110,7 +107,7 @@ const faqs = [
   { q: 'How do engagements work?', a: 'Scoped sprints and project delivery — not opaque retainers. We align on outcomes, then ship with clear ownership through launch.' },
 ];
 
-const homeQuote = caseStudies.find((s) => s.testimonial)?.testimonial;
+const homeQuote = featuredFeedback;
 
 const haiField = (() => {
   let s = 0xa12a2;
@@ -632,7 +629,7 @@ const haiField = (() => {
     <HomeFeatures />
 
     <!-- 12 SELECTED TECHNOLOGIES -->
-    <HomeTechStrip />
+    <TechLogoStrip />
 
     <!-- 13–15 DARK / METRIC / TESTIMONIAL -->
     <section class="c-dark">
@@ -645,45 +642,69 @@ const haiField = (() => {
           <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
         </div>
 
-        <div class="c-dash">
-          <div class="c-people">
-            {leaders.map((p) => (
-              <figure class:list={['c-person', p.hot && 'c-person--hot']}>
+        <div class="c-dash" data-team>
+          <div class="c-people" role="tablist" aria-label="Leadership">
+            {leaders.map((p, index) => (
+              <button
+                type="button"
+                class:list={['c-person', index === 0 && 'is-active']}
+                role="tab"
+                id={`team-tab-${p.id}`}
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`team-panel-${p.id}`}
+                data-team-person
+                data-team-index={String(index)}
+              >
                 {p.photoUrl ? (
                   <img class="c-person__photo" src={p.photoUrl} alt="" width="400" height="400" loading="lazy" decoding="async" />
                 ) : (
                   <span class="c-person__face" aria-hidden="true"></span>
                 )}
-                <figcaption>
+                <span class="c-person__caption">
                   <strong>{p.name}</strong>
                   <span>{p.role}</span>
-                </figcaption>
-              </figure>
+                </span>
+              </button>
             ))}
           </div>
           <div class="c-dark__side">
-            <div class="c-ui">
-              <div class="c-ui__bar"><i></i><i></i><i></i><span>runtime.prod</span></div>
-              <div class="c-ui__tabs">
-                <span class="is-on">Agents</span>
-                <span>Evals</span>
-                <span>Logs</span>
-              </div>
-              <div class="c-ui__status"><b></b> live · production</div>
-              <div class="c-ui__row"><span>ingest</span><b></b></div>
-              <div class="c-ui__row"><span>eval</span><b class="mid"></b></div>
-              <div class="c-ui__row"><span>guard</span><b class="ok"></b></div>
-              <div class="c-ui__chart" aria-hidden="true">
-                <i style="height:28%"></i>
-                <i style="height:46%"></i>
-                <i class="on" style="height:72%"></i>
-                <i style="height:40%"></i>
-                <i class="on" style="height:88%"></i>
-                <i style="height:54%"></i>
-                <i style="height:36%"></i>
-                <i class="on" style="height:64%"></i>
-              </div>
-              <div class="c-ui__user"><i></i> studio · delivery session</div>
+            <div class="c-profile" data-team-panels>
+              {leaders.map((p, index) => (
+                <article
+                  class:list={['c-profile__panel', index === 0 && 'is-active']}
+                  id={`team-panel-${p.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`team-tab-${p.id}`}
+                  data-team-panel
+                  data-team-index={String(index)}
+                  aria-hidden={index === 0 ? 'false' : 'true'}
+                >
+                  <p class="c-micro c-profile__eyebrow">Active profile</p>
+                  <h3 class="c-profile__name">{p.name}</h3>
+                  <p class="c-profile__role">{p.role}</p>
+                  <p class="c-profile__bio">{p.bio}</p>
+                  <div class="c-profile__focus">
+                    <p class="c-micro">Focus</p>
+                    <ul>
+                      {p.focus.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div class="c-profile__links">
+                    {p.linkedin && (
+                      <a href={p.linkedin} target="_blank" rel="noopener noreferrer">
+                        LinkedIn <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                    {'githubUrl' in p && p.githubUrl && (
+                      <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">
+                        GitHub <span aria-hidden="true">↗</span>
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </div>
@@ -717,18 +738,105 @@ const haiField = (() => {
 
         {homeQuote && (
           <figure class="c-quote">
-            <div>
+            <div class="c-quote__body">
               <p class="c-micro">Client feedback</p>
-              <blockquote>“{homeQuote.quote.length > 280 ? `${homeQuote.quote.slice(0, 277).trim()}…` : homeQuote.quote}”</blockquote>
+              <blockquote cite={homeQuote.href}>
+                <p>“{displayQuote(homeQuote)}”</p>
+              </blockquote>
               <figcaption>
-                {homeQuote.author}{homeQuote.role ? ` — ${homeQuote.role}` : ''}
-                {homeQuote.source ? ` · ${homeQuote.source}` : ''}
+                <cite>
+                  {homeQuote.author}
+                  {homeQuote.role ? `, ${homeQuote.role}` : ''}
+                  {homeQuote.location ? ` · ${homeQuote.location}` : ''}
+                </cite>
+                {homeQuote.sourceIsUpwork ? (
+                  <span class="c-quote__source">
+                    <span class="c-quote__source-label">Source</span>
+                    Upwork
+                  </span>
+                ) : homeQuote.sourceLabel ? (
+                  <span class="c-quote__source">
+                    <span class="c-quote__source-label">Source</span>
+                    {homeQuote.sourceLabel}
+                  </span>
+                ) : null}
               </figcaption>
             </div>
-            <div class="c-quote__photo" aria-hidden="true">
-              <span class="c-person__face"></span>
-            </div>
+            <aside class="c-quote__proof" aria-label="Engagement context">
+              <p class="c-micro c-quote__proof-eyebrow">Engagement record</p>
+              <dl class="c-quote__meta">
+                {homeQuote.project && (
+                  <div>
+                    <dt>Project</dt>
+                    <dd>{homeQuote.project}</dd>
+                  </div>
+                )}
+                {homeQuote.work && (
+                  <div>
+                    <dt>Work</dt>
+                    <dd>{homeQuote.work}</dd>
+                  </div>
+                )}
+                {homeQuote.client && (
+                  <div>
+                    <dt>Client</dt>
+                    <dd>{homeQuote.client}</dd>
+                  </div>
+                )}
+                {homeQuote.location && (
+                  <div>
+                    <dt>Location</dt>
+                    <dd>{homeQuote.location}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>Source</dt>
+                  <dd>
+                    {homeQuote.sourceIsUpwork ? (
+                      <span class="c-quote__upwork">
+                        <svg class="c-quote__upwork-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                          <path fill="currentColor" d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.43-1.235-1.856-2.056-4.082-2.522-5.968h-2.522v7.168c0 1.4-1.14 2.54-2.54 2.54s-2.54-1.14-2.54-2.54V3.48H.615v7.168c0 2.854 2.32 5.174 5.174 5.174 2.855 0 5.175-2.32 5.175-5.174v-1.21c.529 1.118 1.182 2.185 1.974 3.118l-1.668 7.873h2.633l1.204-5.692c1.048.85 2.266 1.376 3.654 1.376 3.033 0 5.491-2.475 5.491-5.508 0-3.035-2.458-5.509-5.491-5.509z" />
+                        </svg>
+                        Upwork
+                      </span>
+                    ) : (
+                      homeQuote.sourceLabel
+                    )}
+                  </dd>
+                </div>
+              </dl>
+              {homeQuote.href && (
+                <a class="c-quote__link" href={homeQuote.href}>
+                  Read case study <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </aside>
           </figure>
+        )}
+
+        {secondaryFeedback.length > 0 && (
+          <div class="c-quote-rail" aria-label="More client feedback">
+            {secondaryFeedback.map((item) => (
+              <blockquote class="c-quote-card" cite={item.href}>
+                <p>“{item.quote}”</p>
+                <footer>
+                  <cite>
+                    {item.author}
+                    {item.role ? `, ${item.role}` : ''}
+                  </cite>
+                  <span>
+                    {item.project ? `${item.project} · ` : ''}
+                    {item.sourceLabel}
+                  </span>
+                  {item.href && (
+                    <a href={item.href}>
+                      Case study <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </footer>
+              </blockquote>
+            ))}
+          </div>
         )}
       </div>
     </section>

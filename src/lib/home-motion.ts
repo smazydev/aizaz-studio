@@ -492,6 +492,108 @@ function meshFields() {
   });
 }
 
+function teamProfiles() {
+  const root = document.querySelector<HTMLElement>('[data-team]');
+  if (!root) return;
+
+  const people = Array.from(root.querySelectorAll<HTMLElement>('[data-team-person]'));
+  const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-team-panel]'));
+  if (!people.length || people.length !== panels.length) return;
+
+  let index = 0;
+  let timer: number | null = null;
+  let paused = false;
+  let inView = false;
+  const reduceMotion = reduce();
+
+  const setActive = (next: number) => {
+    index = ((next % people.length) + people.length) % people.length;
+    people.forEach((el, i) => {
+      const on = i === index;
+      el.classList.toggle('is-active', on);
+      el.setAttribute('aria-selected', on ? 'true' : 'false');
+      el.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach((el, i) => {
+      const on = i === index;
+      el.classList.toggle('is-active', on);
+      el.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+  };
+
+  const clearTimer = () => {
+    if (timer != null) {
+      window.clearTimeout(timer);
+      timer = null;
+    }
+  };
+
+  const schedule = () => {
+    clearTimer();
+    if (reduceMotion || paused || !inView) return;
+    timer = window.setTimeout(() => {
+      setActive(index + 1);
+      schedule();
+    }, 4000);
+  };
+
+  const pause = () => {
+    paused = true;
+    clearTimer();
+  };
+
+  const resume = () => {
+    paused = false;
+    schedule();
+  };
+
+  people.forEach((el, i) => {
+    el.tabIndex = i === 0 ? 0 : -1;
+    el.addEventListener('click', () => {
+      setActive(i);
+      pause();
+      window.setTimeout(resume, 6000);
+    });
+    el.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        setActive(index + 1);
+        people[index]?.focus();
+        pause();
+        window.setTimeout(resume, 6000);
+      }
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        setActive(index - 1);
+        people[index]?.focus();
+        pause();
+        window.setTimeout(resume, 6000);
+      }
+    });
+  });
+
+  root.addEventListener('pointerenter', pause);
+  root.addEventListener('pointerleave', resume);
+  root.addEventListener('focusin', pause);
+  root.addEventListener('focusout', (event) => {
+    const next = event.relatedTarget as Node | null;
+    if (!next || !root.contains(next)) resume();
+  });
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        inView = entry.isIntersecting;
+        if (inView) schedule();
+        else clearTimer();
+      });
+    },
+    { threshold: 0.28 },
+  );
+  io.observe(root);
+  setActive(0);
+}
+
 export function mountHomeMotion() {
   bindThemeToggle();
   overlay();
@@ -504,4 +606,5 @@ export function mountHomeMotion() {
   ctaForm();
   ctaMove();
   meshFields();
+  teamProfiles();
 }
