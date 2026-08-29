@@ -1,7 +1,7 @@
 ---
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
-import FaqSection from '../components/FaqSection.astro';
+import PageCTA from '../components/PageCTA.astro';
 import { security } from '../data/commercialPages';
 
 const c = security;
@@ -10,19 +10,17 @@ const c = security;
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/security">
   <PageHero eyebrow="Trust" title={c.title} description={c.heroSubtitle} />
 
-  <section class="pb-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+  <section class="sp-section">
+    <div class="c-wrap seo-measure">
       {c.sections.map((section) => (
-        <article class="p-8 rounded-2xl glass-card">
-          <h2 class="text-xl font-display font-bold text-white mb-4">{section.heading}</h2>
+        <article class="seo-longform__block">
+          <h2 class="page-h2">{section.heading}</h2>
           {section.paragraphs.map((p) => (
-            <p class="text-zinc-400 text-sm leading-relaxed mb-4">{p}</p>
+            <p class="c-lede">{p}</p>
           ))}
           {'bullets' in section && section.bullets && (
-            <ul class="space-y-3 mt-2">
-              {section.bullets.map((point) => (
-                <li class="text-zinc-400 text-sm leading-relaxed flex gap-2"><span class="text-primary-500 shrink-0">•</span>{point}</li>
-              ))}
+            <ul class="sp-list" style="margin-top: 16px">
+              {section.bullets.map((point) => <li>{point}</li>)}
             </ul>
           )}
         </article>
@@ -30,9 +28,10 @@ const c = security;
     </div>
   </section>
 
-  <section class="pb-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <a href="/book-a-call" class="inline-flex px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-zinc-100 transition-colors">Discuss your security requirements</a>
-    </div>
-  </section>
+  <PageCTA
+    title="Discuss your security requirements"
+    lede="Book a call to talk through access, data handling, and delivery practices for your engagement."
+  secondaryHref=""
+  secondaryLabel=""
+/>
 </SiteShell>

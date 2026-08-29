@@ -4,46 +4,46 @@ import PageHero from '../components/PageHero.astro';
 import { portfolio } from '../data/commercialPages';
 import { Image } from 'astro:assets';
 import archiverCover from '../assets/1archiver-casestudy-cover.png';
-import igwCover from '../assets/igw-casestudy-cover.png';
+import { HIDDEN_CASE_STUDY_SLUGS } from '../lib/case-study-visibility';
 
 const c = portfolio;
 const images: Record<string, typeof archiverCover> = {
   '1archiver-compliance-platform': archiverCover,
-  'investorsgonewild-investment-platform': igwCover,
 };
+const projects = c.projects.filter((project) => !HIDDEN_CASE_STUDY_SLUGS.has(project.slug));
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/portfolio">
   <PageHero eyebrow="Work" title={c.title} description={c.intro}>
-    <a href="/case-studies" class="inline-flex justify-center px-8 py-4 rounded-full border border-zinc-700 text-white font-medium hover:bg-zinc-900 transition-colors">Full Case Studies</a>
+    <a class="c-btn c-btn--ghost" href="/case-studies">Full Case Studies</a>
   </PageHero>
 
-  <section class="pb-24">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
-      {c.projects.map((project) => (
-        <article class="rounded-2xl overflow-hidden glass-card flex flex-col">
-          {project.slug && images[project.slug] && (
-            <div class="h-48 overflow-hidden">
-              <Image src={images[project.slug]} alt={project.name} class="w-full h-full object-cover" />
-            </div>
-          )}
-          <div class="p-8 flex flex-col flex-1">
-            <p class="text-xs text-primary-400 font-bold uppercase tracking-widest mb-2">{project.category}</p>
-            <h2 class="text-2xl font-display font-bold text-white mb-3">{project.name}</h2>
-            <p class="text-zinc-400 text-sm leading-relaxed mb-4">{project.summary}</p>
-            <p class="text-xs text-zinc-500 mb-2 font-semibold uppercase tracking-wider">Stack</p>
-            <p class="text-sm text-zinc-400 mb-4">{project.stack.join(' · ')}</p>
-            <ul class="space-y-2 mb-6 flex-1">
-              {project.outcomes.map((o) => (
-                <li class="text-sm text-zinc-300 flex gap-2"><span class="text-primary-500">→</span>{o}</li>
-              ))}
-            </ul>
-            {project.href && (
-              <a href={project.href} class="text-primary-400 font-semibold text-sm hover:text-primary-300 transition-colors">View case study →</a>
+  <section class="sp-section">
+    <div class="c-wrap">
+      <div class="sp-grid">
+        {projects.map((project) => (
+          <article class="sp-card" style="padding: 0; overflow: hidden">
+            {project.slug && images[project.slug] && (
+              <div class="works-detail__hero" style="border:0; border-radius:0; aspect-ratio: 16/10">
+                <Image src={images[project.slug]} alt={project.name} class="works-item__shot" />
+              </div>
             )}
-          </div>
-        </article>
-      ))}
+            <div style="padding: 22px 24px">
+              <p class="c-micro c-red">{project.category}</p>
+              <h2 class="sp-card__title" style="margin-top: 8px">{project.name}</h2>
+              <p class="c-lede sp-card__body">{project.summary}</p>
+              <p class="c-micro" style="margin-top: 16px">Stack</p>
+              <p class="c-lede" style="margin-top: 6px; font-size: 0.9rem">{project.stack.join(' · ')}</p>
+              <ul class="sp-list" style="margin-top: 16px">
+                {project.outcomes.map((o) => <li>{o}</li>)}
+              </ul>
+              {project.href && (
+                <a class="blog-card__more" href={project.href} style="display:inline-block; margin-top: 18px">View case study →</a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 </SiteShell>

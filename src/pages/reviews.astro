@@ -2,26 +2,41 @@
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import { reviews } from '../data/commercialPages';
+import { caseStudies } from '../data/caseStudies';
+import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 
 const c = reviews;
+const realQuotes = filterPublicCaseStudies(caseStudies)
+  .filter((study) => study.testimonial?.quote)
+  .map((study) => ({
+    quote: study.testimonial!.quote,
+    author: study.testimonial!.author,
+    role: study.testimonial!.role,
+    company: study.testimonial!.source || study.title.split(':')[0].trim(),
+  }));
+const quotes = realQuotes.length > 0 ? realQuotes : c.placeholderQuotes;
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/reviews">
   <PageHero eyebrow="Trust" title={c.title} description={c.intro} />
 
-  <section class="pb-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-      {c.placeholderQuotes.map((item) => (
-        <blockquote class="p-8 rounded-2xl glass-card border-dashed border-zinc-700">
-          <p class="text-lg text-zinc-300 leading-relaxed mb-6 italic">"{item.quote}"</p>
-          <footer class="text-sm text-zinc-500">
-            <span class="text-zinc-400 font-semibold">{item.author}</span>
-            {item.role && <> · {item.role}</>}
-            {item.company && <> · {item.company}</>}
-          </footer>
-        </blockquote>
-      ))}
-      <p class="text-center text-sm text-zinc-600">Approved client testimonials will replace placeholders above.</p>
+  <section class="sp-section">
+    <div class="c-wrap seo-measure">
+      <div class="sp-grid sp-grid--1" style="gap: 14px">
+        {quotes.map((item) => (
+          <blockquote class="sp-card">
+            <p class="works-detail__quote">“{item.quote.length > 360 ? `${item.quote.slice(0, 357).trim()}…` : item.quote}”</p>
+            <footer class="c-lede">
+              <strong>{item.author}</strong>
+              {item.role && <> · {item.role}</>}
+              {item.company && <> · {item.company}</>}
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+      {realQuotes.length === 0 && (
+        <p class="c-micro" style="margin-top: 24px; text-align: center">Approved client testimonials will replace placeholders above.</p>
+      )}
     </div>
   </section>
 </SiteShell>
