@@ -82,29 +82,33 @@ const process = [
   { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
 ];
 
-const tools = ['OpenAI', 'Anthropic', 'LangChain', 'Pinecone', 'AWS', 'Postgres', 'Stripe', 'Slack'];
+const tools = ['OpenAI', 'Anthropic', 'LangChain', 'Pinecone', 'AWS', 'Postgres', 'Stripe', 'NetSuite'];
 
-const people = [
-  { name: 'Noah Reed', role: 'ML / Agent Lead', hot: true },
-  { name: 'Lucas Hayes', role: 'Solutions Architect', hot: false },
-  { name: 'Jordan Brooks', role: 'Data Engineer', hot: false },
-  { name: 'Erin Park', role: 'MLOps Engineer', hot: true },
-  { name: 'Ava Collins', role: 'Design Lead', hot: false },
+/** Discipline labels — not individual employee names. */
+const disciplines = [
+  { name: 'Product Engineering', role: 'Web / SaaS / APIs', hot: true },
+  { name: 'AI & Automation', role: 'Agents / Workflows', hot: false },
+  { name: 'Integrations', role: 'ERP / CRM / Data', hot: false },
+  { name: 'Cloud & Ops', role: 'AWS / CI / Observe', hot: true },
+  { name: 'Delivery', role: 'Scope / Ship / Own', hot: false },
 ];
 
-const awards = [
-  { k: '01', t: 'Innovation in AI', d: 'Underwriting Risk Copilot (Fintech) / 2026' },
-  { k: '02', t: 'Best AI Product Design', d: 'Support Copilot (SaaS)' },
-  { k: '03', t: 'Data & AI Excellence', d: 'Clinical Note Summarizer (Healthcare)' },
-  { k: '04', t: 'Risk Intelligence', d: 'Catalog Intelligence Engine' },
+/** Real project foci from shipped work — not awards. */
+const proofPoints = [
+  { k: '01', t: 'Property Matchmaker', d: 'Real estate platform connecting agents and deals' },
+  { k: '02', t: 'SalesAngel', d: 'Live dialer, CRM, and AI agent operations' },
+  { k: '03', t: 'CodeChecker', d: 'Compliance-oriented engineering delivery' },
+  { k: '04', t: 'Systems integration', d: 'ERP, CRM, and production cloud work' },
 ];
 
 const faqs = [
   { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
   { q: 'What do we need to start?', a: 'A clear problem statement, success metrics, access to sample data, and a stakeholder who can make decisions. We’ll run a kickoff workshop to align scope.' },
   { q: 'Which models/stack do you use?', a: 'Modern, scalable stacks like React, Node.js, and cloud services. We choose models/APIs based on the use case, performance, and cost.' },
-  { q: 'Are model/API costs included in pricing?', a: 'Model and API costs are usually billed separately based on usage. We share estimates upfront and help optimize costs.' },
+  { q: 'How do engagements work?', a: 'Scoped sprints and project delivery — not opaque retainers. We align on outcomes, then ship with clear ownership through launch.' },
 ];
+
+const homeQuote = caseStudies.find((s) => s.testimonial)?.testimonial;
 
 const haiField = (() => {
   let s = 0xa12a2;
@@ -200,10 +204,10 @@ const haiField = (() => {
       <div class="c-wrap home-human-ai__head">
         <div class="home-human-ai__heading">
           <p class="c-micro c-red">About Us</p>
-          <h2 class="home-human-ai__title">Human-<br />Centered AI,<br />Built for<br />Production</h2>
+          <h2 class="home-human-ai__title">Senior<br />engineering,<br />built for<br />production</h2>
         </div>
         <p class="c-lede home-human-ai__lede">
-          Good AI feels obvious—because the hard work is hidden. Available for worldwide projects. Based in Montréal, Canada.
+          AI, SaaS, integrations, and cloud systems for teams that need working software — not slide decks. Available for remote projects worldwide.
         </p>
       </div>
       <div class="c-wrap home-human-ai__grid">
@@ -232,17 +236,17 @@ const haiField = (() => {
               <span class="home-human-ai__live">live</span>
             </div>
             <div class="home-human-ai__kpi">
-              <span>120+</span>
-              <small>clients shipped</small>
+              <span>Ship</span>
+              <small>scoped systems</small>
             </div>
             <svg class="home-human-ai__spark" viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
               <path d="M0 34 C18 34 22 18 40 20 C58 22 62 8 80 12 C98 16 104 30 122 24 C140 18 148 6 168 10 C188 14 196 32 216 22 C228 16 234 20 240 18" fill="none" />
             </svg>
-            <p class="home-human-ai__copy">shipping AI from idea to production in 8–10 weeks</p>
+            <p class="home-human-ai__copy">from discovery to production with clear ownership</p>
             <div class="home-human-ai__module-meta">
-              <span>p95 184ms</span>
-              <span>eval 0.97</span>
-              <span>ok</span>
+              <span>AI</span>
+              <span>SaaS</span>
+              <span>ERP</span>
             </div>
           </article>
           <article class="home-human-ai__object">
@@ -255,8 +259,8 @@ const haiField = (() => {
               </span>
             </div>
             <div class="home-human-ai__caption">
-              <p class="c-micro">Ava Collins</p>
-              <p>Aizaz’s Design Lead</p>
+              <p class="c-micro">Studio focus</p>
+              <p>Systems that stay online</p>
             </div>
           </article>
         </div>
@@ -268,7 +272,7 @@ const haiField = (() => {
       <div class="home-services__inner">
         <div class="home-services__head">
           <p class="c-micro c-red">Services</p>
-          <h2 class="home-services__title">End-to-End<br />AI Services</h2>
+          <h2 class="home-services__title">Engineering<br />services</h2>
         </div>
         <div class="home-services__stage">
           <div class="home-services__visual" data-service-viz>
@@ -629,9 +633,9 @@ const haiField = (() => {
     <section class="c-tools">
       <div class="c-wrap">
         <p class="c-micro c-red">Tools</p>
-        <h2 class="c-h2">We work with powerful AI tools</h2>
+        <h2 class="c-h2">Tools we actually ship with</h2>
         <p class="c-lede">
-          We design, build, and evaluate with a modern AI stack—LLMs, vector search, orchestration, and observability—so your features are fast, reliable, and secure.
+          Modern product and ops stacks — LLMs when they earn their place, plus the cloud, data, and ERP systems your business already runs.
         </p>
         <div class="c-orbit" data-orbit>
           {tools.map((t, i) => {
@@ -659,15 +663,15 @@ const haiField = (() => {
       <div class="c-wrap">
         <div class="c-dark__intro">
           <div>
-            <p class="c-micro">Team Members</p>
-            <h2 class="c-h1">The Squad<br />Shipping Your AI</h2>
+            <p class="c-micro">How we work</p>
+            <h2 class="c-h1">A studio built<br />to ship systems</h2>
           </div>
-          <p class="c-lede">Human-centered AI, built for production. 85+ specialists across strategy, design, and MLOps.</p>
+          <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production — without a bloated agency layer.</p>
         </div>
 
         <div class="c-dash">
           <div class="c-people">
-            {people.map((p) => (
+            {disciplines.map((p) => (
               <figure class:list={['c-person', p.hot && 'c-person--hot']}>
                 <span class="c-person__face"></span>
                 <figcaption>
@@ -684,7 +688,7 @@ const haiField = (() => {
                 <span>Evals</span>
                 <span>Logs</span>
               </div>
-              <div class="c-ui__status"><b></b> live · us-east-1</div>
+              <div class="c-ui__status"><b></b> live · production</div>
               <div class="c-ui__row"><span>ingest</span><b></b></div>
               <div class="c-ui__row"><span>eval</span><b class="mid"></b></div>
               <div class="c-ui__row"><span>guard</span><b class="ok"></b></div>
@@ -698,30 +702,30 @@ const haiField = (() => {
                 <i style="height:36%"></i>
                 <i class="on" style="height:64%"></i>
               </div>
-              <div class="c-ui__user"><i></i> noah reed · session 04</div>
+              <div class="c-ui__user"><i></i> studio · delivery session</div>
             </div>
           </div>
         </div>
 
         <div class="c-dark__growth">
           <div>
-            <p class="c-micro">Our growth</p>
-            <p class="c-stat"><span data-count="230">230</span><small>K</small></p>
+            <p class="c-micro">Focus</p>
+            <p class="c-stat c-stat--sm" style="font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.04em;">Systems<br />that ship</p>
           </div>
           <div class="c-dark__metrics">
             <div>
-              <p class="c-micro">Uptime</p>
-              <p class="c-stat c-stat--sm"><span data-count="95">95</span><small>%</small></p>
+              <p class="c-micro">AI &amp; automation</p>
+              <p class="c-lede" style="margin: 8px 0 0">Agents and workflows</p>
             </div>
             <div>
-              <p class="c-micro">On time</p>
-              <p class="c-stat c-stat--sm"><span data-count="99">99</span></p>
+              <p class="c-micro">SaaS &amp; cloud</p>
+              <p class="c-lede" style="margin: 8px 0 0">Products and ops</p>
             </div>
           </div>
         </div>
 
         <div class="c-awards">
-          {awards.map((a) => (
+          {proofPoints.map((a) => (
             <div>
               <p class="c-micro">{a.k}</p>
               <h3>{a.t}</h3>
@@ -730,16 +734,21 @@ const haiField = (() => {
           ))}
         </div>
 
-        <figure class="c-quote">
-          <div>
-            <p class="c-micro">What Our Clients Say</p>
-            <blockquote>“We shipped our first copilot in 7 weeks and cut support tickets by 31%. The eval dashboards made every decision obvious.”</blockquote>
-            <figcaption>Elena Ruiz — Cantos SaaS VP Product</figcaption>
-          </div>
-          <div class="c-quote__photo" aria-hidden="true">
-            <span class="c-person__face"></span>
-          </div>
-        </figure>
+        {homeQuote && (
+          <figure class="c-quote">
+            <div>
+              <p class="c-micro">Client feedback</p>
+              <blockquote>“{homeQuote.quote.length > 280 ? `${homeQuote.quote.slice(0, 277).trim()}…` : homeQuote.quote}”</blockquote>
+              <figcaption>
+                {homeQuote.author}{homeQuote.role ? ` — ${homeQuote.role}` : ''}
+                {homeQuote.source ? ` · ${homeQuote.source}` : ''}
+              </figcaption>
+            </div>
+            <div class="c-quote__photo" aria-hidden="true">
+              <span class="c-person__face"></span>
+            </div>
+          </figure>
+        )}
       </div>
     </section>
 
@@ -748,42 +757,36 @@ const haiField = (() => {
       <div class="c-wrap">
         <div class="c-price__head">
           <div>
-            <p class="c-micro c-red">Pricing Plans</p>
-            <h2 class="c-h1">From pilot to enterprise, clear scope, transparent costs</h2>
-          </div>
-          <div class="c-toggle" aria-hidden="true">
-            <span>Monthly</span>
-            <span class="is-on">Annually</span>
+            <p class="c-micro c-red">Engagement</p>
+            <h2 class="c-h1">Clear scope. Transparent delivery.</h2>
           </div>
         </div>
         <div class="c-price__grid">
           <article class="c-plan">
-            <p class="c-micro">Starter Plan — For startups</p>
-            <p class="c-plan__amount">$9,900</p>
-            <p class="c-lede">/ year</p>
-            <p class="c-lede" style="margin-top: 18px">Prove value in two weeks with a clickable UX, tech spike, and a clear go/no-go roadmap.</p>
+            <p class="c-micro">Sprint — Focused delivery</p>
+            <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Scoped sprint</p>
+            <p class="c-lede" style="margin-top: 18px">Prove value quickly with a working slice, clear go/no-go, and a path to production.</p>
             <ul>
               <li>Discovery workshop</li>
               <li>Opportunity brief</li>
-              <li>Clickable UX</li>
-              <li>1 data source & 1 integration</li>
+              <li>Working prototype or spike</li>
+              <li>Defined next-step roadmap</li>
             </ul>
-            <a class="c-btn" href="/book-a-call" style="margin-top: 32px">Get Started</a>
+            <a class="c-btn" href="/ai-systems-sprint" style="margin-top: 32px">AI Systems Sprint</a>
           </article>
           <article class="c-plan c-plan--dark">
-            <p class="c-micro">Enterprise Plan — For organisations</p>
-            <p class="c-plan__amount">$19,900</p>
-            <p class="c-lede" style="color: rgba(245,245,240,0.55)">/ year</p>
+            <p class="c-micro">Project — Production systems</p>
+            <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem); color: inherit;">Build &amp; ship</p>
             <p class="c-lede" style="margin-top: 18px; color: rgba(245,245,240,0.62)">
-              Compliance-ready delivery for complex orgs—multi-env releases, canaries, and change management.
+              Product, integrations, and cloud work owned through launch — with observability and handoff.
             </p>
             <ul>
-              <li>Everything in Starter</li>
-              <li>CI/CD, tracing, alerts, guardrails</li>
-              <li>Full eval dashboard</li>
-              <li>3 data sources & 3 integrations</li>
+              <li>Architecture and delivery plan</li>
+              <li>CI/CD, tracing, alerts</li>
+              <li>Integrations and data flows</li>
+              <li>Production-ready ownership</li>
             </ul>
-            <a class="c-btn" href="/book-a-call" style="margin-top: 32px">Get Started</a>
+            <a class="c-btn" href="/engagement-models" style="margin-top: 32px">Engagement models</a>
           </article>
         </div>
       </div>
@@ -810,9 +813,9 @@ const haiField = (() => {
           <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
           <div class="c-cta__copy">
             <p class="c-micro">Contact</p>
-            <h2 class="c-h1">Let’s Build Intelligent Things</h2>
+            <h2 class="c-h1">Let’s build the next system</h2>
             <p class="c-lede" style="margin-top: 16px; max-width: 28ch; color: rgba(245,245,240,0.65)">
-              Fill this form below. hello@youraiagency.com · +1 (647) 555 0172
+              Tell us what you need to ship. hello@aizaz.studio · +92 334 2056691
             </p>
           </div>
           <form data-home-form>
