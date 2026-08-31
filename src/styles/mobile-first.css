@@ -330,37 +330,19 @@ h3,
 
 /* —— Team —— */
 @media (max-width: 800px) {
-  .c-member__select {
-    min-height: 44px;
-  }
-
-  .c-member__caption strong {
-    font-size: 0.78rem;
-    letter-spacing: -0.02em;
-  }
-
   .c-member__name {
-    font-size: 1.25rem;
+    font-size: 0.66rem;
   }
 
-  .c-member__bio,
-  .c-member__focus li,
   .c-member__role {
-    font-size: 0.98rem;
-    line-height: 1.5;
+    font-size: 0.72rem;
+    line-height: 1.35;
   }
 
   .c-member__links a {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
-  }
-}
-
-@media (max-width: 430px) {
-  .c-member__select {
-    max-height: 148px;
-    min-height: 112px;
   }
 }
 
@@ -502,7 +484,6 @@ h3,
 
 /* —— Services accordion —— */
 @media (max-width: 1024px) {
-  .home-services__visual,
   .c-service-viz {
     display: none !important;
     min-height: 0 !important;

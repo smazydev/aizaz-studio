@@ -284,7 +284,6 @@ function services() {
   const root = document.querySelector('[data-services]');
   if (!root) return;
   const items = [...root.querySelectorAll<HTMLAnchorElement>('[data-service]')];
-  const panels = root.querySelectorAll<HTMLElement>('[data-sv]');
 
   const activate = (id: string) => {
     items.forEach((item) => {
@@ -294,7 +293,6 @@ function services() {
       if (on) item.setAttribute('aria-current', 'true');
       else item.removeAttribute('aria-current');
     });
-    panels.forEach((p) => p.classList.toggle('is-on', p.dataset.sv === id));
   };
 
   items.forEach((item, i) => {
@@ -516,136 +514,6 @@ function meshFields() {
   });
 }
 
-function teamProfiles() {
-  const root = document.querySelector<HTMLElement>('[data-team]');
-  if (!root) return;
-
-  const members = Array.from(root.querySelectorAll<HTMLElement>('[data-team-member]'));
-  const people = Array.from(root.querySelectorAll<HTMLElement>('[data-team-person]'));
-  const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-team-panel]'));
-  if (!people.length || people.length !== panels.length) return;
-
-  let index = 0;
-  let timer: number | null = null;
-  let resumeTimer: number | null = null;
-  let paused = false;
-  let inView = false;
-  const reduceMotion = reduce();
-  const narrowMq = window.matchMedia('(max-width: 768px)');
-  const isNarrow = () => narrowMq.matches;
-
-  const show = (next: number) => {
-    const target = ((next % people.length) + people.length) % people.length;
-    index = target;
-    root.dataset.active = String(index);
-
-    members.forEach((el, i) => el.classList.toggle('is-active', i === index));
-    people.forEach((el, i) => {
-      const on = i === index;
-      el.classList.toggle('is-active', on);
-      el.setAttribute('aria-selected', on ? 'true' : 'false');
-      el.tabIndex = on ? 0 : -1;
-    });
-    panels.forEach((el, i) => {
-      const on = i === index;
-      el.classList.toggle('is-active', on);
-      el.setAttribute('aria-hidden', on ? 'false' : 'true');
-    });
-  };
-
-  const clearTimer = () => {
-    if (timer != null) {
-      window.clearTimeout(timer);
-      timer = null;
-    }
-  };
-
-  const clearResume = () => {
-    if (resumeTimer != null) {
-      window.clearTimeout(resumeTimer);
-      resumeTimer = null;
-    }
-  };
-
-  const schedule = () => {
-    clearTimer();
-    if (reduceMotion || paused || !inView || isNarrow()) return;
-    timer = window.setTimeout(() => {
-      show(index + 1);
-      schedule();
-    }, 4800);
-  };
-
-  const pause = () => {
-    paused = true;
-    clearTimer();
-  };
-
-  const resume = () => {
-    if (resumeTimer) return;
-    paused = false;
-    schedule();
-  };
-
-  const selectManual = (i: number) => {
-    show(i);
-    pause();
-    clearResume();
-    resumeTimer = window.setTimeout(() => {
-      resumeTimer = null;
-      resume();
-    }, 10000);
-  };
-
-  people.forEach((el, i) => {
-    el.tabIndex = i === 0 ? 0 : -1;
-    el.addEventListener('click', () => selectManual(i));
-    el.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-        event.preventDefault();
-        selectManual(index + 1);
-        people[index]?.focus();
-      }
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-        event.preventDefault();
-        selectManual(index - 1);
-        people[index]?.focus();
-      }
-    });
-  });
-
-  root.addEventListener('pointerenter', pause);
-  root.addEventListener('pointerleave', resume);
-  root.addEventListener('focusin', pause);
-  root.addEventListener('focusout', (event) => {
-    const next = event.relatedTarget as Node | null;
-    if (!next || !root.contains(next)) resume();
-  });
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        inView = entry.isIntersecting;
-        if (inView) schedule();
-        else clearTimer();
-      });
-    },
-    { threshold: 0.28 },
-  );
-  io.observe(root);
-  narrowMq.addEventListener('change', () => {
-    if (isNarrow()) {
-      clearTimer();
-      clearResume();
-      paused = true;
-    } else {
-      paused = false;
-      schedule();
-    }
-  });
-  show(0);
-}
-
 export function mountHomeMotion() {
   bindThemeToggle();
   overlay();
@@ -658,5 +526,4 @@ export function mountHomeMotion() {
   ctaForm();
   ctaMove();
   meshFields();
-  teamProfiles();
 }
