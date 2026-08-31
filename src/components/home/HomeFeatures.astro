@@ -1,0 +1,185 @@
+---
+import '../../styles/home-features.css';
+
+const items = [
+  {
+    n: '01',
+    mark: 'Intelligence',
+    title: 'Agents',
+    body: 'Tool-using systems that execute defined workflows.',
+    meta: 'TOOLS / API / MEMORY',
+  },
+  {
+    n: '02',
+    mark: 'Knowledge',
+    title: 'RAG',
+    body: 'Private knowledge with freshness, citations, and explainability.',
+    meta: 'DOCS / CITE / INDEX',
+  },
+  {
+    n: '03',
+    mark: 'Operations',
+    title: 'Workflow Automation',
+    body: 'Repetitive operations, planned, executed, and reported.',
+    meta: 'PLAN / RUN / REPORT',
+  },
+  {
+    n: '04',
+    mark: 'Context',
+    title: 'Data Pipelines',
+    body: 'Clean, embed, and route context so models see the right truth.',
+    meta: 'CLEAN / EMBED / ROUTE',
+  },
+  {
+    n: '05',
+    mark: 'Connect',
+    title: 'Integrations',
+    body: 'CRM, helpdesk, ERP, and warehouse connected through APIs.',
+    meta: 'CRM / ERP / API',
+  },
+  {
+    n: '06',
+    mark: 'Runtime',
+    title: 'Observability',
+    body: 'Accuracy, latency, safety, and cost measured from day one.',
+    meta: 'EVAL / COST / P95',
+  },
+];
+---
+
+<section class="home-feat" aria-labelledby="home-feat-heading">
+  <div class="home-feat__inner">
+    <p class="home-feat__mark">05 / Capabilities</p>
+    <h2 id="home-feat-heading" class="home-feat__title">What we<br />build</h2>
+
+    <div class="home-feat__sys" data-feat-sys data-on="0">
+      <svg class="home-feat__field" viewBox="0 0 1220 600" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <circle class="home-feat__arc" cx="610" cy="312" r="92" />
+        <circle class="home-feat__arc home-feat__arc--mid" cx="610" cy="312" r="168" />
+        <circle class="home-feat__arc home-feat__arc--out" cx="610" cy="312" r="248" />
+        <path class="home-feat__tick" d="M610 214 V198" />
+        <path class="home-feat__tick" d="M708 312 H724" />
+        <path class="home-feat__tick" d="M610 410 V426" />
+        <path class="home-feat__tick" d="M512 312 H496" />
+        <text class="home-feat__coord" x="18" y="22">AI/01</text>
+        <text class="home-feat__coord" x="1148" y="22">SYS</text>
+        <text class="home-feat__coord" x="396" y="86">EXECUTION</text>
+        <text class="home-feat__coord" x="628" y="198">LIVE</text>
+        <text class="home-feat__coord" x="878" y="278">API</text>
+        <text class="home-feat__coord" x="748" y="478">DATA</text>
+      </svg>
+
+      <svg class="home-feat__paths" viewBox="0 0 1220 600" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path class="home-feat__path home-feat__path--0" d="M568 268 L568 96 L248 96" />
+        <path class="home-feat__path home-feat__path--1" d="M658 262 L820 262 L820 64 L990 64" />
+        <path class="home-feat__path home-feat__path--2" d="M672 318 H860 V292 H1000" />
+        <path class="home-feat__path home-feat__path--3" d="M652 368 V488 H930" />
+        <path class="home-feat__path home-feat__path--4" d="M568 368 H400 V508 H270" />
+        <path class="home-feat__path home-feat__path--5" d="M548 318 H300 V290 H168" />
+
+        <path class="home-feat__flow home-feat__flow--0" pathLength="1" d="M568 268 L568 96 L248 96" />
+        <path class="home-feat__flow home-feat__flow--1" pathLength="1" d="M658 262 L820 262 L820 64 L990 64" />
+        <path class="home-feat__flow home-feat__flow--2" pathLength="1" d="M672 318 H860 V292 H1000" />
+        <path class="home-feat__flow home-feat__flow--3" pathLength="1" d="M652 368 V488 H930" />
+        <path class="home-feat__flow home-feat__flow--4" pathLength="1" d="M568 368 H400 V508 H270" />
+        <path class="home-feat__flow home-feat__flow--5" pathLength="1" d="M548 318 H300 V290 H168" />
+
+        <rect class="home-feat__junc" x="566" y="94" width="4" height="4" />
+        <rect class="home-feat__junc" x="818" y="260" width="4" height="4" />
+        <rect class="home-feat__junc" x="818" y="62" width="4" height="4" />
+        <rect class="home-feat__junc" x="858" y="316" width="4" height="4" />
+        <rect class="home-feat__junc" x="858" y="290" width="4" height="4" />
+        <rect class="home-feat__junc" x="650" y="486" width="4" height="4" />
+        <rect class="home-feat__junc" x="398" y="366" width="4" height="4" />
+        <rect class="home-feat__junc" x="398" y="506" width="4" height="4" />
+        <rect class="home-feat__junc" x="298" y="316" width="4" height="4" />
+        <rect class="home-feat__junc" x="298" y="288" width="4" height="4" />
+
+        <path class="home-feat__dir" d="M248 96 l-6 -3 v6 z" />
+        <path class="home-feat__dir" d="M990 64 l6 -3 v6 z" />
+        <path class="home-feat__dir" d="M1000 292 l6 -3 v6 z" />
+        <path class="home-feat__dir" d="M930 488 l6 -3 v6 z" />
+        <path class="home-feat__dir" d="M270 508 l-6 -3 v6 z" />
+        <path class="home-feat__dir" d="M168 290 l-6 -3 v6 z" />
+      </svg>
+
+      <div class="home-feat__core" aria-hidden="true">
+        <span class="home-feat__core-shadow"></span>
+        <div class="home-feat__core-gimbal">
+          <div class="home-feat__chassis">
+            <span class="home-feat__screw home-feat__screw--tl"></span>
+            <span class="home-feat__screw home-feat__screw--tr"></span>
+            <span class="home-feat__screw home-feat__screw--bl"></span>
+            <span class="home-feat__screw home-feat__screw--br"></span>
+            <div class="home-feat__bezel">
+              <div class="home-feat__well">
+                <div class="home-feat__mass">
+                  <i class="home-feat__seg"></i>
+                  <i class="home-feat__plate"></i>
+                  <i class="home-feat__groove"></i>
+                  <i class="home-feat__band"></i>
+                  <i class="home-feat__port home-feat__port--l"></i>
+                  <i class="home-feat__port home-feat__port--r"></i>
+                  <i class="home-feat__led"></i>
+                  <span class="home-feat__glint"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {items.map((item, i) => (
+        <button
+          type="button"
+          class:list={['home-feat__node', (i === 0 || i === 4 || i === 5) && 'is-end']}
+          data-feat-node
+          data-i={String(i)}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+        >
+          <span class="home-feat__idx">{item.n} / {item.mark}</span>
+          <strong>{item.title}</strong>
+          <span class="home-feat__copy">{item.body}</span>
+          <span class="home-feat__meta">{item.meta}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const sys = document.querySelector<HTMLElement>('[data-feat-sys]');
+  if (sys) {
+    const nodes = sys.querySelectorAll<HTMLButtonElement>('[data-feat-node]');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const set = (index: number) => {
+      sys.dataset.on = String(index);
+      nodes.forEach((node, i) => node.setAttribute('aria-pressed', i === index ? 'true' : 'false'));
+    };
+
+    nodes.forEach((node, i) => {
+      node.addEventListener('mouseenter', () => set(i));
+      node.addEventListener('focus', () => set(i));
+      node.addEventListener('click', () => set(i));
+    });
+
+    if (!reduce) {
+      sys.addEventListener(
+        'pointermove',
+        (event) => {
+          const r = sys.getBoundingClientRect();
+          const x = (event.clientX - r.left) / r.width - 0.5;
+          const y = (event.clientY - r.top) / r.height - 0.5;
+          sys.style.setProperty('--fx', (x * 7).toFixed(2));
+          sys.style.setProperty('--fy', (y * 5).toFixed(2));
+        },
+        { passive: true },
+      );
+      sys.addEventListener('pointerleave', () => {
+        sys.style.setProperty('--fx', '0');
+        sys.style.setProperty('--fy', '0');
+      });
+    }
+  }
+</script>

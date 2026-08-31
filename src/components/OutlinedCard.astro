@@ -1,0 +1,24 @@
+---
+interface Props {
+  href?: string;
+  eyebrow?: string;
+  title: string;
+  body?: string;
+  meta?: string;
+}
+
+const { href, eyebrow, title, body, meta } = Astro.props;
+const Tag = href ? 'a' : 'article';
+---
+
+<Tag class="sp-card" href={href}>
+  {(eyebrow || meta) && (
+    <div class="sp-card__top">
+      {eyebrow && <p class="c-micro c-red">{eyebrow}</p>}
+      {meta && <span class="sp-card__meta">{meta}</span>}
+    </div>
+  )}
+  <h3 class="sp-card__title">{title}</h3>
+  {body && <p class="c-lede sp-card__body">{body}</p>}
+  <slot />
+</Tag>

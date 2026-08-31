@@ -1,40 +1,33 @@
 ---
-export const prerender = true;
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import Process from '../components/Process.astro';
 import PageHero from '../components/PageHero.astro';
+import PageCTA from '../components/PageCTA.astro';
 ---
 
-<Layout
+<SiteShell
   title="How We Work | Aizaz.studio"
-  description="Our process for discovery, architecture, build, deployment, and handoff — designed to ship reliable AI, automation, and software systems."
+  description="Our process for discovery, architecture, build, deployment, and handoff, designed to ship reliable AI, automation, and software systems."
   canonical="/engineering-transformation"
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
+  <PageHero
+    eyebrow="How we work"
+    title="From manual workflow"
+    highlight="to production system"
+    description="Discover, design, build, integrate, ship, and observe: the same disciplined process whether you start with a 14-day sprint or a full platform engagement."
+  >
+    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href="/process">Process summary</a>
+  </PageHero>
 
-    <main class="pb-24">
-      <PageHero
-        eyebrow="How We Work"
-        title="From manual workflow"
-        highlight="to production system"
-        description="Discovery, architecture, build, deployment, and handoff — the same disciplined process whether you start with a 14-day sprint or a full platform engagement."
-      />
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap seo-measure" style="text-align:center">
+      <p class="c-lede">
+        We do not assign random freelancers or disappear after a demo. One senior team maps your workflow, connects your tools, deploys to production, and documents everything your ops team needs to run it.
+      </p>
+    </div>
+  </section>
 
-      <section class="pb-8">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p class="text-zinc-400 text-lg leading-relaxed text-center">
-            We do not assign random freelancers or disappear after a demo. One senior team maps your workflow, connects your tools, deploys to production, and documents everything your ops team needs to run it.
-          </p>
-        </div>
-      </section>
-
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <Process stepsOnly />
-      </div>
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+  <Process stepsOnly />
+  <PageCTA />
+</SiteShell>

@@ -15,11 +15,20 @@ dist-ssr
 # Build-generated local image derivatives (written by optimize-local-images integration)
 public/optimized/
 
+# DEV-only reference overlay (never ship)
+public/dev/
+
 # Local secrets and Cloudflare dev state
 .dev.vars
 .env
 .wrangler/
 cookies.txt
+
+# Abandoned local Payload experiment (never ship secrets or Next cache)
+cms/.env
+cms/.next/
+cms/*.db
+cms/
 
 # Sanity studio
 studio/.env
@@ -37,3 +46,6 @@ studio/.sanity/
 *.njsproj
 *.sln
 *.sw?
+
+# Local Cursor / MCP state (never ship secrets)
+.cursor/

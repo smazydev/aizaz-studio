@@ -12,45 +12,24 @@ const {
   title,
   highlight,
   description,
-  size = 'default',
 } = Astro.props;
-
-const titleSize =
-  size === 'large'
-    ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'
-    : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl';
 ---
 
-<section class="pt-28 pb-12 sm:pt-32 sm:pb-16 relative overflow-hidden page-glow">
-  <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:48px_48px] sm:bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)] pointer-events-none"></div>
-
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-    {eyebrow && (
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-5 sm:mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-primary-400 shrink-0"></span>
-        {eyebrow}
-      </div>
-    )}
-
-    <h1 class={`${titleSize} font-display font-bold text-white mb-4 sm:mb-6 leading-[1.1] text-balance mx-auto max-w-3xl`}>
+<section class="page-hero">
+  <div class="c-wrap">
+    {eyebrow && <p class="c-micro c-red">{eyebrow}</p>}
+    <h1 class="page-title">
       {title}
       {highlight && (
         <>
-          <br class="hidden sm:block" />
-          <span class="sm:hidden"> </span>
-          <span class="text-gradient">{highlight}</span>
+          {' '}
+          <span class="page-title__accent">{highlight}</span>
         </>
       )}
     </h1>
-
-    {description && (
-      <p class="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed text-pretty px-1">
-        {description}
-      </p>
-    )}
-
+    {description && <p class="c-lede page-hero__lede">{description}</p>}
     {Astro.slots.has('default') && (
-      <div class="mt-6 sm:mt-8 flex flex-col items-center justify-center gap-4 w-full">
+      <div class="page-hero__actions">
         <slot />
       </div>
     )}

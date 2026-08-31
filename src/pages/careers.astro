@@ -1,14 +1,14 @@
 ---
-export const prerender = true;
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
+import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import OutlinedCard from '../components/OutlinedCard.astro';
+import { siteFooter } from '../data/siteChrome';
 
 const values = [
   {
     title: 'Systems over slides',
-    description: 'We measure success by working software in production — not decks and wireframes that never ship.',
+    description: 'We measure success by working software in production, not decks and wireframes that never ship.',
   },
   {
     title: 'Ownership mentality',
@@ -25,96 +25,77 @@ const jobs = [
     title: 'Senior Full Stack Engineer',
     department: 'Engineering',
     location: 'Remote',
-    type: 'Full-time',
+    type: 'full time',
     description: 'Build production web apps, APIs, and automations for clients across SaaS, ecommerce, and fintech.',
   },
   {
     title: 'Backend / Integration Engineer',
     department: 'Engineering',
     location: 'Remote',
-    type: 'Full-time',
-    description: 'NetSuite, ERP middleware, AWS backends, and high-reliability data sync systems.',
+    type: 'full time',
+    description: 'NetSuite, ERP middleware, AWS backends, and high reliability data sync systems.',
   },
   {
     title: 'AI Automation Engineer',
     department: 'Engineering',
     location: 'Remote',
-    type: 'Contract / Full-time',
-    description: 'Design and ship AI-assisted workflows, agents, and internal tools connected to business systems.',
+    type: 'Contract / full time',
+    description: 'Design and ship AI assisted workflows, agents, and internal tools connected to business systems.',
   },
 ];
 ---
 
-<Layout
+<SiteShell
   title="Careers | Aizaz.studio"
-  description="Join Aizaz.studio — an AI, cloud, and automation engineering studio building systems for startups and operations-heavy businesses."
+  description="Join Aizaz.studio, an AI, cloud, and automation engineering studio building systems for startups and operations-heavy businesses."
   canonical="/careers"
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
+  <PageHero
+    eyebrow="Careers"
+    title="Build systems that"
+    highlight="businesses depend on"
+    description="We are a small, senior team focused on AI automation, SaaS, ERP integrations, and cloud infrastructure. Exceptional engineers welcome, even when we are not actively hiring."
+  />
 
-    <main>
-      <PageHero
-        eyebrow="Careers"
-        title="Build systems that"
-        highlight="businesses depend on"
-        description="We are a small, senior team focused on AI automation, SaaS, ERP integrations, and cloud infrastructure. Exceptional engineers welcome — even when we are not actively hiring."
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <div class="sp-grid sp-grid--3">
+        {values.map((value) => (
+          <OutlinedCard title={value.title} body={value.description} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-section">
+    <div class="c-wrap seo-measure">
+      <SectionHeader
+        eyebrow="Roles"
+        title="Open roles"
+        lede="We review applications continuously — reach out even if a role is marked paused."
       />
-
-      <section class="pb-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid md:grid-cols-3 gap-6 mb-20">
-            {values.map((value) => (
-              <div class="p-6 rounded-2xl glass-card">
-                <h3 class="text-lg font-bold text-white mb-3">{value.title}</h3>
-                <p class="text-sm text-zinc-400 leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <div class="flex items-end justify-between gap-4 mb-8">
-            <div>
-              <h2 class="text-2xl font-display font-bold text-white mb-2">Open Roles</h2>
-              <p class="text-zinc-400 text-sm">We review applications continuously — reach out even if a role is marked paused.</p>
+      <div class="sp-grid sp-grid--1" style="gap: 12px">
+        {jobs.map((job) => (
+          <article class="sp-card">
+            <div class="sp-card__top">
+              <p class="c-micro c-red">{job.department}</p>
+              <span class="sp-card__meta">Paused · still say hi</span>
             </div>
-          </div>
-
-          <div class="grid gap-4 max-w-4xl">
-            {jobs.map((job) => (
-              <div class="group glass-card rounded-2xl p-8 hover:border-primary-500/20 transition-all">
-                <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-                  <div>
-                    <div class="text-xs font-bold uppercase tracking-widest text-primary-400 mb-2">{job.department}</div>
-                    <h3 class="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">
-                      {job.title}
-                    </h3>
-                    <div class="flex flex-wrap gap-3 text-sm text-zinc-500 mb-4">
-                      <span>{job.location}</span>
-                      <span>·</span>
-                      <span>{job.type}</span>
-                    </div>
-                    <p class="text-zinc-400 leading-relaxed max-w-2xl">{job.description}</p>
-                  </div>
-                  <div class="shrink-0">
-                    <span class="inline-flex px-5 py-2.5 rounded-full bg-zinc-800/80 border border-zinc-700 text-zinc-400 text-sm font-medium">
-                      Paused — still say hi
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div class="mt-12 p-8 rounded-2xl border border-dashed border-zinc-800 text-center max-w-4xl">
-            <p class="text-zinc-400">
-              Send your portfolio or GitHub to{' '}
-              <a href="mailto:hello@aizaz.studio" class="text-primary-400 hover:text-primary-300 font-medium">hello@aizaz.studio</a>
-              {' '}— tell us what systems you have shipped and what you want to build next.
-            </p>
-          </div>
+            <h3 class="sp-card__title">{job.title}</h3>
+            <p class="c-lede sp-card__body">{job.description}</p>
+            <p class="c-micro" style="margin-top: 14px">{job.location} · {job.type}</p>
+          </article>
+        ))}
+      </div>
+      <div class="sp-promo" style="margin-top: 28px">
+        <div class="sp-promo__copy">
+          <p class="c-lede">
+            Send your portfolio or GitHub to{' '}
+            <a href={`mailto:${siteFooter.studio.email}`}>{siteFooter.studio.email}</a>
+            — tell us what systems you have shipped and what you want to build next.
+          </p>
         </div>
-      </section>
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+      </div>
+    </div>
+  </section>
+</SiteShell>

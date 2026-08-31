@@ -1,53 +1,18 @@
 ---
-export const prerender = true;
 import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Hero } from '../components/Hero';
-import { LogoMarquee } from '../components/LogoMarquee';
-import { StatsBar } from '../components/StatsBar';
-import { ProblemSection } from '../components/ProblemSection';
-import { Services } from '../components/Services';
-import Process from '../components/Process.astro';
-import { WhyUs } from '../components/WhyUs';
-import { ClientReviews } from '../components/ClientReviews';
-import { CTA } from '../components/CTA';
-import { Footer } from '../components/Footer';
-import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
-import { getHomepageContent } from '../lib/sanity/homepage';
-
-/**
- * Homepage stays prerendered. Sanity values are baked in at build time.
- * Publishing Homepage in Studio does not go live until the next production build/deploy.
- * One Sanity fetch for editable fields; SEO title/meta/canonical remain code-controlled.
- */
-const homepage = await getHomepageContent();
+import '../styles/home-local.css';
+import ClonePage from '../components/home/ClonePage.astro';
 ---
 
 <Layout
   title="Aizaz.studio | AI, Cloud & Automation Engineering Studio"
-  description="Aizaz.studio builds AI automation, web apps, NetSuite integrations, and AWS infrastructure for startups and ops-heavy businesses."
+  description="Aizaz.studio builds AI automation, web apps, NetSuite integrations, and AWS infrastructure for startups and operations-heavy businesses. Ship working systems in 14 days."
   canonical="/"
-  keywords={['AI automation agency', 'NetSuite integration', 'SaaS development', 'AWS DevOps', 'business process automation']}
 >
-  <div class="site-shell min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
-      <Hero client:load />
-      <LogoMarquee client:load label={homepage.marqueeLabel} items={homepage.marqueeItems} />
-      <StatsBar client:load stats={homepage.stats} />
-      <ProblemSection client:load />
-      <Services client:load />
-      <Process />
-      <WhyUs client:load />
-      <ClientReviews client:load />
-      <CaseStudyShowcase
-        items={homepage.featuredCaseStudies}
-        eyebrow={homepage.showcaseEyebrow}
-        title={homepage.showcaseTitle}
-        description={homepage.showcaseDescription}
-      />
-      <CTA client:load />
-    </main>
-    <Footer client:load />
-  </div>
+  <ClonePage />
 </Layout>
+
+<script>
+  import { mountHomeMotion } from '../lib/home-motion';
+  mountHomeMotion();
+</script>

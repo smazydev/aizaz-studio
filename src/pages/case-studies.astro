@@ -1,12 +1,10 @@
 ---
 export const prerender = false;
 
-import Layout from '../layouts/Layout.astro';
-import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
-import { CTA } from '../components/CTA';
+import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
+import PageCTA from '../components/PageCTA.astro';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 
@@ -19,23 +17,21 @@ const showcaseItems = caseStudies.map((study) => ({
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
 ---
 
-<Layout
+<SiteShell
   title="Case Studies | Aizaz.studio"
   description="See how Aizaz.studio builds compliance platforms, investment intelligence systems, and production-grade software for scaling businesses."
   canonical="/case-studies"
 >
-  <div class="min-h-screen bg-black text-white selection:bg-primary-500/30 selection:text-primary-200 overflow-x-hidden">
-    <Navbar client:load />
-    <main>
-      <PageHero
-        eyebrow="Case Studies"
-        title="Systems built for"
-        highlight="real-world scale"
-        description="Compliance platforms, fintech infrastructure, and production systems — designed for security, scale, and operations teams that cannot afford fragile software."
-      />
-      <CaseStudyShowcase items={showcaseItems} showHeader={false} />
-      <CTA client:visible />
-    </main>
-    <Footer client:visible />
-  </div>
-</Layout>
+  <PageHero
+    eyebrow="Works"
+    title="Systems built for"
+    highlight="real-world scale"
+    description="Compliance platforms, SaaS products, and operational systems designed for security, scale, and teams that cannot afford fragile software."
+  >
+    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href="/services">Services</a>
+  </PageHero>
+
+  <CaseStudyShowcase items={showcaseItems} showHeader={false} />
+  <PageCTA title="Building something similar?" lede="Book a call to talk through scope, stack, and a sensible first step." />
+</SiteShell>

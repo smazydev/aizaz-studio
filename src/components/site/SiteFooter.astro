@@ -1,0 +1,35 @@
+---
+import { siteFooter } from '../../data/siteChrome';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="c-foot">
+  <div class="c-wrap">
+    <div class="c-foot__cols">
+      <div>
+        <h4>{siteFooter.studio.heading}</h4>
+        <a class="c-foot__brand" href="/">
+          <img src="/aizaz-logo-white.png" alt="" width="40" height="40" />
+          Aizaz Studio
+        </a>
+        <p>{siteFooter.studio.blurb}</p>
+        <a href={`mailto:${siteFooter.studio.email}`}>{siteFooter.studio.email}</a>
+        <a href={siteFooter.studio.phoneHref}>{siteFooter.studio.phone}</a>
+      </div>
+      {siteFooter.columns.map((col) => (
+        <div>
+          <h4>{col.heading}</h4>
+          {col.links.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+        </div>
+      ))}
+    </div>
+    <p class="c-foot__mark" aria-hidden="true">AIZAZ</p>
+    <div class="c-foot__base">
+      <span>© {year} Aizaz Studio. All rights reserved.</span>
+      <span>Karachi · Remote</span>
+    </div>
+  </div>
+</footer>

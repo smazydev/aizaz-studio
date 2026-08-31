@@ -1,0 +1,924 @@
+---
+import { Image } from 'astro:assets';
+import { caseStudies } from '../../data/caseStudies';
+import Hero from './Hero.astro';
+import HomeWhy from './HomeWhy.astro';
+import HomeFeatures from './HomeFeatures.astro';
+import TechLogoStrip from './TechLogoStrip.astro';
+import SiteNav from '../site/SiteNav.astro';
+import SiteFooter from '../site/SiteFooter.astro';
+import { siteFooter } from '../../data/siteChrome';
+import { leadershipProfiles } from '../../data/leadership';
+import { featuredFeedback, secondaryFeedback, displayQuote } from '../../data/homeFeedback';
+
+const featuredWork = caseStudies
+  .filter((study) => study.slug !== 'investorsgonewild-investment-platform')
+  .flatMap((study) => {
+    const foci = study.category
+      .split('•')
+      .map((part) => part.trim())
+      .filter(Boolean);
+    const shots = [
+      { image: study.image, kind: 'cinema' as const },
+      ...(study.backgroundImages?.[0]
+        ? [{ image: study.backgroundImages[0], kind: 'wide' as const }]
+        : []),
+      ...(study.backgroundImages?.[1]
+        ? [{ image: study.backgroundImages[1], kind: 'square' as const }]
+        : []),
+    ];
+    return shots.map((shot, index) => ({
+      ...shot,
+      href: `/case-studies/${study.slug}`,
+      title: study.title,
+      name: study.title.split(':')[0].trim(),
+      focus: foci[index] ?? foci[0] ?? study.category,
+      system: study.subtitle,
+    }));
+  })
+  .slice(0, 3);
+
+const isDev = import.meta.env.DEV;
+const services = [
+  {
+    n: '01',
+    title: 'AI Automation',
+    body: 'Agents and workflows that take work off your team, from intake to action, with evals and a human handoff.',
+    items: ['Workflow mapping', 'Tool use & guardrails', 'Production evals'],
+    href: '/services/ai-automation-systems',
+  },
+  {
+    n: '02',
+    title: 'Product Engineering',
+    body: 'Web apps and SaaS products built to ship: architecture, UI, and the backend your users actually hit.',
+    items: ['MVP to production', 'React / Node', 'Auth, billing, APIs'],
+    href: '/services/web-app-saas-development',
+  },
+  {
+    n: '03',
+    title: 'Systems Integration',
+    body: 'CRM, helpdesk, warehouse, and internal tools connected so data stops living in five places.',
+    items: ['API connectors', 'Event buses', 'Idempotent sync'],
+    href: '/services/api-integration',
+  },
+  {
+    n: '04',
+    title: 'ERP / NetSuite',
+    body: 'NetSuite and operations systems wired to the rest of the stack: orders, inventory, and finance in one flow.',
+    items: ['NetSuite REST / SuiteQL', 'Order sync', 'Custom records'],
+    href: '/services/netsuite-erp-automation',
+  },
+  {
+    n: '05',
+    title: 'Cloud Infrastructure',
+    body: 'AWS environments that stay up: CI/CD, observability, and the reliability work that makes shipping safe.',
+    items: ['AWS landing zone', 'Pipelines & canaries', 'Logs, traces, alerts'],
+    href: '/services/aws-devops',
+  },
+];
+
+const process = [
+  { n: '01', title: 'Discover', body: 'Understand the workflow, constraints and systems.', meta: 'INPUT / OPS / USERS', art: 'nodes' },
+  { n: '02', title: 'Design', body: 'Map the experience, prompts, and handoff states.', meta: 'UX / PROMPTS / GUARDS', art: 'wire' },
+  { n: '03', title: 'Build', body: 'Assemble the agent, pipeline, or product.', meta: 'APP / MODEL / API', art: 'blocks' },
+  { n: '04', title: 'Integrate', body: 'Join CRM, ERP, warehouse, and internal tools.', meta: 'BUS / SYNC / AUTH', art: 'join' },
+  { n: '05', title: 'Ship', body: 'Deploy with tracing, canaries, and rollback.', meta: 'CI / CANARY / PROD', art: 'ship' },
+  { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
+];
+
+const leaders = leadershipProfiles;
+
+const contactEmail = siteFooter.studio.email;
+const contactPhone = siteFooter.studio.phone;
+const contactPhoneHref = siteFooter.studio.phoneHref;
+
+/** Real project foci from shipped work — not awards. */
+const proofPoints = [
+  { k: '01', t: 'Property Matchmaker', d: 'Real estate platform connecting agents and deals' },
+  { k: '02', t: 'SalesAngel', d: 'Live dialer, CRM, and AI agent operations' },
+  { k: '03', t: 'CodeChecker', d: 'Compliance-oriented engineering delivery' },
+  { k: '04', t: 'Systems integration', d: 'ERP, CRM, and production cloud work' },
+];
+
+const faqs = [
+  { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
+  { q: 'What do we need to start?', a: 'A clear problem statement, success metrics, access to sample data, and a stakeholder who can make decisions. We’ll run a kickoff workshop to align scope.' },
+  { q: 'Which models/stack do you use?', a: 'Modern, scalable stacks like React, Node.js, and cloud services. We choose models/APIs based on the use case, performance, and cost.' },
+  { q: 'How do engagements work?', a: 'Scoped sprints and project delivery, not opaque retainers. We align on outcomes, then ship with clear ownership through launch.' },
+];
+
+const homeQuote = featuredFeedback;
+
+const haiField = (() => {
+  let s = 0xa12a2;
+  const rng = () => {
+    s |= 0;
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const gauss = () => {
+    const u = rng() || 1e-6;
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(Math.PI * 2 * rng());
+  };
+  const W = 1000;
+  const H = 720;
+  type Pt = { x: number; y: number; r: number; hot: boolean; o: number };
+  const pts: Pt[] = [];
+  const add = (cx: number, cy: number, sx: number, sy: number, n: number, hotP: number) => {
+    for (let i = 0; i < n; i++) {
+      const z = rng();
+      pts.push({
+        x: +(Math.min(0.98, Math.max(0.02, cx + gauss() * sx)) * W).toFixed(1),
+        y: +(Math.min(0.98, Math.max(0.02, cy + gauss() * sy)) * H).toFixed(1),
+        r: +(0.7 + z * 1.15).toFixed(2),
+        hot: rng() < hotP,
+        o: +(0.28 + z * 0.58).toFixed(2),
+      });
+    }
+  };
+  add(0.3, 0.38, 0.13, 0.16, 460, 0.04);
+  add(0.5, 0.47, 0.1, 0.12, 360, 0.1);
+  add(0.68, 0.61, 0.1, 0.11, 440, 0.7);
+  add(0.17, 0.71, 0.08, 0.09, 200, 0.07);
+  add(0.79, 0.25, 0.07, 0.08, 170, 0.05);
+  const bridge = (a: [number, number], b: [number, number], n: number, hotP: number) => {
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      pts.push({
+        x: +((a[0] + (b[0] - a[0]) * t + gauss() * 0.012) * W).toFixed(1),
+        y: +((a[1] + (b[1] - a[1]) * t + Math.sin(t * Math.PI) * 0.045 + gauss() * 0.012) * H).toFixed(1),
+        r: 0.95,
+        hot: rng() < hotP,
+        o: 0.45,
+      });
+    }
+  };
+  bridge([0.3, 0.38], [0.5, 0.47], 90, 0.1);
+  bridge([0.5, 0.47], [0.68, 0.61], 100, 0.48);
+  bridge([0.3, 0.38], [0.17, 0.71], 70, 0.06);
+  bridge([0.5, 0.47], [0.79, 0.25], 55, 0.05);
+  const links: { x1: number; y1: number; x2: number; y2: number; hot: boolean }[] = [];
+  const cols = 28;
+  const rows = 20;
+  const bins: number[][] = Array.from({ length: cols * rows }, () => []);
+  pts.forEach((p, i) => {
+    const cx = Math.min(cols - 1, Math.floor((p.x / W) * cols));
+    const cy = Math.min(rows - 1, Math.floor((p.y / H) * rows));
+    bins[cy * cols + cx].push(i);
+  });
+  bins.forEach((bin) => {
+    for (let i = 0; i < bin.length; i++) {
+      if (rng() > 0.58 || bin.length < 2) continue;
+      const a = pts[bin[i]];
+      const b = pts[bin[(i + 1) % bin.length]];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      if (dx * dx + dy * dy < 1700) links.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, hot: a.hot && b.hot });
+    }
+  });
+  return { pts, links };
+})();
+---
+
+<div class="clone">
+  {isDev && (
+    <>
+      <div class="ref-overlay" data-ref-overlay hidden>
+        <img src="/dev/reference-home.jpg" alt="" />
+      </div>
+      <div class="ref-chip">Shift+R</div>
+    </>
+  )}
+
+  <SiteNav />
+
+  <main>
+    <!-- 02 HERO -->
+    <Hero />
+
+    <!-- 03 HUMAN CENTERED -->
+    <section class="home-human-ai">
+      <div class="c-wrap home-human-ai__head">
+        <div class="home-human-ai__heading">
+          <p class="c-micro c-red">About Us</p>
+          <h2 class="home-human-ai__title">Senior<br />engineering,<br />built for<br />production</h2>
+        </div>
+        <p class="c-lede home-human-ai__lede">
+          AI, SaaS, integrations, and cloud systems for teams that need working software, not slide decks. Available for remote projects worldwide.
+        </p>
+      </div>
+      <div class="c-wrap home-human-ai__grid">
+        <article class="home-human-ai__visual">
+          <svg class="home-human-ai__field" viewBox="0 0 1000 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            {haiField.links.map((l) => (
+              <line
+                x1={l.x1}
+                y1={l.y1}
+                x2={l.x2}
+                y2={l.y2}
+                class={l.hot ? 'is-hot' : undefined}
+              />
+            ))}
+            {haiField.pts.map((p) => (
+              <circle cx={p.x} cy={p.y} r={p.r} opacity={p.o} class={p.hot ? 'is-hot' : undefined} />
+            ))}
+          </svg>
+          <span class="home-human-ai__noise"></span>
+          <span class="home-human-ai__meta">inference field · {haiField.pts.length.toLocaleString()} nodes</span>
+        </article>
+        <div class="home-human-ai__side">
+          <article class="home-human-ai__module">
+            <div class="home-human-ai__module-bar">
+              <p class="c-micro c-red">Aizaz · runtime</p>
+              <span class="home-human-ai__live">live</span>
+            </div>
+            <div class="home-human-ai__kpi">
+              <span>Ship</span>
+              <small>scoped systems</small>
+            </div>
+            <svg class="home-human-ai__spark" viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 34 C18 34 22 18 40 20 C58 22 62 8 80 12 C98 16 104 30 122 24 C140 18 148 6 168 10 C188 14 196 32 216 22 C228 16 234 20 240 18" fill="none" />
+            </svg>
+            <p class="home-human-ai__copy">from discovery to production with clear ownership</p>
+            <div class="home-human-ai__module-meta">
+              <span>AI</span>
+              <span>SaaS</span>
+              <span>ERP</span>
+            </div>
+          </article>
+          <article class="home-human-ai__object">
+            <div class="home-human-ai__part" aria-hidden="true">
+              <span class="home-human-ai__part-shadow"></span>
+              <span class="home-human-ai__part-body">
+                <i class="home-human-ai__part-face"></i>
+                <i class="home-human-ai__part-slit"></i>
+                <i class="home-human-ai__part-port"></i>
+              </span>
+            </div>
+            <div class="home-human-ai__caption">
+              <p class="c-micro">Studio focus</p>
+              <p>Systems that stay online</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 SERVICES -->
+    <section class="home-services" id="services" data-services>
+      <div class="home-services__inner">
+        <div class="home-services__head">
+          <p class="c-micro c-red">Services</p>
+          <h2 class="home-services__title">Engineering<br />services</h2>
+        </div>
+        <div class="home-services__stage">
+          <div class="home-services__visual" data-service-viz>
+            <span class="home-services__depth" aria-hidden="true"></span>
+            <div class="home-services__panel is-on" data-sv="0">
+              <span class="home-services__panel-n">01 · AUTOMATION</span>
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
+                </g>
+                <g class="mid">
+                  <rect x="24" y="84" width="112" height="960" rx="16" />
+                  <rect x="148" y="148" width="104" height="832" rx="16" />
+                  <rect class="hot" x="264" y="112" width="156" height="904" rx="18" />
+                  <rect x="432" y="168" width="118" height="792" rx="16" />
+                  <rect x="562" y="212" width="100" height="704" rx="16" />
+                  <rect x="674" y="256" width="80" height="616" rx="16" />
+                  <rect x="766" y="300" width="70" height="528" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="40" y="64">INPUTS</text>
+                  <text x="160" y="128">EVENTS</text>
+                  <text x="280" y="92">AGENT / LOGIC</text>
+                  <text x="448" y="148">TOOLS</text>
+                  <text x="580" y="192">API</text>
+                  <text x="688" y="236">DATA</text>
+                  <text x="772" y="280">OUTPUT</text>
+                  <text x="44" y="260">ticket</text>
+                  <text x="44" y="420">email</text>
+                  <text x="44" y="580">crm</text>
+                  <text x="44" y="740">webhook</text>
+                  <text x="44" y="900">form</text>
+                  <text x="164" y="320">ingest</text>
+                  <text x="164" y="500">route</text>
+                  <text x="164" y="680">queue</text>
+                  <text x="284" y="300">plan</text>
+                  <text x="284" y="460">tool use</text>
+                  <text x="284" y="620">eval</text>
+                  <text x="284" y="780">handoff</text>
+                  <text x="448" y="340">search</text>
+                  <text x="448" y="500">write</text>
+                  <text x="448" y="660">notify</text>
+                  <text x="576" y="400">rest</text>
+                  <text x="576" y="560">hook</text>
+                  <text x="688" y="440">store</text>
+                  <text x="688" y="620">cache</text>
+                  <text x="774" y="520">action</text>
+                  <path class="flow" d="M136 248 H148" />
+                  <path class="flow" d="M136 408 H148" />
+                  <path class="flow" d="M136 568 C142 568 142 488 148 488" />
+                  <path class="flow" d="M252 488 H264" />
+                  <path class="flow hot" d="M420 448 H432" />
+                  <path class="flow" d="M550 328 C556 328 556 388 562 388" />
+                  <path class="flow hot" d="M550 488 H562" />
+                  <path class="flow hot" d="M662 548 H674" />
+                  <path class="flow hot" d="M754 508 H766" />
+                  <circle cx="56" cy="248" r="4" />
+                  <circle cx="56" cy="408" r="4" />
+                  <circle cx="56" cy="568" r="4" />
+                  <circle cx="56" cy="728" r="4" />
+                  <circle class="hot" cx="342" cy="448" r="6" />
+                  <circle class="hot" cx="491" cy="488" r="4" />
+                  <circle class="pkt" cx="206" cy="488" r="3" />
+                  <circle class="pkt" cx="618" cy="508" r="3" />
+                  <rect x="766" y="780" width="70" height="48" rx="8" />
+                  <text x="774" y="810">p95</text>
+                </g>
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="1">
+              <span class="home-services__panel-n">02 · PRODUCT</span>
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
+                </g>
+                <g class="mid">
+                  <rect x="28" y="72" width="804" height="140" rx="16" />
+                  <rect x="28" y="236" width="252" height="808" rx="18" />
+                  <rect class="hot" x="304" y="236" width="252" height="808" rx="18" />
+                  <rect x="580" y="236" width="252" height="388" rx="18" />
+                  <rect x="580" y="648" width="252" height="396" rx="18" />
+                </g>
+                <g class="fg">
+                  <text x="52" y="132">APP SHELL</text>
+                  <text x="52" y="300">UI SURFACE</text>
+                  <text x="328" y="300">DOMAIN CORE</text>
+                  <text x="604" y="300">AUTH / API</text>
+                  <text x="604" y="712">BILLING</text>
+                  <path class="flow" d="M280 640 H304" />
+                  <path class="flow hot" d="M556 640 H580" />
+                  <path class="flow" d="M706 624 V648" />
+                  <circle class="hot" cx="430" cy="640" r="6" />
+                  <circle cx="154" cy="640" r="4" />
+                  <circle cx="706" cy="430" r="4" />
+                  <circle class="pkt" cx="292" cy="640" r="3" />
+                </g>
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="2">
+              <span class="home-services__panel-n">03 · INTEGRATION</span>
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
+                </g>
+                <g class="mid">
+                  <rect class="bus" x="386" y="56" width="88" height="980" rx="14" />
+                  <rect x="28" y="80" width="300" height="200" rx="16" />
+                  <rect x="28" y="308" width="300" height="200" rx="16" />
+                  <rect x="28" y="536" width="300" height="200" rx="16" />
+                  <rect x="28" y="764" width="300" height="200" rx="16" />
+                  <rect x="532" y="80" width="300" height="200" rx="16" />
+                  <rect x="532" y="308" width="300" height="200" rx="16" />
+                  <rect x="532" y="536" width="300" height="200" rx="16" />
+                  <rect x="532" y="764" width="300" height="200" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="400" y="42">EVENT BUS</text>
+                  <text x="52" y="176">CRM</text>
+                  <text x="52" y="404">HELPDESK</text>
+                  <text x="52" y="632">WAREHOUSE</text>
+                  <text x="52" y="860">DOCS</text>
+                  <text x="556" y="176">ERP</text>
+                  <text x="556" y="404">BILLING</text>
+                  <text x="556" y="632">AUTH</text>
+                  <text x="556" y="860">NOTIFY</text>
+                  <path class="flow" d="M328 180 H386" />
+                  <path class="flow" d="M328 408 H386" />
+                  <path class="flow" d="M328 636 H386" />
+                  <path class="flow" d="M328 864 H386" />
+                  <path class="flow hot" d="M474 180 H532" />
+                  <path class="flow hot" d="M474 408 H532" />
+                  <path class="flow" d="M474 636 H532" />
+                  <path class="flow" d="M474 864 H532" />
+                  <circle class="hot" cx="430" cy="408" r="6" />
+                  <circle class="pkt" cx="358" cy="408" r="3" />
+                  <circle class="pkt" cx="502" cy="180" r="3" />
+                </g>
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="3">
+              <span class="home-services__panel-n">04 · NETSUITE</span>
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
+                </g>
+                <g class="mid">
+                  <rect x="28" y="56" width="360" height="420" rx="18" />
+                  <rect x="472" y="56" width="360" height="420" rx="18" />
+                  <rect x="28" y="604" width="360" height="420" rx="18" />
+                  <rect x="472" y="604" width="360" height="420" rx="18" />
+                  <rect class="core" x="358" y="470" width="144" height="140" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="52" y="112">ORDERS</text>
+                  <text x="496" y="112">CUSTOMERS</text>
+                  <text x="52" y="660">INVENTORY</text>
+                  <text x="496" y="660">FINANCE</text>
+                  <text x="396" y="552">SYNC</text>
+                  <line class="g" x1="52" y1="168" x2="352" y2="168" />
+                  <line class="g" x1="52" y1="216" x2="328" y2="216" />
+                  <line class="g" x1="52" y1="264" x2="340" y2="264" />
+                  <line class="g" x1="496" y1="168" x2="796" y2="168" />
+                  <line class="g" x1="496" y1="216" x2="772" y2="216" />
+                  <line class="g" x1="52" y1="716" x2="352" y2="716" />
+                  <line class="g" x1="496" y1="716" x2="796" y2="716" />
+                  <path class="flow" d="M388 266 H430 V470" />
+                  <path class="flow" d="M472 266 H430" />
+                  <path class="flow hot" d="M388 814 H430 V610" />
+                  <path class="flow" d="M472 814 H430" />
+                  <circle class="hot" cx="430" cy="540" r="6" />
+                  <circle class="pkt" cx="430" cy="360" r="3" />
+                </g>
+              </svg>
+            </div>
+            <div class="home-services__panel" data-sv="4">
+              <span class="home-services__panel-n">05 · INFRA</span>
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+                <g class="bg">
+                  {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
+                  {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
+                </g>
+                <g class="mid">
+                  <rect x="28" y="48" width="804" height="172" rx="16" />
+                  <rect x="28" y="244" width="804" height="172" rx="16" />
+                  <rect class="hot" x="28" y="440" width="804" height="172" rx="16" />
+                  <rect x="28" y="636" width="804" height="172" rx="16" />
+                  <rect x="28" y="832" width="804" height="196" rx="16" />
+                </g>
+                <g class="fg">
+                  <text x="52" y="92">EDGE</text>
+                  <text x="52" y="288">SERVICES</text>
+                  <text x="52" y="484">QUEUES</text>
+                  <text x="52" y="680">DATABASE</text>
+                  <text x="52" y="892">OBSERVABILITY</text>
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="134" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="330" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle class={n === 5 ? 'hot' : undefined} cx={200 + n * 52} cy="526" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="722" r="4" />)}
+                  {Array.from({ length: 12 }).map((_, n) => <circle cx={200 + n * 52} cy="934" r="4" />)}
+                  <path class="flow" d="M430 220 V244" />
+                  <path class="flow" d="M430 416 V440" />
+                  <path class="flow hot" d="M430 612 V636" />
+                  <path class="flow" d="M430 808 V832" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="home-services__acc" role="list">
+            {services.map((s, i) => (
+              <a
+                class:list={['home-services__item', i === 0 && 'is-on']}
+                href={s.href}
+                data-service={String(i)}
+                aria-current={i === 0 ? 'true' : undefined}
+              >
+                <span class="home-services__item-kicker">
+                  <span class="home-services__idx">{s.n}</span>
+                  <span class="home-services__mark"></span>
+                </span>
+                <span class="home-services__item-title">{s.title}</span>
+                <span class="home-services__item-body">
+                  <span class="home-services__item-inner">
+                    {s.body}
+                    <span class="home-services__item-meta">{s.items.join('  /  ')}</span>
+                    <span class="home-services__go">View service</span>
+                  </span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05–08 PROJECTS -->
+    <div class="c-wrap c-works-label">
+      <p class="c-micro c-red">Featured Works</p>
+    </div>
+    {featuredWork.map((p) => (
+      <article class={`c-project c-project--${p.kind}`} data-reveal="media">
+        <a class="c-project__frame" href={p.href}>
+          <Image
+            class="c-project__shot"
+            src={p.image}
+            alt={p.title}
+            width={1920}
+            widths={[960, 1440, 1920]}
+            sizes="(min-width: 1200px) 1680px, 100vw"
+            quality={78}
+          />
+        </a>
+        <div class="c-project__meta">
+          <div>
+            <p class="c-micro">Project</p>
+            <h3>
+              <a href={p.href}>{p.name}</a>
+            </h3>
+          </div>
+          <div>
+            <p class="c-micro">Focus</p>
+            <p class="c-project__val">{p.focus}</p>
+          </div>
+          <div>
+            <p class="c-micro">System</p>
+            <p class="c-project__val">{p.system}</p>
+          </div>
+          <div>
+            <p class="c-micro">Case study</p>
+            <p class="c-project__val">
+              <a href={p.href}>View →</a>
+            </p>
+          </div>
+        </div>
+      </article>
+    ))}
+
+    <!-- 09 FROM IDEA -->
+    <section class="home-process" data-process>
+      <div class="home-process__inner">
+        <p class="home-process__mark">03 / Process</p>
+        <h2 class="home-process__title">From Idea<br />to Production.</h2>
+        <div class="home-process__board">
+          <svg class="home-process__rail home-process__rail--map" viewBox="0 0 1440 640" preserveAspectRatio="none" aria-hidden="true">
+            <g class="home-process__grid">
+              {Array.from({ length: 18 }).map((_, i) => <line x1={40 + i * 80} y1="16" x2={40 + i * 80} y2="624" />)}
+              {Array.from({ length: 8 }).map((_, i) => <line x1="24" y1={40 + i * 80} x2="1416" y2={40 + i * 80} />)}
+            </g>
+            <text class="home-process__ann" x="40" y="36">LIFECYCLE · 06 STAGES</text>
+            <text class="home-process__ann" x="1248" y="36">ROUTE / PROD</text>
+            <path class="home-process__route" d="M120 168 C280 168 360 118 520 118 C700 118 840 148 1000 148 C1140 148 1260 210 1260 328 C1260 430 1080 508 760 508 C500 508 320 540 180 548" />
+            <path class="home-process__route home-process__route--hot" data-process-fill pathLength="1" d="M120 168 C280 168 360 118 520 118 C700 118 840 148 1000 148 C1140 148 1260 210 1260 328 C1260 430 1080 508 760 508 C500 508 320 540 180 548" />
+            <circle class="home-process__dot" cx="120" cy="168" r="5" />
+            <circle class="home-process__dot" cx="520" cy="118" r="5" />
+            <circle class="home-process__dot" cx="1000" cy="148" r="5" />
+            <circle class="home-process__dot" cx="1260" cy="328" r="5" />
+            <circle class="home-process__dot" cx="760" cy="508" r="5" />
+            <circle class="home-process__dot" cx="180" cy="548" r="5" />
+          </svg>
+          <svg class="home-process__rail home-process__rail--col" viewBox="0 0 48 720" preserveAspectRatio="none" aria-hidden="true">
+            <path class="home-process__route" d="M24 18 V702" />
+            <path class="home-process__route home-process__route--hot" data-process-fill pathLength="1" d="M24 18 V702" />
+            <circle class="home-process__dot" cx="24" cy="28" r="4" />
+            <circle class="home-process__dot" cx="24" cy="148" r="4" />
+            <circle class="home-process__dot" cx="24" cy="268" r="4" />
+            <circle class="home-process__dot" cx="24" cy="388" r="4" />
+            <circle class="home-process__dot" cx="24" cy="508" r="4" />
+            <circle class="home-process__dot" cx="24" cy="628" r="4" />
+          </svg>
+          <div class="home-process__core" data-process-core aria-hidden="true">
+            <span class="home-process__core-unit"></span>
+            <span class="home-process__core-unit is-mid"></span>
+            <span class="home-process__core-unit is-top"></span>
+            <i></i>
+          </div>
+          {process.map((row, i) => (
+            <article class:list={['home-process__stage', i === 0 && 'is-on']} data-process-node data-step={String(i)}>
+              <span class="home-process__artifact" aria-hidden="true">
+                {row.art === 'nodes' && (
+                  <svg viewBox="0 0 48 28"><circle cx="8" cy="16" r="2.2" /><circle cx="18" cy="8" r="2" /><circle cx="28" cy="18" r="2.4" /><circle cx="38" cy="10" r="1.8" /><circle cx="22" cy="20" r="1.6" /></svg>
+                )}
+                {row.art === 'wire' && (
+                  <svg viewBox="0 0 48 28"><rect x="4" y="8" width="18" height="12" rx="2" /><rect x="26" y="6" width="18" height="16" rx="2" /><path d="M22 14 H26" /></svg>
+                )}
+                {row.art === 'blocks' && (
+                  <svg viewBox="0 0 48 28"><rect x="6" y="14" width="12" height="10" rx="1.5" /><rect x="18" y="8" width="12" height="16" rx="1.5" /><rect x="30" y="4" width="12" height="20" rx="1.5" /></svg>
+                )}
+                {row.art === 'join' && (
+                  <svg viewBox="0 0 48 28"><path d="M4 8 H20 V20 H4" /><path d="M44 8 H28 V20 H44" /><path d="M20 14 H28" /></svg>
+                )}
+                {row.art === 'ship' && (
+                  <svg viewBox="0 0 48 28"><path d="M6 14 H32" /><path d="M26 8 L36 14 L26 20" /></svg>
+                )}
+                {row.art === 'wave' && (
+                  <svg viewBox="0 0 48 28"><path d="M4 18 C10 18 12 8 18 8 C24 8 24 20 30 20 C36 20 38 12 44 12" /></svg>
+                )}
+              </span>
+              <p class="home-process__idx">{row.n}</p>
+              <h3>{row.title}</h3>
+              <p class="home-process__copy">{row.body}</p>
+              <p class="home-process__meta">{row.meta}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 WHY -->
+    <HomeWhy />
+
+    <!-- 11 FEATURES -->
+    <HomeFeatures />
+
+    <!-- 12 SELECTED TECHNOLOGIES -->
+    <TechLogoStrip />
+
+    <!-- 13–15 DARK / METRIC / TESTIMONIAL -->
+    <section class="c-dark">
+      <div class="c-wrap">
+        <div class="c-dark__intro">
+          <div>
+            <p class="c-micro">Meet the team</p>
+            <h2 class="c-h1">A studio built<br />to ship systems</h2>
+          </div>
+          <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
+        </div>
+
+        <div class="c-roster" data-team data-active="0">
+          <div class="c-roster__people" role="tablist" aria-label="Leadership">
+            {leaders.map((p, index) => (
+              <button
+                type="button"
+                class:list={['c-person', index === 0 && 'is-active']}
+                role="tab"
+                id={`team-tab-${p.id}`}
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`team-panel-${p.id}`}
+                data-team-person
+                data-team-index={String(index)}
+              >
+                {p.photoUrl ? (
+                  <img class="c-person__photo" src={p.photoUrl} alt="" width="400" height="400" loading="lazy" decoding="async" />
+                ) : (
+                  <span class="c-person__face" aria-hidden="true"></span>
+                )}
+                <span class="c-person__caption">
+                  <strong>{p.name}</strong>
+                  <span>{p.role}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+          <div class="c-profile" data-team-profile>
+            {leaders.map((p, index) => (
+              <article
+                class:list={['c-profile__panel', index === 0 && 'is-active']}
+                id={`team-panel-${p.id}`}
+                role="tabpanel"
+                aria-labelledby={`team-tab-${p.id}`}
+                data-team-panel
+                data-team-index={String(index)}
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
+                <h3 class="c-profile__name">{p.name}</h3>
+                <p class="c-profile__role">{p.role}</p>
+                <p class="c-profile__bio">{p.bio}</p>
+                <div class="c-profile__focus">
+                  <p class="c-micro">Focus</p>
+                  <ul>
+                    {p.focus.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="c-profile__links">
+                  {p.linkedin && (
+                    <a href={p.linkedin} target="_blank" rel="noopener noreferrer">
+                      LinkedIn <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {'githubUrl' in p && p.githubUrl && (
+                    <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">
+                      GitHub <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="c-dark__growth">
+          <div>
+            <p class="c-micro">Focus</p>
+            <p class="c-stat c-stat--sm" style="font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.04em;">Systems<br />that ship</p>
+          </div>
+          <div class="c-dark__metrics">
+            <div>
+              <p class="c-micro">AI &amp; automation</p>
+              <p class="c-lede" style="margin: 8px 0 0">Agents and workflows</p>
+            </div>
+            <div>
+              <p class="c-micro">SaaS &amp; cloud</p>
+              <p class="c-lede" style="margin: 8px 0 0">Products and ops</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="c-awards">
+          {proofPoints.map((a) => (
+            <div>
+              <p class="c-micro">{a.k}</p>
+              <h3>{a.t}</h3>
+              <p class="c-lede" style="margin:0">{a.d}</p>
+            </div>
+          ))}
+        </div>
+
+        {homeQuote && (
+          <figure class="c-quote">
+            <div class="c-quote__body">
+              <p class="c-micro">Client feedback</p>
+              <blockquote cite={homeQuote.href}>
+                <p>“{displayQuote(homeQuote)}”</p>
+              </blockquote>
+              <figcaption>
+                <cite>
+                  {homeQuote.author}
+                  {homeQuote.role ? `, ${homeQuote.role}` : ''}
+                  {homeQuote.location ? ` · ${homeQuote.location}` : ''}
+                </cite>
+                {homeQuote.sourceIsUpwork ? (
+                  <span class="c-quote__source">Client feedback from Upwork</span>
+                ) : homeQuote.sourceLabel ? (
+                  <span class="c-quote__source">{homeQuote.sourceLabel}</span>
+                ) : null}
+              </figcaption>
+            </div>
+            <aside class="c-quote__proof" aria-label="Engagement context">
+              <p class="c-micro c-quote__proof-eyebrow">Engagement record</p>
+              <dl class="c-quote__meta">
+                {homeQuote.project && (
+                  <div>
+                    <dt>Project</dt>
+                    <dd>{homeQuote.project}</dd>
+                  </div>
+                )}
+                {homeQuote.work && (
+                  <div>
+                    <dt>Engagement</dt>
+                    <dd>{homeQuote.work}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>Source</dt>
+                  <dd>
+                    {homeQuote.sourceIsUpwork ? (
+                      <span class="c-quote__upwork">
+                        <svg class="c-quote__upwork-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                          <path fill="currentColor" d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.43-1.235-1.856-2.056-4.082-2.522-5.968h-2.522v7.168c0 1.4-1.14 2.54-2.54 2.54s-2.54-1.14-2.54-2.54V3.48H.615v7.168c0 2.854 2.32 5.174 5.174 5.174 2.855 0 5.175-2.32 5.175-5.174v-1.21c.529 1.118 1.182 2.185 1.974 3.118l-1.668 7.873h2.633l1.204-5.692c1.048.85 2.266 1.376 3.654 1.376 3.033 0 5.491-2.475 5.491-5.508 0-3.035-2.458-5.509-5.491-5.509z" />
+                        </svg>
+                        Upwork
+                      </span>
+                    ) : (
+                      homeQuote.sourceLabel
+                    )}
+                  </dd>
+                </div>
+              </dl>
+              {homeQuote.href && (
+                <a class="c-quote__link" href={homeQuote.href}>
+                  View case study <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </aside>
+          </figure>
+        )}
+
+        {secondaryFeedback.length > 0 && (
+          <div class="c-quote-rail" aria-label="More client feedback">
+            {secondaryFeedback.map((item) => (
+              <blockquote class="c-quote-card" cite={item.href}>
+                <p>“{item.quote}”</p>
+                <footer>
+                  <cite>
+                    {item.author}
+                    {item.role ? `, ${item.role}` : ''}
+                  </cite>
+                  <span>
+                    {item.project ? `${item.project} · ` : ''}
+                    {item.sourceLabel}
+                  </span>
+                  {item.href && (
+                    <a href={item.href}>
+                      Case study <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- 16 PRICING -->
+    <section class="c-price" id="pricing">
+      <div class="c-wrap">
+        <div class="c-price__head">
+          <div>
+            <p class="c-micro c-red">Engagement</p>
+            <h2 class="c-h1">Clear scope. Transparent delivery.</h2>
+          </div>
+        </div>
+        <div class="c-price__grid">
+          <article class="c-plan">
+            <p class="c-micro">Sprint: focused delivery</p>
+            <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Scoped sprint</p>
+            <p class="c-lede" style="margin-top: 18px">Prove value quickly with a working slice, clear go/no-go, and a path to production.</p>
+            <ul>
+              <li>Discovery workshop</li>
+              <li>Opportunity brief</li>
+              <li>Working prototype or spike</li>
+              <li>Defined next-step roadmap</li>
+            </ul>
+            <a class="c-btn" href="/ai-systems-sprint" style="margin-top: 32px">AI Systems Sprint</a>
+          </article>
+          <article class="c-plan c-plan--dark">
+            <p class="c-micro">Project: production systems</p>
+            <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem); color: inherit;">Build &amp; ship</p>
+            <p class="c-lede" style="margin-top: 18px; color: rgba(245,245,240,0.62)">
+              Product, integrations, and cloud work owned through launch, with observability and handoff.
+            </p>
+            <ul>
+              <li>Architecture and delivery plan</li>
+              <li>CI/CD, tracing, alerts</li>
+              <li>Integrations and data flows</li>
+              <li>Production-ready ownership</li>
+            </ul>
+            <a class="c-btn" href="/engagement-models" style="margin-top: 32px">Engagement models</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 FAQ -->
+    <section class="c-faq">
+      <div class="c-wrap">
+        <p class="c-micro c-red">FAQs</p>
+        <h2 class="c-h2">Frequently Asked Questions</h2>
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}<span>+</span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- 18 CTA -->
+    <section class="c-cta">
+      <div class="c-wrap">
+        <div class="c-cta__panel" data-cta>
+          <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
+          <div class="c-cta__copy">
+            <p class="c-micro">Contact</p>
+            <h2 class="c-h1">Let’s build<br />the next<br />system</h2>
+            <p class="c-cta__lede">
+              Tell us what you need to ship.
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+              <span aria-hidden="true"> · </span>
+              <a href={contactPhoneHref}>{contactPhone}</a>
+            </p>
+          </div>
+          <form data-home-form>
+            <label class="c-cta__field">
+              <span class="visually-hidden">Your name</span>
+              <input name="name" placeholder="Your name" required autocomplete="name" />
+            </label>
+            <label class="c-cta__field">
+              <span class="visually-hidden">Email</span>
+              <input name="email" type="email" placeholder="Email" required autocomplete="email" />
+            </label>
+            <label class="c-cta__field">
+              <span class="visually-hidden">What are you interested in</span>
+              <select name="interest" required>
+                <option value="" disabled selected>What are you interested in</option>
+                <option value="AI Systems Sprint">AI Systems Sprint</option>
+                <option value="Product / SaaS build">Product / SaaS build</option>
+                <option value="ERP / NetSuite integration">ERP / NetSuite integration</option>
+                <option value="Cloud / AWS">Cloud / AWS</option>
+                <option value="Technical audit">Technical audit</option>
+              </select>
+            </label>
+            <label class="c-cta__field">
+              <span class="visually-hidden">Project details</span>
+              <textarea name="message" placeholder="More about the project" required rows="4"></textarea>
+            </label>
+            <button class="c-btn c-btn--light" type="submit">Submit message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</div>

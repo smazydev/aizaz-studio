@@ -1,73 +1,70 @@
 ---
-export const prerender = true;
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import OutlinedCard from '../components/OutlinedCard.astro';
 import FaqSection from '../components/FaqSection.astro';
 import CalendarEmbed from '../components/CalendarEmbed.astro';
 import { bookACall } from '../data/commercialPages';
+import { siteFooter } from '../data/siteChrome';
 
 const c = bookACall;
 const s = c.sections;
+const contact = siteFooter.studio;
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/book-a-call">
   <PageHero eyebrow="Contact" title={c.title} description={c.heroSubtitle} />
 
-  <section class="pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <div class="sp-grid">
+        <OutlinedCard eyebrow="01" title={s.whoFor.heading}>
+          <ul class="sp-list" style="margin-top: 14px">
+            {s.whoFor.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </OutlinedCard>
+        <OutlinedCard eyebrow="02" title={s.whatWeCover.heading}>
+          <ul class="sp-list" style="margin-top: 14px">
+            {s.whatWeCover.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </OutlinedCard>
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-section">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Schedule"
+        title="Pick a time"
+        lede="Use the calendar below. Prefer email or phone? Reach us directly."
+      />
       <CalendarEmbed />
-    </div>
-  </section>
-
-  <section class="pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8">
-      <div class="p-8 rounded-2xl glass-card">
-        <h2 class="text-xl font-display font-bold text-white mb-4">{s.whoFor.heading}</h2>
-        <ul class="space-y-2">
-          {s.whoFor.items.map((item) => (
-            <li class="text-sm text-zinc-400 flex gap-2"><span class="text-primary-500">•</span>{item}</li>
-          ))}
-        </ul>
-      </div>
-      <div class="p-8 rounded-2xl glass-card">
-        <h2 class="text-xl font-display font-bold text-white mb-4">{s.whatWeCover.heading}</h2>
-        <ul class="space-y-2">
-          {s.whatWeCover.items.map((item) => (
-            <li class="text-sm text-zinc-400 flex gap-2"><span class="text-primary-500">•</span>{item}</li>
-          ))}
-        </ul>
+      <div class="sp-contact">
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <a href={contact.phoneHref}>{contact.phone}</a>
       </div>
     </div>
   </section>
 
-  <section class="pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="p-8 rounded-2xl glass-card mb-8">
-        <h2 class="text-xl font-display font-bold text-white mb-4">{s.whatToPrepare.heading}</h2>
-        <ul class="space-y-2">
-          {s.whatToPrepare.items.map((item) => (
-            <li class="text-sm text-zinc-400 flex gap-2"><span class="text-primary-500">•</span>{item}</li>
-          ))}
-        </ul>
-      </div>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="p-8 rounded-2xl glass-card border-emerald-500/20">
-          <h2 class="text-xl font-display font-bold text-white mb-4">{s.goodFit.heading}</h2>
-          <ul class="space-y-2">
-            {s.goodFit.items.map((item) => (
-              <li class="text-sm text-zinc-400 flex gap-2"><span class="text-emerald-400">✓</span>{item}</li>
-            ))}
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <div class="sp-grid">
+        <OutlinedCard title={s.goodFit.heading}>
+          <ul class="sp-list" style="margin-top: 14px">
+            {s.goodFit.items.map((item) => <li>{item}</li>)}
           </ul>
-        </div>
-        <div class="p-8 rounded-2xl glass-card border-zinc-700">
-          <h2 class="text-xl font-display font-bold text-white mb-4">{s.notFit.heading}</h2>
-          <ul class="space-y-2">
-            {s.notFit.items.map((item) => (
-              <li class="text-sm text-zinc-400 flex gap-2"><span class="text-zinc-600">×</span>{item}</li>
-            ))}
+        </OutlinedCard>
+        <OutlinedCard title={s.notFit.heading}>
+          <ul class="sp-list sp-list--mute" style="margin-top: 14px">
+            {s.notFit.items.map((item) => <li>{item}</li>)}
           </ul>
-        </div>
+        </OutlinedCard>
       </div>
+      <p class="c-lede" style="margin-top: 24px; max-width: 40rem">
+        Optional prep: a short problem note, tools you use today, and any hard deadlines. A Loom or bullet list is enough.
+      </p>
     </div>
   </section>
 

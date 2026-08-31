@@ -1,0 +1,49 @@
+---
+import '../../styles/home-hero.css';
+import HeroSentinelCanvas from '../hero3d/HeroSentinelCanvas.astro';
+---
+
+<section class="c-hero home-hero" aria-label="Hero" data-hero>
+  <div class="home-hero__pin">
+    <div class="hero-sentinel-tech" aria-hidden="true">
+      <svg class="hero-sentinel-tech__svg" viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice">
+        <g class="hero-sentinel-tech__arcs" fill="none" stroke="currentColor" stroke-width="1.15">
+          <ellipse class="hero-sentinel-tech__draw" cx="1188" cy="360" rx="420" ry="420" />
+          <ellipse class="hero-sentinel-tech__draw" cx="1188" cy="360" rx="292" ry="292" />
+          <path class="hero-sentinel-tech__draw hero-sentinel-tech__draw--late" d="M720 210 A520 520 0 0 1 1588 640" />
+        </g>
+        <g class="hero-sentinel-tech__ticks" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M1188 28 v14" />
+          <path d="M1610 360 h14" />
+          <path d="M1188 788 v14" />
+          <path d="M766 360 h12" />
+        </g>
+        <path class="hero-sentinel-tech__route" d="M980 180 C1080 240 1120 320 1188 360" fill="none" />
+        <circle class="hero-sentinel-tech__node" cx="1188" cy="360" r="3.2" />
+      </svg>
+    </div>
+
+    <HeroSentinelCanvas />
+    <div class="hero3d__guard" aria-hidden="true"></div>
+
+    <div class="c-hero__copy">
+      <p class="c-micro c-hero__kicker c-hero__ui" data-reveal>Software engineering studio</p>
+      <h1 class="c-hero__title" data-reveal="clip">Senior systems<br />team<br />on demand</h1>
+      <div class="c-hero__ui" data-reveal>
+        <p class="c-hero__lede">AI, SaaS, NetSuite, and cloud: from discovery to production.</p>
+        <div class="c-hero__cta">
+          <a class="c-btn" href="/services">Explore Services</a>
+          <a class="c-btn c-btn--ghost" href="/book-a-call">Book a Call</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-sentinel-hud" aria-hidden="true">
+      <span class="hero-sentinel-hud__item">01 / SYSTEM</span>
+      <span class="hero-sentinel-hud__item hero-sentinel-hud__item--live">CORE READY</span>
+      <span class="hero-sentinel-hud__item">ENG · OPS · SHIP</span>
+    </div>
+
+    <p class="c-hero__scroll c-hero__ui">Scroll for more</p>
+  </div>
+</section>

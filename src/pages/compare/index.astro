@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 import SiteShell from '../../components/SiteShell.astro';
 import PageHero from '../../components/PageHero.astro';
 import { comparePages } from '../../data/comparePages';
@@ -16,14 +15,16 @@ import { comparePages } from '../../data/comparePages';
     description="Honest comparisons to help you choose the right model for AI, SaaS, cloud, and automation work."
   />
 
-  <section class="pb-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-6">
-      {comparePages.map((page) => (
-        <a href={`/compare/${page.slug}`} class="block p-8 rounded-2xl glass-card hover:border-primary-500/30 transition-colors group">
-          <h2 class="text-xl font-display font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">{page.title}</h2>
-          <p class="text-zinc-400 text-sm leading-relaxed">{page.heroSubtitle}</p>
-        </a>
-      ))}
+  <section class="sp-section">
+    <div class="c-wrap seo-measure">
+      <div class="sp-grid sp-grid--1" style="gap: 12px">
+        {comparePages.map((page) => (
+          <a class="sp-card" href={`/compare/${page.slug}`}>
+            <h2 class="sp-card__title">{page.title}</h2>
+            <p class="c-lede sp-card__body">{page.heroSubtitle}</p>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 </SiteShell>

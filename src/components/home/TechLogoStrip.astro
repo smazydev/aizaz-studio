@@ -1,0 +1,73 @@
+---
+import '../../styles/home-tech.css';
+import { techLogoRows, getTechIcon } from '../../data/selectedTechnologies';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+}
+
+const {
+  eyebrow = 'Selected technologies',
+  title = 'Technologies we work with',
+  lede = 'The stack changes with the system. These are some of the tools and platforms we regularly build with, integrate, and deploy on.',
+} = Astro.props;
+---
+
+<section class="tech-logo-strip" aria-labelledby="tech-logo-strip-heading">
+  <div class="c-wrap tech-logo-strip__head">
+    <p class="c-micro c-red">{eyebrow}</p>
+    <h2 id="tech-logo-strip-heading" class="tech-logo-strip__title">{title}</h2>
+    <p class="c-lede tech-logo-strip__lede">{lede}</p>
+  </div>
+
+  <div class="tech-logo-strip__stage" aria-label="Technologies we work with">
+    {techLogoRows.map((row, rowIndex) => (
+      <div
+        class:list={[
+          'tech-logo-strip__viewport',
+          rowIndex === 1 && 'tech-logo-strip__viewport--reverse',
+        ]}
+      >
+        <div class="tech-logo-strip__track">
+          {[0, 1].map((copy) => (
+            <div
+              class="tech-logo-strip__copy"
+              aria-hidden={copy === 1 ? 'true' : undefined}
+            >
+              {row.map((item) => {
+                const icon = getTechIcon(item.id);
+                return item.href ? (
+                  <a class="tech-logo-strip__pill" href={item.href} title={item.name}>
+                    <svg
+                      class="tech-logo-strip__icon"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path fill="currentColor" d={icon.path} />
+                    </svg>
+                    <span class="tech-logo-strip__name">{item.name}</span>
+                  </a>
+                ) : (
+                  <span class="tech-logo-strip__pill" title={item.name}>
+                    <svg
+                      class="tech-logo-strip__icon"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path fill="currentColor" d={icon.path} />
+                    </svg>
+                    <span class="tech-logo-strip__name">{item.name}</span>
+                  </span>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
