@@ -8,37 +8,34 @@ import SiteNav from '../site/SiteNav.astro';
 import SiteFooter from '../site/SiteFooter.astro';
 import { siteFooter } from '../../data/siteChrome';
 import { leadershipProfiles } from '../../data/leadership';
-import { featuredFeedback, secondaryFeedback, displayQuote } from '../../data/homeFeedback';
+import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
 import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
 import TeamPortrait from '../TeamPortrait.astro';
 
 const publicCaseStudies = filterPublicCaseStudies(caseStudies);
 
-const featuredWork = publicCaseStudies
-  .flatMap((study) => {
-    const foci = study.category
-      .split('•')
-      .map((part) => part.trim())
-      .filter(Boolean);
-    const shots = [
-      { image: study.image, kind: 'cinema' as const },
-      ...(study.backgroundImages?.[0]
-        ? [{ image: study.backgroundImages[0], kind: 'wide' as const }]
-        : []),
-      ...(study.backgroundImages?.[1]
-        ? [{ image: study.backgroundImages[1], kind: 'square' as const }]
-        : []),
-    ];
-    return shots.map((shot, index) => ({
-      ...shot,
-      href: `/case-studies/${study.slug}`,
-      title: study.title,
-      name: study.title.split(':')[0].trim(),
-      focus: foci[index] ?? foci[0] ?? study.category,
-      system: study.subtitle,
-    }));
-  })
-  .slice(0, 3);
+const featuredKinds = ['cinema', 'wide', 'square'] as const;
+
+const featuredWork = publicCaseStudies.slice(0, 3).map((study, index) => {
+  const foci = study.category
+    .split('•')
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const isArchiver = study.slug === '1archiver-compliance-platform';
+  const image = isArchiver && study.backgroundImages?.[0]
+    ? study.backgroundImages[0]
+    : study.image;
+  return {
+    image,
+    kind: featuredKinds[index],
+    crop: isArchiver ? 'archiver' : undefined,
+    href: `/case-studies/${study.slug}`,
+    title: study.title,
+    name: study.title.split('—')[0]?.split(':')[0].trim() || study.title,
+    focus: foci[0] ?? study.category,
+    system: study.subtitle,
+  };
+});
 
 const isDev = import.meta.env.DEV;
 const services = [
@@ -94,13 +91,17 @@ const contactEmail = siteFooter.studio.email;
 const contactPhone = siteFooter.studio.phone;
 const contactPhoneHref = siteFooter.studio.phoneHref;
 
-const shippedStudies = publicCaseStudies.map((study) => ({
-  href: `/case-studies/${study.slug}`,
-  name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
-  category: (study.category.split('•')[0] || study.category).trim(),
-  summary: study.subtitle.replace(/\s+/g, ' ').trim(),
-  image: study.image,
-}));
+const shippedStudies = publicCaseStudies.map((study) => {
+  const isArchiver = study.slug === '1archiver-compliance-platform';
+  return {
+    href: `/case-studies/${study.slug}`,
+    name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
+    category: (study.category.split('•')[0] || study.category).trim(),
+    summary: study.subtitle.replace(/\s+/g, ' ').trim(),
+    image: isArchiver && study.backgroundImages?.[0] ? study.backgroundImages[0] : study.image,
+    crop: isArchiver ? 'archiver' : undefined,
+  };
+});
 
 const faqs = [
   { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
@@ -110,78 +111,6 @@ const faqs = [
 ];
 
 const homeQuote = featuredFeedback;
-
-const haiField = (() => {
-  let s = 0xa12a2;
-  const rng = () => {
-    s |= 0;
-    s = (s + 0x6d2b79f5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-  const gauss = () => {
-    const u = rng() || 1e-6;
-    return Math.sqrt(-2 * Math.log(u)) * Math.cos(Math.PI * 2 * rng());
-  };
-  const W = 1000;
-  const H = 720;
-  type Pt = { x: number; y: number; r: number; hot: boolean; o: number };
-  const pts: Pt[] = [];
-  const add = (cx: number, cy: number, sx: number, sy: number, n: number, hotP: number) => {
-    for (let i = 0; i < n; i++) {
-      const z = rng();
-      pts.push({
-        x: +(Math.min(0.98, Math.max(0.02, cx + gauss() * sx)) * W).toFixed(1),
-        y: +(Math.min(0.98, Math.max(0.02, cy + gauss() * sy)) * H).toFixed(1),
-        r: +(0.7 + z * 1.15).toFixed(2),
-        hot: rng() < hotP,
-        o: +(0.28 + z * 0.58).toFixed(2),
-      });
-    }
-  };
-  add(0.3, 0.38, 0.13, 0.16, 460, 0.04);
-  add(0.5, 0.47, 0.1, 0.12, 360, 0.1);
-  add(0.68, 0.61, 0.1, 0.11, 440, 0.7);
-  add(0.17, 0.71, 0.08, 0.09, 200, 0.07);
-  add(0.79, 0.25, 0.07, 0.08, 170, 0.05);
-  const bridge = (a: [number, number], b: [number, number], n: number, hotP: number) => {
-    for (let i = 0; i <= n; i++) {
-      const t = i / n;
-      pts.push({
-        x: +((a[0] + (b[0] - a[0]) * t + gauss() * 0.012) * W).toFixed(1),
-        y: +((a[1] + (b[1] - a[1]) * t + Math.sin(t * Math.PI) * 0.045 + gauss() * 0.012) * H).toFixed(1),
-        r: 0.95,
-        hot: rng() < hotP,
-        o: 0.45,
-      });
-    }
-  };
-  bridge([0.3, 0.38], [0.5, 0.47], 90, 0.1);
-  bridge([0.5, 0.47], [0.68, 0.61], 100, 0.48);
-  bridge([0.3, 0.38], [0.17, 0.71], 70, 0.06);
-  bridge([0.5, 0.47], [0.79, 0.25], 55, 0.05);
-  const links: { x1: number; y1: number; x2: number; y2: number; hot: boolean }[] = [];
-  const cols = 28;
-  const rows = 20;
-  const bins: number[][] = Array.from({ length: cols * rows }, () => []);
-  pts.forEach((p, i) => {
-    const cx = Math.min(cols - 1, Math.floor((p.x / W) * cols));
-    const cy = Math.min(rows - 1, Math.floor((p.y / H) * rows));
-    bins[cy * cols + cx].push(i);
-  });
-  bins.forEach((bin) => {
-    for (let i = 0; i < bin.length; i++) {
-      if (rng() > 0.58 || bin.length < 2) continue;
-      const a = pts[bin[i]];
-      const b = pts[bin[(i + 1) % bin.length]];
-      const dx = a.x - b.x;
-      const dy = a.y - b.y;
-      if (dx * dx + dy * dy < 1700) links.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, hot: a.hot && b.hot });
-    }
-  });
-  return { pts, links };
-})();
 ---
 
 <div class="clone">
@@ -210,26 +139,6 @@ const haiField = (() => {
         <p class="c-lede home-human-ai__lede">
           AI, SaaS, integrations, and cloud systems for teams that need working software, not slide decks. Available for remote projects worldwide.
         </p>
-      </div>
-      <div class="c-wrap home-human-ai__grid">
-        <article class="home-human-ai__visual">
-          <svg class="home-human-ai__field" viewBox="0 0 1000 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            {haiField.links.map((l) => (
-              <line
-                x1={l.x1}
-                y1={l.y1}
-                x2={l.x2}
-                y2={l.y2}
-                class={l.hot ? 'is-hot' : undefined}
-              />
-            ))}
-            {haiField.pts.map((p) => (
-              <circle cx={p.x} cy={p.y} r={p.r} opacity={p.o} class={p.hot ? 'is-hot' : undefined} />
-            ))}
-          </svg>
-          <span class="home-human-ai__noise"></span>
-          <span class="home-human-ai__meta">inference field · {haiField.pts.length.toLocaleString()} nodes</span>
-        </article>
       </div>
     </section>
 
@@ -486,7 +395,7 @@ const haiField = (() => {
       <p class="c-micro c-red">Featured Works</p>
     </div>
     {featuredWork.map((p) => (
-      <article class={`c-project c-project--${p.kind}`} data-reveal="media">
+      <article class:list={['c-project', `c-project--${p.kind}`, p.crop && `c-project--${p.crop}`]} data-reveal="media">
         <a class="c-project__frame" href={p.href}>
           <Image
             class="c-project__shot"
@@ -680,18 +589,9 @@ const haiField = (() => {
         <div class="c-dark__growth">
           <div>
             <p class="c-micro">Case studies</p>
-            <p class="c-stat c-stat--sm" style="font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.04em;">Systems<br />that ship</p>
+            <h2 class="c-dark__ship-title">Systems that ship</h2>
           </div>
-          <div class="c-dark__metrics">
-            <div>
-              <p class="c-micro">AI &amp; automation</p>
-              <p class="c-lede" style="margin: 8px 0 0">Agents and workflows</p>
-            </div>
-            <div>
-              <p class="c-micro">SaaS &amp; cloud</p>
-              <p class="c-lede" style="margin: 8px 0 0">Products and ops</p>
-            </div>
-          </div>
+          <p class="c-lede c-dark__ship-lede">Public work across compliance, SaaS, developer tooling, and sales platforms. Every card opens the full case study.</p>
         </div>
 
         <div class="c-proof">
@@ -699,7 +599,7 @@ const haiField = (() => {
             <a class="c-proof__card" href={study.href}>
               <div class="c-proof__media">
                 <Image
-                  class="c-proof__shot"
+                  class:list={['c-proof__shot', study.crop && `c-proof__shot--${study.crop}`]}
                   src={study.image}
                   alt={study.name}
                   width={720}
@@ -725,7 +625,7 @@ const haiField = (() => {
             <div class="c-quote__body">
               <p class="c-micro">Client feedback</p>
               <blockquote cite={homeQuote.href}>
-                <p>“{displayQuote(homeQuote)}”</p>
+                <p>“{homeQuote.quote}”</p>
               </blockquote>
               <figcaption>
                 <cite>
@@ -740,8 +640,8 @@ const haiField = (() => {
                 ) : null}
               </figcaption>
             </div>
-            <aside class="c-quote__proof" aria-label="Engagement context">
-              <p class="c-micro c-quote__proof-eyebrow">Engagement record</p>
+            <aside class="c-quote__proof" aria-label="Case study snapshot">
+              <p class="c-micro c-quote__proof-eyebrow">Case snapshot</p>
               <dl class="c-quote__meta">
                 {homeQuote.project && (
                   <div>
@@ -749,10 +649,28 @@ const haiField = (() => {
                     <dd>{homeQuote.project}</dd>
                   </div>
                 )}
-                {homeQuote.work && (
+                {homeQuote.engagementLabel && (
                   <div>
                     <dt>Engagement</dt>
-                    <dd>{homeQuote.work}</dd>
+                    <dd>{homeQuote.engagementLabel}</dd>
+                  </div>
+                )}
+                {homeQuote.problem && (
+                  <div>
+                    <dt>Main problem</dt>
+                    <dd>{homeQuote.problem}</dd>
+                  </div>
+                )}
+                {homeQuote.solved && (
+                  <div>
+                    <dt>What Aizaz solved</dt>
+                    <dd>{homeQuote.solved}</dd>
+                  </div>
+                )}
+                {homeQuote.deliveryTime && (
+                  <div>
+                    <dt>Delivery time</dt>
+                    <dd>{homeQuote.deliveryTime}</dd>
                   </div>
                 )}
                 <div>
@@ -773,7 +691,7 @@ const haiField = (() => {
               </dl>
               {homeQuote.href && (
                 <a class="c-quote__link" href={homeQuote.href}>
-                  View case study <span aria-hidden="true">↗</span>
+                  View full case study <span aria-hidden="true">↗</span>
                 </a>
               )}
             </aside>

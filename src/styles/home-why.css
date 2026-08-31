@@ -4,9 +4,10 @@
 }
 
 .home-why__inner {
-  width: min(1160px, calc(100vw - 80px));
+  width: min(1160px, calc(100% - 80px));
   max-width: none;
   margin-inline: auto;
+  padding-inline: 0;
 }
 
 .home-why__mark {
@@ -288,7 +289,8 @@
 
 @media (max-width: 900px) {
   .home-why__inner {
-    width: calc(100vw - 32px);
+    width: 100%;
+    padding-inline: var(--page-pad);
   }
 
   .home-why__grid {

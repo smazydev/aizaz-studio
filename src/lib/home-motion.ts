@@ -29,7 +29,7 @@ function reduce() {
 
 function reveals() {
   const nodes = document.querySelectorAll<HTMLElement>('.clone [data-reveal]');
-  if (reduce() || !('IntersectionObserver' in window)) {
+  if (reduce() || window.matchMedia('(max-width: 768px)').matches || !('IntersectionObserver' in window)) {
     nodes.forEach((el) => el.classList.add('is-on'));
     return;
   }
@@ -290,6 +290,7 @@ function services() {
     items.forEach((item) => {
       const on = item.dataset.service === id;
       item.classList.toggle('is-on', on);
+      item.setAttribute('aria-expanded', on ? 'true' : 'false');
       if (on) item.setAttribute('aria-current', 'true');
       else item.removeAttribute('aria-current');
     });
@@ -298,8 +299,18 @@ function services() {
 
   items.forEach((item, i) => {
     const id = () => item.dataset.service || '0';
-    item.addEventListener('mouseenter', () => activate(id()));
+    item.setAttribute('aria-expanded', item.classList.contains('is-on') ? 'true' : 'false');
+    item.addEventListener('mouseenter', () => {
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) activate(id());
+    });
     item.addEventListener('focus', () => activate(id()));
+    item.addEventListener('click', (event) => {
+      if (!window.matchMedia('(max-width: 768px)').matches) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('.home-services__go')) return;
+      event.preventDefault();
+      activate(id());
+    });
     item.addEventListener('keydown', (event) => {
       const last = items.length - 1;
       let next = i;
@@ -321,6 +332,18 @@ function processRail() {
   const nodes = [...root.querySelectorAll<HTMLElement>('[data-process-node]')];
   const core = root.querySelector<HTMLElement>('[data-process-core]');
   if (!nodes.length) return;
+
+  const skipMotion = reduce() || window.matchMedia('(max-width: 768px)').matches;
+  if (skipMotion) {
+    root.style.setProperty('--process-p', '1');
+    fills.forEach((el) => {
+      el.style.strokeDasharray = '1';
+      el.style.strokeDashoffset = '0';
+    });
+    nodes.forEach((n) => n.classList.add('is-on'));
+    core?.classList.add('is-on');
+    return;
+  }
 
   fills.forEach((el) => {
     el.style.strokeDasharray = '1';
@@ -419,7 +442,7 @@ function ctaForm() {
 function ctaMove() {
   const panel = document.querySelector<HTMLElement>('[data-cta]');
   const art = panel?.querySelector<HTMLElement>('.c-cta__art');
-  if (!panel || !art || reduce()) return;
+  if (!panel || !art || reduce() || window.matchMedia('(max-width: 768px)').matches) return;
   panel.addEventListener('pointermove', (event) => {
     const r = panel.getBoundingClientRect();
     const x = (event.clientX - r.left) / r.width - 0.5;
@@ -428,6 +451,7 @@ function ctaMove() {
 }
 
 function meshFields() {
+  if (reduce() || window.matchMedia('(max-width: 768px)').matches) return;
   const canvases = document.querySelectorAll<HTMLCanvasElement>('[data-mesh]');
   canvases.forEach((canvas) => {
     const ctx = canvas.getContext('2d');
@@ -507,6 +531,8 @@ function teamProfiles() {
   let paused = false;
   let inView = false;
   const reduceMotion = reduce();
+  const narrowMq = window.matchMedia('(max-width: 768px)');
+  const isNarrow = () => narrowMq.matches;
 
   const show = (next: number) => {
     const target = ((next % people.length) + people.length) % people.length;
@@ -543,7 +569,7 @@ function teamProfiles() {
 
   const schedule = () => {
     clearTimer();
-    if (reduceMotion || paused || !inView) return;
+    if (reduceMotion || paused || !inView || isNarrow()) return;
     timer = window.setTimeout(() => {
       show(index + 1);
       schedule();
@@ -607,6 +633,16 @@ function teamProfiles() {
     { threshold: 0.28 },
   );
   io.observe(root);
+  narrowMq.addEventListener('change', () => {
+    if (isNarrow()) {
+      clearTimer();
+      clearResume();
+      paused = true;
+    } else {
+      paused = false;
+      schedule();
+    }
+  });
   show(0);
 }
 

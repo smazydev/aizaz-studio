@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/light-theme.css';
 import '../styles/clone.css';
 import '../styles/site-pages.css';
+import '../styles/mobile-first.css';
 import { SITE_URL } from '../data/seoPages';
 
 interface Props {
@@ -167,8 +168,9 @@ const pageStructuredData =
   bindThemeToggle();
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const narrow = window.matchMedia('(max-width: 768px)').matches;
 
-  if (!reduceMotion) {
+  if (!reduceMotion && !narrow) {
     const revealElements = document.querySelectorAll('[data-reveal]');
 
     if (revealElements.length > 0) {

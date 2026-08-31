@@ -37,12 +37,38 @@ function isCurrent(href: string) {
         </svg>
       </button>
       <a class="c-btn c-nav__cta" href="/book-a-call">Start a Project</a>
-      <label class="c-nav__burger" for="c-nav" aria-label="Open menu"><span></span></label>
+      <label class="c-nav__burger" for="c-nav" aria-label="Open menu" aria-controls="c-nav-mobile" aria-expanded="false"><span></span></label>
     </div>
   </div>
-  <nav class="c-nav__mobile">
+  <nav class="c-nav__mobile" id="c-nav-mobile">
     {siteNav.map((l) => (
       <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
     ))}
   </nav>
 </header>
+
+<script>
+  const nav = document.querySelector('.c-nav');
+  const box = nav?.querySelector<HTMLInputElement>('#c-nav');
+  const burger = nav?.querySelector('.c-nav__burger');
+  if (nav && box && burger) {
+    const sync = () => {
+      const open = box.checked;
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    box.addEventListener('change', sync);
+    nav.querySelectorAll('.c-nav__mobile a').forEach((link) => {
+      link.addEventListener('click', () => {
+        box.checked = false;
+        sync();
+      });
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && box.checked) {
+        box.checked = false;
+        sync();
+      }
+    });
+  }
+</script>

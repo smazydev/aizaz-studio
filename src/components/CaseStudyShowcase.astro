@@ -39,7 +39,7 @@ const kinds = ['cinema', 'wide', 'square'] as const;
         const name = study.title.split(':')[0].trim();
         const focus = (item.tabLabel || study.category || '').split('•')[0].trim();
         return (
-          <article class={`works-item works-item--${kind}`}>
+          <article class:list={['works-item', `works-item--${kind}`, /1archiver/i.test(study.slug) && 'works-item--archiver']}>
             <a class="works-item__frame" href={`/case-studies/${study.slug}`}>
               {study.imageUrl ? (
                 <img

@@ -102,14 +102,16 @@ if (!preview && related.length > 0 && !hasFurtherReading) {
     <aside class="blog-article__aside">
       {headings.length > 0 && (
         <nav class="blog-toc" aria-label="Table of contents">
-          <p class="c-micro">On this page</p>
-          <ul>
-            {headings.map((heading) => (
-              <li class:list={[heading.level === 3 && 'is-h3']}>
-                <a href={`#${heading.id}`}>{heading.text}</a>
-              </li>
-            ))}
-          </ul>
+          <details class="blog-toc__fold" data-blog-toc>
+            <summary class="blog-toc__summary">On this page</summary>
+            <ul>
+              {headings.map((heading) => (
+                <li class:list={[heading.level === 3 && 'is-h3']}>
+                  <a href={`#${heading.id}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
         </nav>
       )}
 
@@ -119,3 +121,15 @@ if (!preview && related.length > 0 && !hasFurtherReading) {
 </article>
 
 {!preview && endGroups.length > 0 && <RelatedContent groups={endGroups} />}
+
+<script>
+  const toc = document.querySelector('[data-blog-toc]');
+  if (toc instanceof HTMLDetailsElement) {
+    const mq = window.matchMedia('(min-width: 961px)');
+    const sync = () => {
+      toc.open = mq.matches;
+    };
+    mq.addEventListener('change', sync);
+    sync();
+  }
+</script>

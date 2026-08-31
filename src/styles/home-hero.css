@@ -339,7 +339,7 @@ html.js .home-hero.is-settled .hero3d__canvas {
 
 @media (max-width: 768px) {
   .home-hero {
-    min-height: 95svh;
+    min-height: 0;
   }
 
   .hero3d__guard {
@@ -351,11 +351,22 @@ html.js .home-hero.is-settled .hero3d__canvas {
     );
   }
 
+  .hero3d {
+    position: relative;
+    inset: auto;
+    height: min(38vh, 280px);
+    width: 100%;
+  }
+
   .hero3d__poster {
-    right: -18vw;
-    bottom: -12vh;
-    height: clamp(520px, 70vh, 720px);
+    right: 50%;
+    bottom: -8%;
+    left: auto;
+    top: auto;
+    transform: translateX(50%);
+    height: min(42vh, 300px);
     width: auto;
+    max-width: 92%;
     aspect-ratio: 768 / 1024;
   }
 
@@ -370,9 +381,11 @@ html.js .home-hero.is-settled .hero3d__canvas {
 
 @media (max-width: 430px) {
   .hero3d__poster {
-    right: -38vw;
-    bottom: -10vh;
-    width: 112vw;
+    right: 50%;
+    bottom: -6%;
+    width: auto;
+    max-width: 90%;
+    transform: translateX(50%);
   }
 }
 
