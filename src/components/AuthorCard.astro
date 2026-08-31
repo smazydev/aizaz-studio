@@ -12,6 +12,7 @@ const { author, wrapperClass = '', compact = false, showBio = false } = Astro.pr
 const name = author?.name?.trim() || 'Author';
 const role = author?.role?.trim() || '';
 const photoUrl = author?.photoUrl?.trim() || '';
+const photoObjectPosition = author?.photoObjectPosition?.trim() || '50% 32%';
 const linkedin = author?.linkedin?.trim() || '';
 const xUrl = author?.xUrl?.trim() || '';
 const githubUrl = author?.githubUrl?.trim() || '';
@@ -37,6 +38,7 @@ const socialLinks = [
       src={photoUrl}
       alt={name}
       class={`rounded-full object-cover border border-white/10 shrink-0 ${compact ? 'w-9 h-9' : 'w-11 h-11'}`}
+      style={`object-position: ${photoObjectPosition}`}
       width={compact ? 36 : 44}
       height={compact ? 36 : 44}
       loading="lazy"

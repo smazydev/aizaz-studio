@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import { caseStudies } from '../../data/caseStudies';
 import Hero from './Hero.astro';
-import HomeWhy from './HomeWhy.astro';
 import HomeFeatures from './HomeFeatures.astro';
 import TechLogoStrip from './TechLogoStrip.astro';
 import SiteNav from '../site/SiteNav.astro';
@@ -10,9 +9,12 @@ import SiteFooter from '../site/SiteFooter.astro';
 import { siteFooter } from '../../data/siteChrome';
 import { leadershipProfiles } from '../../data/leadership';
 import { featuredFeedback, secondaryFeedback, displayQuote } from '../../data/homeFeedback';
+import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
+import TeamPortrait from '../TeamPortrait.astro';
 
-const featuredWork = caseStudies
-  .filter((study) => study.slug !== 'investorsgonewild-investment-platform')
+const publicCaseStudies = filterPublicCaseStudies(caseStudies);
+
+const featuredWork = publicCaseStudies
   .flatMap((study) => {
     const foci = study.category
       .split('•')
@@ -92,13 +94,13 @@ const contactEmail = siteFooter.studio.email;
 const contactPhone = siteFooter.studio.phone;
 const contactPhoneHref = siteFooter.studio.phoneHref;
 
-/** Real project foci from shipped work — not awards. */
-const proofPoints = [
-  { k: '01', t: 'Property Matchmaker', d: 'Real estate platform connecting agents and deals' },
-  { k: '02', t: 'SalesAngel', d: 'Live dialer, CRM, and AI agent operations' },
-  { k: '03', t: 'CodeChecker', d: 'Compliance-oriented engineering delivery' },
-  { k: '04', t: 'Systems integration', d: 'ERP, CRM, and production cloud work' },
-];
+const shippedStudies = publicCaseStudies.map((study) => ({
+  href: `/case-studies/${study.slug}`,
+  name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
+  category: (study.category.split('•')[0] || study.category).trim(),
+  summary: study.subtitle.replace(/\s+/g, ' ').trim(),
+  image: study.image,
+}));
 
 const faqs = [
   { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
@@ -228,41 +230,6 @@ const haiField = (() => {
           <span class="home-human-ai__noise"></span>
           <span class="home-human-ai__meta">inference field · {haiField.pts.length.toLocaleString()} nodes</span>
         </article>
-        <div class="home-human-ai__side">
-          <article class="home-human-ai__module">
-            <div class="home-human-ai__module-bar">
-              <p class="c-micro c-red">Aizaz · runtime</p>
-              <span class="home-human-ai__live">live</span>
-            </div>
-            <div class="home-human-ai__kpi">
-              <span>Ship</span>
-              <small>scoped systems</small>
-            </div>
-            <svg class="home-human-ai__spark" viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M0 34 C18 34 22 18 40 20 C58 22 62 8 80 12 C98 16 104 30 122 24 C140 18 148 6 168 10 C188 14 196 32 216 22 C228 16 234 20 240 18" fill="none" />
-            </svg>
-            <p class="home-human-ai__copy">from discovery to production with clear ownership</p>
-            <div class="home-human-ai__module-meta">
-              <span>AI</span>
-              <span>SaaS</span>
-              <span>ERP</span>
-            </div>
-          </article>
-          <article class="home-human-ai__object">
-            <div class="home-human-ai__part" aria-hidden="true">
-              <span class="home-human-ai__part-shadow"></span>
-              <span class="home-human-ai__part-body">
-                <i class="home-human-ai__part-face"></i>
-                <i class="home-human-ai__part-slit"></i>
-                <i class="home-human-ai__part-port"></i>
-              </span>
-            </div>
-            <div class="home-human-ai__caption">
-              <p class="c-micro">Studio focus</p>
-              <p>Systems that stay online</p>
-            </div>
-          </article>
-        </div>
       </div>
     </section>
 
@@ -499,8 +466,12 @@ const haiField = (() => {
                 <span class="home-services__item-body">
                   <span class="home-services__item-inner">
                     {s.body}
-                    <span class="home-services__item-meta">{s.items.join('  /  ')}</span>
-                    <span class="home-services__go">View service</span>
+                    <span class="home-services__tags">
+                      {s.items.map((item) => (
+                        <span>{item}</span>
+                      ))}
+                    </span>
+                    <span class="home-services__go">View service <span aria-hidden="true">↗</span></span>
                   </span>
                 </span>
               </a>
@@ -545,7 +516,7 @@ const haiField = (() => {
           <div>
             <p class="c-micro">Case study</p>
             <p class="c-project__val">
-              <a href={p.href}>View →</a>
+              <a href={p.href}>View case study ↗</a>
             </p>
           </div>
         </div>
@@ -622,9 +593,6 @@ const haiField = (() => {
       </div>
     </section>
 
-    <!-- 10 WHY -->
-    <HomeWhy />
-
     <!-- 11 FEATURES -->
     <HomeFeatures />
 
@@ -642,12 +610,16 @@ const haiField = (() => {
           <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
         </div>
 
-        <div class="c-roster" data-team data-active="0">
-          <div class="c-roster__people" role="tablist" aria-label="Leadership">
-            {leaders.map((p, index) => (
+        <div class="c-roster" data-team data-active="0" role="tablist" aria-label="Leadership">
+          {leaders.map((p, index) => (
+            <article
+              class:list={['c-member', index === 0 && 'is-active']}
+              data-team-member
+              data-team-index={String(index)}
+            >
               <button
                 type="button"
-                class:list={['c-person', index === 0 && 'is-active']}
+                class="c-member__select"
                 role="tab"
                 id={`team-tab-${p.id}`}
                 aria-selected={index === 0 ? 'true' : 'false'}
@@ -655,22 +627,21 @@ const haiField = (() => {
                 data-team-person
                 data-team-index={String(index)}
               >
-                {p.photoUrl ? (
-                  <img class="c-person__photo" src={p.photoUrl} alt="" width="400" height="400" loading="lazy" decoding="async" />
-                ) : (
-                  <span class="c-person__face" aria-hidden="true"></span>
-                )}
-                <span class="c-person__caption">
-                  <strong>{p.name}</strong>
+                <TeamPortrait
+                  person={p}
+                  class="c-member__photo"
+                  widths={[320, 480, 640, 960]}
+                  sizes="(max-width: 800px) 32vw, 420px"
+                  width={800}
+                  height={800}
+                />
+                <span class="c-member__caption">
+                  <strong>{p.shortName}</strong>
                   <span>{p.role}</span>
                 </span>
               </button>
-            ))}
-          </div>
-          <div class="c-profile" data-team-profile>
-            {leaders.map((p, index) => (
-              <article
-                class:list={['c-profile__panel', index === 0 && 'is-active']}
+              <div
+                class:list={['c-member__details', index === 0 && 'is-active']}
                 id={`team-panel-${p.id}`}
                 role="tabpanel"
                 aria-labelledby={`team-tab-${p.id}`}
@@ -678,10 +649,10 @@ const haiField = (() => {
                 data-team-index={String(index)}
                 aria-hidden={index === 0 ? 'false' : 'true'}
               >
-                <h3 class="c-profile__name">{p.name}</h3>
-                <p class="c-profile__role">{p.role}</p>
-                <p class="c-profile__bio">{p.bio}</p>
-                <div class="c-profile__focus">
+                <h3 class="c-member__name">{p.name}</h3>
+                <p class="c-member__role">{p.role}</p>
+                <p class="c-member__bio">{p.bio}</p>
+                <div class="c-member__focus">
                   <p class="c-micro">Focus</p>
                   <ul>
                     {p.focus.map((item) => (
@@ -689,26 +660,26 @@ const haiField = (() => {
                     ))}
                   </ul>
                 </div>
-                <div class="c-profile__links">
+                <div class="c-member__links">
                   {p.linkedin && (
                     <a href={p.linkedin} target="_blank" rel="noopener noreferrer">
                       LinkedIn <span aria-hidden="true">↗</span>
                     </a>
                   )}
-                  {'githubUrl' in p && p.githubUrl && (
+                  {p.githubUrl && (
                     <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">
                       GitHub <span aria-hidden="true">↗</span>
                     </a>
                   )}
                 </div>
-              </article>
-            ))}
-          </div>
+              </div>
+            </article>
+          ))}
         </div>
 
         <div class="c-dark__growth">
           <div>
-            <p class="c-micro">Focus</p>
+            <p class="c-micro">Case studies</p>
             <p class="c-stat c-stat--sm" style="font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.04em;">Systems<br />that ship</p>
           </div>
           <div class="c-dark__metrics">
@@ -723,13 +694,29 @@ const haiField = (() => {
           </div>
         </div>
 
-        <div class="c-awards">
-          {proofPoints.map((a) => (
-            <div>
-              <p class="c-micro">{a.k}</p>
-              <h3>{a.t}</h3>
-              <p class="c-lede" style="margin:0">{a.d}</p>
-            </div>
+        <div class="c-proof">
+          {shippedStudies.map((study) => (
+            <a class="c-proof__card" href={study.href}>
+              <div class="c-proof__media">
+                <Image
+                  class="c-proof__shot"
+                  src={study.image}
+                  alt={study.name}
+                  width={720}
+                  widths={[360, 720, 960]}
+                  sizes="(min-width: 900px) 22vw, 90vw"
+                  quality={72}
+                />
+              </div>
+              <div class="c-proof__body">
+                <p class="c-micro">{study.category}</p>
+                <h3>{study.name}</h3>
+                <p class="c-proof__summary">{study.summary}</p>
+                <span class="c-proof__go">
+                  View case study <span aria-hidden="true">↗</span>
+                </span>
+              </div>
+            </a>
           ))}
         </div>
 

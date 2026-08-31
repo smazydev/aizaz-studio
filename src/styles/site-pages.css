@@ -422,6 +422,14 @@ a.sp-card:hover {
   line-height: 1.55;
 }
 
+.sp-card__go {
+  margin: 14px 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
 .sp-grid {
   display: grid;
   gap: 12px;
@@ -525,19 +533,34 @@ a.sp-card:hover {
 
 .sp-person {
   display: grid;
-  gap: 14px;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
   padding: 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--paper);
 }
 
-.sp-person img {
-  width: 72px;
-  height: 72px;
+.sp-person picture {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #111;
+}
+
+.sp-person img,
+.sp-person__photo {
+  width: 96px;
+  height: 96px;
   border-radius: 999px;
   object-fit: cover;
+  object-position: var(--portrait-pos, 50% 32%);
   border: 1px solid var(--line);
+  background: #111;
 }
 
 .sp-person__name {

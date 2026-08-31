@@ -4,11 +4,12 @@ import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
 import PageCTA from '../components/PageCTA.astro';
-import { LEGACY_AUTHORS } from '../data/authors';
+import TeamPortrait from '../components/TeamPortrait.astro';
+import { leadershipProfiles } from '../data/leadership';
 import { caseStudies } from '../data/caseStudies';
 import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 
-const leaders = [LEGACY_AUTHORS.ali, LEGACY_AUTHORS.nasir, LEGACY_AUTHORS.ayaz];
+const leaders = leadershipProfiles;
 const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 ---
 
@@ -60,9 +61,14 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
       <div class="sp-people">
         {leaders.map((person) => (
           <article class="sp-person">
-            {person.photoUrl && (
-              <img src={person.photoUrl} alt="" width="72" height="72" loading="lazy" />
-            )}
+            <TeamPortrait
+              person={person}
+              class="sp-person__photo"
+              width={192}
+              height={192}
+              widths={[96, 192]}
+              sizes="96px"
+            />
             <div>
               <h3 class="sp-person__name">{person.name}</h3>
               <p class="sp-person__role">{person.role}</p>
@@ -70,7 +76,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
                 {person.linkedin && (
                   <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 )}
-                {'githubUrl' in person && person.githubUrl && (
+                {person.githubUrl && (
                   <a href={person.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
                 )}
               </div>
@@ -114,7 +120,9 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
             eyebrow={study.category}
             title={study.title.split(':')[0].trim()}
             body={study.subtitle}
-          />
+          >
+            <p class="sp-card__go">View case study ↗</p>
+          </OutlinedCard>
         ))}
       </div>
     </div>

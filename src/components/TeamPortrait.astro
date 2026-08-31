@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import type { LeadershipProfile } from '../data/leadership';
+
+interface Props {
+  person: LeadershipProfile;
+  class?: string;
+  widths?: number[];
+  sizes?: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+}
+
+const {
+  person,
+  class: className = '',
+  widths = [320, 480, 640, 960],
+  sizes = '(max-width: 800px) 32vw, 420px',
+  width = 800,
+  height = 800,
+  loading = 'lazy',
+} = Astro.props;
+---
+
+<Image
+  class={className}
+  src={person.image}
+  alt={person.imageAlt}
+  width={width}
+  height={height}
+  widths={widths}
+  sizes={sizes}
+  quality={82}
+  loading={loading}
+  decoding="async"
+  style={`--portrait-pos: ${person.objectPosition}; object-position: ${person.objectPosition}`}
+/>

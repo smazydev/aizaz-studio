@@ -6,6 +6,7 @@ export interface ContentAuthor {
     role?: string;
     bio?: string;
     photoUrl?: string;
+    photoObjectPosition?: string;
     linkedin?: string;
     xUrl?: string;
     githubUrl?: string;
