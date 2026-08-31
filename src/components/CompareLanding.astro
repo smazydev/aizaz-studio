@@ -1,6 +1,7 @@
 ---
 import type { ComparePage } from '../data/comparePages';
 import FaqSection from './FaqSection.astro';
+import PageCTA from './PageCTA.astro';
 
 interface Props {
   page: ComparePage;
@@ -25,63 +26,64 @@ const { page } = Astro.props;
   </div>
 </section>
 
-<section class="pb-16">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x auto">
-    <table class="w-full min-w-[640px] text-left border-collapse">
-      <thead>
-        <tr class="border-b border-zinc-800">
-          <th class="py-4 pr-4 text-zinc-500 font-medium text-sm"></th>
-          <th class="py-4 px-4 text-white font-bold">Aizaz Studio</th>
-          <th class="py-4 px-4 text-zinc-400 font-bold">{page.optionBLabel ?? 'Alternative'}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {page.comparisonRows.map((row) => (
-          <tr class="border-b border-zinc-900">
-            <td class="py-4 pr-4 text-zinc-300 font-medium">{row.label}</td>
-            <td class="py-4 px-4 text-zinc-300">{row.optionA}</td>
-            <td class="py-4 px-4 text-zinc-500">{row.optionB}</td>
+<section class="sp-section">
+  <div class="c-wrap">
+    <div class="sp-table-wrap">
+      <table class="sp-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Aizaz Studio</th>
+            <th>{page.optionBLabel ?? 'Alternative'}</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {page.comparisonRows.map((row) => (
+            <tr>
+              <td>{row.label}</td>
+              <td>{row.optionA}</td>
+              <td>{row.optionB}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
 {page.sections.map((section) => (
-  <section class="pb-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl font-display font-bold text-white mb-4">{section.heading}</h2>
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap seo-measure">
+      <h2 class="page-h2">{section.heading}</h2>
       {section.paragraphs.map((p) => (
-        <p class="text-zinc-400 leading-relaxed mb-4">{p}</p>
+        <p class="c-lede" style="margin-top: 14px">{p}</p>
       ))}
     </div>
   </section>
 ))}
 
-<section class="pb-16">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-2xl font-display font-bold text-white mb-6">Related reading</h2>
-    <div class="flex flex-wrap gap-3">
+<section class="sp-section">
+  <div class="c-wrap seo-measure">
+    <h2 class="page-h2">Related reading</h2>
+    <div class="sp-group__links" style="margin-top: 20px">
       {page.relatedLinks.map((link) => (
-        <a href={link.href} class="px-4 py-2 rounded-full border border-zinc-700 text-sm text-zinc-300 hover:border-primary-500/40 hover:text-white transition-colors">
-          {link.label}
-        </a>
+        <a class="sp-link" href={link.href}><strong>{link.label}</strong></a>
       ))}
     </div>
   </div>
 </section>
 
-<section class="pb-20">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="p-10 rounded-3xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20 text-center">
-      <p class="c-lede" style="margin-top: 0">{page.ctaText}</p>
-      <div class="page-hero__actions">
-        <a class="c-btn" href="/book-a-call">Book a Call</a>
-        <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement Models</a>
+{page.faqs?.length > 0 && <FaqSection faqs={page.faqs} />}
+
+<section class="sp-section sp-section--tight">
+  <div class="c-wrap">
+    <div class="sp-promo">
+      <div class="sp-promo__copy">
+        <p class="c-lede">{page.ctaText}</p>
       </div>
+      <a class="c-btn" href="/book-a-call">Book a Call</a>
     </div>
   </div>
 </section>
 
-<FaqSection faqs={page.faqs} />
+<PageCTA />

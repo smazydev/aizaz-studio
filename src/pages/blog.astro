@@ -2,9 +2,9 @@
 export const prerender = false;
 
 import SiteShell from '../components/SiteShell.astro';
-import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import BlogCard from '../components/BlogCard.astro';
+import PageCTA from '../components/PageCTA.astro';
 import { getLinkablePosts, getPublishedPosts } from '../lib/blog';
 import { getBlogFilterCategories } from '../lib/blog-categories';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
@@ -25,51 +25,43 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
     eyebrow="Insights"
     title="Playbooks for"
     highlight="smarter operations"
-    description="What we've learned building, fixing, and operating real software systems — from AI and SaaS to NetSuite, integrations, and production failures."
+    description="What we've learned building, fixing, and operating real software systems, from AI and SaaS to NetSuite, integrations, and production failures."
   />
 
-  <section class="pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="p-6 rounded-2xl glass-card flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <div class="text-sm font-semibold text-white mb-1">Want the short version?</div>
-          <p class="text-sm text-zinc-400">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <div class="sp-promo">
+        <div class="sp-promo__copy">
+          <p class="c-micro c-red">Short version</p>
+          <p class="c-lede">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
         </div>
-        <a href="/ai-systems-sprint" class="inline-flex justify-center px-5 py-2.5 rounded-full bg-primary-600 text-white text-sm font-semibold hover:bg-primary-500 transition-colors shrink-0">
-          AI Systems Sprint →
-        </a>
+        <a class="c-btn" href="/ai-systems-sprint">AI Systems Sprint</a>
       </div>
     </div>
   </section>
 
-  <section class="pb-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="sp-section">
+    <div class="c-wrap">
       {featured && (
-        <div class="mb-16">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Featured</h2>
-          </div>
+        <div class="blog-index__featured">
+          <p class="c-micro c-red">Featured</p>
           <BlogCard blog={featured} featured />
         </div>
       )}
 
-      <div class="flex flex-wrap gap-2 mb-10" id="blog-filters">
+      <div class="blog-filters" id="blog-filters">
         {categories.map((category, index) => (
           <button
             type="button"
             data-filter={category}
-            class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              index === 0
-                ? 'bg-white text-black'
-                : 'bg-zinc-900/60 text-zinc-400 border border-white/5 hover:text-white hover:border-white/15'
-            }`}
+            class:list={['blog-filters__btn', index === 0 && 'is-active']}
           >
             {category}
           </button>
         ))}
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid">
+      <div class="blog-index__grid" id="blog-grid">
         {rest.map((blog) => (
           <div data-category={blog.category} class="blog-item">
             <BlogCard blog={blog} />
@@ -79,7 +71,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
     </div>
   </section>
 
-  <CTA client:visible />
+  <PageCTA />
 </SiteShell>
 
 <script>
@@ -91,13 +83,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
       const category = filter.getAttribute('data-filter');
 
       filters.forEach((btn) => {
-        const active = btn === filter;
-        btn.classList.toggle('bg-white', active);
-        btn.classList.toggle('text-black', active);
-        btn.classList.toggle('bg-zinc-900/60', !active);
-        btn.classList.toggle('text-zinc-400', !active);
-        btn.classList.toggle('border', !active);
-        btn.classList.toggle('border-white/5', !active);
+        btn.classList.toggle('is-active', btn === filter);
       });
 
       items.forEach((item) => {

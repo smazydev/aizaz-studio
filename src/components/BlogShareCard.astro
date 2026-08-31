@@ -9,33 +9,13 @@ const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encod
 const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
 ---
 
-<div class="p-5 rounded-2xl glass-card" data-blog-share data-share-url={url} data-share-title={title}>
-  <div class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">Share</div>
-  <p class="text-sm text-zinc-400 mb-4">Send this to someone dealing with the same problem.</p>
-  <div class="flex flex-col gap-2">
-    <button
-      type="button"
-      data-copy-link
-      class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-white/10 text-sm font-medium text-white hover:bg-zinc-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-    >
-      Copy link
-    </button>
-    <a
-      href={linkedInUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-white/10 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
-    >
-      LinkedIn
-    </a>
-    <a
-      href={xUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-white/10 text-sm font-medium text-primary-400 hover:text-primary-300 hover:bg-zinc-900 transition-colors"
-    >
-      X
-    </a>
+<div class="blog-share" data-blog-share data-share-url={url} data-share-title={title}>
+  <p class="c-micro">Share</p>
+  <p class="c-lede blog-share__lede">Send this to someone dealing with the same problem.</p>
+  <div class="blog-share__actions">
+    <button type="button" data-copy-link class="c-btn c-btn--ghost">Copy link</button>
+    <a class="c-btn c-btn--ghost" href={linkedInUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a class="c-btn c-btn--ghost" href={xUrl} target="_blank" rel="noopener noreferrer">X</a>
   </div>
 </div>
 
@@ -64,15 +44,15 @@ const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}
   }
 
   document.querySelectorAll('[data-blog-share]').forEach((card) => {
-    const url = card.getAttribute('data-share-url') ?? '';
+    const shareUrl = card.getAttribute('data-share-url') ?? '';
     const copyBtn = card.querySelector('[data-copy-link]');
-    if (!(copyBtn instanceof HTMLButtonElement) || !url) return;
+    if (!(copyBtn instanceof HTMLButtonElement) || !shareUrl) return;
 
     copyBtn.addEventListener('click', async () => {
-      const ok = await copyText(url);
+      const ok = await copyText(shareUrl);
       if (!ok) return;
       const original = copyBtn.textContent ?? 'Copy link';
-      copyBtn.textContent = 'Copied ✓';
+      copyBtn.textContent = 'Copied';
       window.setTimeout(() => {
         copyBtn.textContent = original;
       }, 2000);

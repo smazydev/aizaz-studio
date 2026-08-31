@@ -1,67 +1,109 @@
 ---
 import SiteShell from '../components/SiteShell.astro';
-import { CTA } from '../components/CTA';
-import { servicePages, industryPages } from '../data/seoPages';
 import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { industryPages } from '../data/seoPages';
+import { serviceGroups, servicesForGroup, ungroupedServices } from '../data/serviceGroups';
+
+const leftover = ungroupedServices();
 ---
 
 <SiteShell
   title="Services | AI, Cloud & Automation Engineering | Aizaz.studio"
   description="AI automation, web app development, AWS DevOps, NetSuite integrations, business process automation, trading technology, and product enablement for growing businesses."
   canonical="/services"
-  keywords={['AI automation services', 'SaaS development', 'NetSuite integration', 'AWS DevOps', 'business automation']}
 >
-      <PageHero
-        eyebrow="Services"
-        title="Build smarter systems."
-        highlight="Scale cleaner operations."
-        description="We help growing businesses replace messy manual workflows with reliable software systems, from AI agents and web apps to NetSuite integrations and AWS infrastructure."
+  <PageHero
+    eyebrow="Services"
+    title="Build smarter systems."
+    highlight="Scale cleaner operations."
+    description="Senior engineering across AI & automation, product/SaaS, ERP integrations, and cloud, so manual workflows become reliable software."
+  >
+    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
+  </PageHero>
+
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <div class="sp-promo">
+        <div class="sp-promo__copy">
+          <p class="c-micro c-red">Focused sprint</p>
+          <h2 class="page-h2">AI Systems Sprint</h2>
+          <p class="c-lede">
+            In 14 days, we turn one manual workflow into a working AI-assisted system, automation, dashboard, or internal tool connected to your real stack.
+          </p>
+        </div>
+        <a class="c-btn" href="/ai-systems-sprint">View the Sprint Offer</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-section">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Capabilities"
+        title="Four groups. Full depth underneath."
+        lede="Use this page to orient. Each link opens a dedicated service page that keeps its SEO intent and technical detail."
       />
 
-      <section class="pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-20 p-8 md:p-10 rounded-3xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20">
-          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div>
-              <h2 class="text-2xl md:text-3xl font-display font-bold text-white mb-3">AI Systems Sprint</h2>
-              <p class="text-zinc-400 max-w-2xl">
-                In 14 days, we turn one manual workflow into a working AI assisted system, automation, dashboard, or internal tool.
-              </p>
+      {serviceGroups.map((group) => {
+        const items = servicesForGroup(group);
+        return (
+          <div class="sp-group">
+            <div class="sp-group__head">
+              <p class="c-micro c-red">{group.n}</p>
+              <h3>{group.title}</h3>
+              <p class="c-lede">{group.lede}</p>
             </div>
-            <a class="c-btn" href="/ai-systems-sprint">View the Sprint Offer</a>
+            <div class="sp-group__links">
+              {items.map((service) => (
+                <a class="sp-link" href={`/services/${service.slug}`}>
+                  <strong>{service.title}</strong>
+                  <span>{service.heroSubtitle}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+
+      {leftover.length > 0 && (
+        <div class="sp-group">
+          <div class="sp-group__head">
+            <p class="c-micro c-red">More</p>
+            <h3>Additional services</h3>
+          </div>
+          <div class="sp-group__links">
+            {leftover.map((service) => (
+              <a class="sp-link" href={`/services/${service.slug}`}>
+                <strong>{service.title}</strong>
+                <span>{service.heroSubtitle}</span>
+              </a>
+            ))}
           </div>
         </div>
+      )}
+    </div>
+  </section>
 
-        <h2 class="text-3xl font-display font-bold text-white mb-8">Core Services</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
-          {servicePages.map((service) => (
-            <a
-              href={`/services/${service.slug}`}
-              class="group p-8 rounded-2xl glass-card hover:border-primary-500/30 hover:bg-zinc-900/50 transition-all"
-            >
-              <h3 class="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">
-                {service.title}
-              </h3>
-              <p class="text-zinc-400 text-sm leading-relaxed mb-4">{service.heroSubtitle}</p>
-              <span class="text-sm font-medium text-primary-400">Learn more →</span>
-            </a>
-          ))}
-        </div>
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Industries"
+        title="Built for operations-heavy contexts"
+        lede="Industry pages keep audience-specific framing. Same engineering standards."
+      />
+      <div class="sp-group__links">
+        {industryPages.map((industry) => (
+          <a class="sp-link" href={`/for/${industry.slug}`}>
+            <p class="c-micro c-red">{industry.audienceLabel}</p>
+            <strong>{industry.title}</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-        <h2 class="text-3xl font-display font-bold text-white mb-8">Industries We Serve</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {industryPages.map((industry) => (
-            <a
-              href={`/for/${industry.slug}`}
-              class="p-5 rounded-xl glass-card hover:border-primary-500/30 transition-colors"
-            >
-              <div class="text-xs uppercase tracking-wider text-primary-400 mb-2">{industry.audienceLabel}</div>
-              <h3 class="text-lg font-semibold text-white">{industry.title}</h3>
-            </a>
-          ))}
-        </div>
-        </div>
-      </section>
-
-      <CTA client:visible />
+  <PageCTA />
 </SiteShell>

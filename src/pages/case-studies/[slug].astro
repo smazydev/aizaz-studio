@@ -2,7 +2,7 @@
 export const prerender = false;
 
 import SiteShell from '../../components/SiteShell.astro';
-import { CTA } from '../../components/CTA';
+import PageCTA from '../../components/PageCTA.astro';
 import { SITE_URL } from '../../data/seoPages';
 import { BOOKING_URL } from '../../data/siteConfig';
 import { getCaseStudyBySlug } from '../../lib/sanity/caseStudies';
@@ -80,295 +80,197 @@ const articleSchema = {
   noindex={study.noindex}
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-  <div class="pt-10 md:pt-14 pb-20">
-      {/* Header */}
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center">
-        <div class="inline-block px-4 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-primary-400 text-sm font-medium mb-6">
-          {study.category}
-        </div>
-        <h1 class="text-4xl md:text-6xl font-display font-bold mb-6 text-white">
-          {study.subtitle}
-        </h1>
-        <p class="text-xl text-zinc-400 max-w-3xl mx-auto">
-          {study.description}
-        </p>
+
+  <article class="works-detail">
+    <header class="page-hero">
+      <div class="c-wrap">
+        <p class="c-micro c-red">{study.category}</p>
+        <h1 class="page-title">{study.subtitle}</h1>
+        <p class="c-lede page-hero__lede">{study.description}</p>
         {study.author && (
-          <div class="mt-8 flex justify-center">
+          <div class="works-detail__author">
             <AuthorCard author={study.author} wrapperClass="text-left" />
           </div>
         )}
-        {study.deliveredBy && (
-          <p class="mt-4 text-sm text-zinc-500 max-w-2xl mx-auto">
-            Delivered by {study.deliveredBy}
-          </p>
-        )}
-        {study.engagementNote && (
-          <p class="mt-3 text-sm text-zinc-500 max-w-2xl mx-auto">
-            {study.engagementNote}
-          </p>
-        )}
-        {(study.client || study.location || study.industry || study.projectValue) && (
-          <div class="mt-8 flex flex-wrap justify-center gap-4">
-            {study.client && (
-              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
-                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Client</div>
-                <div class="text-sm text-white font-medium">{study.client}</div>
-              </div>
-            )}
-            {study.location && (
-              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
-                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Location</div>
-                <div class="text-sm text-white font-medium">{study.location}</div>
-              </div>
-            )}
-            {study.industry && (
-              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
-                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Industry</div>
-                <div class="text-sm text-white font-medium">{study.industry}</div>
-              </div>
-            )}
-            {study.projectValue && (
-              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
-                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Engagement</div>
-                <div class="text-sm text-white font-medium">{study.projectValue}</div>
-              </div>
-            )}
-            {study.deliveryDuration && (
-              <div class="px-5 py-3 rounded-2xl bg-zinc-900/50 border border-white/10 text-left">
-                <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">Delivery</div>
-                <div class="text-sm text-white font-medium">{study.deliveryDuration}</div>
-              </div>
-            )}
+        {study.deliveredBy && <p class="c-lede works-detail__note">Delivered by {study.deliveredBy}</p>}
+        {study.engagementNote && <p class="c-lede works-detail__note">{study.engagementNote}</p>}
+      </div>
+    </header>
+
+    {(study.client || study.location || study.industry || study.projectValue || study.deliveryDuration) && (
+      <section class="sp-section sp-section--tight">
+        <div class="c-wrap">
+          <div class="sp-grid sp-grid--3">
+            {study.client && <div class="sp-card"><p class="c-micro">Client</p><p class="sp-card__title">{study.client}</p></div>}
+            {study.location && <div class="sp-card"><p class="c-micro">Location</p><p class="sp-card__title">{study.location}</p></div>}
+            {study.industry && <div class="sp-card"><p class="c-micro">Industry</p><p class="sp-card__title">{study.industry}</p></div>}
+            {study.projectValue && <div class="sp-card"><p class="c-micro">Engagement</p><p class="sp-card__title">{study.projectValue}</p></div>}
+            {study.deliveryDuration && <div class="sp-card"><p class="c-micro">Delivery</p><p class="sp-card__title">{study.deliveryDuration}</p></div>}
           </div>
-        )}
-        {study.atAGlance && study.atAGlance.length > 0 && (
-          <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        </div>
+      </section>
+    )}
+
+    {study.atAGlance && study.atAGlance.length > 0 && (
+      <section class="sp-section sp-section--tight">
+        <div class="c-wrap">
+          <div class="sp-grid sp-grid--3">
             {study.atAGlance.map((item) => (
-              <div class="px-5 py-5 rounded-2xl bg-zinc-900/30 border border-white/10 text-center">
-                <div class="text-2xl md:text-3xl font-display font-bold text-white mb-2">{item.value}</div>
-                <div class="text-sm text-zinc-400">{item.label}</div>
-                {item.sublabel && <div class="text-xs text-zinc-500 mt-1">{item.sublabel}</div>}
+              <div class="sp-card" style="text-align:center">
+                <p class="sp-card__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem)">{item.value}</p>
+                <p class="c-lede sp-card__body">{item.label}</p>
+                {item.sublabel && <p class="c-micro" style="margin-top:8px">{item.sublabel}</p>}
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      </section>
+    )}
 
-      {/* Hero Image */}
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-        <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-primary-500/10 aspect-video">
+    <section class="sp-section sp-section--tight">
+      <div class="c-wrap">
+        <div class="works-detail__hero">
           {study.imageUrl ? (
-            <img
-              src={study.imageUrl}
-              alt={study.title}
-              class="w-full h-full object-cover"
-              loading="eager"
-              fetchpriority="high"
-              width="1600"
-              height="900"
-            />
+            <img src={study.imageUrl} alt={study.title} loading="eager" fetchpriority="high" width="1600" height="900" />
           ) : (
-            <LocalImage
-              src={study.image}
-              alt={study.title}
-              class="w-full h-full object-cover"
-              loading="eager"
-              fetchpriority="high"
-              kind="hero"
-              width={1600}
-            />
+            <LocalImage src={study.image} alt={study.title} loading="eager" fetchpriority="high" kind="hero" width={1600} />
           )}
-          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </div>
       </div>
+    </section>
 
-      {/* Content Sections */}
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
-        {study.testimonial && (
-          <section>
-            <div class="bg-zinc-900/30 border border-white/10 rounded-3xl p-8 md:p-12">
-              <div class="text-primary-400 font-semibold mb-6">{study.testimonial.rating}</div>
-              <blockquote class="text-lg md:text-xl text-zinc-200 leading-relaxed mb-8">
-                "{study.testimonial.quote}"
-              </blockquote>
-              <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-                <div>
-                  <div class="font-bold text-white text-lg">
-                    — {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
-                  </div>
-                  <div class="text-sm text-primary-400 mt-2">{study.testimonial.source}</div>
-                </div>
-                {study.testimonial.engagementMeta && (
-                  <div class="text-sm text-zinc-500">{study.testimonial.engagementMeta}</div>
-                )}
+    <div class="c-wrap works-detail__body">
+      {study.testimonial && (
+        <section class="works-detail__block">
+          <div class="sp-card">
+            {study.testimonial.rating && <p class="c-micro c-red">{study.testimonial.rating}</p>}
+            <blockquote class="works-detail__quote">“{study.testimonial.quote}”</blockquote>
+            <p class="c-lede">
+              — {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
+              {study.testimonial.source ? ` · ${study.testimonial.source}` : ''}
+            </p>
+            {study.testimonial.engagementMeta && <p class="c-micro" style="margin-top:12px">{study.testimonial.engagementMeta}</p>}
+          </div>
+        </section>
+      )}
+
+      {study.engagement && study.engagement.length > 0 && (
+        <section class="works-detail__block">
+          <h2 class="page-h2">Project details</h2>
+          <div class="sp-grid" style="margin-top: 20px">
+            {study.engagement.map((detail) => (
+              <div class="sp-card">
+                <p class="c-micro">{detail.label}</p>
+                <p class="sp-card__title">{detail.value}</p>
               </div>
-            </div>
-          </section>
-        )}
+            ))}
+          </div>
+        </section>
+      )}
 
-        {study.engagement && study.engagement.length > 0 && (
-          <section>
-            <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">Project Details</h2>
-            <div class="grid sm:grid-cols-2 gap-4">
-              {study.engagement.map((detail) => (
-                <div class="px-5 py-4 rounded-2xl bg-zinc-900/30 border border-white/5">
-                  <div class="text-xs uppercase tracking-wider text-zinc-500 mb-1">{detail.label}</div>
-                  <div class="text-sm text-white font-medium">{detail.value}</div>
+      {study.detailedContent?.map((section) => (
+        <section class="works-detail__block">
+          <h2 class="page-h2">{section.title}</h2>
+          {section.content && <p class="c-lede" style="margin-top: 16px">{section.content}</p>}
+          {section.items && (
+            <div class="works-detail__items">
+              {section.items.map((item) => (
+                <div class="sp-card">
+                  <h3 class="sp-card__title">{item.title}</h3>
+                  {item.description && <p class="c-lede sp-card__body">{item.description}</p>}
+                  {item.points && (
+                    <ul class="sp-list" style="margin-top: 14px">
+                      {item.points.map((point) => <li>{point}</li>)}
+                    </ul>
+                  )}
+                  {item.table && (
+                    <div class="sp-table-wrap" style="margin-top: 16px">
+                      <table class="sp-table">
+                        <thead>
+                          <tr>
+                            <th>{item.tableHeaders?.left ?? 'Item'}</th>
+                            <th>{item.tableHeaders?.right ?? 'Value'}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {item.table.map((row) => (
+                            <tr>
+                              <td>{row.label}</td>
+                              <td>{row.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                  {item.tableCaption && <p class="c-micro" style="margin-top:10px">{item.tableCaption}</p>}
+                  {item.image ? (
+                    <div class="works-detail__media">
+                      <LocalImage src={item.image} alt={item.title} kind="content" width={1200} />
+                    </div>
+                  ) : item.imageUrl ? (
+                    <div class="works-detail__media">
+                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="1200" height="800" />
+                    </div>
+                  ) : null}
                 </div>
               ))}
             </div>
-          </section>
-        )}
+          )}
+        </section>
+      ))}
 
-        {/* Detailed Content Sections */}
-        {study.detailedContent?.map((section) => (
-          <section>
-            <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">{section.title}</h2>
-            {section.content && (
-              <p class="text-lg text-zinc-300 leading-relaxed mb-8">
-                {section.content}
-              </p>
-            )}
-            
-            {section.items && (
-              <div class="space-y-12">
-                {section.items.map((item) => (
-                  <div class="bg-zinc-900/30 border border-white/5 rounded-2xl p-8 overflow-hidden">
-                    <div>
-                      <h3 class="text-xl font-bold text-white mb-4">{item.title}</h3>
-                      {item.description && (
-                        <p class="text-zinc-400 mb-4">{item.description}</p>
-                      )}
-                      {item.points && (
-                        <ul class="space-y-2 mb-8">
-                          {item.points.map((point) => (
-                            <li class="flex items-start gap-3 text-zinc-300">
-                              <div class="mt-2 w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0" />
-                              <span>{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {item.table && (
-                        <div class="overflow-hidden rounded-xl border border-white/10 mb-4">
-                          <table class="w-full text-left">
-                            <thead class="bg-zinc-900/80">
-                              <tr>
-                                <th class="px-5 py-3 text-sm font-semibold text-zinc-300">
-                                  {item.tableHeaders?.left ?? 'Agent Network'}
-                                </th>
-                                <th class="px-5 py-3 text-sm font-semibold text-zinc-300">
-                                  {item.tableHeaders?.right ?? 'Third-Party SaaS Cost'}
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {item.table.map((row) => (
-                                <tr class="border-t border-white/5">
-                                  <td class="px-5 py-3 text-zinc-300">{row.label}</td>
-                                  <td class="px-5 py-3 text-white font-medium">{row.value}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      )}
-                      {item.tableCaption && (
-                        <p class="text-sm text-zinc-500 mb-8">{item.tableCaption}</p>
-                      )}
-                    </div>
-                    {item.image ? (
-                      <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                        <LocalImage src={item.image} alt={item.title} class="w-full h-auto object-cover" kind="content" width={1200} />
-                      </div>
-                    ) : item.imageUrl ? (
-                      <div class="mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-                        <img src={item.imageUrl} alt={item.title} class="w-full h-auto object-cover" loading="lazy" width="1200" height="800" />
-                      </div>
-                    ) : null}
-                  </div>
-                ))}
+      {!study.detailedContent && (
+        <>
+          <section class="works-detail__block">
+            <h2 class="page-h2">The challenge</h2>
+            <p class="c-lede" style="margin-top: 16px">{study.content.challenge}</p>
+          </section>
+          {study.content.testimonial && (
+            <section class="works-detail__block">
+              <div class="sp-card">
+                <blockquote class="works-detail__quote">“{study.content.testimonial.quote}”</blockquote>
+                <p class="c-lede">— {study.content.testimonial.author}, {study.content.testimonial.role}</p>
+              </div>
+            </section>
+          )}
+          <section class="works-detail__block">
+            <h2 class="page-h2">Our solution</h2>
+            <p class="c-lede" style="margin-top: 16px">{study.content.solution}</p>
+            {study.gallery?.[0] && (
+              <div class="works-detail__media">
+                <img src={study.gallery[0]} alt="Solution details" loading="lazy" />
               </div>
             )}
           </section>
-        ))}
-
-        {/* Legacy Content (Fallback if detailedContent is missing) */}
-        {!study.detailedContent && (
-          <>
-            {/* Challenge */}
-            <section>
-              <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">The Challenge</h2>
-              <p class="text-lg text-zinc-300 leading-relaxed">
-                {study.content.challenge}
-              </p>
-            </section>
-
-            {/* Testimonial */}
-            {study.content.testimonial && (
-              <div class="bg-zinc-900/30 border-l-4 border-primary-500 p-8 md:p-12 rounded-r-2xl my-12">
-                <blockquote class="text-xl md:text-2xl font-display font-medium text-white mb-6 italic">
-                  "{study.content.testimonial.quote}"
-                </blockquote>
-                <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold">
-                    {study.content.testimonial.author.charAt(0)}
-                  </div>
-                  <div>
-                    <div class="font-bold text-white">{study.content.testimonial.author}</div>
-                    <div class="text-primary-400 text-sm">{study.content.testimonial.role}</div>
-                  </div>
-                </div>
+          <section class="works-detail__block">
+            <h2 class="page-h2">The outcome</h2>
+            <p class="c-lede" style="margin-top: 16px">{study.content.outcome}</p>
+            {study.gallery?.[1] && (
+              <div class="works-detail__media">
+                <img src={study.gallery[1]} alt="Outcome details" loading="lazy" />
               </div>
             )}
+          </section>
+        </>
+      )}
+    </div>
 
-            {/* Solution */}
-            <section>
-              <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">Our Solution</h2>
-              <p class="text-lg text-zinc-300 leading-relaxed mb-8">
-                {study.content.solution}
-              </p>
-              {study.gallery && study.gallery[0] && (
-                 <div class="rounded-2xl overflow-hidden border border-white/10 my-8">
-                   <img src={study.gallery[0]} alt="Solution details" class="w-full h-auto" />
-                 </div>
-              )}
-            </section>
+    <RelatedContent groups={relatedGroups} />
 
-            {/* Outcome */}
-            <section>
-              <h2 class="text-3xl font-display font-bold text-primary-400 mb-6">The Outcome</h2>
-              <p class="text-lg text-zinc-300 leading-relaxed mb-8">
-                {study.content.outcome}
-              </p>
-               {study.gallery && study.gallery[1] && (
-                 <div class="rounded-2xl overflow-hidden border border-white/10 my-8">
-                   <img src={study.gallery[1]} alt="Outcome details" class="w-full h-auto" />
-                 </div>
-              )}
-            </section>
-          </>
-        )}
-      </div>
-
-      <RelatedContent groups={relatedGroups} />
-
-      {study.cta && (
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
-          <div class="text-center p-10 md:p-12 rounded-3xl bg-zinc-900/30 border border-white/10">
-            <p class="text-xl md:text-2xl text-zinc-200 mb-8 leading-relaxed">{study.cta.headline}</p>
-            <a
-              href={study.cta.buttonHref ?? BOOKING_URL}
-              class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-zinc-100 transition-all"
-            >
-              {study.cta.buttonText}
-            </a>
+    {study.cta && (
+      <section class="sp-section">
+        <div class="c-wrap">
+          <div class="sp-promo">
+            <div class="sp-promo__copy">
+              <p class="c-lede">{study.cta.headline}</p>
+            </div>
+            <a class="c-btn" href={study.cta.buttonHref ?? BOOKING_URL}>{study.cta.buttonText}</a>
           </div>
         </div>
-      )}
+      </section>
+    )}
 
-      <div class="mt-32">
-        <CTA client:visible />
-      </div>
-  </div>
+    <PageCTA />
+  </article>
 </SiteShell>

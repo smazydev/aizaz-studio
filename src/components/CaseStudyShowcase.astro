@@ -1,6 +1,5 @@
 ---
 import type { HomepageFeaturedCaseStudy } from '../lib/sanity/homepage';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import LocalImage from './LocalImage.astro';
 
 interface Props {
@@ -14,206 +13,83 @@ interface Props {
 const {
   items: featuredItems,
   showHeader = true,
-  eyebrow = 'Case Studies',
+  eyebrow = 'Works',
   title = 'Production systems, not portfolio filler',
-  description = 'Compliance, fintech, and infrastructure work built for teams that need software to hold up under real load.',
+  description = 'Compliance, SaaS, and operational software built for teams that need systems to hold up under real load.',
 } = Astro.props;
 
 const items = featuredItems.filter((item) => Boolean(item?.study?.slug));
+const kinds = ['cinema', 'wide', 'square'] as const;
 ---
 
-<section id="case-study-showcase" class={`${showHeader ? 'py-20' : 'pb-20'} bg-black`}>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="case-study-showcase" class="sp-section">
+  <div class="c-wrap">
     {showHeader && (
-      <div class="text-center mb-16">
-        <h2 class="text-primary-500 font-bold tracking-widest uppercase text-sm mb-4">{eyebrow}</h2>
-        <h3 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-          {title}
-        </h3>
-        <p class="text-zinc-400 max-w-2xl mx-auto">
-          {description}
-        </p>
-      </div>
+      <header class="sp-header">
+        <p class="c-micro c-red">{eyebrow}</p>
+        <h2 class="page-h2">{title}</h2>
+        <p class="c-lede sp-header__lede">{description}</p>
+      </header>
     )}
 
-    {items.length > 0 && (
-      <>
-        <div class="flex flex-wrap justify-center gap-4 mb-12" id="category-tabs">
-          {items.map((item, index) => (
-            <button
-              type="button"
-              data-category={item.study.slug}
-              data-index={index}
-              class={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                index === 0
-                  ? 'bg-zinc-800 text-white border border-zinc-700 shadow-lg shadow-primary-500/10 active'
-                  : 'bg-transparent text-zinc-400 hover:text-white hover:bg-zinc-900'
-              }`}
-            >
-              {item.tabLabel}
-            </button>
-          ))}
-        </div>
-
-        <div class="relative min-h-[600px] lg:min-h-[500px]">
-          {items.map((item, index) => {
-            const study = item.study;
-            return (
-              <div
-                data-category-content={study.slug}
-                data-index={index}
-                class={`bg-zinc-900/30 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm transition-opacity duration-500 ${
-                  index === 0
-                    ? 'opacity-100 z-10 relative'
-                    : 'opacity-0 z-0 pointer-events-none absolute inset-0'
-                }`}
-              >
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 h-full">
-                  <div class="relative h-64 lg:h-auto min-h-[280px] overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-                    {study.imageUrl ? (
-                      <img
-                        src={study.imageUrl}
-                        alt={study.title}
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                        width="1200"
-                        height="900"
-                        decoding="async"
-                      />
-                    ) : (
-                      <LocalImage
-                        src={study.image}
-                        alt={study.title}
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                        kind="card"
-                        width={1200}
-                      />
-                    )}
-                    <a
-                      href={`/case-studies/${study.slug}`}
-                      class="absolute top-6 right-6 z-20 bg-black/50 backdrop-blur-md border border-white/10 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-black/70 transition-colors"
-                    >
-                      View Case Study <ArrowUpRight size={16} />
-                    </a>
-                  </div>
-
-                  <div class="p-8 lg:p-12 flex flex-col justify-center">
-                    <div class="mb-6">
-                      <div class="w-12 h-12 mb-6 text-primary-500">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
-                          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                        </svg>
-                      </div>
-                      <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-4 leading-tight">
-                        {study.title}
-                      </h3>
-                      <p class="text-zinc-400 leading-relaxed mb-8">
-                        {study.description}
-                      </p>
-                    </div>
-
-                    <div class="mt-auto">
-                      <a
-                        href={`/case-studies/${study.slug}`}
-                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-600 text-white hover:bg-primary-500 transition-colors shadow-lg shadow-primary-500/20"
-                      >
-                        <ArrowRight size={20} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
+    <div class="works-list">
+      {items.map((item, index) => {
+        const study = item.study;
+        const kind = kinds[index % kinds.length];
+        const name = study.title.split(':')[0].trim();
+        const focus = (item.tabLabel || study.category || '').split('•')[0].trim();
+        return (
+          <article class={`works-item works-item--${kind}`}>
+            <a class="works-item__frame" href={`/case-studies/${study.slug}`}>
+              {study.imageUrl ? (
+                <img
+                  src={study.imageUrl}
+                  alt={study.title}
+                  class="works-item__shot"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  width="1600"
+                  height="900"
+                  decoding="async"
+                />
+              ) : (
+                <LocalImage
+                  src={study.image}
+                  alt={study.title}
+                  class="works-item__shot"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  kind={index === 0 ? 'hero' : 'card'}
+                  width={1600}
+                />
+              )}
+            </a>
+            <div class="works-item__meta">
+              <div>
+                <p class="c-micro">Project</p>
+                <p class="works-item__val">
+                  <a href={`/case-studies/${study.slug}`}>{name}</a>
+                </p>
               </div>
-            );
-          })}
-        </div>
-      </>
-    )}
+              <div>
+                <p class="c-micro">Focus</p>
+                <p class="works-item__val">{focus || study.category}</p>
+              </div>
+              <div>
+                <p class="c-micro">System</p>
+                <p class="works-item__val">{study.subtitle}</p>
+              </div>
+              <div>
+                <p class="c-micro">Case study</p>
+                <p class="works-item__val">
+                  <a href={`/case-studies/${study.slug}`}>View →</a>
+                </p>
+              </div>
+            </div>
+            {study.description && (
+              <p class="c-lede works-item__lede">{study.description}</p>
+            )}
+          </article>
+        );
+      })}
+    </div>
   </div>
 </section>
-
-{items.length > 1 && (
-  <script>
-    const section = document.getElementById('case-study-showcase');
-    const tabs = Array.from(document.querySelectorAll('#category-tabs button'));
-    const contents = Array.from(document.querySelectorAll('[data-category-content]'));
-    const total = tabs.length;
-
-    let currentIndex = 0;
-    let rotateTimer: ReturnType<typeof setInterval> | null = null;
-
-    function setActiveTab(tab: Element) {
-      tabs.forEach((t) => {
-        if (t === tab) {
-          t.classList.remove('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
-          t.classList.add('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
-        } else {
-          t.classList.add('bg-transparent', 'text-zinc-400', 'hover:text-white', 'hover:bg-zinc-900');
-          t.classList.remove('bg-zinc-800', 'text-white', 'border', 'border-zinc-700', 'shadow-lg', 'shadow-primary-500/10');
-        }
-      });
-    }
-
-    function showIndex(index: number) {
-      currentIndex = index;
-
-      tabs.forEach((tab, i) => {
-        if (i === index) setActiveTab(tab);
-      });
-
-      contents.forEach((content, i) => {
-        if (i === index) {
-          content.classList.remove('opacity-0', 'z-0', 'pointer-events-none', 'absolute', 'inset-0');
-          content.classList.add('opacity-100', 'z-10', 'relative');
-        } else {
-          content.classList.add('opacity-0', 'z-0', 'pointer-events-none', 'absolute', 'inset-0');
-          content.classList.remove('opacity-100', 'z-10', 'relative');
-        }
-      });
-    }
-
-    function startRotation() {
-      if (rotateTimer) clearInterval(rotateTimer);
-      rotateTimer = setInterval(() => {
-        showIndex((currentIndex + 1) % total);
-      }, 2000);
-    }
-
-    function stopRotation() {
-      if (rotateTimer) {
-        clearInterval(rotateTimer);
-        rotateTimer = null;
-      }
-    }
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        showIndex(index);
-        startRotation();
-      });
-    });
-
-    if (section && total > 1) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting) {
-            startRotation();
-          } else {
-            stopRotation();
-          }
-        },
-        { threshold: 0.25 },
-      );
-
-      observer.observe(section);
-
-      section.addEventListener('mouseenter', stopRotation);
-      section.addEventListener('mouseleave', () => {
-        if (section.getBoundingClientRect().top < window.innerHeight) {
-          startRotation();
-        }
-      });
-    }
-  </script>
-)}

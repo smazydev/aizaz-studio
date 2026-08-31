@@ -2,9 +2,9 @@
 export const prerender = false;
 
 import SiteShell from '../components/SiteShell.astro';
-import { CTA } from '../components/CTA';
 import PageHero from '../components/PageHero.astro';
 import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
+import PageCTA from '../components/PageCTA.astro';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 
@@ -23,11 +23,15 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
   canonical="/case-studies"
 >
   <PageHero
-    eyebrow="Case Studies"
+    eyebrow="Works"
     title="Systems built for"
     highlight="real-world scale"
-    description="Compliance platforms, fintech infrastructure, and production systems — designed for security, scale, and operations teams that cannot afford fragile software."
-  />
+    description="Compliance platforms, SaaS products, and operational systems designed for security, scale, and teams that cannot afford fragile software."
+  >
+    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href="/services">Services</a>
+  </PageHero>
+
   <CaseStudyShowcase items={showcaseItems} showHeader={false} />
-  <CTA client:visible />
+  <PageCTA title="Building something similar?" lede="Book a call to talk through scope, stack, and a sensible first step." />
 </SiteShell>

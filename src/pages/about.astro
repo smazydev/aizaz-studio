@@ -1,80 +1,127 @@
 ---
 import SiteShell from '../components/SiteShell.astro';
-import { WhyUs } from '../components/WhyUs';
-import { CTA } from '../components/CTA';
-import { ClientReviews } from '../components/ClientReviews';
 import PageHero from '../components/PageHero.astro';
-import { servicePages } from '../data/seoPages';
-import { deliverySteps, siteStats } from '../data/siteContent';
+import SectionHeader from '../components/SectionHeader.astro';
+import OutlinedCard from '../components/OutlinedCard.astro';
+import PageCTA from '../components/PageCTA.astro';
+import { LEGACY_AUTHORS } from '../data/authors';
+import { caseStudies } from '../data/caseStudies';
+import { filterPublicCaseStudies } from '../lib/case-study-visibility';
+
+const leaders = [LEGACY_AUTHORS.ali, LEGACY_AUTHORS.nasir, LEGACY_AUTHORS.ayaz];
+const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 ---
 
 <SiteShell
   title="About Aizaz.studio | AI, Cloud & Automation Engineering Studio"
   description="Learn about Aizaz.studio, an engineering studio helping startups and operations-heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
   canonical="/about"
-  keywords={['about Aizaz.studio', 'AI automation studio', 'software development agency', 'NetSuite developers']}
 >
-      <PageHero
-        eyebrow="About Us"
-        title="We connect your business"
-        highlight="with software that actually runs"
-        description="Aizaz.studio is an AI, cloud, and automation engineering studio. We help founders and operations teams replace manual workflows with production-grade systems, from first AI sprint to full platform builds."
+  <PageHero
+    eyebrow="About"
+    title="A senior software"
+    highlight="engineering studio"
+    description="Aizaz builds production systems across AI & automation, product/SaaS engineering, ERP/NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
+  >
+    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href="/case-studies">See Works</a>
+  </PageHero>
+
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="What we are"
+        title="Systems thinking, senior delivery"
+        lede="We help founders and operations teams replace manual, scattered workflows with connected software, from a focused sprint to a full platform build."
       />
+      <div class="sp-grid">
+        <OutlinedCard
+          eyebrow="Who we work with"
+          title="Ops-heavy teams and product builders"
+          body="SaaS founders, ecommerce operators, clinics, trading businesses, NetSuite users, and agencies that need senior engineering, not another layer of account management."
+        />
+        <OutlinedCard
+          eyebrow="How we think"
+          title="Across architecture, automation, and handoff"
+          body="Isolated vendors create gaps. We design the technical layer so CRM, ERP, product, and cloud stay coherent, and your team can operate what we ship."
+        />
+      </div>
+    </div>
+  </section>
 
-      <section class="pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid md:grid-cols-4 gap-6 mb-20">
-            {siteStats.map((stat) => (
-              <div class="p-6 rounded-2xl glass-card text-center">
-                <div class="text-3xl font-display font-bold text-white">{stat.value}<span class="text-primary-400">{stat.suffix}</span></div>
-                <div class="text-sm text-zinc-500 mt-1">{stat.label}</div>
+  <section class="sp-section sp-section--dark">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Leadership"
+        title="The people who own the work"
+        lede="A small founding team. No fabricated headcount. Direct access to the engineers and operators shipping your system."
+        tone="dark"
+      />
+      <div class="sp-people">
+        {leaders.map((person) => (
+          <article class="sp-person">
+            {person.photoUrl && (
+              <img src={person.photoUrl} alt="" width="72" height="72" loading="lazy" />
+            )}
+            <div>
+              <h3 class="sp-person__name">{person.name}</h3>
+              <p class="sp-person__role">{person.role}</p>
+              <div class="sp-person__links">
+                {person.linkedin && (
+                  <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                )}
+                {'githubUrl' in person && person.githubUrl && (
+                  <a href={person.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+                )}
               </div>
-            ))}
-          </div>
-
-          <div class="grid lg:grid-cols-3 gap-6 mb-20">
-            <div class="p-8 rounded-2xl glass-card lg:col-span-2">
-              <h2 class="text-2xl font-display font-bold text-white mb-4">Who we work with</h2>
-              <p class="text-zinc-400 leading-relaxed mb-4">
-                SaaS founders, ecommerce operators, clinics, trading businesses, NetSuite users, and agencies that need senior backend, cloud, or automation support. If your team repeats the same work across CRMs, ERPs, spreadsheets, and chat tools, we are probably a fit.
-              </p>
-              <p class="text-zinc-400 leading-relaxed">
-                Unlike traditional agencies that deliver isolated pieces, we think across architecture, automation, deployment, and handoff. One website vendor, another for cloud, another for ERP creates gaps. We build the full technical layer so operations get quieter.
-              </p>
             </div>
-            <div class="p-8 rounded-2xl bg-gradient-to-br from-primary-600/20 to-indigo-600/10 border border-primary-500/20">
-              <div class="text-xs font-bold uppercase tracking-widest text-primary-400 mb-3">Brand Promise</div>
-              <p class="text-white text-lg font-display font-semibold leading-relaxed">
-                Move from manual, scattered, and fragile operations to connected, automated, and scalable systems.
-              </p>
-            </div>
-          </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-          <h2 class="text-2xl font-display font-bold text-white mb-8">How we work with clients</h2>
-          <div class="grid md:grid-cols-3 gap-4 mb-20">
-            {deliverySteps.map((step) => (
-              <div class="p-6 rounded-2xl glass-card">
-                <div class="text-primary-400 font-display font-bold text-sm mb-3">{step.step}</div>
-                <h3 class="font-bold text-white mb-2">{step.title}</h3>
-                <p class="text-sm text-zinc-400 leading-relaxed">{step.description}</p>
-              </div>
-            ))}
-          </div>
+  <section class="sp-section">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="How we work with clients"
+        title="Clear ownership, production standards"
+        lede="Every engagement starts with discovery and ends with software your team can run, with documentation, monitoring, and a sensible next step."
+      />
+      <div class="sp-grid sp-grid--3">
+        <OutlinedCard eyebrow="01" title="Discover" body="Map the stack and pick the highest-leverage workflow or product milestone." />
+        <OutlinedCard eyebrow="02" title="Build & integrate" body="Senior engineers ship against real systems, not isolated demos." />
+        <OutlinedCard eyebrow="03" title="Ship & observe" body="Deploy with CI/CD, logging, and handoff so operations stay quiet after launch." />
+      </div>
+      <div class="page-hero__actions" style="margin-top: 28px">
+        <a class="c-btn c-btn--ghost" href="/process">Full process</a>
+        <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement models</a>
+      </div>
+    </div>
+  </section>
 
-          <h2 class="text-2xl font-display font-bold text-white mb-2">What we build</h2>
-          <p class="text-zinc-400 mb-8">full stack delivery across AI, product engineering, ERP, and cloud.</p>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {servicePages.map((service) => (
-              <a href={`/services/${service.slug}`} class="p-5 rounded-xl glass-card hover:border-primary-500/25 transition-colors group">
-                <h3 class="font-semibold text-white mb-2 group-hover:text-primary-400 transition-colors">{service.title}</h3>
-                <p class="text-sm text-zinc-500 line-clamp-2">{service.heroSubtitle}</p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Proof"
+        title="Real systems in production"
+        lede="Selected public work: compliance platforms, SaaS products, and operational software."
+      />
+      <div class="sp-grid sp-grid--3">
+        {proof.map((study) => (
+          <OutlinedCard
+            href={`/case-studies/${study.slug}`}
+            eyebrow={study.category}
+            title={study.title.split(':')[0].trim()}
+            body={study.subtitle}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <WhyUs client:visible />
-      <ClientReviews client:visible />
-      <CTA client:visible />
+  <PageCTA
+    title="Ready to talk through a system?"
+    lede="Book a discovery call. We will map fit, scope, and a sensible first step."
+  />
 </SiteShell>

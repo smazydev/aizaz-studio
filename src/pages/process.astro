@@ -3,13 +3,19 @@ import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import Process from '../components/Process.astro';
 import FaqSection from '../components/FaqSection.astro';
+import PageCTA from '../components/PageCTA.astro';
 import { processPage } from '../data/commercialPages';
 
 const c = processPage;
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/process">
-  <PageHero eyebrow="How we work" title={c.title} description={c.intro}>
+  <PageHero
+    eyebrow="How we work"
+    title="Discover → Observe"
+    highlight="a delivery discipline"
+    description="Every engagement follows the same lifecycle: discover, design, build, integrate, ship, and observe. Timelines depend on scope. We do not invent universal delivery dates."
+  >
     <a class="c-btn" href="/book-a-call">Book a Call</a>
     <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement Models</a>
   </PageHero>
@@ -17,15 +23,20 @@ const c = processPage;
   <Process stepsOnly />
 
   <FaqSection faqs={[
-    { question: 'How is this different from the full process page?', answer: 'This page is a conversion focused summary. The engineering transformation page includes more context for teams evaluating a larger engagement.' },
-    { question: 'Can we start with one step only?', answer: 'Yes. Many clients start with discovery and a 14 day AI Systems Sprint before committing to a platform build or retainer.' },
+    { question: 'Does every project use every stage?', answer: 'Yes in spirit. Discovery and design always happen, even on a focused sprint. Build, integrate, ship, and observe scale with the engagement model you choose.' },
+    { question: 'Can we start with one stage only?', answer: 'Yes. Many clients start with discovery and a 14-day AI Systems Sprint before committing to a platform build or retainer.' },
     { question: 'Do you document everything for our team?', answer: 'Yes. Handoff includes architecture notes, runbooks, and access documentation so your team can operate and extend the system.' },
     { question: 'Who works on our project?', answer: 'Senior engineers and architects. We do not rotate junior staff onto production systems without senior oversight.' },
   ]} />
 
-  <section class="pb-24">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <a href="/engineering-transformation" class="text-primary-400 font-semibold hover:text-primary-300 transition-colors">Read the full engineering transformation overview →</a>
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap" style="text-align:center">
+      <a class="c-btn c-btn--ghost" href="/engineering-transformation">Engineering transformation overview</a>
     </div>
   </section>
+
+  <PageCTA
+    title="Want this process on your next system?"
+    lede="Book a call to map scope, or start with a focused sprint."
+  />
 </SiteShell>

@@ -10,21 +10,16 @@ const visible = groups.filter((g) => g.links.length > 0).slice(0, 3);
 ---
 
 {visible.length > 0 && (
-  <section class="pb-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+  <section class="sp-section">
+    <div class="c-wrap seo-measure">
       {visible.map((group) => (
-        <div>
-          <h2 class="text-3xl font-display font-bold text-white mb-8">{group.title}</h2>
-          <div class="grid md:grid-cols-2 gap-4">
+        <div class="related-block">
+          <h2 class="page-h2">{group.title}</h2>
+          <div class="sp-grid" style="margin-top: 20px">
             {group.links.map((link) => (
-              <a
-                href={link.href}
-                class="p-6 rounded-2xl glass-card hover:border-primary-500/30 transition-colors"
-              >
-                <h3 class="text-lg font-bold text-white mb-2">{link.label}</h3>
-                {link.description && (
-                  <p class="text-sm text-zinc-400 line-clamp-2">{link.description}</p>
-                )}
+              <a class="sp-card" href={link.href}>
+                <h3 class="sp-card__title">{link.label}</h3>
+                {link.description && <p class="c-lede sp-card__body">{link.description}</p>}
               </a>
             ))}
           </div>
