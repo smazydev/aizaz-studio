@@ -761,6 +761,64 @@ a.sp-card:hover {
   }
 }
 
+/* —— Shared media frames —— */
+
+.sp-media-frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #111;
+  aspect-ratio: 4 / 3;
+}
+
+.sp-media-frame > img,
+.sp-media-frame > picture,
+.sp-media-frame > picture img,
+.sp-media-cover {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.sp-media-frame > img,
+.sp-media-frame > picture {
+  position: absolute;
+  inset: 0;
+}
+
+.sp-media-frame--43 {
+  aspect-ratio: 4 / 3;
+}
+
+.sp-media-frame--45 {
+  aspect-ratio: 4 / 5;
+}
+
+.sp-media-frame--1610 {
+  aspect-ratio: 16 / 10;
+}
+
+.sp-media-frame--21 {
+  aspect-ratio: 2 / 1;
+}
+
+.sp-media-frame--contain,
+.works-detail__media {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 42%),
+    #0e0e0e;
+}
+
+.sp-media-frame--contain > img,
+.sp-media-frame--contain > picture img,
+.sp-media-contain {
+  object-fit: contain;
+  padding: clamp(12px, 2vw, 28px);
+  box-sizing: border-box;
+}
+
 /* —— Works / case studies —— */
 
 .works-list {
@@ -770,33 +828,28 @@ a.sp-card:hover {
 
 .works-item__frame {
   display: block;
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
   text-decoration: none;
+  width: min(800px, 100%);
+  aspect-ratio: 4 / 3;
 }
 
 .works-item__shot {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.works-item--cinema .works-item__shot {
-  aspect-ratio: 16 / 9;
-}
-
+.works-item--cinema .works-item__shot,
 .works-item--square .works-item__shot {
-  aspect-ratio: 16 / 10;
-}
-
-.works-item--archiver .works-item__shot {
-  object-position: 50% 42%;
-  transform: scale(1.16);
-  transform-origin: 50% 42%;
+  aspect-ratio: auto;
 }
 
 .works-item__meta {
@@ -842,17 +895,21 @@ a.sp-card:hover {
 }
 
 .works-detail__hero {
+  position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
+  width: min(840px, 100%);
+  aspect-ratio: 4 / 3;
 }
 
 .works-detail__hero img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
-  aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
@@ -886,26 +943,27 @@ a.sp-card:hover {
 }
 
 .works-detail__media {
+  position: relative;
   margin-top: 18px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  aspect-ratio: 2 / 1;
 }
 
 .works-detail__media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  object-fit: contain;
+  box-sizing: border-box;
 }
 
 @media (max-width: 800px) {
   .works-item__meta {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .works-item--cinema .works-item__shot,
-  .works-item--square .works-item__shot {
-    aspect-ratio: 16 / 10;
   }
 }
 
