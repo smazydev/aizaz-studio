@@ -59,21 +59,116 @@ export function clearSanityFetchCache(): void {
     resultCache.clear();
 }
 
-type SanityImageSource = {
+export type SanityImageCrop = {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+};
+
+export type SanityImageHotspot = {
+    x: number;
+    y: number;
+    height?: number;
+    width?: number;
+};
+
+export type SanityImageSource = {
     asset?: {
         _ref?: string;
     };
+    crop?: SanityImageCrop | null;
+    hotspot?: SanityImageHotspot | null;
+    alt?: string | null;
+    caption?: string | null;
 };
 
-export function urlForImage(source: SanityImageSource | undefined, width = 1600): string | undefined {
-    if (!source?.asset?._ref) return undefined;
+export type UrlForImageOptions = {
+    /** When set, the CDN crops to this height using the image hotspot as the focal point. */
+    height?: number;
+};
+
+function parseImageAssetRef(
+    ref: string,
+): { id: string; dimensions: string; format: string; width: number; height: number } | null {
+    const match = ref.match(/^image-(.+)-(\d+)x(\d+)-([a-z0-9]+)$/i);
+    if (match) {
+        return {
+            id: match[1],
+            dimensions: `${match[2]}x${match[3]}`,
+            format: match[4],
+            width: Number(match[2]),
+            height: Number(match[3]),
+        };
+    }
+
+    const parts = ref.split('-');
+    if (parts.length < 4) return null;
+    const format = parts[parts.length - 1];
+    const dimensions = parts[parts.length - 2];
+    const id = parts.slice(1, -2).join('-');
+    const [origW, origH] = dimensions.split('x').map(Number);
+    if (!id || !format || !origW || !origH) return null;
+    return { id, dimensions, format, width: origW, height: origH };
+}
+
+function cropToRect(
+    crop: SanityImageCrop,
+    origW: number,
+    origH: number,
+): { left: number; top: number; width: number; height: number } | null {
+    const left = Math.round(Math.max(0, crop.left) * origW);
+    const top = Math.round(Math.max(0, crop.top) * origH);
+    const width = Math.round(origW * Math.max(0, 1 - crop.left - crop.right));
+    const height = Math.round(origH * Math.max(0, 1 - crop.top - crop.bottom));
+    if (width <= 0 || height <= 0) return null;
+    return { left, top, width, height };
+}
+
+/** CSS object-position from a Sanity hotspot, e.g. `"50% 28%"`. */
+export function objectPositionFromHotspot(
+    hotspot: SanityImageHotspot | null | undefined,
+    fallback = '50% 50%',
+): string {
+    if (!hotspot || typeof hotspot.x !== 'number' || typeof hotspot.y !== 'number') {
+        return fallback;
+    }
+    const clamp = (n: number) => Math.min(100, Math.max(0, n * 100));
+    const round = (n: number) => Math.round(n * 10) / 10;
+    return `${round(clamp(hotspot.x))}% ${round(clamp(hotspot.y))}%`;
+}
+
+export function urlForImage(
+    source: SanityImageSource | null | undefined,
+    width = 1600,
+    options?: UrlForImageOptions,
+): string | undefined {
+    const ref = source?.asset?._ref;
+    if (!ref) return undefined;
 
     const projectId = getSanityProjectId();
     const dataset = getSanityDataset();
     if (!projectId) return undefined;
 
-    const [, id, dimensions, format] = source.asset._ref.split('-');
-    if (!id || !dimensions || !format) return undefined;
+    const parsed = parseImageAssetRef(ref);
+    if (!parsed) return undefined;
 
-    return `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}-${dimensions}.${format}?w=${width}&auto=format`;
+    const params = [`w=${width}`, 'auto=format'];
+
+    if (source?.crop) {
+        const rect = cropToRect(source.crop, parsed.width, parsed.height);
+        if (rect) {
+            params.push(`rect=${rect.left},${rect.top},${rect.width},${rect.height}`);
+        }
+    }
+
+    if (options?.height) {
+        params.push(`h=${options.height}`, 'fit=crop');
+        const hotspot = source?.hotspot;
+        if (hotspot && typeof hotspot.x === 'number' && typeof hotspot.y === 'number') {
+            params.push('crop=focalpoint', `fp-x=${hotspot.x}`, `fp-y=${hotspot.y}`);
+        }
+    }
+
+    return `https://cdn.sanity.io/images/${projectId}/${dataset}/${parsed.id}-${parsed.dimensions}.${parsed.format}?${params.join('&')}`;
 }

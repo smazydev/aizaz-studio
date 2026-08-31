@@ -104,6 +104,8 @@ export const caseStudiesQuery = groq`
         tableHeaderRight
       }
     },
+    featuredOnHomepage,
+    logo,
     gallery,
     backgroundImages,
     cta{

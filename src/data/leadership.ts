@@ -6,8 +6,13 @@ import ayazImage from '../assets/team/ayaz.webp';
 
 export type LeadershipId = 'ali' | 'nasir' | 'ayaz';
 
+/**
+ * Team card data. `image` is the local fallback; `imageUrl` is a Sanity CDN URL
+ * (hotspot → objectPosition). TeamPortrait prefers imageUrl when present so a
+ * new portrait does not require component changes.
+ */
 export type LeadershipProfile = {
-  id: LeadershipId;
+  id: string;
   authorId: string;
   name: string;
   shortName: string;
@@ -16,15 +21,18 @@ export type LeadershipProfile = {
   focus: string[];
   linkedin: string;
   githubUrl?: string;
-  image: ImageMetadata;
+  image?: ImageMetadata;
+  imageUrl?: string;
   imageAlt: string;
   objectPosition: string;
+  order?: number;
+  featuredOnHomepage?: boolean;
+  showOnTeam?: boolean;
 };
 
 /**
- * Homepage and About team config.
- * `image` is a local Astro asset so portraits can later move to Sanity
- * without changing card markup — swap `image` for a CMS URL/ImageMetadata.
+ * Homepage and About team config (static fallback).
+ * CMS overlays live in `src/lib/sanity/team.ts` and keep this shape.
  */
 export const leadershipProfiles: LeadershipProfile[] = [
   {
@@ -40,6 +48,9 @@ export const leadershipProfiles: LeadershipProfile[] = [
     image: aliImage,
     imageAlt: 'Syed Ali Zafar, Founder and Principal Engineer at Aizaz Studio',
     objectPosition: '50% 28%',
+    order: 0,
+    showOnTeam: true,
+    featuredOnHomepage: true,
   },
   {
     id: 'nasir',
@@ -54,6 +65,9 @@ export const leadershipProfiles: LeadershipProfile[] = [
     image: nasirImage,
     imageAlt: 'Nasir Mahmood, Co-Founder for ERP and integrations at Aizaz Studio',
     objectPosition: '50% 30%',
+    order: 1,
+    showOnTeam: true,
+    featuredOnHomepage: true,
   },
   {
     id: 'ayaz',
@@ -67,6 +81,9 @@ export const leadershipProfiles: LeadershipProfile[] = [
     image: ayazImage,
     imageAlt: 'Ayaz Khan, Co-Founder for operations and growth at Aizaz Studio',
     objectPosition: '50% 22%',
+    order: 2,
+    showOnTeam: true,
+    featuredOnHomepage: true,
   },
 ];
 
@@ -80,8 +97,9 @@ export function leadershipToAuthor(person: LeadershipProfile): ContentAuthor {
     name: person.name,
     role: person.role,
     bio: person.bio,
-    photoUrl: person.image.src,
+    photoUrl: person.imageUrl || person.image?.src,
     photoObjectPosition: person.objectPosition,
+    photoAlt: person.imageAlt,
     linkedin: person.linkedin,
     githubUrl: person.githubUrl,
   };

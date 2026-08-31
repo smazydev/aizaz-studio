@@ -1,8 +1,11 @@
 import type { CaseStudy } from '../../data/caseStudies';
+import type { LeadershipProfile } from '../../data/leadership';
 import { clientLogos, siteStats } from '../../data/siteContent';
-import { cachedSanityFetch, getSanityClient } from './client';
-import { getAllCaseStudies } from './caseStudies';
 import { isHiddenCaseStudySlug, isPublicCaseStudy } from '../case-study-visibility';
+import { personSelection, type SanityPersonDoc } from './author';
+import { getAllCaseStudies } from './caseStudies';
+import { cachedSanityFetch, getSanityClient } from './client';
+import { getHomepageTeam, mapSanityTeamMember } from './team';
 
 export type HomepageStat = {
     value: string;
@@ -29,6 +32,7 @@ export type HomepageContent = {
     showcaseTitle: string;
     showcaseDescription: string;
     featuredCaseStudies: HomepageFeaturedCaseStudy[];
+    featuredTeam: LeadershipProfile[];
 };
 
 type SanityHomepageDoc = {
@@ -53,6 +57,7 @@ type SanityHomepageDoc = {
         labelOverride?: string | null;
         enabled?: boolean | null;
     }> | null;
+    featuredTeam?: SanityPersonDoc[] | null;
 };
 
 /** Default featured order matches current public homepage emphasis. */
@@ -87,7 +92,10 @@ export const homepageQuery = `*[_type == "homepage" && _id == "homepage"][0]{
   showcaseEyebrow,
   showcaseTitle,
   showcaseDescription,
-  featuredCaseStudies[]{ caseStudySlug, labelOverride, enabled }
+  featuredCaseStudies[]{ caseStudySlug, labelOverride, enabled },
+  featuredTeam[]->{
+    ${personSelection}
+  }
 }`;
 
 function pickString(value: string | null | undefined, fallback: string): string {
@@ -131,9 +139,15 @@ function resolveFeatured(
             labelOverride: item.labelOverride?.trim() || undefined,
         }));
 
+    const flagged = publicStudies
+        .filter((study) => study.featuredOnHomepage)
+        .map((study) => ({ slug: study.slug, labelOverride: undefined as string | undefined }));
+
     const selected = configured.length
         ? configured
-        : DEFAULT_FEATURED_SLUGS.map((slug) => ({ slug, labelOverride: undefined as string | undefined }));
+        : flagged.length
+          ? flagged
+          : DEFAULT_FEATURED_SLUGS.map((slug) => ({ slug, labelOverride: undefined as string | undefined }));
 
     const featured: HomepageFeaturedCaseStudy[] = [];
     for (const item of selected) {
@@ -166,6 +180,14 @@ function resolveFeatured(
     return featured;
 }
 
+async function resolveFeaturedTeam(doc: SanityHomepageDoc | null): Promise<LeadershipProfile[]> {
+    const fromHomepage = (doc?.featuredTeam ?? [])
+        .map((person) => mapSanityTeamMember(person))
+        .filter((person): person is LeadershipProfile => Boolean(person));
+    if (fromHomepage.length > 0) return fromHomepage;
+    return getHomepageTeam();
+}
+
 /**
  * Single homepage document fetch + case-study resolution.
  * Safe when Sanity is down or the Homepage document does not exist yet.
@@ -180,7 +202,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         allStudies = [];
     }
 
-    const fallback = (): HomepageContent => ({
+    const fallback = async (): Promise<HomepageContent> => ({
         stats: defaultHomepageContent.stats,
         marqueeLabel: defaultHomepageContent.marqueeLabel,
         marqueeItems: defaultHomepageContent.marqueeItems,
@@ -188,6 +210,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         showcaseTitle: defaultHomepageContent.showcaseTitle,
         showcaseDescription: defaultHomepageContent.showcaseDescription,
         featuredCaseStudies: resolveFeatured(null, allStudies),
+        featuredTeam: await resolveFeaturedTeam(null),
     });
 
     const client = getSanityClient();
@@ -209,6 +232,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
                 defaultHomepageContent.showcaseDescription,
             ),
             featuredCaseStudies: resolveFeatured(doc, allStudies),
+            featuredTeam: await resolveFeaturedTeam(doc),
         };
     } catch (error) {
         console.warn('[sanity] Failed to fetch homepage; using code fallbacks.', error);

@@ -44,7 +44,8 @@ const kinds = ['cinema', 'wide', 'square'] as const;
               {study.imageUrl ? (
                 <img
                   src={study.imageUrl}
-                  alt={study.title}
+                  alt={study.imageAlt || study.title}
+                  style={study.imageObjectPosition ? `object-position: ${study.imageObjectPosition}` : undefined}
                   class="works-item__shot"
                   loading={index === 0 ? 'eager' : 'lazy'}
                   width="1600"
@@ -54,7 +55,7 @@ const kinds = ['cinema', 'wide', 'square'] as const;
               ) : (
                 <LocalImage
                   src={study.image}
-                  alt={study.title}
+                  alt={study.imageAlt || study.title}
                   class="works-item__shot"
                   loading={index === 0 ? 'eager' : 'lazy'}
                   kind={index === 0 ? 'hero' : 'card'}

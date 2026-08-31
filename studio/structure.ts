@@ -14,6 +14,17 @@ export const structure = (S: StructureBuilder) =>
                 .id('homepage')
                 .child(S.document().schemaType('homepage').documentId('homepage').title('Homepage')),
             S.listItem()
+                .title('Team')
+                .child(
+                    S.documentTypeList('person')
+                        .title('Team')
+                        .filter('_type == "person" && showOnTeam == true')
+                        .defaultOrdering([
+                            { field: 'order', direction: 'asc' },
+                            { field: 'name', direction: 'asc' },
+                        ]),
+                ),
+            S.listItem()
                 .title('Authors')
                 .child(
                     S.documentTypeList('person')

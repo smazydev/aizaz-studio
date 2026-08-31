@@ -1,5 +1,21 @@
 import { defineField, defineType } from 'sanity';
 
+/** Alt + optional caption, attached to Sanity `image` fields (hotspot/crop live on the image). */
+export const imageAltCaptionFields = [
+    defineField({
+        name: 'alt',
+        title: 'Alt text',
+        type: 'string',
+        description: 'Describe the image for accessibility. Required when replacing a public image.',
+    }),
+    defineField({
+        name: 'caption',
+        title: 'Caption',
+        type: 'string',
+        description: 'Optional caption shown with the image.',
+    }),
+];
+
 /** Reusable SEO fields for every page/document type */
 export const seoFields = defineType({
     name: 'seoFields',
@@ -298,6 +314,7 @@ export const caseStudySectionItem = defineType({
             title: 'Image',
             type: 'image',
             options: { hotspot: true },
+            fields: imageAltCaptionFields,
         }),
         defineField({
             name: 'table',

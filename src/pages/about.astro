@@ -1,16 +1,19 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
 import PageCTA from '../components/PageCTA.astro';
 import TeamPortrait from '../components/TeamPortrait.astro';
-import { leadershipProfiles } from '../data/leadership';
-import { caseStudies } from '../data/caseStudies';
-import { filterPublicCaseStudies } from '../lib/case-study-visibility';
+import { getTeamMembers } from '../lib/sanity/team';
+import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
 
-const leaders = leadershipProfiles;
-const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
+const leaders = await getTeamMembers();
+const proof = (await getAllCaseStudies()).slice(0, 3);
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'about', 'team']);
 ---
 
 <SiteShell

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { imageAltCaptionFields } from './objects';
 
 export const caseStudy = defineType({
     name: 'caseStudy',
@@ -6,6 +7,7 @@ export const caseStudy = defineType({
     type: 'document',
     groups: [
         { name: 'content', title: 'Content', default: true },
+        { name: 'media', title: 'Media' },
         { name: 'details', title: 'Details & proof' },
         { name: 'seo', title: 'SEO' },
     ],
@@ -51,9 +53,36 @@ export const caseStudy = defineType({
             name: 'coverImage',
             title: 'Cover image',
             type: 'image',
-            group: 'content',
+            group: 'media',
             options: { hotspot: true },
+            fields: imageAltCaptionFields,
             validation: (rule) => rule.required(),
+            description: 'Primary listing and detail image. Set hotspot/crop so replacements do not need frontend work.',
+        }),
+        defineField({
+            name: 'logo',
+            title: 'Logo',
+            type: 'image',
+            group: 'media',
+            options: { hotspot: true },
+            fields: [
+                defineField({
+                    name: 'alt',
+                    title: 'Alt text',
+                    type: 'string',
+                    description: 'Example: PropertyMatch logo',
+                }),
+            ],
+            description: 'Optional client or product logo. Mapped for the frontend; layout does not change until a page opts in.',
+        }),
+        defineField({
+            name: 'featuredOnHomepage',
+            title: 'Featured on homepage',
+            type: 'boolean',
+            group: 'content',
+            description:
+                'Candidate for the homepage showcase when the Homepage document list is empty. Hidden studies stay excluded in code.',
+            initialValue: false,
         }),
         defineField({
             name: 'client',
@@ -79,6 +108,7 @@ export const caseStudy = defineType({
             type: 'text',
             rows: 5,
             group: 'content',
+            description: 'Optional short challenge summary. Leave blank rather than inventing one.',
         }),
         defineField({
             name: 'solution',
@@ -86,6 +116,7 @@ export const caseStudy = defineType({
             type: 'text',
             rows: 5,
             group: 'content',
+            description: 'Optional short solution summary. Leave blank rather than inventing one.',
         }),
         defineField({
             name: 'outcome',
@@ -119,6 +150,8 @@ export const caseStudy = defineType({
             title: 'Delivery duration',
             type: 'string',
             group: 'details',
+            description:
+                'Optional. Only enter a duration you can stand behind for a real engagement (e.g. “6 weeks”). Leave blank if it is not factual.',
         }),
         defineField({
             name: 'deliveredBy',
@@ -176,17 +209,30 @@ export const caseStudy = defineType({
         }),
         defineField({
             name: 'gallery',
-            title: 'Gallery images',
+            title: 'Gallery / screenshots',
             type: 'array',
-            of: [{ type: 'image', options: { hotspot: true } }],
-            group: 'details',
+            of: [
+                {
+                    type: 'image',
+                    options: { hotspot: true },
+                    fields: imageAltCaptionFields,
+                },
+            ],
+            group: 'media',
+            description: 'Screenshots and supporting images. Alt and caption are mapped for the case-study page.',
         }),
         defineField({
             name: 'backgroundImages',
             title: 'Background / detail images',
             type: 'array',
-            of: [{ type: 'image', options: { hotspot: true } }],
-            group: 'details',
+            of: [
+                {
+                    type: 'image',
+                    options: { hotspot: true },
+                    fields: imageAltCaptionFields,
+                },
+            ],
+            group: 'media',
         }),
         defineField({
             name: 'cta',

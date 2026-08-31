@@ -2,11 +2,12 @@ import type { CaseStudy } from '../../data/caseStudies';
 import { caseStudies as staticCaseStudies } from '../../data/caseStudies';
 import { filterPublicCaseStudies, isPublicCaseStudy } from '../case-study-visibility';
 import { mapSanityAuthor } from './author';
-import { cachedSanityFetch, getSanityClient, urlForImage } from './client';
+import { cachedSanityFetch, getSanityClient, type SanityImageSource } from './client';
+import { mapManagedImage } from './image';
 import { caseStudiesQuery } from './queries';
 import { mapSanitySeo } from './seo';
 
-type SanityImage = { asset?: { _ref?: string } };
+type SanityImage = SanityImageSource;
 
 type SanityCaseStudy = {
     _id: string;
@@ -53,6 +54,8 @@ type SanityCaseStudy = {
             tableHeaderRight?: string;
         }[];
     }[];
+    featuredOnHomepage?: boolean;
+    logo?: SanityImage;
     gallery?: SanityImage[];
     backgroundImages?: SanityImage[];
     cta?: {
@@ -73,7 +76,13 @@ type SanityCaseStudy = {
 };
 
 function mapSanityCaseStudy(study: SanityCaseStudy, existing?: CaseStudy): CaseStudy {
-    const imageUrl = urlForImage(study.coverImage) ?? existing?.imageUrl;
+    const cover = mapManagedImage(study.coverImage);
+    const logo = mapManagedImage(study.logo, 400);
+    const galleryItems =
+        study.gallery
+            ?.map((img) => mapManagedImage(img))
+            .filter((item): item is NonNullable<typeof item> => Boolean(item)) ?? existing?.galleryItems;
+    const imageUrl = cover?.url ?? existing?.imageUrl;
     const legacyAuthorName = typeof study.author === 'string' ? study.author : null;
     const author = mapSanityAuthor(study.authorDoc, legacyAuthorName) ?? existing?.author;
     const seo = mapSanitySeo(
@@ -103,7 +112,8 @@ function mapSanityCaseStudy(study: SanityCaseStudy, existing?: CaseStudy): CaseS
                 image: existing?.detailedContent
                     ?.flatMap((s) => s.items ?? [])
                     .find((i) => i.title === item.title)?.image,
-                imageUrl: urlForImage(item.image),
+                imageUrl: mapManagedImage(item.image)?.url,
+                imageAlt: item.image?.alt?.trim() || item.title,
                 table: item.table,
                 tableCaption: item.tableCaption,
                 tableHeaders:
@@ -124,6 +134,11 @@ function mapSanityCaseStudy(study: SanityCaseStudy, existing?: CaseStudy): CaseS
         description: study.description,
         image: existing?.image ?? staticCaseStudies[0].image,
         imageUrl,
+        imageAlt: cover?.alt || existing?.imageAlt || study.title,
+        imageObjectPosition: cover?.objectPosition || existing?.imageObjectPosition,
+        logo: logo?.url ?? existing?.logo,
+        logoAlt: logo?.alt || existing?.logoAlt,
+        featuredOnHomepage: study.featuredOnHomepage ?? existing?.featuredOnHomepage,
         client: study.client ?? existing?.client,
         location: study.location ?? existing?.location,
         industry: study.industry ?? existing?.industry,
@@ -153,13 +168,12 @@ function mapSanityCaseStudy(study: SanityCaseStudy, existing?: CaseStudy): CaseS
             testimonial: existing?.content.testimonial,
         },
         detailedContent: mappedDetailedContent,
-        gallery:
-            study.gallery?.map((img) => urlForImage(img)).filter((url): url is string => Boolean(url)) ??
-            existing?.gallery,
+        gallery: galleryItems?.map((item) => item.url) ?? existing?.gallery,
+        galleryItems,
         backgroundImages: existing?.backgroundImages,
         backgroundImageUrls:
             study.backgroundImages
-                ?.map((img) => urlForImage(img))
+                ?.map((img) => mapManagedImage(img)?.url)
                 .filter((url): url is string => Boolean(url)) ?? existing?.backgroundImageUrls,
         author,
         seoTitle: seo.metaTitle,

@@ -131,9 +131,9 @@ const articleSchema = {
       <div class="c-wrap">
         <div class="works-detail__hero">
           {study.imageUrl ? (
-            <img src={study.imageUrl} alt={study.title} loading="eager" fetchpriority="high" width="1600" height="900" />
+            <img src={study.imageUrl} alt={study.imageAlt || study.title} loading="eager" fetchpriority="high" width="1600" height="900" style={study.imageObjectPosition ? `object-position: ${study.imageObjectPosition}` : undefined} />
           ) : (
-            <LocalImage src={study.image} alt={study.title} loading="eager" fetchpriority="high" kind="hero" width={1600} />
+            <LocalImage src={study.image} alt={study.imageAlt || study.title} loading="eager" fetchpriority="high" kind="hero" width={1600} />
           )}
         </div>
       </div>
@@ -210,7 +210,7 @@ const articleSchema = {
                     </div>
                   ) : item.imageUrl ? (
                     <div class="works-detail__media">
-                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="1200" height="800" />
+                      <img src={item.imageUrl} alt={item.imageAlt || item.title} loading="lazy" width="1200" height="800" />
                     </div>
                   ) : null}
                 </div>
@@ -239,7 +239,10 @@ const articleSchema = {
             <p class="c-lede" style="margin-top: 16px">{study.content.solution}</p>
             {study.gallery?.[0] && (
               <div class="works-detail__media">
-                <img src={study.gallery[0]} alt="Solution details" loading="lazy" />
+                <img src={study.gallery[0]} alt={study.galleryItems?.[0]?.alt || 'Solution details'} loading="lazy" />
+                {study.galleryItems?.[0]?.caption && (
+                  <p class="c-micro" style="margin-top:10px">{study.galleryItems[0].caption}</p>
+                )}
               </div>
             )}
           </section>
@@ -248,7 +251,10 @@ const articleSchema = {
             <p class="c-lede" style="margin-top: 16px">{study.content.outcome}</p>
             {study.gallery?.[1] && (
               <div class="works-detail__media">
-                <img src={study.gallery[1]} alt="Outcome details" loading="lazy" />
+                <img src={study.gallery[1]} alt={study.galleryItems?.[1]?.alt || 'Outcome details'} loading="lazy" />
+                {study.galleryItems?.[1]?.caption && (
+                  <p class="c-micro" style="margin-top:10px">{study.galleryItems[1].caption}</p>
+                )}
               </div>
             )}
           </section>

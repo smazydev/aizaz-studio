@@ -21,18 +21,34 @@ const {
   height = 800,
   loading = 'lazy',
 } = Astro.props;
+
+const cmsSrc = person.imageUrl?.trim();
+const portraitStyle = `--portrait-pos: ${person.objectPosition}; object-position: ${person.objectPosition}`;
 ---
 
-<Image
-  class={className}
-  src={person.image}
-  alt={person.imageAlt}
-  width={width}
-  height={height}
-  widths={widths}
-  sizes={sizes}
-  quality={82}
-  loading={loading}
-  decoding="async"
-  style={`--portrait-pos: ${person.objectPosition}; object-position: ${person.objectPosition}`}
-/>
+{cmsSrc ? (
+  <img
+    class={className}
+    src={cmsSrc}
+    alt={person.imageAlt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+    style={portraitStyle}
+  />
+) : person.image ? (
+  <Image
+    class={className}
+    src={person.image}
+    alt={person.imageAlt}
+    width={width}
+    height={height}
+    widths={widths}
+    sizes={sizes}
+    quality={82}
+    loading={loading}
+    decoding="async"
+    style={portraitStyle}
+  />
+) : null}

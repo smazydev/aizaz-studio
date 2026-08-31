@@ -36,7 +36,7 @@ const socialLinks = [
   {photoUrl ? (
     <img
       src={photoUrl}
-      alt={name}
+      alt={author.photoAlt?.trim() || name}
       class={`rounded-full object-cover border border-white/10 shrink-0 ${compact ? 'w-9 h-9' : 'w-11 h-11'}`}
       style={`object-position: ${photoObjectPosition}`}
       width={compact ? 36 : 44}

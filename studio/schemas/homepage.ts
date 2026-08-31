@@ -23,6 +23,7 @@ export const homepage = defineType({
         { name: 'stats', title: 'Stats', default: true },
         { name: 'marquee', title: 'Proof marquee' },
         { name: 'showcase', title: 'Featured case studies' },
+        { name: 'team', title: 'Featured team' },
     ],
     fields: [
         defineField({
@@ -202,6 +203,20 @@ export const homepage = defineType({
                             };
                         },
                     },
+                }),
+            ],
+        }),
+        defineField({
+            name: 'featuredTeam',
+            title: 'Featured team',
+            type: 'array',
+            group: 'team',
+            description:
+                'Optional homepage roster order. Each item is an Author who should also have Team fields set. Leave empty to use people marked “Featured on homepage”. The current homepage visual still reads static leadership until it is wired to this list.',
+            of: [
+                defineArrayMember({
+                    type: 'reference',
+                    to: [{ type: 'person' }],
                 }),
             ],
         }),
