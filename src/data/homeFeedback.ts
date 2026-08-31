@@ -1,4 +1,5 @@
 import { caseStudies } from './caseStudies';
+import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 
 export type HomeFeedbackItem = {
   quote: string;
@@ -68,7 +69,7 @@ function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | 
   };
 }
 
-const withTestimonials = caseStudies
+const withTestimonials = filterPublicCaseStudies(caseStudies)
   .filter((study) => study.testimonial?.quote)
   .map(buildFeedback)
   .filter((item): item is HomeFeedbackItem => Boolean(item));
