@@ -22,11 +22,8 @@ const featuredWork = publicCaseStudies.slice(0, 3).map((study, index) => {
     .map((part) => part.trim())
     .filter(Boolean);
   const isArchiver = study.slug === '1archiver-compliance-platform';
-  const image = isArchiver && study.backgroundImages?.[0]
-    ? study.backgroundImages[0]
-    : study.image;
   return {
-    image,
+    image: study.image,
     kind: featuredKinds[index],
     crop: isArchiver ? 'archiver' : undefined,
     href: `/case-studies/${study.slug}`,
@@ -92,14 +89,12 @@ const contactPhone = siteFooter.studio.phone;
 const contactPhoneHref = siteFooter.studio.phoneHref;
 
 const shippedStudies = publicCaseStudies.map((study) => {
-  const isArchiver = study.slug === '1archiver-compliance-platform';
   return {
     href: `/case-studies/${study.slug}`,
     name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
     category: (study.category.split('•')[0] || study.category).trim(),
     summary: study.subtitle.replace(/\s+/g, ' ').trim(),
-    image: isArchiver && study.backgroundImages?.[0] ? study.backgroundImages[0] : study.image,
-    crop: isArchiver ? 'archiver' : undefined,
+    image: study.image,
   };
 });
 
@@ -150,11 +145,11 @@ const homeQuote = featuredFeedback;
           <h2 class="home-services__title">Engineering<br />services</h2>
         </div>
         <div class="home-services__stage">
-          <div class="home-services__visual" data-service-viz>
+          <div class="home-services__visual sp-media-frame sp-media-frame--43" data-service-viz>
             <span class="home-services__depth" aria-hidden="true"></span>
             <div class="home-services__panel is-on" data-sv="0">
               <span class="home-services__panel-n">01 · AUTOMATION</span>
-              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 <g class="bg">
                   {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
                   {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
@@ -220,7 +215,7 @@ const homeQuote = featuredFeedback;
             </div>
             <div class="home-services__panel" data-sv="1">
               <span class="home-services__panel-n">02 · PRODUCT</span>
-              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 <g class="bg">
                   {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
                   {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
@@ -250,7 +245,7 @@ const homeQuote = featuredFeedback;
             </div>
             <div class="home-services__panel" data-sv="2">
               <span class="home-services__panel-n">03 · INTEGRATION</span>
-              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 <g class="bg">
                   {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
                   {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
@@ -292,7 +287,7 @@ const homeQuote = featuredFeedback;
             </div>
             <div class="home-services__panel" data-sv="3">
               <span class="home-services__panel-n">04 · NETSUITE</span>
-              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 <g class="bg">
                   {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
                   {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
@@ -328,7 +323,7 @@ const homeQuote = featuredFeedback;
             </div>
             <div class="home-services__panel" data-sv="4">
               <span class="home-services__panel-n">05 · INFRA</span>
-              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="none" aria-hidden="true">
+              <svg class="home-services__svg" viewBox="0 0 860 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 <g class="bg">
                   {Array.from({ length: 21 }).map((_, i) => <line class="g" x1={18 + i * 41} y1="12" x2={18 + i * 41} y2="1068" />)}
                   {Array.from({ length: 26 }).map((_, i) => <line class="g" x1="12" y1={18 + i * 41} x2="848" y2={18 + i * 41} />)}
@@ -396,7 +391,7 @@ const homeQuote = featuredFeedback;
     </div>
     {featuredWork.map((p) => (
       <article class:list={['c-project', `c-project--${p.kind}`, p.crop && `c-project--${p.crop}`]} data-reveal="media">
-        <a class="c-project__frame" href={p.href}>
+        <a class="c-project__frame sp-media-frame sp-media-frame--43" href={p.href}>
           <Image
             class="c-project__shot"
             src={p.image}
@@ -538,11 +533,11 @@ const homeQuote = featuredFeedback;
               >
                 <TeamPortrait
                   person={p}
-                  class="c-member__photo"
-                  widths={[320, 480, 640, 960]}
-                  sizes="(max-width: 800px) 32vw, 420px"
-                  width={800}
-                  height={800}
+                  class="c-member__photo team-photo-sm"
+                  widths={[240, 360, 480, 640]}
+                  sizes="(max-width: 800px) 28vw, 260px"
+                  width={640}
+                  height={640}
                 />
                 <span class="c-member__caption">
                   <strong>{p.shortName}</strong>
@@ -597,9 +592,9 @@ const homeQuote = featuredFeedback;
         <div class="c-proof">
           {shippedStudies.map((study) => (
             <a class="c-proof__card" href={study.href}>
-              <div class="c-proof__media">
+              <div class="c-proof__media sp-media-frame sp-media-frame--43">
                 <Image
-                  class:list={['c-proof__shot', study.crop && `c-proof__shot--${study.crop}`]}
+                  class="c-proof__shot"
                   src={study.image}
                   alt={study.name}
                   width={720}

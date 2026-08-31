@@ -129,7 +129,7 @@ const articleSchema = {
 
     <section class="sp-section sp-section--tight">
       <div class="c-wrap">
-        <div class="works-detail__hero">
+        <div class="works-detail__hero sp-media-frame sp-media-frame--43">
           {study.imageUrl ? (
             <img src={study.imageUrl} alt={study.title} loading="eager" fetchpriority="high" width="1600" height="900" />
           ) : (
@@ -205,11 +205,11 @@ const articleSchema = {
                   )}
                   {item.tableCaption && <p class="c-micro" style="margin-top:10px">{item.tableCaption}</p>}
                   {item.image ? (
-                    <div class="works-detail__media">
+                    <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
                       <LocalImage src={item.image} alt={item.title} kind="content" width={1200} />
                     </div>
                   ) : item.imageUrl ? (
-                    <div class="works-detail__media">
+                    <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
                       <img src={item.imageUrl} alt={item.title} loading="lazy" width="1200" height="800" />
                     </div>
                   ) : null}
@@ -238,7 +238,7 @@ const articleSchema = {
             <h2 class="page-h2">Our solution</h2>
             <p class="c-lede" style="margin-top: 16px">{study.content.solution}</p>
             {study.gallery?.[0] && (
-              <div class="works-detail__media">
+              <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
                 <img src={study.gallery[0]} alt="Solution details" loading="lazy" />
               </div>
             )}
@@ -247,7 +247,7 @@ const articleSchema = {
             <h2 class="page-h2">The outcome</h2>
             <p class="c-lede" style="margin-top: 16px">{study.content.outcome}</p>
             {study.gallery?.[1] && (
-              <div class="works-detail__media">
+              <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
                 <img src={study.gallery[1]} alt="Outcome details" loading="lazy" />
               </div>
             )}
