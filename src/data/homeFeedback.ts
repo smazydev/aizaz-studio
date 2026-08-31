@@ -11,12 +11,11 @@ export type HomeFeedbackItem = {
   project?: string;
   work?: string;
   href?: string;
+  engagementLabel?: string;
+  problem?: string;
+  solved?: string;
+  deliveryTime?: string;
 };
-
-function truncateQuote(quote: string, max = 280) {
-  if (quote.length <= max) return quote;
-  return `${quote.slice(0, max - 1).trim()}…`;
-}
 
 function excerptQuote(quote: string, max = 140) {
   if (quote.length <= max) return quote;
@@ -25,6 +24,24 @@ function excerptQuote(quote: string, max = 140) {
 
 function engagementValue(study: (typeof caseStudies)[number], label: string) {
   return study.engagement?.find((row) => row.label === label)?.value;
+}
+
+function firstSentence(text: string | undefined, max = 180) {
+  if (!text) return undefined;
+  const compact = text.replace(/\s+/g, ' ').trim();
+  if (!compact) return undefined;
+  const match = compact.match(/^.+?[.!?](?:\s|$)/);
+  const sentence = (match?.[0] || compact).trim();
+  if (sentence.length <= max) return sentence;
+  return `${sentence.slice(0, max - 1).trim()}…`;
+}
+
+function documentedDelivery(study: (typeof caseStudies)[number]) {
+  const explicit = study.deliveryDuration?.trim();
+  if (explicit) return explicit;
+  const labeled = engagementValue(study, 'Delivery')?.trim();
+  if (labeled) return labeled;
+  return undefined;
 }
 
 function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | null {
@@ -54,6 +71,11 @@ function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | 
       : study.category.split('•')[0]?.trim());
   const work = workHint || engagementValue(study, 'Engagement type') || undefined;
 
+  const engagementLabel =
+    engagementValue(study, 'Engagement type') ||
+    engagementValue(study, 'Engagement') ||
+    undefined;
+
   return {
     quote: t.quote,
     author: t.author,
@@ -66,6 +88,10 @@ function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | 
     project: projectTitle,
     work: work || undefined,
     href: `/case-studies/${study.slug}`,
+    engagementLabel,
+    problem: firstSentence(study.content?.challenge),
+    solved: firstSentence(study.content?.solution),
+    deliveryTime: documentedDelivery(study),
   };
 }
 
@@ -86,7 +112,3 @@ export const secondaryFeedback: HomeFeedbackItem[] = withTestimonials
     ...item,
     quote: excerptQuote(item.quote),
   }));
-
-export function displayQuote(item: HomeFeedbackItem, max = 280) {
-  return truncateQuote(item.quote, max);
-}

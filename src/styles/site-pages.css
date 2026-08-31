@@ -558,7 +558,7 @@ a.sp-card:hover {
   height: 96px;
   border-radius: 999px;
   object-fit: cover;
-  object-position: var(--portrait-pos, 50% 32%);
+  object-position: var(--portrait-pos, 50% 28%);
   border: 1px solid var(--line);
   background: #111;
 }
@@ -784,11 +784,17 @@ a.sp-card:hover {
 }
 
 .works-item--cinema .works-item__shot {
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 16 / 9;
 }
 
 .works-item--square .works-item__shot {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
+}
+
+.works-item--archiver .works-item__shot {
+  object-position: 50% 42%;
+  transform: scale(1.16);
+  transform-origin: 50% 42%;
 }
 
 .works-item__meta {
