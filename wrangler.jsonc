@@ -1,6 +1,9 @@
 {
 	"main": "dist/_worker.js/index.js",
 	"name": "aizaz-studio",
+	// Production Cloudflare account (Workers → aizaz-studio dashboard URL).
+	// Source of truth so a stale CLOUDFLARE_ACCOUNT_ID secret cannot retarget deploy.
+	"account_id": "54d8ce3fa765fe69f73c366be3d98f69",
 	"compatibility_date": "2026-01-06",
 	"compatibility_flags": [
 		"nodejs_compat",

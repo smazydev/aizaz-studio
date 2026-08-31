@@ -1,3 +1,21 @@
+# Production deploy path — this workflow is the only in-repo deployer.
+#
+# Competing system: the Cloudflare GitHub app ("Cloudflare Workers and Pages")
+# also reports "Workers Builds: aizaz-studio" on pushes. That Git integration
+# has been the path that actually updated production; this workflow has never
+# completed a successful wrangler deploy (runs 1–17). Disconnect Builds in
+# dash.cloudflare.com → Workers → aizaz-studio → Settings → Builds so only
+# this workflow can ship Worker versions.
+#
+# Required GitHub Actions secrets:
+#   CLOUDFLARE_API_TOKEN  — token on account 54d8ce3fa765fe69f73c366be3d98f69
+#                           with Workers Scripts Edit, Account Settings Read,
+#                           and Zone Workers Routes Edit + Zone Read for aizaz.studio
+#   CLOUDFLARE_ACCOUNT_ID — optional; if set must equal wrangler.jsonc account_id
+#
+# cache.enabled requires Wrangler >= 4.69.0 (this repo pins wrangler@4.120.1).
+# Older CLIs warn: Unexpected fields found in top-level field: "cache".
+
 name: Deploy to Cloudflare
 
 on:
@@ -15,7 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      deployments: write
 
     steps:
       - name: Checkout
@@ -33,28 +50,32 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Fail fast with a clear message instead of an opaque wrangler-action npx exit code.
       - name: Verify Cloudflare credentials
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          EXPECTED_ACCOUNT_ID: 54d8ce3fa765fe69f73c366be3d98f69
         run: |
+          set -euo pipefail
           if [ -z "${CLOUDFLARE_API_TOKEN}" ]; then
-            echo "::error::Missing GitHub Actions secret CLOUDFLARE_API_TOKEN. Add it under Settings → Secrets and variables → Actions."
+            echo "::error::Missing GitHub Actions secret CLOUDFLARE_API_TOKEN. Create a token on account ${EXPECTED_ACCOUNT_ID} (Edit Cloudflare Workers + Zone Workers Routes for aizaz.studio) and add it under Settings → Secrets and variables → Actions."
             exit 1
           fi
-          if [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
-            echo "::error::Missing GitHub Actions secret CLOUDFLARE_ACCOUNT_ID. Add it under Settings → Secrets and variables → Actions."
+          if [ -n "${CLOUDFLARE_ACCOUNT_ID}" ] && [ "${CLOUDFLARE_ACCOUNT_ID}" != "${EXPECTED_ACCOUNT_ID}" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID secret is stale. Expected ${EXPECTED_ACCOUNT_ID} (wrangler.jsonc account_id / production Worker dashboard). Update or remove the secret."
             exit 1
           fi
-          echo "Cloudflare secrets are present. Authenticating with project Wrangler $(./node_modules/.bin/wrangler --version)..."
-          ./node_modules/.bin/wrangler whoami
+          echo "Using project Wrangler $(./node_modules/.bin/wrangler --version)"
+          WHOAMI="$(./node_modules/.bin/wrangler whoami)"
+          printf '%s\n' "${WHOAMI}"
+          if ! printf '%s\n' "${WHOAMI}" | grep -q "${EXPECTED_ACCOUNT_ID}"; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not attached to production account ${EXPECTED_ACCOUNT_ID}. Recreate the token on that account."
+            exit 1
+          fi
 
+      # Use the repo-pinned binary. wrangler-action wraps `npx wrangler deploy`
+      # and reports only "npx failed with exit code 1" (runs 1–17).
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Use the Wrangler already installed by npm ci (project pin: wrangler@^4).
-          packageManager: npm
-          command: deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: ./node_modules/.bin/wrangler deploy
