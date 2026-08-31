@@ -3692,8 +3692,8 @@ body.ref-on .ref-chip::after {
 
   .c-nav__burger {
     display: inline-flex;
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     border: 1px solid var(--line);
     border-radius: 8px;
     align-items: center;
@@ -3733,6 +3733,16 @@ body.ref-on .ref-chip::after {
     flex-direction: column;
     padding: 16px var(--page-pad) 24px;
     background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .c-nav__mobile a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 10px 0;
+    font-size: 1.05rem;
+    font-weight: 600;
     border-bottom: 1px solid var(--line);
   }
 
@@ -3936,23 +3946,24 @@ body.ref-on .ref-chip::after {
 
 @media (max-width: 640px) {
   .c-hero {
-    min-height: 92svh;
+    min-height: 0;
   }
 
   .c-hero__title {
-    font-size: clamp(3.1rem, 16vw, 4.4rem);
+    font-size: var(--display);
+    line-height: 0.92;
   }
 
   .c-foot__mark {
-    font-size: 22vw;
+    font-size: clamp(3.2rem, 22vw, 5.5rem);
   }
 
   .c-rail {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .c-project__meta {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 

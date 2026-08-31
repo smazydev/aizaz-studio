@@ -279,6 +279,8 @@
 .site-main .article-content pre {
   background: var(--paper);
   border-color: var(--line);
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 /* —— Commercial / migrated page primitives —— */

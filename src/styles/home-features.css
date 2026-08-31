@@ -4,9 +4,10 @@
 }
 
 .home-feat__inner {
-  width: min(1220px, calc(100vw - 80px));
+  width: min(1220px, calc(100% - 80px));
   max-width: none;
   margin-inline: auto;
+  padding-inline: 0;
 }
 
 .home-feat__mark {
@@ -466,7 +467,8 @@
 
 @media (max-width: 820px) {
   .home-feat__inner {
-    width: calc(100vw - 32px);
+    width: 100%;
+    padding-inline: var(--page-pad);
   }
 
   .home-feat__sys {

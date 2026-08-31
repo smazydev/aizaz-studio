@@ -246,6 +246,7 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const debug = import.meta.env.DEV && new URLSearchParams(location.search).has('heroDebug');
   const saveData = Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+  const narrow = window.matchMedia('(max-width: 768px)').matches;
   const q = quality();
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -264,9 +265,14 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
     return empty;
   };
 
-  /* Reduced motion / no WebGL / save-data: keep poster only, skip Three + GLB. */
-  if (reduced || saveData || !hasWebGL()) {
-    return fallback('capability', { reduced, saveData, webgl: hasWebGL() });
+  /* Reduced motion / save-data / no WebGL / narrow viewports: poster only. */
+  if (reduced || saveData || narrow || !hasWebGL()) {
+    showPosterFallback();
+    hero.dataset.hero3dState = 'fallback';
+    if (!narrow && !reduced && !saveData) {
+      console.warn('[hero3d] fallback: capability', { reduced, saveData, narrow, webgl: hasWebGL() });
+    }
+    return empty;
   }
 
   hero.classList.add('is-loading');
