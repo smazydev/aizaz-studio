@@ -40,3 +40,6 @@ studio/.sanity/
 *.njsproj
 *.sln
 *.sw?
+
+# Local Cursor / MCP state (never ship secrets)
+.cursor/

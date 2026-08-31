@@ -98,7 +98,7 @@ export const engagementModels: EngagementModelsContent = {
         'Flexible engineering engagement models for AI automation, SaaS MVPs, cloud infrastructure, project rescue, and ongoing product development.',
     title: 'Flexible Engineering Engagements for AI, SaaS & Automation Projects',
     heroSubtitle:
-        'Whether you need one workflow live in two weeks or a senior team embedded for a platform build — every model follows the same discovery to deploy discipline.',
+        'Whether you need one workflow live in two weeks or a senior team embedded for a platform build. Every model follows the same discovery to deploy discipline.',
     models: [
         {
             id: 'ai-systems-sprint',
@@ -108,7 +108,7 @@ export const engagementModels: EngagementModelsContent = {
             duration: '14 days',
             bestFor: [
                 'Teams validating AI or automation ROI before a larger build',
-                'Founders who need one workflow live — not another strategy deck',
+                'Founders who need one workflow live, not another strategy deck',
                 'Ops leaders replacing a single painful manual process',
             ],
             deliverables: [
@@ -123,7 +123,7 @@ export const engagementModels: EngagementModelsContent = {
             id: 'mvp-build',
             name: 'MVP Build',
             summary:
-                'Four to eight week SaaS or product build — auth, APIs, dashboards, billing hooks, and AWS deployment scoped in milestones your stakeholders can track.',
+                'Four to eight week SaaS or product build: auth, APIs, dashboards, billing hooks, and AWS deployment scoped in milestones your stakeholders can track.',
             duration: '4 to 8 weeks typical',
             bestFor: [
                 'SaaS founders launching v1 with paying customers in mind',
@@ -142,7 +142,7 @@ export const engagementModels: EngagementModelsContent = {
             id: 'engineering-retainer',
             name: 'Engineering Retainer',
             summary:
-                'Ongoing senior engineering for product, cloud, and automation work — features, infra, integrations, and the next workflow on your backlog.',
+                'Ongoing senior engineering for product, cloud, and automation work: features, infra, integrations, and the next workflow on your backlog.',
             duration: 'Monthly retainer',
             bestFor: [
                 'Scale ups shipping features weekly across backend and cloud',
@@ -161,7 +161,7 @@ export const engagementModels: EngagementModelsContent = {
             id: 'project-rescue',
             name: 'Project Rescue',
             summary:
-                'Audit, stabilize, and rebuild stalled or broken software — when previous devs left, deploys fail, or nobody trusts the codebase.',
+                'Audit, stabilize, and rebuild stalled or broken software when previous devs left, deploys fail, or nobody trusts the codebase.',
             duration: '2 to 12 weeks typical',
             bestFor: [
                 'Half built SaaS or internal tools that stopped moving',
@@ -237,11 +237,11 @@ export const engagementModels: EngagementModelsContent = {
         ],
     },
     included: [
-        'Discovery and architecture before code — every engagement',
+        'Discovery and architecture before code, on every engagement',
         'Direct access to senior engineers, not account manager layers',
         'Production minded delivery: logging, deploys, and handoff docs',
         'Async updates with clear milestones and visible progress',
-        'Stack fit guidance — we recommend tools based on your business, not trends',
+        'Stack fit guidance: we recommend tools based on your business, not trends',
     ],
     notIncluded: [
         'Open ended scope without milestones or written acceptance criteria',
@@ -253,7 +253,7 @@ export const engagementModels: EngagementModelsContent = {
     selectorGuide: [
         {
             heading: 'Start with the AI Systems Sprint if…',
-            body: 'You know automation or AI should help but need one working proof in production — connected to CRM, email, or internal tools — before committing to a platform budget.',
+            body: 'You know automation or AI should help but need one working proof in production, connected to CRM, email, or internal tools, before committing to a platform budget.',
         },
         {
             heading: 'Choose MVP & Platform Build if…',
@@ -261,21 +261,21 @@ export const engagementModels: EngagementModelsContent = {
         },
         {
             heading: 'Choose Integration & Automation Project if…',
-            body: 'Your product exists but data between NetSuite, Shopify, CRM, and warehouses is wrong — and you need reliable sync, webhooks, or middleware, not another manual export.',
+            body: 'Your product exists but data between NetSuite, Shopify, CRM, and warehouses is wrong, and you need reliable sync, webhooks, or middleware, not another manual export.',
         },
         {
             heading: 'Choose Dedicated Engineering if…',
-            body: 'You have a roadmap, paying customers or internal users, and need senior capacity embedded weekly — faster than hiring and safer than rotating freelancers.',
+            body: 'You have a roadmap, paying customers or internal users, and need senior capacity embedded weekly, faster than hiring and safer than rotating freelancers.',
         },
         {
             heading: 'Choose Ongoing Retainer if…',
-            body: 'Systems are live and generating value — you need someone to own monitoring, fixes, and the next small improvements without restarting a full project every time.',
+            body: 'Systems are live and generating value. You need someone to own monitoring, fixes, and the next small improvements without restarting a full project every time.',
         },
     ],
     faqs: [
         {
             question: 'Can we start with a sprint and expand into a platform build?',
-            answer: 'Yes — that is one of our most common paths. The sprint proves value on one workflow; the platform build extends the same architecture across your product.',
+            answer: 'Yes. That is one of our most common paths. The sprint proves value on one workflow; the platform build extends the same architecture across your product.',
         },
         {
             question: 'Do you sign NDAs and work with existing codebases?',
@@ -283,7 +283,7 @@ export const engagementModels: EngagementModelsContent = {
         },
         {
             question: 'How do you price engagements?',
-            answer: 'Sprints are fixed scope. Projects are quoted after discovery. Dedicated pods and retainers are monthly — aligned to hours and seniority, shared upfront before work begins.',
+            answer: 'Sprints are fixed scope. Projects are quoted after discovery. Dedicated pods and retainers are monthly, aligned to hours and seniority, shared upfront before work begins.',
         },
         {
             question: 'Are you timezone friendly for remote teams?',
@@ -307,7 +307,7 @@ export const bookACall: BookACallContent = {
         'Book a technical discovery call with Aizaz Studio to discuss your AI, SaaS, automation, cloud, or software project.',
     title: 'Book a Technical Discovery Call',
     heroSubtitle:
-        'A 30 minute conversation to map your workflow, stack, and timeline — no pitch deck, no pressure. You leave knowing whether we can help and what a sensible first step looks like.',
+        'A 30 minute conversation to map your workflow, stack, and timeline. No pitch deck, no pressure. You leave knowing whether we can help and what a sensible first step looks like.',
     sections: {
         whoFor: {
             heading: 'Who this call is for',
@@ -322,16 +322,16 @@ export const bookACall: BookACallContent = {
             heading: 'What we cover on the call',
             items: [
                 'Your highest impact manual workflow or product milestone',
-                'Current stack — CRM, ERP, cloud, and where data breaks today',
+                'Current stack: CRM, ERP, cloud, and where data breaks today',
                 'Timeline, budget range, and what success looks like in plain language',
                 'Which engagement model fits: sprint, project, pod, or retainer',
-                'Honest fit assessment — we refer out when we are not the right team',
+                'Honest fit assessment. We refer out when we are not the right team',
             ],
         },
         whatToPrepare: {
             heading: 'What to prepare (optional but helpful)',
             items: [
-                'A short description of the problem — even a Loom or bullet list works',
+                'A short description of the problem. Even a Loom or bullet list works',
                 'Names of tools you use today (HubSpot, NetSuite, Shopify, AWS, etc.)',
                 'Any hard deadlines: launch date, audit, funding milestone',
                 'Links to existing product, repo, or workflow docs if available',
@@ -340,7 +340,7 @@ export const bookACall: BookACallContent = {
         goodFit: {
             heading: 'Good fit signals',
             items: [
-                'You want production software — not a demo that stalls after the kickoff',
+                'You want production software, not a demo that stalls after the kickoff',
                 'You can share access to stakeholders or systems within a reasonable window',
                 'You value direct senior engineering over large agency overhead',
                 'You are ready to start within the next few weeks, not indefinitely researching',
@@ -358,11 +358,11 @@ export const bookACall: BookACallContent = {
         faqs: [
             {
                 question: 'Is the discovery call free?',
-                answer: 'Yes. It is a fit and scope conversation — not a paid consultation. If we proceed, pricing follows the engagement model we recommend.',
+                answer: 'Yes. It is a fit and scope conversation, not a paid consultation. If we proceed, pricing follows the engagement model we recommend.',
             },
             {
                 question: 'Will I get a proposal after the call?',
-                answer: 'If there is a clear fit, we send a written scope outline, timeline, and pricing within a few business days — often same week for sprint candidates.',
+                answer: 'If there is a clear fit, we send a written scope outline, timeline, and pricing within a few business days, often same week for sprint candidates.',
             },
             {
                 question: 'Can multiple stakeholders join?',
@@ -370,7 +370,7 @@ export const bookACall: BookACallContent = {
             },
             {
                 question: 'What if we are not ready to build yet?',
-                answer: 'We still help you clarify next steps. If timing is early, we may suggest a lighter sprint later or point you to resources — no hard sell.',
+                answer: 'We still help you clarify next steps. If timing is early, we may suggest a lighter sprint later or point you to resources. No hard sell.',
             },
         ],
     },

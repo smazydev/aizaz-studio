@@ -9,7 +9,6 @@ export type HomeFeedbackItem = {
   sourceIsUpwork: boolean;
   project?: string;
   work?: string;
-  client?: string;
   href?: string;
 };
 
@@ -47,9 +46,11 @@ function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | 
   const role = t.role?.trim() && t.role.trim() !== location ? t.role.trim() : undefined;
 
   const projectTitle = study.title.split('—')[0]?.split(':')[0]?.trim() || study.title;
-  const workHint = /mvp/i.test(`${study.title} ${study.subtitle} ${study.category}`)
-    ? 'SaaS MVP'
-    : study.category.split('•')[0]?.trim();
+  const titleWork = study.title.split('—')[1]?.trim();
+  const workHint = titleWork
+    || (/mvp/i.test(`${study.title} ${study.subtitle} ${study.category}`)
+      ? 'SaaS MVP'
+      : study.category.split('•')[0]?.trim());
   const work = workHint || engagementValue(study, 'Engagement type') || undefined;
 
   return {
@@ -63,7 +64,6 @@ function buildFeedback(study: (typeof caseStudies)[number]): HomeFeedbackItem | 
     sourceIsUpwork,
     project: projectTitle,
     work: work || undefined,
-    client: t.author,
     href: `/case-studies/${study.slug}`,
   };
 }

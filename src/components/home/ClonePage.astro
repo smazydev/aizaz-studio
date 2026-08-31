@@ -43,14 +43,14 @@ const services = [
   {
     n: '01',
     title: 'AI Automation',
-    body: 'Agents and workflows that take work off your team — from intake to action, with evals and a human handoff.',
+    body: 'Agents and workflows that take work off your team, from intake to action, with evals and a human handoff.',
     items: ['Workflow mapping', 'Tool use & guardrails', 'Production evals'],
     href: '/services/ai-automation-systems',
   },
   {
     n: '02',
     title: 'Product Engineering',
-    body: 'Web apps and SaaS products built to ship — architecture, UI, and the backend your users actually hit.',
+    body: 'Web apps and SaaS products built to ship: architecture, UI, and the backend your users actually hit.',
     items: ['MVP to production', 'React / Node', 'Auth, billing, APIs'],
     href: '/services/web-app-saas-development',
   },
@@ -64,7 +64,7 @@ const services = [
   {
     n: '04',
     title: 'ERP / NetSuite',
-    body: 'NetSuite and operations systems wired to the rest of the stack — orders, inventory, and finance in one flow.',
+    body: 'NetSuite and operations systems wired to the rest of the stack: orders, inventory, and finance in one flow.',
     items: ['NetSuite REST / SuiteQL', 'Order sync', 'Custom records'],
     href: '/services/netsuite-erp-automation',
   },
@@ -104,7 +104,7 @@ const faqs = [
   { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
   { q: 'What do we need to start?', a: 'A clear problem statement, success metrics, access to sample data, and a stakeholder who can make decisions. We’ll run a kickoff workshop to align scope.' },
   { q: 'Which models/stack do you use?', a: 'Modern, scalable stacks like React, Node.js, and cloud services. We choose models/APIs based on the use case, performance, and cost.' },
-  { q: 'How do engagements work?', a: 'Scoped sprints and project delivery — not opaque retainers. We align on outcomes, then ship with clear ownership through launch.' },
+  { q: 'How do engagements work?', a: 'Scoped sprints and project delivery, not opaque retainers. We align on outcomes, then ship with clear ownership through launch.' },
 ];
 
 const homeQuote = featuredFeedback;
@@ -206,7 +206,7 @@ const haiField = (() => {
           <h2 class="home-human-ai__title">Senior<br />engineering,<br />built for<br />production</h2>
         </div>
         <p class="c-lede home-human-ai__lede">
-          AI, SaaS, integrations, and cloud systems for teams that need working software — not slide decks. Available for remote projects worldwide.
+          AI, SaaS, integrations, and cloud systems for teams that need working software, not slide decks. Available for remote projects worldwide.
         </p>
       </div>
       <div class="c-wrap home-human-ai__grid">
@@ -678,7 +678,6 @@ const haiField = (() => {
                 data-team-index={String(index)}
                 aria-hidden={index === 0 ? 'false' : 'true'}
               >
-                <p class="c-micro c-profile__eyebrow">Active profile</p>
                 <h3 class="c-profile__name">{p.name}</h3>
                 <p class="c-profile__role">{p.role}</p>
                 <p class="c-profile__bio">{p.bio}</p>
@@ -748,15 +747,9 @@ const haiField = (() => {
                   {homeQuote.location ? ` · ${homeQuote.location}` : ''}
                 </cite>
                 {homeQuote.sourceIsUpwork ? (
-                  <span class="c-quote__source">
-                    <span class="c-quote__source-label">Source</span>
-                    Upwork
-                  </span>
+                  <span class="c-quote__source">Client feedback from Upwork</span>
                 ) : homeQuote.sourceLabel ? (
-                  <span class="c-quote__source">
-                    <span class="c-quote__source-label">Source</span>
-                    {homeQuote.sourceLabel}
-                  </span>
+                  <span class="c-quote__source">{homeQuote.sourceLabel}</span>
                 ) : null}
               </figcaption>
             </div>
@@ -771,20 +764,8 @@ const haiField = (() => {
                 )}
                 {homeQuote.work && (
                   <div>
-                    <dt>Work</dt>
+                    <dt>Engagement</dt>
                     <dd>{homeQuote.work}</dd>
-                  </div>
-                )}
-                {homeQuote.client && (
-                  <div>
-                    <dt>Client</dt>
-                    <dd>{homeQuote.client}</dd>
-                  </div>
-                )}
-                {homeQuote.location && (
-                  <div>
-                    <dt>Location</dt>
-                    <dd>{homeQuote.location}</dd>
                   </div>
                 )}
                 <div>
@@ -805,7 +786,7 @@ const haiField = (() => {
               </dl>
               {homeQuote.href && (
                 <a class="c-quote__link" href={homeQuote.href}>
-                  Read case study <span aria-hidden="true">↗</span>
+                  View case study <span aria-hidden="true">↗</span>
                 </a>
               )}
             </aside>
@@ -850,7 +831,7 @@ const haiField = (() => {
         </div>
         <div class="c-price__grid">
           <article class="c-plan">
-            <p class="c-micro">Sprint — Focused delivery</p>
+            <p class="c-micro">Sprint: focused delivery</p>
             <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Scoped sprint</p>
             <p class="c-lede" style="margin-top: 18px">Prove value quickly with a working slice, clear go/no-go, and a path to production.</p>
             <ul>
@@ -862,10 +843,10 @@ const haiField = (() => {
             <a class="c-btn" href="/ai-systems-sprint" style="margin-top: 32px">AI Systems Sprint</a>
           </article>
           <article class="c-plan c-plan--dark">
-            <p class="c-micro">Project — Production systems</p>
+            <p class="c-micro">Project: production systems</p>
             <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem); color: inherit;">Build &amp; ship</p>
             <p class="c-lede" style="margin-top: 18px; color: rgba(245,245,240,0.62)">
-              Product, integrations, and cloud work owned through launch — with observability and handoff.
+              Product, integrations, and cloud work owned through launch, with observability and handoff.
             </p>
             <ul>
               <li>Architecture and delivery plan</li>

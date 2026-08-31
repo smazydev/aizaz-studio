@@ -23,7 +23,8 @@
 .tech-logo-strip__lede {
   margin: 14px 0 0;
   max-width: 40rem;
-  font-size: 0.98rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
 }
 
 .tech-logo-strip__stage {

@@ -4,7 +4,7 @@ export const processSteps = [
     title: 'Discover',
     subtitle: 'Find the highest-leverage problem',
     description:
-      'We map your stack — CRM, ERP, email, spreadsheets, internal tools — and pick the workflow or product milestone where engineering changes outcomes, not just screens.',
+      'We map your stack (CRM, ERP, email, spreadsheets, internal tools) and pick the workflow or product milestone where engineering changes outcomes, not just screens.',
   },
   {
     step: '02',
@@ -18,7 +18,7 @@ export const processSteps = [
     title: 'Build',
     subtitle: 'Senior delivery on the critical path',
     description:
-      'Engineers ship the automation, product surface, or internal system — with the quality bar of production software, not a disposable prototype.',
+      'Engineers ship the automation, product surface, or internal system with the quality bar of production software, not a disposable prototype.',
   },
   {
     step: '04',
@@ -32,7 +32,7 @@ export const processSteps = [
     title: 'Ship',
     subtitle: 'Production from day one',
     description:
-      'CI/CD, logging, alerts, and rollback paths go live with the system — not as a phase-two promise after the demo.',
+      'CI/CD, logging, alerts, and rollback paths go live with the system, not as a phase-two promise after the demo.',
   },
   {
     step: '06',

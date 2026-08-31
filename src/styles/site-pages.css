@@ -418,7 +418,8 @@ a.sp-card:hover {
 
 .sp-card__body {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
 }
 
 .sp-grid {
@@ -512,7 +513,7 @@ a.sp-card:hover {
 .sp-link span {
   display: block;
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: 0.98rem;
   line-height: 1.5;
 }
 
@@ -549,7 +550,7 @@ a.sp-card:hover {
 .sp-person__role {
   margin: 4px 0 0;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .sp-person__links {
@@ -632,7 +633,7 @@ a.sp-card:hover {
 
 .sp-process__body .c-lede {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .sp-table-wrap {
@@ -682,7 +683,7 @@ a.sp-card:hover {
   grid-template-columns: 12px minmax(0, 1fr);
   gap: 10px;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1.55;
 }
 
@@ -705,7 +706,7 @@ a.sp-card:hover {
   gap: 18px 28px;
   margin-top: 18px;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .sp-contact a {
@@ -1016,7 +1017,8 @@ a.sp-card:hover {
 .blog-card__excerpt {
   margin: 0;
   flex: 1;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
 }
 
 .blog-card__foot {
@@ -1152,7 +1154,7 @@ a.sp-card:hover {
 .blog-toc a {
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   line-height: 1.35;
 }
 
@@ -1166,7 +1168,7 @@ a.sp-card:hover {
 
 .blog-share__lede {
   margin: 8px 0 14px;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
 }
 
 .blog-share__actions {

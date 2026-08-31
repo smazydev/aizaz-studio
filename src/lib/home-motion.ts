@@ -508,18 +508,12 @@ function teamProfiles() {
   let inView = false;
   let moving = false;
   const reduceMotion = reduce();
-  const movers = [...people, profile];
-
-  const capture = () =>
-    new Map(
-      movers.map((el) => [el, el.getBoundingClientRect()] as const),
-    );
 
   const flipTo = (next: number) => {
     const target = ((next % people.length) + people.length) % people.length;
     if (target === index) return;
 
-    const first = reduceMotion || moving ? null : capture();
+    const first = reduceMotion || moving ? null : profile.getBoundingClientRect();
     index = target;
     root.dataset.active = String(index);
 
@@ -537,26 +531,23 @@ function teamProfiles() {
 
     if (!first || reduceMotion) return;
 
+    const last = profile.getBoundingClientRect();
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+
     moving = true;
-    movers.forEach((el) => {
-      const prev = first.get(el);
-      if (!prev) return;
-      const last = el.getBoundingClientRect();
-      const dx = prev.left - last.left;
-      const dy = prev.top - last.top;
-      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
-      el.animate(
-        [
-          { transform: `translate(${dx}px, ${dy}px)` },
-          { transform: 'translate(0, 0)' },
-        ],
-        {
-          duration: 560,
-          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-          fill: 'both',
-        },
-      );
-    });
+    profile.animate(
+      [
+        { transform: `translate(${dx}px, ${dy}px)` },
+        { transform: 'translate(0, 0)' },
+      ],
+      {
+        duration: 560,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        fill: 'both',
+      },
+    );
     window.setTimeout(() => {
       moving = false;
     }, 580);
@@ -582,7 +573,7 @@ function teamProfiles() {
     timer = window.setTimeout(() => {
       flipTo(index + 1);
       schedule();
-    }, 4000);
+    }, 4500);
   };
 
   const pause = () => {
@@ -599,7 +590,7 @@ function teamProfiles() {
     flipTo(i);
     pause();
     clearResume();
-    resumeTimer = window.setTimeout(resume, 8000);
+    resumeTimer = window.setTimeout(resume, 10000);
   };
 
   people.forEach((el, i) => {
