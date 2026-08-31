@@ -39,6 +39,7 @@ export const servicePages: SeoPage[] = [
             'Turn repetitive decisions and manual workflows into reliable AI assisted systems that connect to your real business tools.',
         keywords: [
             'AI automation',
+            'AI automation consultant',
             'AI agents for business',
             'chatbot development',
             'lead qualification automation',
@@ -76,58 +77,70 @@ export const servicePages: SeoPage[] = [
                 question: 'How fast can we launch a first AI workflow?',
                 answer: 'Our AI Systems Sprint delivers one working workflow in 14 days — scoped, built, deployed, and ready for your team to use.',
             },
+            {
+                question: 'Are you an AI automation consultant or a software studio?',
+                answer: 'Both. We advise on which workflow is worth automating, then implement it as production software. We do not sell a tool license and walk away.',
+            },
         ],
-        relatedSlugs: ['business-process-automation', 'web-app-saas-development'],
+        relatedSlugs: ['ai-workflow-automation', 'business-process-automation', 'web-app-saas-development'],
     },
     {
         slug: 'web-app-saas-development',
         title: 'Web App & SaaS Development',
-        metaTitle: 'Web App & SaaS Development Studio | Aizaz.studio',
+        metaTitle: 'SaaS Development Agency for Products Past Prototype | Aizaz.studio',
         metaDescription:
-            'Production ready web apps, dashboards, admin portals, customer portals, and SaaS platforms with auth, payments, APIs, and scalable architecture.',
+            'Product engineering for SaaS platforms past v1: auth, billing, APIs, multi-tenant paths, and AWS — an outcome-owned studio, not staff augmentation.',
         heroSubtitle:
-            'Ship MVPs and full SaaS products with proper authentication, databases, payments, and architecture built for growth.',
+            'Hire a product engineering team for the SaaS you already have in market — auth, billing, APIs, and infrastructure that survive real customers.',
         keywords: [
+            'SaaS development agency',
+            'product engineering agency',
             'SaaS development',
             'web app development',
-            'MVP development',
             'admin portal development',
             'customer portal',
-            'startup software development',
         ],
         problem:
-            'Many teams stall between a prototype and a product customers can rely on. Auth is fragile, data models break under load, and every new feature feels like a patch on top of a patch.',
+            'The prototype worked. Paying customers did not. Auth is fragile, billing is bolted on, APIs were never designed for partners, and every new tenant or role is a one-off patch.',
         solution:
-            'We build web apps and SaaS platforms with production grade foundations — clean APIs, secure authentication, scalable databases, and deployment pipelines that survive real usage.',
+            'Aizaz.studio is a product engineering agency for SaaS past prototype. We own platform foundations — authentication, billing, APIs, multi-tenant paths, and AWS — as production software your next hire can extend. Tight 4–8 week v1 work lives on our SaaS MVP page; this page is for the product that has to keep shipping.',
         capabilities: [
-            'MVPs and full SaaS platforms',
+            'Multi tenant SaaS platforms and role based access',
+            'Authentication, billing, and subscription infrastructure',
             'Admin and customer portals',
+            'Public APIs, webhooks, and partner integrations',
             'Internal dashboards and reporting tools',
-            'Authentication, roles, and permissions',
-            'Payments and subscription billing',
-            'REST and GraphQL APIs with scalable backends',
+            'AWS deployment, CI/CD, and production monitoring',
         ],
         useCases: [
-            'Founder MVP → beta launch → paid subscriptions',
-            'Operations dashboard replacing manual spreadsheets',
-            'Customer self service portal with billing and support',
-            'Multi tenant SaaS with admin controls and analytics',
+            'Live SaaS → harden auth and billing → enterprise-ready tenancy',
+            'Customer self service portal with usage, invoices, and support',
+            'Operations dashboard replacing spreadsheet reporting',
+            'Existing codebase → stabilize → roadmap the next two quarters',
         ],
         faqs: [
+            {
+                question: 'How is this different from your SaaS MVP service?',
+                answer: 'SaaS MVP Development is a 4–8 week v1 for founders who need users or investors in a real product. This page is product engineering after that: platform foundations, ongoing features, and taking over an existing SaaS codebase.',
+            },
+            {
+                question: 'Are you a product engineering agency or staff augmentation?',
+                answer: 'We sell outcomes, not leased seats. Compare us with staff augmentation if you need extra engineers on Slack indefinitely — that is not how we engage. See also agency vs freelancer if you are deciding how to hire.',
+            },
             {
                 question: 'What tech stack do you use for web apps?',
                 answer: 'We match the stack to the product — commonly React, Next.js, Astro, Node.js, PostgreSQL, and AWS. We prioritize maintainability and your team’s ability to extend the system.',
             },
             {
-                question: 'Can you take over an existing codebase?',
-                answer: 'Yes. We often help teams stabilize legacy apps, refactor critical paths, and add features without breaking production.',
+                question: 'Can you take over an existing SaaS codebase?',
+                answer: 'Yes. We stabilize production, document architecture, and ship the next features without a rewrite unless the audit says otherwise. If the repo is stalled or untrusted, start with a technical audit or project rescue rather than a feature retainer.',
             },
             {
                 question: 'Do you handle deployment and DevOps?',
                 answer: 'Yes. We deploy to AWS with CI/CD, monitoring, backups, and security hardening so your app stays reliable after launch.',
             },
         ],
-        relatedSlugs: ['aws-devops', 'ai-automation-systems'],
+        relatedSlugs: ['saas-mvp-development', 'b2b-saas-development', 'aws-devops', 'project-rescue'],
     },
     {
         slug: 'aws-devops',
@@ -182,52 +195,56 @@ export const servicePages: SeoPage[] = [
     {
         slug: 'netsuite-erp-automation',
         title: 'NetSuite & ERP Automation',
-        metaTitle: 'NetSuite Integration & ERP Automation | Aizaz.studio',
+        metaTitle: 'NetSuite ERP Automation & SuiteScript Workflows | Aizaz.studio',
         metaDescription:
-            'NetSuite integrations, SuiteScript workflows, ERP automations, data sync, and middleware between NetSuite, Shopify, CRMs, 3PLs, and custom apps.',
+            'Automate work inside NetSuite: SuiteScript, order-to-cash workflows, finance and ops scripts — not another storefront connector landing.',
         heroSubtitle:
-            'Connect NetSuite to Shopify, CRMs, warehouses, and custom systems so orders, inventory, and finance stay in sync.',
+            'Automate sales order, fulfillment, and finance work inside NetSuite when saved searches and the native workflow manager are not enough.',
         keywords: [
-            'NetSuite integration',
+            'NetSuite order automation',
             'SuiteScript development',
             'ERP automation',
-            'Shopify NetSuite sync',
-            'NetSuite middleware',
-            'ERP data sync',
+            'NetSuite workflows',
+            'NetSuite scheduled scripts',
+            'ERP finance automation',
         ],
         problem:
-            'NetSuite holds critical business data, but it rarely talks cleanly to Shopify, CRMs, 3PLs, or internal tools. Teams export CSVs, fix sync errors manually, and lose hours reconciling orders and inventory.',
+            'Orders, fulfillment, and finance still need humans inside NetSuite even after the storefront is connected. Saved searches, native workflows, and one-off scripts cannot finish exception handling, approvals, or the last mile to 3PL and the general ledger.',
         solution:
-            'We build NetSuite integrations and ERP automations that keep data flowing reliably — SuiteScript workflows, middleware, SFTP pipelines, and dashboards that surface issues before they become crises.',
+            'We automate work inside NetSuite — SuiteScript 2.x, scheduled scripts, custom records, and ERP workflows — so sales orders move through fulfillment and finance without another spreadsheet. Storefront and 3PL connectors live on our NetSuite integration service; this page is the SuiteScript and order-ops layer.',
         capabilities: [
-            'NetSuite REST and SuiteScript workflows',
-            'Shopify, CRM, and 3PL integrations',
-            'Order, inventory, and fulfillment sync',
-            'SFTP and CSV pipeline automation',
-            'ERP reporting dashboards',
-            'Error alerting and retry workflows',
+            'SuiteScript 2.x workflows, RESTlets, and scheduled scripts',
+            'Sales order to fulfillment to finance automation',
+            'Custom records, approvals, and exception queues',
+            'Saved search replacement where scripts are the right tool',
+            'ERP reporting dashboards for ops and finance',
+            'Error alerting when a NetSuite workflow fails',
         ],
         useCases: [
-            'Shopify order → NetSuite sales order → 3PL fulfillment',
-            'NetSuite inventory sync → ecommerce storefront',
-            'Failed order alert → retry workflow → ops dashboard',
-            'Finance reporting dashboard pulling NetSuite and CRM data',
+            'Sales order in NetSuite → fulfillment rules → finance close without CSV',
+            'Exception queue → SuiteScript handling → ops alert → resolution',
+            'Native workflow manager limit → scheduled script → auditable outcome',
+            'Finance reporting dashboard pulling NetSuite operational data',
         ],
         faqs: [
             {
-                question: 'Do you work with NetSuite SuiteScript 2.x?',
-                answer: 'Yes. We build SuiteScript workflows, custom records, REST integrations, and scheduled scripts tailored to your NetSuite environment.',
+                question: 'How is this different from NetSuite integration?',
+                answer: 'NetSuite integration is connector and middleware work: Shopify, BigCommerce, 3PL, and CRM sync into NetSuite. This page is automation inside NetSuite — SuiteScript, order ops, and finance workflows after the record already exists.',
             },
             {
-                question: 'Can you integrate NetSuite with Shopify?',
-                answer: 'Yes. We build reliable sync for products, orders, inventory, customers, and fulfillment between Shopify and NetSuite.',
+                question: 'Do you work with NetSuite SuiteScript 2.x?',
+                answer: 'Yes. We build SuiteScript workflows, custom records, RESTlets, and scheduled scripts tailored to your NetSuite environment.',
+            },
+            {
+                question: 'Can you still connect Shopify or BigCommerce?',
+                answer: 'Yes, but that engagement is scoped on NetSuite Integration. Once orders land in NetSuite, this page covers the order-to-cash and finance automation that native workflows cannot finish.',
             },
             {
                 question: 'What if our ERP data is messy?',
                 answer: 'We map data carefully, add validation layers, and build monitoring so bad records are caught early instead of breaking downstream systems.',
             },
         ],
-        relatedSlugs: ['business-process-automation', 'aws-devops'],
+        relatedSlugs: ['netsuite-integration', 'api-integration', 'business-process-automation'],
     },
     {
         slug: 'business-process-automation',
@@ -559,30 +576,39 @@ export const industryPages: IndustryPage[] = [
         slug: 'netsuite-users',
         audienceLabel: 'NetSuite & ERP Users',
         title: 'Custom Integrations for NetSuite Users',
-        metaTitle: 'NetSuite Automation for Operations Teams | Aizaz.studio',
+        metaTitle: 'NetSuite Integration Consultant for Ops & Finance Teams | Aizaz.studio',
         metaDescription:
-            'For companies running NetSuite with disconnected Shopify, CRM, spreadsheet, and warehouse tools — we build the middleware that connects everything.',
+            'Already on NetSuite? Work with an integration consultant who scopes middleware, then implements Shopify, BigCommerce, 3PL, and CRM connections.',
         heroSubtitle:
-            'Your ERP should not be an island. We connect NetSuite to the rest of your business.',
-        keywords: ['NetSuite automation company', 'ERP integration services', 'NetSuite consultant developer'],
+            'You already run NetSuite. You need a partner who can scope the integration — then a studio that can actually build it.',
+        keywords: [
+            'NetSuite integration consultant',
+            'NetSuite automation company',
+            'ERP integration services',
+            'NetSuite consultant developer',
+        ],
         problem:
-            'NetSuite is the system of record, but sales, ecommerce, logistics, and finance teams still work in disconnected tools. Data drift and manual fixes consume operations.',
+            'NetSuite is the system of record, but sales, ecommerce, logistics, and finance teams still work in disconnected tools. Buying another iPaaS license does not fix field mappings, oversell, or 2am sync failures.',
         solution:
-            'We specialize in NetSuite integrations, SuiteScript, middleware, and reporting dashboards that make ERP data usable across the business.',
+            'Treat this page as the consultant conversation: what to connect, what to leave in NetSuite, and what to monitor. Implementation — Shopify, BigCommerce, 3PL, CRM — is delivered on our NetSuite integration service. SuiteScript inside the ERP lives on NetSuite ERP automation.',
         capabilities: [
-            'NetSuite ↔ Shopify sync',
+            'NetSuite ↔ Shopify and BigCommerce scoping',
             'CRM and sales pipeline integration',
             '3PL and warehouse connectors',
-            'SuiteScript custom workflows',
+            'When to use SuiteScript vs middleware',
             'SFTP and CSV automation',
             'Executive ERP reporting dashboards',
         ],
         useCases: [
-            'NetSuite order issue → alert → retry → dashboard',
+            'Native connector failed → consultant scope → integration build',
             'Finance close → automated reports → leadership inbox',
             'Inventory sync across ecommerce and wholesale channels',
         ],
         faqs: [
+            {
+                question: 'Do we hire you as a NetSuite consultant or for implementation?',
+                answer: 'This page is the consultant conversation: what to connect, what native tools cannot do, and what to monitor. The build itself is delivered on NetSuite Integration. Inside-ERP SuiteScript is NetSuite ERP Automation.',
+            },
             {
                 question: 'We already have a NetSuite partner. Can you still help?',
                 answer: 'Yes. We often handle integrations, custom scripts, and middleware that sit outside core ERP implementation work.',

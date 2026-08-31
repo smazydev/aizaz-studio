@@ -138,17 +138,17 @@ function mapSlugs(
 /** Extra relations beyond existing relatedSlugs on SeoPage (industries, tech, proof, reading). */
 export const serviceClusterExtras: Record<string, PageRelations> = {
   'ai-automation-systems': {
-    industries: ['operations-teams', 'b2b-saas', 'saas-startups', 'healthtech-clinics'],
-    technologies: ['openai', 'langchain', 'python-development', 'fastapi-development'],
     caseStudies: ['designing-multi-tenant-crm-architecture'],
-    articles: ['ai-automation-workflows-for-operations-teams', 'identify-workflows-worth-automating-with-ai'],
+    articles: ['ai-automation-workflows-for-operations-teams', 'identify-workflows-worth-automating-with-ai', 'how-much-does-ai-automation-cost'],
     pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
   },
   'ai-workflow-automation': {
-    industries: ['operations-teams', 'ecommerce-operations'],
-    technologies: ['openai', 'langchain'],
-    articles: ['identify-workflows-worth-automating-with-ai', 'how-much-does-ai-automation-cost'],
-    pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
+    caseStudies: ['designing-multi-tenant-crm-architecture'],
+    articles: ['automate-manual-business-workflow-with-ai', 'identify-workflows-worth-automating-with-ai'],
+    pages: [
+      { href: '/ai-systems-sprint', label: 'AI Systems Sprint' },
+      { href: '/compare/ai-systems-sprint-vs-traditional-automation', label: 'Sprint vs Traditional Automation' },
+    ],
   },
   'ai-agent-development': {
     industries: ['b2b-saas', 'operations-teams'],
@@ -167,16 +167,21 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     articles: ['building-production-ready-saas-mvp'],
   },
   'web-app-saas-development': {
-    industries: ['saas-startups', 'b2b-saas', 'startups', 'healthtech-clinics', 'agencies'],
-    technologies: ['react-development', 'nextjs-development', 'nodejs-development'],
-    caseStudies: ['propertymatchmaker-real-estate-saas', 'designing-multi-tenant-crm-architecture'],
-    articles: ['building-production-ready-saas-mvp', 'cicd-checklist-early-stage-saas'],
+    caseStudies: [
+      '1archiver-compliance-platform',
+      'designing-multi-tenant-crm-architecture',
+      'propertymatchmaker-real-estate-saas',
+    ],
+    articles: ['building-production-ready-saas-mvp'],
+    pages: [
+      { href: '/compare/aizaz-vs-staff-augmentation', label: 'Agency vs Staff Augmentation' },
+      { href: '/engagement-models', label: 'Engagement Models' },
+    ],
   },
   'saas-mvp-development': {
-    industries: ['startups', 'saas-startups'],
-    technologies: ['nextjs-development', 'supabase', 'stripe'],
     caseStudies: ['propertymatchmaker-real-estate-saas'],
     articles: ['building-production-ready-saas-mvp', 'rescue-a-half-built-saas-product'],
+    pages: [{ href: '/engagement-models', label: 'MVP Build on Engagement Models' }],
   },
   'b2b-saas-development': {
     industries: ['b2b-saas', 'saas-startups', 'agencies'],
@@ -221,19 +226,16 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     pages: [{ href: '/ai-systems-sprint', label: 'AI Systems Sprint' }],
   },
   'netsuite-erp-automation': {
-    industries: ['netsuite-users', 'ecommerce-wholesale', 'ecommerce-operations'],
-    technologies: ['nodejs-development', 'python-development'],
+    industries: ['netsuite-users', 'ecommerce-wholesale'],
     articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
   },
   'netsuite-integration': {
-    industries: ['netsuite-users', 'ecommerce-wholesale'],
-    services: ['api-integration', 'crm-integration'],
+    industries: ['netsuite-users', 'ecommerce-wholesale', 'ecommerce-operations'],
     articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
   },
   'api-integration': {
-    industries: ['ecommerce-operations', 'operations-teams', 'logistics'],
-    technologies: ['nodejs-development', 'python-development'],
-    articles: ['netsuite-shopify-integration-pitfalls'],
+    industries: ['ecommerce-operations', 'ecommerce-wholesale', 'operations-teams'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
   },
   'crm-integration': {
     industries: ['b2b-saas', 'operations-teams'],

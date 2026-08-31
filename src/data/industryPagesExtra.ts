@@ -323,7 +323,7 @@ export const extraIndustryPages: IndustryPage[] = [
                 answer: 'We replace fragile file based workflows with validated pipelines, error queues, and visibility when something fails.',
             },
         ],
-        relatedSlugs: ['business-process-automation', 'web-app-saas-development'],
+        relatedSlugs: ['netsuite-integration', 'api-integration', 'business-process-automation'],
     },
     {
         slug: 'logistics',

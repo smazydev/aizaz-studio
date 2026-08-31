@@ -240,23 +240,23 @@ export const extraServicePages: SeoPage[] = [
     {
         slug: 'ai-workflow-automation',
         title: 'AI Workflow Automation',
-        metaTitle: 'AI Workflow Automation Services | Aizaz.studio',
+        metaTitle: 'AI Workflow Automation Company | Aizaz.studio',
         metaDescription:
-            'Automate multi step business workflows with AI decision points, document processing, and deep integrations across CRM, email, ERP, and internal tools.',
+            'A studio that ships production AI workflows: multi-step ops with decision nodes, retries, and monitoring. Start with one workflow in 14 days.',
         heroSubtitle:
-            'Replace manual multi step processes with AI assisted workflows that run reliably across the tools your operations team already uses.',
+            'Hire a studio to replace one painful multi-step process with an AI workflow your ops team can monitor — then expand once it is live.',
         keywords: [
+            'AI workflow automation company',
+            'AI workflow automation agency',
             'AI workflow automation',
             'intelligent process automation',
             'AI powered workflows',
-            'document workflow automation',
-            'CRM workflow automation',
             'operations automation AI',
         ],
         problem:
-            'Your workflows span five tools and three people. Someone copies data, someone approves, someone updates the CRM — and errors slip through every day. Basic Zapier flows break when logic gets complex or volume grows.',
+            'Your workflows span five tools and three people. Someone copies data, someone approves, someone updates the CRM — and errors slip through every day. Zapier and native CRM automations break when judgment, volume, or ERP data enters the path.',
         solution:
-            'We design AI workflow automation that handles judgment calls, document understanding, and multi system orchestration in one reliable pipeline. Senior engineers build it as production software with logging, retries, and alerts — not fragile no code chains.',
+            'Aizaz.studio is an AI workflow automation company: we ship multi-step production workflows with AI decision nodes, human approval gates, and ops dashboards. Most buyers start with the 14 day AI Systems Sprint on one workflow, then expand. Broader AI systems (agents, chat, docs) live on AI Automation Systems; orchestration without AI judgment lives on Business Process Automation.',
         capabilities: [
             'Multi step workflow design and orchestration',
             'AI decision nodes for classification and extraction',
@@ -270,7 +270,7 @@ export const extraServicePages: SeoPage[] = [
             'Invoice received → AI extract → validate → accounting system → notify',
             'New deal → AI score → CRM stage update → Slack alert → task creation',
             'Contract upload → AI review → flag clauses → legal queue → archive',
-            'Daily orders → AI reconcile → ERP update → exception report → ops team',
+            'Support queue → AI route → human-in-the-loop → CRM update',
         ],
         faqs: [
             {
@@ -278,8 +278,12 @@ export const extraServicePages: SeoPage[] = [
                 answer: 'When workflows need AI judgment, high volume, complex branching, sensitive data, or deep ERP integrations that no code tools cannot handle reliably.',
             },
             {
+                question: 'Should we start with the 14 day sprint or a longer engagement?',
+                answer: 'If you have one painful path and can grant CRM or API access in week one, start with the AI Systems Sprint. Multi-workflow programs start with a call. Greenfield SaaS is an MVP Build, not a sprint.',
+            },
+            {
                 question: 'Can AI workflows connect to NetSuite or Salesforce?',
-                answer: 'Yes. We integrate with major CRMs, ERPs, ecommerce platforms, and custom APIs as part of the workflow architecture.',
+                answer: 'Yes. HubSpot, Salesforce, NetSuite, email, and custom APIs are systems we wire into a workflow. A named Shopify or BigCommerce ↔ NetSuite program belongs on NetSuite Integration, not this page.',
             },
             {
                 question: 'How do you handle workflow failures?',
@@ -289,12 +293,8 @@ export const extraServicePages: SeoPage[] = [
                 question: 'Do we need to replace our existing tools?',
                 answer: 'No. We orchestrate across your current stack. The goal is less manual work between tools, not another platform migration.',
             },
-            {
-                question: 'Can we start with one workflow and expand later?',
-                answer: 'Yes. Most clients begin with the highest impact process, prove ROI, then roll out automation across adjacent workflows.',
-            },
         ],
-        relatedSlugs: ['ai-agent-development', 'api-integration', 'crm-integration', 'business-process-automation'],
+        relatedSlugs: ['ai-automation-systems', 'business-process-automation', 'api-integration', 'crm-integration'],
     },
     {
         slug: 'llm-app-development',
@@ -358,23 +358,23 @@ export const extraServicePages: SeoPage[] = [
     {
         slug: 'saas-mvp-development',
         title: 'SaaS MVP Development',
-        metaTitle: 'SaaS MVP Development for Startups | Aizaz.studio',
+        metaTitle: 'SaaS MVP Development Company | Aizaz.studio',
         metaDescription:
-            'Launch investor-ready SaaS MVPs in weeks with auth, payments, core workflows, and deployable architecture — senior engineers only.',
+            'A SaaS MVP development company for founders who need a real v1: auth, core workflow, Stripe if needed, AWS and CI/CD in a 4–8 week MVP Build.',
         heroSubtitle:
-            'Ship a SaaS MVP that real users can sign up for, pay for, and rely on — built with architecture that survives your first growth spike.',
+            'Pay a studio to ship a v1 users can log into — not a clickable prototype, and not a six-month platform before you have customers.',
         keywords: [
+            'SaaS MVP development company',
+            'MVP software development company',
             'SaaS MVP development',
             'startup MVP development',
-            'MVP software development',
-            'SaaS prototype to product',
             'founder MVP development',
             'minimum viable product SaaS',
         ],
         problem:
-            'You need to validate the idea fast, but cutting corners on auth, data models, and deployment creates debt that kills momentum after launch. Prototypes impress in demos yet crumble when the first paying customer arrives.',
+            'You need users or investors in a real product. No-code prototypes impress in a demo and fall over at signup. Agencies overbuild. Freelancers skip auth, billing, and deploy. You are stuck between a slide deck and a rewrite.',
         solution:
-            'Aizaz.studio builds SaaS MVPs with the essentials done right: authentication, core workflows, payments where needed, and AWS deployment with CI/CD. You launch faster without trading away the foundation your next engineering hire will need.',
+            'Aizaz.studio is a SaaS MVP development company: we ship a scoped v1 with authentication, the core workflow, Stripe when you need it, and AWS plus CI/CD. Typical MVP Build is 4–8 weeks. Ongoing platform engineering after launch lives on Web App & SaaS Development. Half-built repos belong on project rescue, not this page.',
         capabilities: [
             'Founder scoped MVP feature definition',
             'User authentication and onboarding flows',
@@ -385,34 +385,34 @@ export const extraServicePages: SeoPage[] = [
             'AWS deployment with CI/CD and monitoring',
         ],
         useCases: [
-            'Idea validation → MVP in 6 weeks → beta users → investor demo',
-            'No code prototype → production SaaS → paid launch',
+            'Validated prototype → production SaaS MVP → first users',
+            'Non-technical founder → scoped v1 → investor-ready demo environment',
             'Services business → self serve product → recurring revenue',
-            'Internal tool → external SaaS → multi tenant launch',
+            'Portal or internal tool v1 → then hand to product engineering',
         ],
         faqs: [
             {
                 question: 'How long does a typical SaaS MVP take?',
-                answer: 'Most MVPs ship in four to eight weeks depending on scope. We define a tight v1 feature set upfront so you launch with enough to validate, not everything on the wishlist.',
+                answer: 'Most MVP Builds ship in four to eight weeks. We cut scope to a v1 people can use. PropertyMatch, our public SaaS MVP case study, was a focused 14 day build from a validated Airtable prototype — that timeline is the exception when the workflow is already proven, not the default quote.',
+            },
+            {
+                question: 'What does investor-ready mean here?',
+                answer: 'Someone can create an account, complete the core workflow, and you can deploy with CI/CD on AWS. Stripe if you are charging. It is not a pitch-deck clickthrough and not a multi-tenant enterprise platform on day one.',
             },
             {
                 question: 'Will we own the code and infrastructure?',
                 answer: 'Yes. You receive full source code, documentation, and access to all cloud resources. No lock in.',
             },
             {
-                question: 'Can you help after MVP launch?',
-                answer: 'Yes. We offer ongoing engineering support, feature sprints, and infrastructure management as you grow past v1.',
+                question: 'What if we already have a half-built repo?',
+                answer: 'Do not start an MVP Build on a stalled codebase. Book a technical audit, then project rescue if the repo is salvageable. We wrote about rescuing a half-built SaaS if you need the decision frame first.',
             },
             {
                 question: 'Do you work with non technical founders?',
                 answer: 'Often. We translate business goals into technical scope, keep you informed with visible milestones, and deliver systems your first hire can extend.',
             },
-            {
-                question: 'What tech stack do you use for MVPs?',
-                answer: 'Typically React or Next.js, Node.js, PostgreSQL, and AWS. We choose based on your product needs and hiring plans.',
-            },
         ],
-        relatedSlugs: ['b2b-saas-development', 'backend-engineering', 'web-app-saas-development', 'llm-app-development'],
+        relatedSlugs: ['web-app-saas-development', 'b2b-saas-development', 'project-rescue', 'backend-engineering'],
     },
     {
         slug: 'b2b-saas-development',
@@ -771,23 +771,23 @@ export const extraServicePages: SeoPage[] = [
     {
         slug: 'api-integration',
         title: 'API Integration',
-        metaTitle: 'API Integration Development Services | Aizaz.studio',
+        metaTitle: 'API Integration Services | Aizaz.studio',
         metaDescription:
-            'Connect products to third-party APIs, webhooks, and partner systems with retries, monitoring, and documentation your team can maintain.',
+            'API integration services for REST, GraphQL, SOAP, and webhooks: mappings, retries, and failure dashboards — production software, not Zap scripts.',
         heroSubtitle:
-            'Make your product talk to everything it needs to — payment providers, CRMs, ERPs, shipping APIs — without brittle scripts that break on every vendor update.',
+            'Connect your product to vendor APIs with mappings, retries, and a dashboard when something fails — not a script nobody owns.',
         keywords: [
-            'API integration',
             'API integration services',
+            'API integration developer',
+            'API integration',
             'third party API integration',
             'webhook integration',
-            'system integration development',
             'API middleware development',
         ],
         problem:
             'Your product needs data from five external systems, each with different auth, rate limits, and quirks. Integrations are duct taped together, break without warning, and nobody documented the field mappings.',
         solution:
-            'We build API integrations as maintainable software: clear data mappings, retry logic, error alerting, and versioned adapters. Senior engineers connect your core product to payment, CRM, ERP, logistics, and custom partner APIs with monitoring built in.',
+            'We build API integrations as maintainable software: versioned adapters, field mappings, retry logic, and failure dashboards. If you named Shopify or BigCommerce with NetSuite, that work belongs on NetSuite Integration. This page is the general API and middleware engagement.',
         capabilities: [
             'REST, GraphQL, and SOAP API integrations',
             'Webhook receivers and event driven processing',
@@ -799,11 +799,15 @@ export const extraServicePages: SeoPage[] = [
         ],
         useCases: [
             'SaaS product → Stripe + HubSpot + Slack → unified customer view',
-            'Ecommerce → shipping API + inventory API → real time fulfillment',
-            'Fintech → payment gateway + KYC provider → compliant onboarding',
-            'Internal ops → legacy API wrapper → modern dashboard → alerts',
+            'Ecommerce storefront → shipping and inventory APIs → fulfillment (ERP unnamed)',
+            'Fintech → payment gateway + KYC provider → onboarding',
+            'Two vendors that cannot talk → middleware → validated payload → both sides',
         ],
         faqs: [
+            {
+                question: 'We need Shopify or BigCommerce connected to NetSuite. Is this the right page?',
+                answer: 'No. Named NetSuite storefront work is NetSuite Integration. Use this page when the job is vendor APIs, webhooks, or middleware without NetSuite as the named system of record.',
+            },
             {
                 question: 'Can you integrate with APIs that have poor documentation?',
                 answer: 'Yes. We reverse engineer behavior, build test harnesses, and document findings so your team is not dependent on vendor docs alone.',
@@ -813,19 +817,15 @@ export const extraServicePages: SeoPage[] = [
                 answer: 'Queues, exponential backoff, circuit breakers, and alerts so temporary vendor issues do not cascade into data loss or customer impact.',
             },
             {
-                question: 'Do you build middleware between systems?',
-                answer: 'Yes. When two systems cannot talk directly, we build middleware that transforms, validates, and routes data reliably.',
+                question: 'What does an API integration developer actually deliver?',
+                answer: 'Mappings, versioned adapters, retry and backoff, and a failure dashboard — plus documentation your team can maintain. Not a Zap that dies when the vendor changes a field.',
             },
             {
                 question: 'Can you expose APIs for our customers and partners?',
                 answer: 'Yes. We build outward facing APIs and webhooks alongside inbound integrations, with auth, versioning, and developer documentation.',
             },
-            {
-                question: 'What if an integration partner changes their API?',
-                answer: 'Versioned adapters and automated tests catch breaking changes early. We design integrations to absorb vendor updates with minimal downtime.',
-            },
         ],
-        relatedSlugs: ['crm-integration', 'netsuite-integration', 'backend-engineering', 'ai-workflow-automation'],
+        relatedSlugs: ['netsuite-integration', 'crm-integration', 'backend-engineering', 'ai-workflow-automation'],
     },
     {
         slug: 'crm-integration',
@@ -889,60 +889,64 @@ export const extraServicePages: SeoPage[] = [
     {
         slug: 'netsuite-integration',
         title: 'NetSuite Integration',
-        metaTitle: 'NetSuite Integration Services | Aizaz.studio',
+        metaTitle: 'NetSuite Integration Services for Shopify & BigCommerce | Aizaz.studio',
         metaDescription:
-            'NetSuite integrations for ecommerce, CRM, 3PL, and custom apps — order, inventory, fulfillment, and finance sync you can trust.',
+            'NetSuite integration services for Shopify, BigCommerce, 3PL, and inventory — connector and middleware work with validation, retries, and ops dashboards.',
         heroSubtitle:
-            'Connect NetSuite to Shopify, CRMs, warehouses, and internal tools so orders, inventory, and finance data stay aligned across every channel.',
+            'Connect Shopify, BigCommerce, warehouses, and CRMs to NetSuite so orders and inventory stop living in CSVs.',
         keywords: [
-            'NetSuite integration',
             'NetSuite integration services',
+            'NetSuite ecommerce integration',
             'Shopify NetSuite integration',
-            'SuiteScript development',
-            'NetSuite API integration',
-            'NetSuite ecommerce sync',
+            'BigCommerce NetSuite integration',
+            'NetSuite integration developer',
+            'NetSuite inventory sync',
         ],
         problem:
-            'NetSuite is your system of record but it does not talk cleanly to Shopify, your CRM, or your 3PL. Teams export CSVs, fix sync errors by hand, and finance finds out about problems days later.',
+            'NetSuite is the system of record, but Shopify, BigCommerce, your 3PL, and your CRM run on different clocks. Native connectors miss edge cases. Teams export CSVs, oversell, and finance finds the drift days later.',
         solution:
-            'Aizaz.studio builds NetSuite integrations with SuiteScript, REST APIs, and middleware that keep orders, inventory, customers, and fulfillment in sync. We add validation, retry logic, and ops dashboards so failures surface before they hit your customers.',
+            'This is connector and middleware work: REST, RESTlets, and SuiteScript where the native tool falls short. We sync orders, inventory, customers, and fulfillment with validation, retries, and an ops dashboard. Co-founder Nasir Mahmood leads ERP and commerce integration. Automation inside NetSuite (order-to-cash scripts, finance workflows) is a different page: NetSuite ERP Automation.',
         capabilities: [
-            'NetSuite REST and SuiteScript 2.x development',
-            'Shopify order, inventory, and customer sync',
-            'CRM and sales pipeline data into NetSuite',
+            'Shopify order, inventory, customer, and fulfillment sync',
+            'BigCommerce ↔ NetSuite in production — not an afterthought',
             '3PL and warehouse fulfillment integrations',
-            'Custom record and workflow automation',
-            'SFTP and CSV pipeline ingestion',
-            'Sync error dashboards and alerting workflows',
+            'Inventory sync rules that prevent oversell',
+            'NetSuite REST, RESTlets, and SuiteScript 2.x as implementation detail',
+            'CRM and sales pipeline data into NetSuite',
+            'Sync error dashboards, validation, and retry queues',
         ],
         useCases: [
             'Shopify order → NetSuite sales order → 3PL fulfillment → tracking sync',
-            'Inventory update → NetSuite → ecommerce storefront → prevent oversell',
+            'BigCommerce catalog and inventory → NetSuite → storefront quantity you can trust',
+            'Inventory update → NetSuite → both storefronts → stop oversell',
             'Failed sync → alert → retry queue → ops dashboard → resolution',
-            'Wholesale CRM deal → NetSuite customer → pricing → invoice automation',
         ],
         faqs: [
             {
-                question: 'Do you work with SuiteScript 2.x and REST integrations?',
-                answer: 'Yes. We build SuiteScript workflows, scheduled scripts, RESTlets, and external middleware depending on what fits your NetSuite edition and use case.',
+                question: 'Do you integrate BigCommerce with NetSuite, or only Shopify?',
+                answer: 'Both. Shopify and BigCommerce are first-class storefronts on this page. We published production notes on BigCommerce ↔ NetSuite failure modes and a separate Shopify pitfalls guide.',
             },
             {
                 question: 'Can you integrate NetSuite with Shopify?',
-                answer: 'Yes. Product, order, inventory, customer, and fulfillment sync between Shopify and NetSuite is one of our most common integration projects.',
+                answer: 'Yes. Product, order, inventory, customer, and fulfillment sync between Shopify and NetSuite is a core integration pattern we build and repair.',
+            },
+            {
+                question: 'Is this the same as NetSuite ERP automation?',
+                answer: 'No. This page is storefront, 3PL, and CRM connectors into NetSuite. SuiteScript and order automation inside the ERP is NetSuite ERP Automation.',
             },
             {
                 question: 'What happens when sync fails at 2am?',
                 answer: 'We build alerting, retry queues, and ops dashboards so failures are visible immediately and recover automatically when safe.',
             },
             {
-                question: 'Our NetSuite data is messy. Can you still integrate?',
-                answer: 'We map fields carefully, add validation layers, and catch bad records before they break downstream systems. Cleanup plans are part of scoping.',
+                question: 'Should we start with a 14 day sprint?',
+                answer: 'Only if you have one order or inventory exception workflow. A multi-storefront NetSuite program is a scoped integration engagement. Book a call to sort which.',
             },
             {
-                question: 'How is this different from native NetSuite connectors?',
-                answer: 'Native connectors cover simple cases. We build custom logic for multi channel, multi warehouse, and complex pricing rules that off the shelf tools cannot handle.',
+                question: 'We need a NetSuite consultant more than developers. Where do we go?',
+                answer: 'Ops and finance leads already on NetSuite should start on Custom Integrations for NetSuite Users. Implementation still lands on this service URL.',
             },
         ],
-        relatedSlugs: ['crm-integration', 'api-integration', 'netsuite-erp-automation', 'ai-workflow-automation'],
+        relatedSlugs: ['netsuite-erp-automation', 'api-integration', 'crm-integration', 'business-process-automation'],
     },
 ];
