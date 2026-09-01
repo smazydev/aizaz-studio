@@ -365,25 +365,10 @@ h3,
     padding-right: 0;
   }
 
-  .works-item__meta {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .works-item__meta > div:nth-child(3) {
-    display: none;
-  }
-
   .works-item__val a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-  }
-
-  .works-item__shot,
-  .works-item--cinema .works-item__shot,
-  .works-item--square .works-item__shot {
-    aspect-ratio: 16 / 10;
   }
 
   .works-detail__quote {

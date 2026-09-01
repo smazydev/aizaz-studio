@@ -57,8 +57,9 @@ const kinds = ['cinema', 'wide', 'square'] as const;
                   alt={study.title}
                   class="works-item__shot"
                   loading={index === 0 ? 'eager' : 'lazy'}
-                  kind={index === 0 ? 'hero' : 'card'}
-                  width={1600}
+                  kind="content"
+                  width={1024}
+                  sizes="(max-width: 800px) calc(100vw - 32px), (max-width: 1100px) calc(100vw - 56px), (max-width: 1500px) 68vw, 1024px"
                 />
               )}
             </a>

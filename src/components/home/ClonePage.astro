@@ -9,7 +9,6 @@ import SiteFooter from '../site/SiteFooter.astro';
 import { siteFooter } from '../../data/siteChrome';
 import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
 import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
-import FounderGrid from '../FounderGrid.astro';
 import ContactForm from '../ContactForm.astro';
 
 const publicCaseStudies = filterPublicCaseStudies(caseStudies);
@@ -508,18 +507,6 @@ const homeQuote = featuredFeedback;
     <!-- 13–15 DARK / METRIC / TESTIMONIAL -->
     <section class="c-dark">
       <div class="c-wrap">
-        <div class="c-team" id="team">
-          <div class="c-dark__intro">
-            <div>
-              <p class="c-micro">Meet the team</p>
-              <h2 class="c-h1">A studio built to ship systems</h2>
-            </div>
-            <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
-          </div>
-
-          <FounderGrid />
-        </div>
-
         <div class="c-dark__growth">
           <div>
             <p class="c-micro">Case studies</p>

@@ -11,13 +11,24 @@ interface Props {
   kind?: 'card' | 'hero' | 'content';
   /** Max width hint for src selection */
   width?: number;
+  /** Responsive rendered-width hint for srcset selection */
+  sizes?: string;
 }
 
-const { src, alt, class: className = '', loading = 'lazy', fetchpriority, kind = 'content', width } = Astro.props;
+const {
+  src,
+  alt,
+  class: className = '',
+  loading = 'lazy',
+  fetchpriority,
+  kind = 'content',
+  width,
+  sizes: sizesHint,
+} = Astro.props;
 const basename = assetBasename(src);
 const srcSet = basename ? optimizedSrcSet(basename) : undefined;
 const primary = basename ? optimizedSrc(basename, width) : src.src;
-const sizes = defaultSizes(kind);
+const sizes = sizesHint ?? defaultSizes(kind);
 const widthAttr = width ?? (kind === 'hero' ? 1200 : kind === 'card' ? 800 : 1000);
 const heightAttr = src.height && src.width ? Math.round((widthAttr / src.width) * src.height) : undefined;
 ---
