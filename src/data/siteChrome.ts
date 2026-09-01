@@ -1,3 +1,5 @@
+import { BOOKING_URL } from './siteConfig';
+
 export const siteNav = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
@@ -52,7 +54,7 @@ export const siteFooter = {
         { href: '/compare', label: 'Compare' },
         { href: '/technologies', label: 'Technologies' },
         { href: '/start-a-project', label: 'Start a Project' },
-        { href: '/book-a-call', label: 'Book a Call' },
+        { href: BOOKING_URL, label: 'Book a Call' },
       ],
     },
   ],

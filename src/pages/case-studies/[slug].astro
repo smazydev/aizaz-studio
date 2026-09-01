@@ -4,7 +4,7 @@ export const prerender = false;
 import SiteShell from '../../components/SiteShell.astro';
 import PageCTA from '../../components/PageCTA.astro';
 import { SITE_URL } from '../../data/seoPages';
-import { BOOKING_URL } from '../../data/siteConfig';
+import { BOOKING_URL, isExternalHref } from '../../data/siteConfig';
 import { getCaseStudyBySlug } from '../../lib/sanity/caseStudies';
 import AuthorCard from '../../components/AuthorCard.astro';
 import LocalImage from '../../components/LocalImage.astro';
@@ -21,6 +21,11 @@ if (!study) {
 
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies', `case-study:${study.slug}`]);
 const relatedGroups = getCaseStudyRelatedGroups(study.slug);
+const ctaHref =
+  !study.cta?.buttonHref || study.cta.buttonHref === '/book-a-call'
+    ? BOOKING_URL
+    : study.cta.buttonHref;
+const ctaExternal = isExternalHref(ctaHref);
 const pageTitle = study.seoTitle ?? `${study.title} | Aizaz Studio`;
 const pageDescription = study.seoDescription ?? study.description;
 const canonicalPath = study.canonicalPath ?? `/case-studies/${study.slug}`;
@@ -265,7 +270,12 @@ const articleSchema = {
             <div class="sp-promo__copy">
               <p class="c-lede">{study.cta.headline}</p>
             </div>
-            <a class="c-btn" href={study.cta.buttonHref ?? BOOKING_URL}>{study.cta.buttonText}</a>
+            <a
+              class="c-btn"
+              href={ctaHref}
+              target={ctaExternal ? '_blank' : undefined}
+              rel={ctaExternal ? 'noopener noreferrer' : undefined}
+            >{study.cta.buttonText}</a>
           </div>
         </div>
       </section>

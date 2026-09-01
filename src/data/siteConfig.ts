@@ -5,9 +5,13 @@ export const SOCIAL_LINKS = {
     twitter: '#',
 } as const;
 
-/** Google Calendar appointment booking (Strategy Call) */
-export const BOOKING_URL =
-    'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1yvprFeBWNlVaAt03V10kuIhDfRiH0lPlE32qE0Bng4l1T9T-N-7yQp96s2puuPmvBjTCblaEk';
+/** Ali-owned Google Calendar discovery booking page. */
+export const BOOKING_URL = 'https://calendar.app.google/uZsVAwsXCfaSjvDQ6';
 
+/** Embeddable appointments view of the same Ali calendar. */
 export const BOOKING_EMBED_URL =
-    'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1yvprFeBWNlVaAt03V10kuIhDfRiH0lPlE32qE0Bng4l1T9T-N-7yQp96s2puuPmvBjTCblaEk?gv=true';
+    'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0aD-z4dTW_9l9zH8tqWBnw4Nonuvi726GG8Gv5__CpWjiVOI4TS01ooqDBshB6885vxrIzrHXA?gv=true';
+
+export function isExternalHref(href: string): boolean {
+    return href.startsWith('http://') || href.startsWith('https://');
+}

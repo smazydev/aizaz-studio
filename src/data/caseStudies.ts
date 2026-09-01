@@ -1,3 +1,4 @@
+import { BOOKING_URL } from './siteConfig';
 import type { ImageMetadata } from 'astro';
 import type { ContentAuthor } from '../lib/sanity/author';
 import archiverCover from '../assets/1archiver-casestudy-cover.png';
@@ -529,7 +530,7 @@ export const caseStudies: CaseStudy[] = [
         cta: {
             headline: 'Have an existing developer tool that needs to be extended, stabilized or taken to production?',
             buttonText: 'Talk to Aizaz Studio',
-            buttonHref: '/book-a-call',
+            buttonHref: BOOKING_URL,
         },
         detailedContent: [
             {
@@ -714,7 +715,7 @@ export const caseStudies: CaseStudy[] = [
         cta: {
             headline: 'Building a complex SaaS product? Turn your product requirements into an architecture built for scale.',
             buttonText: 'Talk to Aizaz Studio',
-            buttonHref: '/book-a-call',
+            buttonHref: BOOKING_URL,
         },
         detailedContent: [
             {

@@ -8,6 +8,7 @@ import RelatedContent from './RelatedContent.astro';
 import { SITE_URL } from '../data/seoPages';
 import { getArticleRelatedGroups } from '../data/internalLinks';
 import { extractArticleHeadings, injectArticleHeadingIds } from '../lib/article-headings';
+import { BOOKING_URL } from '../data/siteConfig';
 import { resolveArticleHtml } from '../lib/article-content';
 
 interface Props {
@@ -92,7 +93,7 @@ if (!preview && related.length > 0 && !hasFurtherReading) {
             </p>
           </div>
           <div class="page-hero__actions" style="margin:0">
-            <a class="c-btn" href="/book-a-call">Book a Free Call</a>
+            <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Free Call</a>
             <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
           </div>
         </div>

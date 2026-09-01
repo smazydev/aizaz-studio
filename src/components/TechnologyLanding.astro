@@ -4,6 +4,7 @@ import FaqSection from './FaqSection.astro';
 import RelatedContent from './RelatedContent.astro';
 import PageCTA from './PageCTA.astro';
 import { getTechnologyRelatedGroups } from '../data/internalLinks';
+import { BOOKING_URL } from '../data/siteConfig';
 
 interface Props {
   page: TechnologyPage;
@@ -27,7 +28,7 @@ const shortName = page.title.replace(' Development', '').replace(' Services', ''
     <h1 class="page-title">{page.title}</h1>
     <p class="c-lede page-hero__lede">{page.heroSubtitle}</p>
     <div class="page-hero__actions">
-      <a class="c-btn" href="/book-a-call">Book a Call</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
       <a class="c-btn c-btn--ghost" href="/services">View Services</a>
     </div>
   </div>

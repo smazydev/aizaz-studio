@@ -1,5 +1,6 @@
 ---
 import type { RelatedGroup } from '../data/internalLinks';
+import { isExternalHref } from '../data/siteConfig';
 
 interface Props {
   groups: RelatedGroup[];
@@ -17,7 +18,12 @@ const visible = groups.filter((g) => g.links.length > 0).slice(0, 3);
           <h2 class="page-h2">{group.title}</h2>
           <div class="sp-grid" style="margin-top: 20px">
             {group.links.map((link) => (
-              <a class="sp-card" href={link.href}>
+              <a
+                class="sp-card"
+                href={link.href}
+                target={isExternalHref(link.href) ? '_blank' : undefined}
+                rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
+              >
                 <h3 class="sp-card__title">{link.label}</h3>
                 {link.description && <p class="c-lede sp-card__body">{link.description}</p>}
               </a>

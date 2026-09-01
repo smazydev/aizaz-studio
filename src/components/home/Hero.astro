@@ -1,6 +1,7 @@
 ---
 import '../../styles/home-hero.css';
 import HeroSentinelCanvas from '../hero3d/HeroSentinelCanvas.astro';
+import { BOOKING_URL } from '../../data/siteConfig';
 ---
 
 <section class="c-hero home-hero" aria-label="Hero" data-hero>
@@ -12,7 +13,7 @@ import HeroSentinelCanvas from '../hero3d/HeroSentinelCanvas.astro';
         <p class="c-hero__lede">AI, SaaS, NetSuite, and cloud: from discovery to production.</p>
         <div class="c-hero__cta">
           <a class="c-btn" href="/services">Explore Services</a>
-          <a class="c-btn c-btn--ghost" href="/book-a-call">Book a Call</a>
+          <a class="c-btn c-btn--ghost" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
         </div>
       </div>
     </div>

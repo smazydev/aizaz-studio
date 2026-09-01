@@ -1,4 +1,5 @@
 import { processSteps } from './processSteps';
+import { BOOKING_URL } from './siteConfig';
 
 export interface EngagementModel {
     id: string;
@@ -297,7 +298,7 @@ export const engagementModels: EngagementModelsContent = {
         { label: 'DevOps Consulting', href: '/services/devops-consulting' },
         { label: 'Project Rescue', href: '/services/project-rescue' },
         { label: 'Technical Audit', href: '/services/technical-audit' },
-        { label: 'Book a Call', href: '/book-a-call' },
+        { label: 'Book a Call', href: BOOKING_URL },
     ],
 };
 

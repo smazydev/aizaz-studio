@@ -2,6 +2,7 @@
 import type { ComparePage } from '../data/comparePages';
 import FaqSection from './FaqSection.astro';
 import PageCTA from './PageCTA.astro';
+import { BOOKING_URL } from '../data/siteConfig';
 
 interface Props {
   page: ComparePage;
@@ -81,7 +82,7 @@ const { page } = Astro.props;
       <div class="sp-promo__copy">
         <p class="c-lede">{page.ctaText}</p>
       </div>
-      <a class="c-btn" href="/book-a-call">Book a Call</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
     </div>
   </div>
 </section>

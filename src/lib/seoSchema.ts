@@ -1,5 +1,6 @@
 import type { SeoPage } from '../data/seoPages';
 import { SITE_URL } from '../data/seoPages';
+import { BOOKING_URL } from '../data/siteConfig';
 
 interface FaqItem {
     question: string;
@@ -35,7 +36,7 @@ export function buildServiceSchema(page: SeoPage, canonicalPath: string) {
         },
         offers: {
             '@type': 'Offer',
-            url: `${SITE_URL}/book-a-call`,
+            url: BOOKING_URL,
             availability: 'https://schema.org/InStock',
             priceCurrency: 'USD',
             name: 'Free strategy call',

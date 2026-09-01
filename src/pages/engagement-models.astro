@@ -6,13 +6,14 @@ import OutlinedCard from '../components/OutlinedCard.astro';
 import FaqSection from '../components/FaqSection.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { engagementModels } from '../data/commercialPages';
+import { BOOKING_URL } from '../data/siteConfig';
 
 const c = engagementModels;
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/engagement-models">
   <PageHero eyebrow="Commercial" title={c.title} description={c.heroSubtitle}>
-    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
     <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
   </PageHero>
 

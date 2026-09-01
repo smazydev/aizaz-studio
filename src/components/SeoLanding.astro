@@ -5,6 +5,7 @@ import SeoRichContent from './SeoRichContent.astro';
 import RelatedContent from './RelatedContent.astro';
 import FaqSection from './FaqSection.astro';
 import PageCTA from './PageCTA.astro';
+import { BOOKING_URL } from '../data/siteConfig';
 import type { RelatedGroup } from '../data/internalLinks';
 
 interface Props {
@@ -37,7 +38,7 @@ const showLegacyRelated = relatedGroups.length === 0 && relatedServices.length >
     <h1 class="page-title">{page.title}</h1>
     <p class="c-lede page-hero__lede">{page.heroSubtitle}</p>
     <div class="page-hero__actions">
-      <a class="c-btn" href="/book-a-call">Book a Free Call</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Free Call</a>
       <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">14 Day Sprint</a>
     </div>
   </div>

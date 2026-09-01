@@ -8,6 +8,7 @@ import TeamPortrait from '../components/TeamPortrait.astro';
 import { leadershipProfiles } from '../data/leadership';
 import { caseStudies } from '../data/caseStudies';
 import { filterPublicCaseStudies } from '../lib/case-study-visibility';
+import { BOOKING_URL } from '../data/siteConfig';
 
 const leaders = leadershipProfiles;
 const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
@@ -24,7 +25,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
     highlight="engineering studio"
     description="Aizaz builds production systems across AI & automation, product/SaaS engineering, ERP/NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
   >
-    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
     <a class="c-btn c-btn--ghost" href="/case-studies">See Works</a>
   </PageHero>
 

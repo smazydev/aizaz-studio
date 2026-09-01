@@ -3,6 +3,7 @@ import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { siteFooter } from '../data/siteChrome';
+import { BOOKING_URL } from '../data/siteConfig';
 
 const contact = siteFooter.studio;
 ---
@@ -17,7 +18,7 @@ const contact = siteFooter.studio;
     title="Tell us what you need to ship"
     description="Share a short brief. Our team will review the details and follow up using the email address you provide. Prefer a live conversation? Book a call instead."
   >
-    <a class="c-btn c-btn--ghost" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
   </PageHero>
 
   <section class="c-cta sp-section" aria-labelledby="start-project-heading">

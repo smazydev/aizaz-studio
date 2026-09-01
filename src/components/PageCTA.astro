@@ -1,4 +1,6 @@
 ---
+import { BOOKING_URL, isExternalHref } from '../data/siteConfig';
+
 interface Props {
   eyebrow?: string;
   title?: string;
@@ -13,11 +15,14 @@ const {
   eyebrow = 'Start here',
   title = 'Turn one workflow into a working system.',
   lede = 'Book a call to map the highest-impact automation, or start with a focused sprint and ship something your team can use.',
-  primaryHref = '/book-a-call',
+  primaryHref = BOOKING_URL,
   primaryLabel = 'Book a Call',
   secondaryHref = '/ai-systems-sprint',
   secondaryLabel = 'See the Sprint Offer',
 } = Astro.props;
+
+const primaryExternal = isExternalHref(primaryHref);
+const secondaryExternal = secondaryHref ? isExternalHref(secondaryHref) : false;
 ---
 
 <section class="sp-cta">
@@ -26,9 +31,19 @@ const {
     <h2 class="page-h2">{title}</h2>
     {lede && <p class="c-lede page-hero__lede">{lede}</p>}
     <div class="page-hero__actions">
-      <a class="c-btn" href={primaryHref}>{primaryLabel}</a>
+      <a
+        class="c-btn"
+        href={primaryHref}
+        target={primaryExternal ? '_blank' : undefined}
+        rel={primaryExternal ? 'noopener noreferrer' : undefined}
+      >{primaryLabel}</a>
       {secondaryHref && secondaryLabel && (
-        <a class="c-btn c-btn--ghost" href={secondaryHref}>{secondaryLabel}</a>
+        <a
+          class="c-btn c-btn--ghost"
+          href={secondaryHref}
+          target={secondaryExternal ? '_blank' : undefined}
+          rel={secondaryExternal ? 'noopener noreferrer' : undefined}
+        >{secondaryLabel}</a>
       )}
     </div>
   </div>

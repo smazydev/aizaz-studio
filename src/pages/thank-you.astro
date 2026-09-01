@@ -1,6 +1,7 @@
 ---
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
+import { BOOKING_URL } from '../data/siteConfig';
 
 Astro.response.headers.set('Cache-Control', 'no-store');
 ---
@@ -17,7 +18,7 @@ Astro.response.headers.set('Cache-Control', 'no-store');
     description="Thanks for sharing what you’re working on. Our team will review the details and follow up using the email address you provided."
   >
     <a class="c-btn" href="/case-studies">View Case Studies</a>
-    <a class="c-btn c-btn--ghost" href="/book-a-call">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
   </PageHero>
 </SiteShell>
 

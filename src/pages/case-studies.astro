@@ -7,6 +7,7 @@ import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { BOOKING_URL } from '../data/siteConfig';
 
 const caseStudies = await getAllCaseStudies();
 /** Independent of Homepage CMS — full public listing order from getAllCaseStudies(). */
@@ -28,7 +29,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
     highlight="real-world scale"
     description="Compliance platforms, SaaS products, and operational systems designed for security, scale, and teams that cannot afford fragile software."
   >
-    <a class="c-btn" href="/book-a-call">Book a Call</a>
+    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
     <a class="c-btn c-btn--ghost" href="/services">Services</a>
   </PageHero>
 
