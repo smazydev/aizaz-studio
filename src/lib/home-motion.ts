@@ -1,3 +1,4 @@
+import { gsap } from 'gsap';
 import { bindThemeToggle } from './theme';
 
 function overlay() {
@@ -291,19 +292,14 @@ function services() {
   const connectorPath = connector?.querySelector<SVGPathElement>('[data-service-connector-path]');
   const signal = connector?.querySelector<SVGCircleElement>('[data-service-signal]');
   let activeId = items.find((item) => item.classList.contains('is-on'))?.dataset.service || '0';
-  let connectorTimer = 0;
+  let sceneTween: gsap.core.Timeline | null = null;
+  let connectorTween: gsap.core.Tween | null = null;
+  let signalTween: gsap.core.Tween | null = null;
+  const desktop = () => !window.matchMedia('(max-width: 768px)').matches;
+  const motionOk = () => !reduce() && desktop();
 
   const positionConnector = (animate = true) => {
-    if (
-      !stage ||
-      !visual ||
-      !connector ||
-      !connectorPath ||
-      !signal ||
-      window.matchMedia('(max-width: 768px)').matches
-    ) {
-      return;
-    }
+    if (!stage || !visual || !connector || !connectorPath || !signal || !desktop()) return;
 
     const selected = items.find((item) => item.dataset.service === activeId);
     if (!selected) return;
@@ -322,26 +318,74 @@ function services() {
     const endY = visualRect.top - stageRect.top + visualRect.height / 2;
     const bend = Math.max(14, (endX - startX) * 0.48);
 
-    const commit = () => {
-      connector.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
-      connectorPath.setAttribute(
-        'd',
-        `M ${startX} ${startY} C ${startX + bend} ${startY} ${endX - bend} ${endY} ${endX} ${endY}`,
-      );
-      signal.style.transform = `translate(${startX}px, ${startY}px)`;
-      requestAnimationFrame(() => connector.classList.remove('is-updating'));
-    };
+    connector.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
+    connectorPath.setAttribute(
+      'd',
+      `M ${startX} ${startY} C ${startX + bend} ${startY} ${endX - bend} ${endY} ${endX} ${endY}`,
+    );
 
-    window.clearTimeout(connectorTimer);
-    if (!animate) {
-      commit();
+    const length = connectorPath.getTotalLength();
+    connectorTween?.kill();
+    signalTween?.kill();
+
+    if (!animate || !motionOk()) {
+      gsap.set(connectorPath, { strokeDasharray: length, strokeDashoffset: 0 });
+      const end = connectorPath.getPointAtLength(length);
+      gsap.set(signal, { attr: { cx: end.x, cy: end.y }, opacity: 1 });
+      connector.classList.remove('is-updating');
       return;
     }
-    connector.classList.add('is-updating');
-    connectorTimer = window.setTimeout(commit, 80);
+
+    gsap.set(connectorPath, { strokeDasharray: length, strokeDashoffset: length });
+    gsap.set(signal, { attr: { cx: startX, cy: startY }, opacity: 0.35 });
+    connectorTween = gsap.to(connectorPath, {
+      strokeDashoffset: 0,
+      duration: 0.32,
+      ease: 'power2.out',
+      onComplete: () => connector.classList.remove('is-updating'),
+    });
+
+    const travel = { t: 0 };
+    signalTween = gsap.to(travel, {
+      t: 1,
+      duration: 0.4,
+      ease: 'power2.out',
+      onUpdate: () => {
+        const point = connectorPath.getPointAtLength(travel.t * length);
+        gsap.set(signal, { attr: { cx: point.x, cy: point.y }, opacity: 0.35 + travel.t * 0.65 });
+      },
+    });
   };
 
-  const activate = (id: string) => {
+  const markScene = (id: string) => {
+    scenes.forEach((scene) => {
+      const on = scene.dataset.serviceScene === id;
+      scene.classList.toggle('is-on', on);
+      scene.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+  };
+
+  const showScene = (id: string, animate: boolean) => {
+    const next = scenes.find((scene) => scene.dataset.serviceScene === id);
+    const prev = scenes.find((scene) => scene.classList.contains('is-on') && scene !== next);
+    sceneTween?.kill();
+    if (!next) return;
+
+    if (!animate || !motionOk() || !prev) {
+      markScene(id);
+      gsap.set(scenes, { autoAlpha: 0, y: 0 });
+      gsap.set(next, { autoAlpha: 1, y: 0 });
+      return;
+    }
+
+    gsap.set(next, { autoAlpha: 0, y: 16 });
+    markScene(id);
+    sceneTween = gsap.timeline({ defaults: { duration: 0.26, ease: 'power2.out' } });
+    sceneTween.to(prev, { autoAlpha: 0, y: 10 }, 0);
+    sceneTween.to(next, { autoAlpha: 1, y: 0 }, 0.06);
+  };
+
+  const activate = (id: string, animate = true) => {
     const changed = id !== activeId;
     activeId = id;
     items.forEach((item) => {
@@ -351,13 +395,9 @@ function services() {
       if (on) item.setAttribute('aria-current', 'true');
       else item.removeAttribute('aria-current');
     });
-    scenes.forEach((scene) => {
-      const on = scene.dataset.serviceScene === id;
-      scene.classList.toggle('is-on', on);
-      scene.setAttribute('aria-hidden', on ? 'false' : 'true');
-    });
+    showScene(id, animate && changed);
     root.dataset.activeService = id;
-    requestAnimationFrame(() => positionConnector(changed));
+    requestAnimationFrame(() => positionConnector(animate && changed));
   };
 
   items.forEach((item, i) => {
@@ -387,7 +427,7 @@ function services() {
     });
   });
 
-  activate(activeId);
+  activate(activeId, false);
   requestAnimationFrame(() => positionConnector(false));
   window.addEventListener('resize', () => positionConnector(false), { passive: true });
   if ('ResizeObserver' in window && stage) {

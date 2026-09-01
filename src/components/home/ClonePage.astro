@@ -10,6 +10,11 @@ import { siteFooter } from '../../data/siteChrome';
 import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
 import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
 import ContactForm from '../ContactForm.astro';
+import salesangelAiAgents from '../../assets/salesangel-ai-agents.png';
+import propertyMatchmakerSearch from '../../assets/propertymatchmaker-bg-property-search.png';
+import igwDashboard from '../../assets/igw-bg-dashboard-1.png';
+import propertyMatchmakerBuyer from '../../assets/propertymatchmaker-bg-buyer-management.png';
+import salesangelArchitecture from '../../assets/salesangel-architecture-diagram.png';
 
 const publicCaseStudies = filterPublicCaseStudies(caseStudies);
 
@@ -21,6 +26,9 @@ const services = [
     body: 'Agents and workflows that take work off your team, from intake to action, with evals and a human handoff.',
     items: ['Workflow mapping', 'Tool use & guardrails', 'Production evals'],
     href: '/services/ai-automation-systems',
+    caption: 'Agent pipeline',
+    image: salesangelAiAgents,
+    imageAlt: 'Operations dashboard for AI agents handling live workflows',
   },
   {
     n: '02',
@@ -28,6 +36,9 @@ const services = [
     body: 'Web apps and SaaS products built to ship: architecture, UI, and the backend your users actually hit.',
     items: ['MVP to production', 'React / Node', 'Auth, billing, APIs'],
     href: '/services/web-app-saas-development',
+    caption: 'Product interface',
+    image: propertyMatchmakerSearch,
+    imageAlt: 'SaaS product interface for search and operational workflows',
   },
   {
     n: '03',
@@ -35,6 +46,9 @@ const services = [
     body: 'CRM, helpdesk, warehouse, and internal tools connected so data stops living in five places.',
     items: ['API connectors', 'Event buses', 'Idempotent sync'],
     href: '/services/api-integration',
+    caption: 'Connected systems',
+    image: igwDashboard,
+    imageAlt: 'Integrated operations dashboard connecting multiple business systems',
   },
   {
     n: '04',
@@ -42,6 +56,9 @@ const services = [
     body: 'NetSuite and operations systems wired to the rest of the stack: orders, inventory, and finance in one flow.',
     items: ['NetSuite REST / SuiteQL', 'Order sync', 'Custom records'],
     href: '/services/netsuite-erp-automation',
+    caption: 'Commerce to ERP',
+    image: propertyMatchmakerBuyer,
+    imageAlt: 'Operational records interface for ERP-connected workflows',
   },
   {
     n: '05',
@@ -49,6 +66,9 @@ const services = [
     body: 'AWS environments that stay up: CI/CD, observability, and the reliability work that makes shipping safe.',
     items: ['AWS landing zone', 'Pipelines & canaries', 'Logs, traces, alerts'],
     href: '/services/aws-devops',
+    caption: 'Architecture map',
+    image: salesangelArchitecture,
+    imageAlt: 'Production architecture diagram for cloud runtime and data layers',
   },
 ];
 
@@ -119,7 +139,7 @@ const homeQuote = featuredFeedback;
       <div class="home-services__inner">
         <div class="home-services__head">
           <p class="c-micro c-red">Services</p>
-          <h2 class="home-services__title">Engineering services</h2>
+          <h2 class="home-services__title">Systems we build</h2>
         </div>
         <div class="home-services__stage">
           <div class="home-services__acc" role="list">
@@ -159,270 +179,35 @@ const homeQuote = featuredFeedback;
             <path data-service-connector-path d="M 480 88 C 510 88 520 300 556 300" />
             <circle data-service-signal cx="0" cy="0" r="4" />
           </svg>
-          <div class="home-services__visual" aria-label="Selected service architecture">
-            <figure
-              class="service-scene is-on"
-              data-service-scene="0"
-              aria-label="AI automation architecture"
-            >
-              <figcaption>
-                <span>AI Automation</span>
-                <span>Live route 01</span>
-              </figcaption>
-              <svg viewBox="0 0 640 480" role="img" aria-label="Input, reasoning, and action workflow">
-                <text class="scene-heading" x="42" y="66">INPUT</text>
-                <text class="scene-heading" x="252" y="66">REASON</text>
-                <text class="scene-heading" x="484" y="66">ACTION</text>
-
-                <path class="scene-link" d="M154 138 H238 M154 224 H238 M154 310 H238" />
-                <path class="scene-link" d="M402 138 H474 M402 224 H474 M402 310 H474" />
-                <path class="scene-link scene-signal" d="M154 138 H238 M402 138 H474" />
-
-                <g class="scene-node">
-                  <rect x="42" y="108" width="112" height="60" rx="8" />
-                  <text x="58" y="133">EMAIL</text>
-                  <text class="scene-sub" x="58" y="151">new lead</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="42" y="194" width="112" height="60" rx="8" />
-                  <text x="58" y="219">CRM</text>
-                  <text class="scene-sub" x="58" y="237">account data</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="42" y="280" width="112" height="60" rx="8" />
-                  <text x="58" y="305">WEBHOOK</text>
-                  <text class="scene-sub" x="58" y="323">event payload</text>
-                </g>
-
-                <g class="scene-node scene-node--core">
-                  <rect x="238" y="96" width="164" height="244" rx="12" />
-                  <text x="258" y="126">PLAN</text>
-                  <path d="M258 142 H382" />
-                  <text x="258" y="174">SEARCH</text>
-                  <path d="M258 190 H382" />
-                  <text x="258" y="222">TOOLS</text>
-                  <path d="M258 238 H382" />
-                  <text x="258" y="270">EVAL</text>
-                  <path d="M258 286 H382" />
-                  <text class="scene-sub" x="258" y="316">guarded reasoning loop</text>
-                </g>
-
-                <g class="scene-node">
-                  <rect x="474" y="108" width="124" height="60" rx="8" />
-                  <text x="490" y="133">ROUTE</text>
-                  <text class="scene-sub" x="490" y="151">assign owner</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="474" y="194" width="124" height="60" rx="8" />
-                  <text x="490" y="219">NOTIFY</text>
-                  <text class="scene-sub" x="490" y="237">team signal</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="474" y="280" width="124" height="60" rx="8" />
-                  <text x="490" y="305">HANDOFF</text>
-                  <text class="scene-sub" x="490" y="323">human review</text>
-                </g>
-
-                <g class="scene-footer">
-                  <text x="42" y="416">LLM</text>
-                  <text x="172" y="416">TOOLS</text>
-                  <text x="316" y="416">EVAL</text>
-                  <text x="454" y="416">OUTPUT</text>
-                  <path d="M42 430 H598" />
-                </g>
-              </svg>
-            </figure>
-
-            <figure
-              class="service-scene"
-              data-service-scene="1"
-              aria-label="Product engineering architecture"
-              aria-hidden="true"
-            >
-              <figcaption>
-                <span>Product Engineering</span>
-                <span>Release route 02</span>
-              </figcaption>
-              <svg viewBox="0 0 640 480" role="img" aria-label="Product layers from interface to deployment">
-                <g class="scene-window">
-                  <rect x="42" y="74" width="556" height="292" rx="12" />
-                  <circle cx="66" cy="98" r="4" />
-                  <circle cx="82" cy="98" r="4" />
-                  <circle cx="98" cy="98" r="4" />
-                  <path d="M42 120 H598" />
-                </g>
-                <g class="scene-node">
-                  <rect x="68" y="148" width="214" height="86" rx="8" />
-                  <text x="86" y="176">PRODUCT UI</text>
-                  <rect class="scene-block" x="86" y="192" width="72" height="20" rx="4" />
-                  <rect class="scene-block" x="166" y="192" width="94" height="20" rx="4" />
-                </g>
-                <g class="scene-node">
-                  <rect x="302" y="148" width="270" height="86" rx="8" />
-                  <text x="320" y="176">API CONTRACT</text>
-                  <path d="M320 196 H548 M320 212 H480" />
-                </g>
-                <g class="scene-node">
-                  <rect x="68" y="252" width="150" height="82" rx="8" />
-                  <text x="86" y="281">DATA</text>
-                  <text class="scene-sub" x="86" y="304">schema / events</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="234" y="252" width="150" height="82" rx="8" />
-                  <text x="252" y="281">TEST</text>
-                  <text class="scene-sub" x="252" y="304">unit / e2e</text>
-                </g>
-                <g class="scene-node scene-node--live">
-                  <rect x="400" y="252" width="172" height="82" rx="8" />
-                  <text x="418" y="281">DEPLOY</text>
-                  <text class="scene-sub" x="418" y="304">release healthy</text>
-                </g>
-                <path class="scene-link scene-signal" d="M144 366 V396 H522 V366" />
-                <g class="scene-footer">
-                  <text x="50" y="428">DESIGN</text>
-                  <text x="186" y="428">BUILD</text>
-                  <text x="316" y="428">TEST</text>
-                  <text x="446" y="428">SHIP</text>
-                </g>
-              </svg>
-            </figure>
-
-            <figure
-              class="service-scene"
-              data-service-scene="2"
-              aria-label="Systems integration architecture"
-              aria-hidden="true"
-            >
-              <figcaption>
-                <span>Systems Integration</span>
-                <span>Event route 03</span>
-              </figcaption>
-              <svg viewBox="0 0 640 480" role="img" aria-label="Business systems connected through a central system layer">
-                <path class="scene-link" d="M170 120 C232 120 224 206 272 206 M170 224 H272 M170 328 C232 328 224 256 272 256" />
-                <path class="scene-link" d="M470 120 C408 120 416 206 368 206 M470 224 H368 M470 328 C408 328 416 256 368 256" />
-                <path class="scene-link scene-signal" d="M170 224 H272 M368 224 H470" />
-                <g class="scene-node">
-                  <rect x="48" y="88" width="122" height="64" rx="8" />
-                  <text x="66" y="124">CRM</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="48" y="192" width="122" height="64" rx="8" />
-                  <text x="66" y="228">ERP</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="48" y="296" width="122" height="64" rx="8" />
-                  <text x="66" y="332">BILLING</text>
-                </g>
-                <g class="scene-node scene-node--core">
-                  <rect x="272" y="172" width="96" height="116" rx="12" />
-                  <text x="290" y="214">SYSTEM</text>
-                  <text x="290" y="234">LAYER</text>
-                  <text class="scene-sub" x="290" y="260">sync / auth</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="470" y="88" width="122" height="64" rx="8" />
-                  <text x="488" y="124">AUTH</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="470" y="192" width="122" height="64" rx="8" />
-                  <text x="488" y="228">WAREHOUSE</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="470" y="296" width="122" height="64" rx="8" />
-                  <text x="488" y="332">SUPPORT</text>
-                </g>
-                <g class="scene-footer">
-                  <text x="48" y="420">IDEMPOTENT ROUTES</text>
-                  <text x="420" y="420">OBSERVABLE JOBS</text>
-                  <path d="M48 434 H592" />
-                </g>
-              </svg>
-            </figure>
-
-            <figure
-              class="service-scene"
-              data-service-scene="3"
-              aria-label="NetSuite and ERP architecture"
-              aria-hidden="true"
-            >
-              <figcaption>
-                <span>ERP / NetSuite</span>
-                <span>Operations route 04</span>
-              </figcaption>
-              <svg viewBox="0 0 640 480" role="img" aria-label="NetSuite connected to commerce and operations data">
-                <path class="scene-link" d="M320 128 V92 M320 352 V392 M208 240 H150 M432 240 H490 M242 162 L194 124 M398 162 L446 124 M242 318 L194 356 M398 318 L446 356" />
-                <path class="scene-link scene-signal" d="M150 240 H208 M432 240 H490" />
-                <g class="scene-node scene-node--core">
-                  <rect x="208" y="162" width="224" height="156" rx="16" />
-                  <text class="scene-title" x="250" y="232">NETSUITE</text>
-                  <text class="scene-sub" x="254" y="262">ERP CORE / SUITEQL</text>
-                </g>
-                <g class="scene-node"><rect x="254" y="58" width="132" height="70" rx="8" /><text x="278" y="99">ORDERS</text></g>
-                <g class="scene-node"><rect x="48" y="204" width="102" height="72" rx="8" /><text x="66" y="246">CUSTOMERS</text></g>
-                <g class="scene-node"><rect x="490" y="204" width="102" height="72" rx="8" /><text x="508" y="246">BILLING</text></g>
-                <g class="scene-node"><rect x="60" y="90" width="134" height="68" rx="8" /><text x="78" y="130">SHOPIFY</text></g>
-                <g class="scene-node"><rect x="446" y="90" width="146" height="68" rx="8" /><text x="464" y="130">BIGCOMMERCE</text></g>
-                <g class="scene-node"><rect x="60" y="324" width="134" height="68" rx="8" /><text x="78" y="364">INVENTORY</text></g>
-                <g class="scene-node"><rect x="446" y="324" width="146" height="68" rx="8" /><text x="464" y="364">FULFILLMENT</text></g>
-                <g class="scene-node"><rect x="244" y="392" width="152" height="52" rx="8" /><text x="266" y="424">SYNC HEALTHY</text></g>
-              </svg>
-            </figure>
-
-            <figure
-              class="service-scene"
-              data-service-scene="4"
-              aria-label="Cloud infrastructure architecture"
-              aria-hidden="true"
-            >
-              <figcaption>
-                <span>Cloud Infrastructure</span>
-                <span>Production route 05</span>
-              </figcaption>
-              <svg viewBox="0 0 640 480" role="img" aria-label="Edge, runtime, and data cloud layers">
-                <text class="scene-heading" x="46" y="92">EDGE</text>
-                <text class="scene-heading" x="258" y="92">RUNTIME</text>
-                <text class="scene-heading" x="486" y="92">DATA</text>
-                <path class="scene-link" d="M178 190 H240 M410 190 H472 M178 286 H240 M410 286 H472" />
-                <path class="scene-link scene-signal" d="M80 238 H560" />
-                <g class="scene-node">
-                  <rect x="46" y="132" width="132" height="164" rx="10" />
-                  <text x="64" y="164">CLOUDFLARE</text>
-                  <path d="M64 184 H160 M64 206 H142 M64 228 H152" />
-                  <text class="scene-sub" x="64" y="272">cache / protect</text>
-                </g>
-                <g class="scene-node scene-node--core">
-                  <rect x="240" y="132" width="170" height="164" rx="10" />
-                  <text x="260" y="164">AWS / GOOGLE CLOUD</text>
-                  <path d="M260 184 H390 M260 206 H372" />
-                  <text x="260" y="244">DOCKER</text>
-                  <text class="scene-sub" x="260" y="272">service / queue</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="472" y="132" width="122" height="164" rx="10" />
-                  <text x="490" y="164">POSTGRES</text>
-                  <path d="M490 184 H576 M490 206 H558" />
-                  <text class="scene-sub" x="490" y="272">store / backup</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="46" y="326" width="164" height="66" rx="8" />
-                  <text x="66" y="366">TERRAFORM</text>
-                </g>
-                <g class="scene-node scene-node--live">
-                  <rect x="226" y="326" width="170" height="66" rx="8" />
-                  <text x="246" y="354">UPTIME HEALTHY</text>
-                  <text class="scene-sub" x="246" y="374">p95 tracked</text>
-                </g>
-                <g class="scene-node">
-                  <rect x="412" y="326" width="182" height="66" rx="8" />
-                  <text x="432" y="366">TELEMETRY</text>
-                </g>
-                <g class="scene-footer">
-                  <text x="46" y="432">DEPLOY</text>
-                  <text x="266" y="432">SCALE</text>
-                  <text x="482" y="432">OBSERVE</text>
-                </g>
-              </svg>
-            </figure>
+          <div class="home-services__visual" aria-label="Selected service visual">
+            {services.map((s, i) => (
+              <figure
+                class:list={['service-scene', i === 0 && 'is-on']}
+                data-service-scene={String(i)}
+                aria-label={`${s.title} visual`}
+                aria-hidden={i === 0 ? 'false' : 'true'}
+              >
+                <Image
+                  class="service-scene__img"
+                  src={s.image}
+                  alt={s.imageAlt}
+                  widths={[640, 960, 1280]}
+                  sizes="(max-width: 768px) 100vw, 42vw"
+                  quality={72}
+                />
+                <div class="service-scene__copy">
+                  <figcaption>
+                    <span>{s.title}</span>
+                    <span>{s.caption}</span>
+                  </figcaption>
+                  <div class="service-scene__chips">
+                    {s.items.map((item) => (
+                      <span>{item}</span>
+                    ))}
+                  </div>
+                </div>
+              </figure>
+            ))}
           </div>
         </div>
       </div>

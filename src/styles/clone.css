@@ -36,10 +36,10 @@
   --micro: 0.625rem;
   --font: 'Figtree', 'Instrument Sans', system-ui, sans-serif;
 
-  --space-major: clamp(64px, 7vw, 104px);
-  --space-compact: clamp(48px, 5vw, 72px);
-  --hero-pad-top: clamp(28px, 3.2vw, 44px);
-  --hero-pad-bottom: clamp(32px, 4vw, 56px);
+  --space-major: clamp(52px, 6vw, 84px);
+  --space-compact: clamp(36px, 4vw, 56px);
+  --hero-pad-top: clamp(20px, 2.4vw, 36px);
+  --hero-pad-bottom: clamp(24px, 3vw, 44px);
 }
 
 @media (max-width: 1439px) {
@@ -55,9 +55,9 @@
     --display-page: clamp(2.35rem, 5.4vw, 3.5rem);
     --heading-xl: clamp(2rem, 4vw, 3rem);
     --heading-lg: clamp(1.7rem, 3.2vw, 2.45rem);
-    --space-major: clamp(56px, 8vw, 88px);
-    --space-compact: clamp(44px, 6vw, 64px);
-    --hero-pad-top: clamp(24px, 3vw, 36px);
+    --space-major: clamp(48px, 7vw, 72px);
+    --space-compact: clamp(32px, 5vw, 48px);
+    --hero-pad-top: clamp(18px, 2.4vw, 28px);
   }
 }
 
@@ -70,10 +70,10 @@
     --heading-md: clamp(1.25rem, 4vw, 1.6rem);
     --body-lg: 1.0625rem;
     --body: 1.0625rem;
-    --space-major: clamp(48px, 10vw, 72px);
-    --space-compact: clamp(40px, 8vw, 56px);
-    --hero-pad-top: 24px;
-    --hero-pad-bottom: 40px;
+    --space-major: clamp(40px, 8vw, 56px);
+    --space-compact: clamp(28px, 6vw, 40px);
+    --hero-pad-top: 18px;
+    --hero-pad-bottom: 28px;
   }
 }
 
@@ -361,13 +361,60 @@ html.theme-dark .clone .c-cta__panel {
   padding: var(--hero-pad-top) 0 var(--hero-pad-bottom);
 }
 
+.page-hero .c-micro {
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  font-weight: 650;
+}
+
 .page-hero + .sp-section {
-  padding-top: clamp(16px, 2vw, 28px);
+  padding-top: clamp(8px, 1.4vw, 20px);
+}
+
+.page-hero + .sp-section--tight {
+  padding-bottom: clamp(16px, 2.4vw, 28px);
+}
+
+.sp-section--tight + .sp-section {
+  padding-top: clamp(16px, 2.4vw, 32px);
+}
+
+.sp-section + .sp-cta {
+  padding-top: clamp(8px, 1.6vw, 24px);
+}
+
+@media (min-width: 1024px) {
+  .page-hero .c-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.7fr);
+    column-gap: clamp(28px, 4vw, 64px);
+    row-gap: 8px;
+    align-items: end;
+  }
+
+  .page-hero .c-micro {
+    grid-column: 1;
+  }
+
+  .page-hero .page-title {
+    grid-column: 1 / -1;
+  }
+
+  .page-hero .page-hero__lede {
+    grid-column: 1;
+    margin-top: 8px;
+  }
+
+  .page-hero .page-hero__actions {
+    grid-column: 2;
+    margin-top: 8px;
+    align-self: end;
+  }
 }
 
 .page-title {
-  margin: 12px 0 0;
-  max-width: min(20ch, 100%);
+  margin: 10px 0 0;
+  max-width: min(32ch, 92%);
   font-size: var(--display-page);
   font-weight: 700;
   line-height: 0.92;
@@ -379,7 +426,7 @@ html.theme-dark .clone .c-cta__panel {
 }
 
 .page-hero--wide .page-title {
-  max-width: min(24ch, 85%);
+  max-width: min(36ch, 92%);
 }
 
 .page-title__accent {
@@ -388,7 +435,7 @@ html.theme-dark .clone .c-cta__panel {
 
 .page-h2 {
   margin: 12px 0 0;
-  max-width: min(18ch, 100%);
+  max-width: min(28ch, 100%);
   font-size: var(--heading-lg);
   font-weight: 700;
   line-height: 0.94;
@@ -400,7 +447,7 @@ html.theme-dark .clone .c-cta__panel {
 }
 
 .page-hero__lede {
-  margin-top: 20px;
+  margin-top: 14px;
   max-width: 58ch;
   font-size: var(--body-lg);
   line-height: 1.55;
@@ -410,7 +457,7 @@ html.theme-dark .clone .c-cta__panel {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 18px;
 }
 
 .page-crumbs {
@@ -2188,7 +2235,7 @@ html[data-theme='light'] .clone .c-dark {
 
 .c-cta__copy h2 {
   margin: 12px 0 0;
-  max-width: 10ch;
+  max-width: 16ch;
 }
 
 .c-cta__lede {
@@ -2306,14 +2353,14 @@ html.theme-dark .c-cta select option {
 
 /* FOOTER */
 .c-foot {
-  padding: 24px 0 36px;
+  padding: 16px 0 28px;
 }
 
 .c-foot__cols {
   display: grid;
-  grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  padding-bottom: 28px;
+  grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
+  gap: 20px 28px;
+  padding-bottom: 24px;
 }
 
 .c-foot h4 {
@@ -2348,13 +2395,6 @@ html.theme-dark .c-cta select option {
   background: #000;
 }
 
-.c-foot__cols {
-  display: grid;
-  grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  padding-bottom: 48px;
-}
-
 .c-foot__mark {
   font-size: clamp(10rem, 38vw, 34rem);
   font-weight: 700;
@@ -2364,7 +2404,7 @@ html.theme-dark .c-cta select option {
   overflow: hidden;
   white-space: nowrap;
   user-select: none;
-  margin: 8px -4vw 36px;
+  margin: 4px -4vw 20px;
 }
 
 .c-foot__base {
