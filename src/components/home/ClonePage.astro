@@ -11,6 +11,7 @@ import { leadershipProfiles } from '../../data/leadership';
 import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
 import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
 import TeamPortrait from '../TeamPortrait.astro';
+import ContactForm from '../ContactForm.astro';
 
 const publicCaseStudies = filterPublicCaseStudies(caseStudies);
 
@@ -467,7 +468,7 @@ const homeQuote = featuredFeedback;
     </section>
 
     <!-- 18 CTA -->
-    <section class="c-cta">
+    <section class="c-cta" id="contact">
       <div class="c-wrap">
         <div class="c-cta__panel" data-cta>
           <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
@@ -481,32 +482,7 @@ const homeQuote = featuredFeedback;
               <a href={contactPhoneHref}>{contactPhone}</a>
             </p>
           </div>
-          <form data-home-form>
-            <label class="c-cta__field">
-              <span class="visually-hidden">Your name</span>
-              <input name="name" placeholder="Your name" required autocomplete="name" />
-            </label>
-            <label class="c-cta__field">
-              <span class="visually-hidden">Email</span>
-              <input name="email" type="email" placeholder="Email" required autocomplete="email" />
-            </label>
-            <label class="c-cta__field">
-              <span class="visually-hidden">What are you interested in</span>
-              <select name="interest" required>
-                <option value="" disabled selected>What are you interested in</option>
-                <option value="AI Systems Sprint">AI Systems Sprint</option>
-                <option value="Product / SaaS build">Product / SaaS build</option>
-                <option value="ERP / NetSuite integration">ERP / NetSuite integration</option>
-                <option value="Cloud / AWS">Cloud / AWS</option>
-                <option value="Technical audit">Technical audit</option>
-              </select>
-            </label>
-            <label class="c-cta__field">
-              <span class="visually-hidden">Project details</span>
-              <textarea name="message" placeholder="More about the project" required rows="4"></textarea>
-            </label>
-            <button class="c-btn c-btn--light" type="submit">Submit message</button>
-          </form>
+          <ContactForm />
         </div>
       </div>
     </section>

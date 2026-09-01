@@ -420,23 +420,6 @@ function counters() {
   nums.forEach((el) => io.observe(el));
 }
 
-function ctaForm() {
-  const form = document.querySelector<HTMLFormElement>('[data-home-form]');
-  if (!form) return;
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const interest = String(data.get('interest') || '').trim();
-    const message = String(data.get('message') || '').trim();
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nInterest: ${interest}\n\n${message}`,
-    );
-    window.location.href = `mailto:hello@aizaz.studio?subject=${encodeURIComponent('Project inquiry')}&body=${body}`;
-  });
-}
-
 function ctaMove() {
   const panel = document.querySelector<HTMLElement>('[data-cta]');
   const art = panel?.querySelector<HTMLElement>('.c-cta__art');
@@ -523,7 +506,6 @@ export function mountHomeMotion() {
   processRail();
   hub();
   counters();
-  ctaForm();
   ctaMove();
   meshFields();
 }

@@ -1,0 +1,41 @@
+---
+import SiteShell from '../components/SiteShell.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { siteFooter } from '../data/siteChrome';
+
+const contact = siteFooter.studio;
+---
+
+<SiteShell
+  title="Start a Project | Aizaz.studio"
+  description="Share what you need to ship. Aizaz Studio will review your project details and follow up by email."
+  canonical="/start-a-project"
+>
+  <PageHero
+    eyebrow="Start a project"
+    title="Tell us what you need to ship"
+    description="Share a short brief. Our team will review the details and follow up using the email address you provide. Prefer a live conversation? Book a call instead."
+  >
+    <a class="c-btn c-btn--ghost" href="/book-a-call">Book a Call</a>
+  </PageHero>
+
+  <section class="c-cta sp-section" aria-labelledby="start-project-heading">
+    <div class="c-wrap">
+        <div class="c-cta__panel">
+          <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
+        <div class="c-cta__copy">
+          <p class="c-micro">Contact</p>
+          <h2 class="c-h1" id="start-project-heading">Let’s build<br />the next<br />system</h2>
+          <p class="c-cta__lede">
+            Tell us what you need to ship.
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <span aria-hidden="true"> · </span>
+            <a href={contact.phoneHref}>{contact.phone}</a>
+          </p>
+        </div>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</SiteShell>

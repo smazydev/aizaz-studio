@@ -713,6 +713,7 @@ export function getAllSeoPaths(): string[] {
         '/careers',
         '/engagement-models',
         '/book-a-call',
+        '/start-a-project',
         '/portfolio',
         '/reviews',
         '/security',

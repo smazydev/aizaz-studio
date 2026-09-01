@@ -51,6 +51,7 @@ export const siteFooter = {
         { href: '/security', label: 'Security' },
         { href: '/compare', label: 'Compare' },
         { href: '/technologies', label: 'Technologies' },
+        { href: '/start-a-project', label: 'Start a Project' },
         { href: '/book-a-call', label: 'Book a Call' },
       ],
     },

@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /thank-you
 
 User-agent: OAI-SearchBot
 Allow: /

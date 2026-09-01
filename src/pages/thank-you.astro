@@ -1,0 +1,28 @@
+---
+import SiteShell from '../components/SiteShell.astro';
+import PageHero from '../components/PageHero.astro';
+
+Astro.response.headers.set('Cache-Control', 'no-store');
+---
+
+<SiteShell
+  title="Project received | Aizaz.studio"
+  description="Thanks for sharing what you’re working on. Aizaz Studio will follow up by email."
+  canonical="/thank-you"
+  noindex={true}
+>
+  <PageHero
+    eyebrow="Received"
+    title="Project received."
+    description="Thanks for sharing what you’re working on. Our team will review the details and follow up using the email address you provided."
+  >
+    <a class="c-btn" href="/case-studies">View Case Studies</a>
+    <a class="c-btn c-btn--ghost" href="/book-a-call">Book a Call</a>
+  </PageHero>
+</SiteShell>
+
+<script>
+  import { maybeFireContactConversion } from '../lib/contact-thankyou';
+
+  maybeFireContactConversion(import.meta.env.PUBLIC_GOOGLE_ADS_SEND_TO);
+</script>

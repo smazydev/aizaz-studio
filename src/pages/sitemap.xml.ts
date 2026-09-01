@@ -18,6 +18,7 @@ function toCanonicalPath(path: string): string {
 function isIndexablePath(path: string): boolean {
   if (path.includes('?') || path.includes('/_image') || path.includes('/optimized/')) return false;
   if (path.startsWith('/api/')) return false;
+  if (path === '/thank-you') return false;
   const slug = path.split('/').pop() ?? '';
   if (isNonIndexableContentSlug(slug)) return false;
   return true;

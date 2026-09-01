@@ -8,3 +8,16 @@ REVALIDATE_SECRET=change-me-to-a-long-random-string
 # Optional: purge Cloudflare edge cache for CMS URLs after webhook
 # CLOUDFLARE_ZONE_ID=
 # CLOUDFLARE_API_TOKEN=
+
+# Contact form — Cloudflare Turnstile (official dummy keys for local testing)
+# https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+
+# Optional extra hostname accepted by Turnstile Siteverify (preview deploys)
+# TURNSTILE_PREVIEW_HOST=
+
+# Optional Google Ads conversion send_to. Required before production conversion tracking.
+# Format: AW-CONVERSION_ID/CONVERSION_LABEL
+# PUBLIC_GOOGLE_ADS_SEND_TO=
+

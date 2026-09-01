@@ -31,5 +31,30 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	// Contact form — Cloudflare Email Service (Workers send() API).
+	// Dashboard: verify sender forms@aizaz.studio, destination hello@aizaz.studio.
+	// Local wrangler simulates send() unless "remote": true is set.
+	"send_email": [
+		{
+			"name": "EMAIL"
+		}
+	],
+	// Contact form — ~5 attempts / 60s per hashed network identity (not path-only).
+	// Requires Wrangler >= 4.36. Dashboard equivalent is not a substitute while this binding is live.
+	"ratelimits": [
+		{
+			"name": "CONTACT_RATE_LIMITER",
+			"namespace_id": "8701",
+			"simple": {
+				"limit": 5,
+				"period": 60
+			}
+		}
+	]
+	// Production vars/secrets (set in Cloudflare dashboard — never commit real values):
+	// vars.PUBLIC_TURNSTILE_SITE_KEY
+	// vars.PUBLIC_GOOGLE_ADS_SEND_TO   (AW-CONVERSION_ID/CONVERSION_LABEL)
+	// vars.TURNSTILE_PREVIEW_HOST      (optional extra Siteverify hostname)
+	// secrets.TURNSTILE_SECRET_KEY
 }
