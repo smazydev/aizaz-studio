@@ -328,24 +328,6 @@ h3,
   }
 }
 
-/* —— Team —— */
-@media (max-width: 800px) {
-  .c-member__name {
-    font-size: 0.66rem;
-  }
-
-  .c-member__role {
-    font-size: 0.72rem;
-    line-height: 1.35;
-  }
-
-  .c-member__links a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
-}
-
 /* —— Case studies / proof —— */
 @media (max-width: 768px) {
   .c-proof,
