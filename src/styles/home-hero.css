@@ -1,8 +1,11 @@
-.home-hero {
+.c-hero.home-hero {
   --hero-blue: #4e92d8;
   --hero-blue-soft: rgba(78, 146, 216, 0.22);
   --ss: 1;
-  min-height: 95svh;
+  min-height: calc(100svh - 58px);
+  text-align: left;
+  align-items: stretch;
+  padding: var(--hero-pad-top) var(--page-pad) var(--hero-pad-bottom);
 }
 
 .home-hero__pin {
@@ -21,14 +24,40 @@
 
 .home-hero .c-hero__copy {
   z-index: 5;
+  align-items: flex-start;
+  width: min(64%, 56rem);
+  margin-top: 0;
 }
 
 .home-hero .c-hero__title {
   z-index: 5;
+  max-width: 16ch;
+  font-size: var(--display-hero);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
 }
 
 .home-hero .c-hero__ui {
   z-index: 5;
+}
+
+.home-hero .c-hero__lede {
+  margin: 20px 0 0;
+  max-width: 36ch;
+  font-size: var(--body-lg);
+  line-height: 1.55;
+}
+
+.home-hero .c-hero__cta {
+  justify-content: flex-start;
+}
+
+.home-hero .c-hero__kicker {
+  margin-bottom: 14px;
+}
+
+.home-hero .c-hero__scroll {
+  padding-top: 3.5vh;
 }
 
 .home-hero .c-btn:hover {
@@ -322,10 +351,14 @@ html.js .home-hero.is-settled .hero3d__canvas {
 }
 
 @media (max-width: 1024px) {
+  .home-hero .c-hero__copy {
+    width: min(74%, 36rem);
+  }
+
   .hero3d__poster {
     right: -14vw;
     bottom: -11vh;
-    height: clamp(540px, 78vh, 820px);
+    height: clamp(420px, 62vh, 640px);
   }
 
   .hero-sentinel-hud {
@@ -338,8 +371,17 @@ html.js .home-hero.is-settled .hero3d__canvas {
 }
 
 @media (max-width: 768px) {
-  .home-hero {
+  .c-hero.home-hero {
     min-height: 0;
+    padding: 20px var(--page-pad) 0;
+  }
+
+  .home-hero .c-hero__copy {
+    width: 100%;
+  }
+
+  .home-hero .c-hero__title {
+    max-width: none;
   }
 
   .hero3d__guard {

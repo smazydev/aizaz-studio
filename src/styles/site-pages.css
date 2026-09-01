@@ -72,19 +72,19 @@
 
 .site-main h1:not(.page-title) {
   font-family: var(--font);
-  font-size: clamp(3rem, 6.2vw, 5.6rem);
+  font-size: var(--display-page);
   font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.055em;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
   color: var(--ink);
 }
 
 .site-main h2:not(.page-h2):not(.c-h2):not(.page-card__title) {
   font-family: var(--font);
-  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-size: var(--heading-lg);
   font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.05em;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
   color: var(--ink);
 }
 
@@ -286,17 +286,17 @@
 /* —— Commercial / migrated page primitives —— */
 
 .sp-section {
-  padding: clamp(48px, 7vw, 96px) 0;
+  padding: var(--space-major) 0;
 }
 
 .sp-section--tight {
-  padding: clamp(32px, 5vw, 64px) 0;
+  padding: var(--space-compact) 0;
 }
 
 .sp-section--dark {
   background: var(--ink);
   color: var(--bg);
-  padding: clamp(56px, 8vw, 112px) 0;
+  padding: var(--space-major) 0;
 }
 
 html[data-theme='dark'] .sp-section--dark,
@@ -370,12 +370,16 @@ html.theme-dark .sp-section--dark .sp-person img {
 
 .sp-header {
   margin-bottom: clamp(28px, 4vw, 48px);
-  max-width: 42rem;
+  max-width: none;
+}
+
+.sp-header .page-h2 {
+  max-width: min(22ch, 100%);
 }
 
 .sp-header__lede {
   margin-top: 14px;
-  max-width: 36rem;
+  max-width: 58ch;
 }
 
 .sp-card {
@@ -1182,7 +1186,7 @@ a.sp-card:hover {
 }
 
 .blog-article__title {
-  max-width: 18ch;
+  max-width: min(22ch, 100%);
 }
 
 .blog-article__byline {

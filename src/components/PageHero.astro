@@ -12,10 +12,11 @@ const {
   title,
   highlight,
   description,
+  size = 'default',
 } = Astro.props;
 ---
 
-<section class="page-hero">
+<section class:list={['page-hero', size === 'large' && 'page-hero--wide']}>
   <div class="c-wrap">
     {eyebrow && <p class="c-micro c-red">{eyebrow}</p>}
     <h1 class="page-title">

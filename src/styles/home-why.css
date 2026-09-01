@@ -21,10 +21,10 @@
 
 .home-why__title {
   margin: 10px 0 22px;
-  font-size: clamp(42px, 4vw, 60px);
+  font-size: var(--heading-xl);
   font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
   color: var(--ink);
 }
 
@@ -310,6 +310,6 @@
 
 @media (max-width: 768px) {
   .home-why__title {
-    font-size: clamp(2rem, 8vw, 2.5rem);
+    font-size: var(--heading-xl);
   }
 }

@@ -23,9 +23,9 @@
 .home-feat__title {
   margin: 10px 0 18px;
   text-align: center;
-  font-size: clamp(52px, 5vw, 78px);
+  font-size: var(--heading-xl);
   font-weight: 700;
-  line-height: 0.9;
+  line-height: 0.92;
   letter-spacing: -0.05em;
   color: var(--ink);
 }
