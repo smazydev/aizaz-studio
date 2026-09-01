@@ -238,10 +238,8 @@ const homeQuote = featuredFeedback;
       <div class="c-wrap">
         <div class="c-team" id="team">
           <div class="c-dark__intro">
-            <div>
-              <p class="c-micro">Meet the team</p>
-              <h2 class="c-h1">A studio built<br />to ship systems</h2>
-            </div>
+            <p class="c-micro">Meet the team</p>
+            <h2 class="c-h1">A studio built<br />to ship systems</h2>
             <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
           </div>
 
@@ -250,25 +248,25 @@ const homeQuote = featuredFeedback;
               <article class="c-member">
                 <div class="c-member__media">
                   <TeamPortrait
-                    person={p}
+                    person={{ ...p, image: p.founderImage, objectPosition: '50% 50%' }}
                     class="c-member__photo"
                     objectPosition="center center"
-                    widths={[176, 240, 360, 480]}
-                    sizes="(max-width: 699px) 96px, (max-width: 1199px) 28vw, 18vw"
-                    width={480}
-                    height={480}
+                    widths={[280, 340, 480, 640]}
+                    sizes="(max-width: 768px) min(320px, 86vw), min(320px, 28vw)"
+                    width={640}
+                    height={640}
                   />
                 </div>
                 <div class="c-member__body">
-                  <h3 class="c-member__name">{p.name}</h3>
+                  <h3 class="c-member__name">{p.displayName}</h3>
                   <p class="c-member__role">{p.role}</p>
                   <p class="c-member__tags">{p.focus.slice(0, 3).join(' · ')}</p>
                   <div class="c-member__links">
                     {p.linkedin && (
-                      <a href={p.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                      <a href={p.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
                     )}
                     {p.githubUrl && (
-                      <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+                      <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
                     )}
                   </div>
                 </div>
