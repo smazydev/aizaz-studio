@@ -281,11 +281,69 @@ function aboutField() {
 }
 
 function services() {
-  const root = document.querySelector('[data-services]');
+  const root = document.querySelector<HTMLElement>('[data-services]');
   if (!root) return;
   const items = [...root.querySelectorAll<HTMLAnchorElement>('[data-service]')];
+  const stage = root.querySelector<HTMLElement>('.home-services__stage');
+  const visual = root.querySelector<HTMLElement>('.home-services__visual');
+  const scenes = [...root.querySelectorAll<HTMLElement>('[data-service-scene]')];
+  const connector = root.querySelector<SVGSVGElement>('[data-service-connector]');
+  const connectorPath = connector?.querySelector<SVGPathElement>('[data-service-connector-path]');
+  const signal = connector?.querySelector<SVGCircleElement>('[data-service-signal]');
+  let activeId = items.find((item) => item.classList.contains('is-on'))?.dataset.service || '0';
+  let connectorTimer = 0;
+
+  const positionConnector = (animate = true) => {
+    if (
+      !stage ||
+      !visual ||
+      !connector ||
+      !connectorPath ||
+      !signal ||
+      window.matchMedia('(max-width: 768px)').matches
+    ) {
+      return;
+    }
+
+    const selected = items.find((item) => item.dataset.service === activeId);
+    if (!selected) return;
+
+    const stageRect = stage.getBoundingClientRect();
+    const itemRect = selected.getBoundingClientRect();
+    const markRect = selected.querySelector<HTMLElement>('.home-services__mark')?.getBoundingClientRect();
+    const visualRect = visual.getBoundingClientRect();
+    const startX = markRect
+      ? markRect.left - stageRect.left + markRect.width / 2
+      : itemRect.right - stageRect.left - 4;
+    const startY = markRect
+      ? markRect.top - stageRect.top + markRect.height / 2
+      : itemRect.top - stageRect.top + itemRect.height / 2;
+    const endX = visualRect.left - stageRect.left - 8;
+    const endY = visualRect.top - stageRect.top + visualRect.height / 2;
+    const bend = Math.max(14, (endX - startX) * 0.48);
+
+    const commit = () => {
+      connector.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
+      connectorPath.setAttribute(
+        'd',
+        `M ${startX} ${startY} C ${startX + bend} ${startY} ${endX - bend} ${endY} ${endX} ${endY}`,
+      );
+      signal.style.transform = `translate(${startX}px, ${startY}px)`;
+      requestAnimationFrame(() => connector.classList.remove('is-updating'));
+    };
+
+    window.clearTimeout(connectorTimer);
+    if (!animate) {
+      commit();
+      return;
+    }
+    connector.classList.add('is-updating');
+    connectorTimer = window.setTimeout(commit, 80);
+  };
 
   const activate = (id: string) => {
+    const changed = id !== activeId;
+    activeId = id;
     items.forEach((item) => {
       const on = item.dataset.service === id;
       item.classList.toggle('is-on', on);
@@ -293,6 +351,13 @@ function services() {
       if (on) item.setAttribute('aria-current', 'true');
       else item.removeAttribute('aria-current');
     });
+    scenes.forEach((scene) => {
+      const on = scene.dataset.serviceScene === id;
+      scene.classList.toggle('is-on', on);
+      scene.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+    root.dataset.activeService = id;
+    requestAnimationFrame(() => positionConnector(changed));
   };
 
   items.forEach((item, i) => {
@@ -321,6 +386,15 @@ function services() {
       items[next].focus();
     });
   });
+
+  activate(activeId);
+  requestAnimationFrame(() => positionConnector(false));
+  window.addEventListener('resize', () => positionConnector(false), { passive: true });
+  if ('ResizeObserver' in window && stage) {
+    const observer = new ResizeObserver(() => positionConnector(false));
+    observer.observe(stage);
+    items.forEach((item) => observer.observe(item));
+  }
 }
 
 function processRail() {

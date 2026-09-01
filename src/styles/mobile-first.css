@@ -33,7 +33,7 @@ h3,
 .c-h1,
 .c-h2,
 .c-display {
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
   word-break: normal;
   hyphens: none;
 }
@@ -461,12 +461,6 @@ h3,
 
 /* —— Services accordion —— */
 @media (max-width: 1024px) {
-  .c-service-viz {
-    display: none !important;
-    min-height: 0 !important;
-    height: 0 !important;
-  }
-
   .home-services__item {
     min-height: 52px;
     padding: 12px 0;
@@ -652,10 +646,6 @@ h3,
   .sp-card,
   .page-card {
     min-height: 44px;
-  }
-
-  .sp-person {
-    grid-template-columns: 72px minmax(0, 1fr);
   }
 
   .sp-promo {

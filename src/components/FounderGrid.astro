@@ -1,0 +1,33 @@
+---
+import TeamPortrait from './TeamPortrait.astro';
+import { leadershipProfiles } from '../data/leadership';
+---
+
+<div class="founder-grid" aria-label="Founding team">
+  {leadershipProfiles.map((person) => (
+    <article class="founder-profile">
+      <div class="founder-profile__media">
+        <TeamPortrait
+          person={person}
+          class="founder-profile__photo"
+          objectPosition="center center"
+          widths={[240, 320, 480, 640]}
+          sizes="(max-width: 768px) 78vw, (max-width: 1100px) 28vw, 320px"
+          width={640}
+          height={640}
+        />
+      </div>
+      <div class="founder-profile__body">
+        <h3>{person.displayName}</h3>
+        <p class="founder-profile__role">{person.role}</p>
+        <p class="founder-profile__focus">{person.focus.join(' · ')}</p>
+        <div class="founder-profile__links">
+          <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          {person.githubUrl && (
+            <a href={person.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+          )}
+        </div>
+      </div>
+    </article>
+  ))}
+</div>

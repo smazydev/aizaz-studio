@@ -37,7 +37,7 @@ const shortName = page.title.replace(' Development', '').replace(' Services', ''
 <section class="sp-section sp-section--tight">
   <div class="c-wrap seo-measure">
     <h2 class="page-h2">Business outcomes we build with {shortName}</h2>
-    <ul class="sp-list" style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px">
+    <ul class="sp-list sp-list--columns" style="margin-top: 24px">
       {page.outcomes.map((item) => <li>{item}</li>)}
     </ul>
   </div>

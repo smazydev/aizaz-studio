@@ -4,13 +4,11 @@ import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
 import PageCTA from '../components/PageCTA.astro';
-import TeamPortrait from '../components/TeamPortrait.astro';
-import { leadershipProfiles } from '../data/leadership';
+import FounderGrid from '../components/FounderGrid.astro';
 import { caseStudies } from '../data/caseStudies';
 import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 import { BOOKING_URL } from '../data/siteConfig';
 
-const leaders = leadershipProfiles;
 const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 ---
 
@@ -51,7 +49,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
     </div>
   </section>
 
-  <section class="sp-section sp-section--dark">
+  <section class="sp-section sp-section--dark founder-section">
     <div class="c-wrap">
       <SectionHeader
         eyebrow="Leadership"
@@ -59,32 +57,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
         lede="A small founding team. No fabricated headcount. Direct access to the engineers and operators shipping your system."
         tone="dark"
       />
-      <div class="sp-people">
-        {leaders.map((person) => (
-          <article class="sp-person">
-            <TeamPortrait
-              person={person}
-              class="sp-person__photo"
-              width={192}
-              height={192}
-              widths={[96, 192]}
-              sizes="96px"
-            />
-            <div>
-              <h3 class="sp-person__name">{person.name}</h3>
-              <p class="sp-person__role">{person.role}</p>
-              <div class="sp-person__links">
-                {person.linkedin && (
-                  <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                )}
-                {person.githubUrl && (
-                  <a href={person.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+      <FounderGrid />
     </div>
   </section>
 
