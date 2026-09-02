@@ -79,7 +79,7 @@
   color: var(--ink);
 }
 
-.site-main h2:not(.page-h2):not(.c-h2):not(.page-card__title) {
+.site-main h2:not(.page-h2):not(.c-h2):not(.c-h1):not(.page-card__title) {
   font-family: var(--font);
   font-size: clamp(2.2rem, 4vw, 3.6rem);
   font-weight: 700;
@@ -1364,5 +1364,77 @@ a.sp-card:hover {
   .blog-article__aside {
     position: static;
     order: -1;
+  }
+}
+
+/* Inner pages: landing sentinel fills the empty right column */
+.page-sentinel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 92svh;
+}
+
+.page-sentinel .page-hero,
+.page-sentinel .page-sentinel__intro {
+  position: relative;
+  z-index: 5;
+}
+
+.page-sentinel:has(.page-sentinel__intro) .page-hero,
+.page-sentinel:has(.page-sentinel__offer) .page-hero {
+  padding-bottom: clamp(16px, 2vw, 24px);
+}
+
+.page-sentinel .page-sentinel__intro {
+  padding-bottom: clamp(48px, 7vw, 88px);
+}
+
+.page-sentinel .sp-header {
+  margin-bottom: 0;
+}
+
+.page-sentinel .hero3d__canvas {
+  max-width: none;
+}
+
+.page-sentinel:has(.page-sentinel__offer) {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-sentinel__offer {
+  position: relative;
+  z-index: 6;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-bottom: 0;
+}
+
+.sp-promo--offer {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 36rem;
+  padding: 22px 24px;
+}
+
+.sp-promo--offer .sp-promo__copy {
+  max-width: none;
+}
+
+.sp-promo--offer .page-h2 {
+  max-width: none;
+}
+
+@media (max-width: 768px) {
+  .page-sentinel {
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .page-sentinel__offer {
+    margin-top: 28px;
+    margin-bottom: 28px;
   }
 }

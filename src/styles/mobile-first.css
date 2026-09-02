@@ -33,9 +33,9 @@ h3,
 .c-h1,
 .c-h2,
 .c-display {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 }
 
 /* —— Type + spacing baseline —— */
@@ -70,7 +70,7 @@ h3,
   .page-title,
   .page-h2,
   .site-main h1:not(.page-title),
-  .site-main h2:not(.page-h2):not(.c-h2):not(.page-card__title) {
+  .site-main h2:not(.page-h2):not(.c-h2):not(.c-h1):not(.page-card__title) {
     max-width: none;
     line-height: 1.05;
     letter-spacing: -0.045em;
@@ -82,7 +82,7 @@ h3,
   }
 
   .page-h2,
-  .site-main h2:not(.page-h2):not(.c-h2):not(.page-card__title) {
+  .site-main h2:not(.page-h2):not(.c-h2):not(.c-h1):not(.page-card__title) {
     font-size: clamp(1.65rem, 7vw, 2.15rem);
   }
 
@@ -517,7 +517,8 @@ h3,
     align-items: start;
   }
 
-  .home-human-ai__lede {
+  .home-human-ai__lede,
+  .home-services__lede {
     max-width: none;
   }
 }

@@ -1,0 +1,10 @@
+---
+import HeroSentinelCanvas from './hero3d/HeroSentinelCanvas.astro';
+import '../styles/home-hero.css';
+---
+
+<div class="home-hero page-sentinel" data-hero>
+  <slot />
+  <HeroSentinelCanvas />
+  <div class="hero3d__guard" aria-hidden="true"></div>
+</div>

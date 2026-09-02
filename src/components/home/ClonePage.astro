@@ -12,6 +12,7 @@ import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
 import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
 import TeamPortrait from '../TeamPortrait.astro';
 import ContactForm from '../ContactForm.astro';
+import emblemRender from '../../assets/aizaz-emblem.png';
 
 const publicCaseStudies = filterPublicCaseStudies(caseStudies);
 
@@ -111,10 +112,19 @@ const homeQuote = featuredFeedback;
         <div class="home-human-ai__heading">
           <p class="c-micro c-red">About Us</p>
           <h2 class="home-human-ai__title">Senior<br />engineering,<br />built for<br />production</h2>
+          <p class="c-lede home-human-ai__lede">
+            AI, SaaS, integrations, and cloud systems for teams that need working software, not slide decks. Available for remote projects worldwide.
+          </p>
         </div>
-        <p class="c-lede home-human-ai__lede">
-          AI, SaaS, integrations, and cloud systems for teams that need working software, not slide decks. Available for remote projects worldwide.
-        </p>
+        <div class="home-human-ai__emblem">
+          <Image
+            class="home-human-ai__emblem-img"
+            src={emblemRender}
+            alt="Aizaz Studios emblem"
+            widths={[400, 640, 880]}
+            sizes="(min-width: 1024px) 42vw, min(90vw, 520px)"
+          />
+        </div>
       </div>
     </section>
 
@@ -124,35 +134,36 @@ const homeQuote = featuredFeedback;
         <div class="home-services__head">
           <p class="c-micro c-red">Services</p>
           <h2 class="home-services__title">Engineering<br />services</h2>
+          <p class="c-lede home-services__lede">
+            AI automation, product, integrations, NetSuite, and cloud — scoped to the systems you already run, then owned through production.
+          </p>
         </div>
-        <div class="home-services__stage">
-          <div class="home-services__acc" role="list">
-            {services.map((s, i) => (
-              <a
-                class:list={['home-services__item', i === 0 && 'is-on']}
-                href={s.href}
-                data-service={String(i)}
-                aria-current={i === 0 ? 'true' : undefined}
-              >
-                <span class="home-services__item-kicker">
-                  <span class="home-services__idx">{s.n}</span>
-                  <span class="home-services__mark"></span>
-                </span>
-                <span class="home-services__item-title">{s.title}</span>
-                <span class="home-services__item-body">
-                  <span class="home-services__item-inner">
-                    {s.body}
-                    <span class="home-services__tags">
-                      {s.items.map((item) => (
-                        <span>{item}</span>
-                      ))}
-                    </span>
-                    <span class="home-services__go">View service <span aria-hidden="true">↗</span></span>
+        <div class="home-services__acc" role="list">
+          {services.map((s, i) => (
+            <a
+              class:list={['home-services__item', i === 0 && 'is-on']}
+              href={s.href}
+              data-service={String(i)}
+              aria-current={i === 0 ? 'true' : undefined}
+            >
+              <span class="home-services__item-kicker">
+                <span class="home-services__idx">{s.n}</span>
+                <span class="home-services__mark"></span>
+              </span>
+              <span class="home-services__item-title">{s.title}</span>
+              <span class="home-services__item-body">
+                <span class="home-services__item-inner">
+                  {s.body}
+                  <span class="home-services__tags">
+                    {s.items.map((item) => (
+                      <span>{item}</span>
+                    ))}
                   </span>
+                  <span class="home-services__go">View service <span aria-hidden="true">↗</span></span>
                 </span>
-              </a>
-            ))}
-          </div>
+              </span>
+            </a>
+          ))}
         </div>
       </div>
     </section>

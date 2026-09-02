@@ -5,6 +5,7 @@ import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
 import PageCTA from '../components/PageCTA.astro';
 import TeamPortrait from '../components/TeamPortrait.astro';
+import PageSentinel from '../components/PageSentinel.astro';
 import { leadershipProfiles } from '../data/leadership';
 import { caseStudies } from '../data/caseStudies';
 import { filterPublicCaseStudies } from '../lib/case-study-visibility';
@@ -19,23 +20,28 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
   description="Learn about Aizaz.studio, an engineering studio helping startups and operations-heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
   canonical="/about"
 >
-  <PageHero
-    eyebrow="About"
-    title="A senior software"
-    highlight="engineering studio"
-    description="Aizaz builds production systems across AI & automation, product/SaaS engineering, ERP/NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
-  >
-    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-    <a class="c-btn c-btn--ghost" href="/case-studies">See Works</a>
-  </PageHero>
+  <PageSentinel>
+    <PageHero
+      eyebrow="About"
+      title="A senior software"
+      highlight="engineering studio"
+      description="Aizaz builds production systems across AI & automation, product/SaaS engineering, ERP/NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
+    >
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
+      <a class="c-btn c-btn--ghost" href="/case-studies">See Works</a>
+    </PageHero>
 
-  <section class="sp-section sp-section--tight">
-    <div class="c-wrap">
+    <div class="c-wrap page-sentinel__intro">
       <SectionHeader
         eyebrow="What we are"
         title="Systems thinking, senior delivery"
         lede="We help founders and operations teams replace manual, scattered workflows with connected software, from a focused sprint to a full platform build."
       />
+    </div>
+  </PageSentinel>
+
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
       <div class="sp-grid">
         <OutlinedCard
           eyebrow="Who we work with"

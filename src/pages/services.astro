@@ -3,6 +3,7 @@ import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import PageCTA from '../components/PageCTA.astro';
+import PageSentinel from '../components/PageSentinel.astro';
 import { industryPages } from '../data/seoPages';
 import { serviceGroups, servicesForGroup, ungroupedServices } from '../data/serviceGroups';
 import { BOOKING_URL } from '../data/siteConfig';
@@ -15,19 +16,19 @@ const leftover = ungroupedServices();
   description="AI automation, web app development, AWS DevOps, NetSuite integrations, business process automation, trading technology, and product enablement for growing businesses."
   canonical="/services"
 >
-  <PageHero
-    eyebrow="Services"
-    title="Build smarter systems."
-    highlight="Scale cleaner operations."
-    description="Senior engineering across AI & automation, product/SaaS, ERP integrations, and cloud, so manual workflows become reliable software."
-  >
-    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-    <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
-  </PageHero>
+  <PageSentinel>
+    <PageHero
+      eyebrow="Services"
+      title="Build smarter systems."
+      highlight="Scale cleaner operations."
+      description="Senior engineering across AI & automation, product/SaaS, ERP integrations, and cloud, so manual workflows become reliable software."
+    >
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
+      <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
+    </PageHero>
 
-  <section class="sp-section sp-section--tight">
-    <div class="c-wrap">
-      <div class="sp-promo">
+    <aside class="c-wrap page-sentinel__offer">
+      <div class="sp-promo sp-promo--offer">
         <div class="sp-promo__copy">
           <p class="c-micro c-red">Focused sprint</p>
           <h2 class="page-h2">AI Systems Sprint</h2>
@@ -37,8 +38,8 @@ const leftover = ungroupedServices();
         </div>
         <a class="c-btn" href="/ai-systems-sprint">View the Sprint Offer</a>
       </div>
-    </div>
-  </section>
+    </aside>
+  </PageSentinel>
 
   <section class="sp-section">
     <div class="c-wrap">

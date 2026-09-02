@@ -1,10 +1,12 @@
 ---
-import { BOOKING_URL, isExternalHref } from '../data/siteConfig';
+import ContactForm from './ContactForm.astro';
+import { siteFooter } from '../data/siteChrome';
 
 interface Props {
   eyebrow?: string;
   title?: string;
   lede?: string;
+  /** @deprecated Buttons were replaced by the contact form. */
   primaryHref?: string;
   primaryLabel?: string;
   secondaryHref?: string;
@@ -12,39 +14,36 @@ interface Props {
 }
 
 const {
-  eyebrow = 'Start here',
-  title = 'Turn one workflow into a working system.',
-  lede = 'Book a call to map the highest-impact automation, or start with a focused sprint and ship something your team can use.',
-  primaryHref = BOOKING_URL,
-  primaryLabel = 'Book a Call',
-  secondaryHref = '/ai-systems-sprint',
-  secondaryLabel = 'See the Sprint Offer',
+  eyebrow = 'Contact',
+  title = 'Let’s build the next system',
+  lede = 'Tell us what you need to ship.',
 } = Astro.props;
 
-const primaryExternal = isExternalHref(primaryHref);
-const secondaryExternal = secondaryHref ? isExternalHref(secondaryHref) : false;
+const contact = siteFooter.studio;
+const defaultTitle = title === 'Let’s build the next system';
 ---
 
-<section class="sp-cta">
+<section class="c-cta sp-section" id="contact">
   <div class="c-wrap">
-    <p class="c-micro c-red">{eyebrow}</p>
-    <h2 class="page-h2">{title}</h2>
-    {lede && <p class="c-lede page-hero__lede">{lede}</p>}
-    <div class="page-hero__actions">
-      <a
-        class="c-btn"
-        href={primaryHref}
-        target={primaryExternal ? '_blank' : undefined}
-        rel={primaryExternal ? 'noopener noreferrer' : undefined}
-      >{primaryLabel}</a>
-      {secondaryHref && secondaryLabel && (
-        <a
-          class="c-btn c-btn--ghost"
-          href={secondaryHref}
-          target={secondaryExternal ? '_blank' : undefined}
-          rel={secondaryExternal ? 'noopener noreferrer' : undefined}
-        >{secondaryLabel}</a>
-      )}
+    <div class="c-cta__panel">
+      <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
+      <div class="c-cta__copy">
+        <p class="c-micro">{eyebrow}</p>
+        <h2 class="c-h1">
+          {defaultTitle ? (
+            <>Let’s build<br />the next<br />system</>
+          ) : (
+            title
+          )}
+        </h2>
+        <p class="c-cta__lede">
+          {lede}
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          <span aria-hidden="true"> · </span>
+          <a href={contact.phoneHref}>{contact.phone}</a>
+        </p>
+      </div>
+      <ContactForm />
     </div>
   </div>
 </section>

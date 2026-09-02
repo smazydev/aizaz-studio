@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Process from '../components/Process.astro';
 import FaqSection from '../components/FaqSection.astro';
 import PageCTA from '../components/PageCTA.astro';
+import PageSentinel from '../components/PageSentinel.astro';
 import { processPage } from '../data/commercialPages';
 import { BOOKING_URL } from '../data/siteConfig';
 
@@ -11,15 +12,17 @@ const c = processPage;
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/process">
-  <PageHero
-    eyebrow="How we work"
-    title="Discover → Observe"
-    highlight="a delivery discipline"
-    description="Every engagement follows the same lifecycle: discover, design, build, integrate, ship, and observe. Timelines depend on scope. We do not invent universal delivery dates."
-  >
-    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-    <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement Models</a>
-  </PageHero>
+  <PageSentinel>
+    <PageHero
+      eyebrow="How we work"
+      title="Discover → Observe"
+      highlight="a delivery discipline"
+      description="Every engagement follows the same lifecycle: discover, design, build, integrate, ship, and observe. Timelines depend on scope. We do not invent universal delivery dates."
+    >
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
+      <a class="c-btn c-btn--ghost" href="/engagement-models">Engagement Models</a>
+    </PageHero>
+  </PageSentinel>
 
   <Process stepsOnly />
 
