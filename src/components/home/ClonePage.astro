@@ -4,6 +4,7 @@ import { caseStudies } from '../../data/caseStudies';
 import Hero from './Hero.astro';
 import HomeFeatures from './HomeFeatures.astro';
 import TechLogoStrip from './TechLogoStrip.astro';
+import Process from '../Process.astro';
 import SiteNav from '../site/SiteNav.astro';
 import SiteFooter from '../site/SiteFooter.astro';
 import { siteFooter } from '../../data/siteChrome';
@@ -70,15 +71,6 @@ const services = [
     image: salesangelArchitecture,
     imageAlt: 'Production architecture diagram for cloud runtime and data layers',
   },
-];
-
-const process = [
-  { n: '01', title: 'Discover', body: 'Understand the workflow, constraints and systems.', meta: 'INPUT / OPS / USERS', art: 'nodes' },
-  { n: '02', title: 'Design', body: 'Map the experience, prompts, and handoff states.', meta: 'UX / PROMPTS / GUARDS', art: 'wire' },
-  { n: '03', title: 'Build', body: 'Assemble the agent, pipeline, or product.', meta: 'APP / MODEL / API', art: 'blocks' },
-  { n: '04', title: 'Integrate', body: 'Join CRM, ERP, warehouse, and internal tools.', meta: 'BUS / SYNC / AUTH', art: 'join' },
-  { n: '05', title: 'Ship', body: 'Deploy with tracing, canaries, and rollback.', meta: 'CI / CANARY / PROD', art: 'ship' },
-  { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
 ];
 
 const contactEmail = siteFooter.studio.email;
@@ -213,75 +205,8 @@ const homeQuote = featuredFeedback;
       </div>
     </section>
 
-    <!-- 09 FROM IDEA -->
-    <section class="home-process" data-process>
-      <div class="home-process__inner">
-        <p class="home-process__mark">03 / Process</p>
-        <h2 class="home-process__title">From Idea to Production.</h2>
-        <div class="home-process__board">
-          <svg class="home-process__rail home-process__rail--map" viewBox="0 0 1440 640" preserveAspectRatio="none" aria-hidden="true">
-            <g class="home-process__grid">
-              {Array.from({ length: 18 }).map((_, i) => <line x1={40 + i * 80} y1="16" x2={40 + i * 80} y2="624" />)}
-              {Array.from({ length: 8 }).map((_, i) => <line x1="24" y1={40 + i * 80} x2="1416" y2={40 + i * 80} />)}
-            </g>
-            <text class="home-process__ann" x="40" y="36">LIFECYCLE · 06 STAGES</text>
-            <text class="home-process__ann" x="1248" y="36">ROUTE / PROD</text>
-            <path class="home-process__route" d="M120 168 C280 168 360 118 520 118 C700 118 840 148 1000 148 C1140 148 1260 210 1260 328 C1260 430 1080 508 760 508 C500 508 320 540 180 548" />
-            <path class="home-process__route home-process__route--hot" data-process-fill pathLength="1" d="M120 168 C280 168 360 118 520 118 C700 118 840 148 1000 148 C1140 148 1260 210 1260 328 C1260 430 1080 508 760 508 C500 508 320 540 180 548" />
-            <circle class="home-process__dot" cx="120" cy="168" r="5" />
-            <circle class="home-process__dot" cx="520" cy="118" r="5" />
-            <circle class="home-process__dot" cx="1000" cy="148" r="5" />
-            <circle class="home-process__dot" cx="1260" cy="328" r="5" />
-            <circle class="home-process__dot" cx="760" cy="508" r="5" />
-            <circle class="home-process__dot" cx="180" cy="548" r="5" />
-          </svg>
-          <svg class="home-process__rail home-process__rail--col" viewBox="0 0 48 720" preserveAspectRatio="none" aria-hidden="true">
-            <path class="home-process__route" d="M24 18 V702" />
-            <path class="home-process__route home-process__route--hot" data-process-fill pathLength="1" d="M24 18 V702" />
-            <circle class="home-process__dot" cx="24" cy="28" r="4" />
-            <circle class="home-process__dot" cx="24" cy="148" r="4" />
-            <circle class="home-process__dot" cx="24" cy="268" r="4" />
-            <circle class="home-process__dot" cx="24" cy="388" r="4" />
-            <circle class="home-process__dot" cx="24" cy="508" r="4" />
-            <circle class="home-process__dot" cx="24" cy="628" r="4" />
-          </svg>
-          <div class="home-process__core" data-process-core aria-hidden="true">
-            <span class="home-process__core-unit"></span>
-            <span class="home-process__core-unit is-mid"></span>
-            <span class="home-process__core-unit is-top"></span>
-            <i></i>
-          </div>
-          {process.map((row, i) => (
-            <article class:list={['home-process__stage', i === 0 && 'is-on']} data-process-node data-step={String(i)}>
-              <span class="home-process__artifact" aria-hidden="true">
-                {row.art === 'nodes' && (
-                  <svg viewBox="0 0 48 28"><circle cx="8" cy="16" r="2.2" /><circle cx="18" cy="8" r="2" /><circle cx="28" cy="18" r="2.4" /><circle cx="38" cy="10" r="1.8" /><circle cx="22" cy="20" r="1.6" /></svg>
-                )}
-                {row.art === 'wire' && (
-                  <svg viewBox="0 0 48 28"><rect x="4" y="8" width="18" height="12" rx="2" /><rect x="26" y="6" width="18" height="16" rx="2" /><path d="M22 14 H26" /></svg>
-                )}
-                {row.art === 'blocks' && (
-                  <svg viewBox="0 0 48 28"><rect x="6" y="14" width="12" height="10" rx="1.5" /><rect x="18" y="8" width="12" height="16" rx="1.5" /><rect x="30" y="4" width="12" height="20" rx="1.5" /></svg>
-                )}
-                {row.art === 'join' && (
-                  <svg viewBox="0 0 48 28"><path d="M4 8 H20 V20 H4" /><path d="M44 8 H28 V20 H44" /><path d="M20 14 H28" /></svg>
-                )}
-                {row.art === 'ship' && (
-                  <svg viewBox="0 0 48 28"><path d="M6 14 H32" /><path d="M26 8 L36 14 L26 20" /></svg>
-                )}
-                {row.art === 'wave' && (
-                  <svg viewBox="0 0 48 28"><path d="M4 18 C10 18 12 8 18 8 C24 8 24 20 30 20 C36 20 38 12 44 12" /></svg>
-                )}
-              </span>
-              <p class="home-process__idx">{row.n}</p>
-              <h3>{row.title}</h3>
-              <p class="home-process__copy">{row.body}</p>
-              <p class="home-process__meta">{row.meta}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+    <!-- 09 PROCESS -->
+    <Process />
 
     <!-- 11 FEATURES -->
     <HomeFeatures />

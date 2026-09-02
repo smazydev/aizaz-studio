@@ -332,17 +332,43 @@ html.theme-dark .founder-section {
 
 /* Leadership cards: theme-aware surfaces (avoid light paper + inherited light text) */
 .sp-header {
-  margin-bottom: clamp(20px, 3vw, 36px);
+  margin-bottom: clamp(16px, 2.4vw, 28px);
   max-width: none;
 }
 
 .sp-header .page-h2 {
-  max-width: min(28ch, 100%);
+  max-width: min(18em, 100%);
 }
 
 .sp-header__lede {
-  margin-top: 14px;
-  max-width: 58ch;
+  margin-top: 12px;
+  max-width: 54ch;
+}
+
+@media (min-width: 1024px) {
+  .sp-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    column-gap: clamp(24px, 3.5vw, 48px);
+    align-items: end;
+  }
+
+  .sp-header .c-micro,
+  .sp-header .page-h2 {
+    grid-column: 1;
+  }
+
+  .sp-header .page-h2 {
+    max-width: none;
+  }
+
+  .sp-header__lede {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: end;
+    margin-top: 0;
+    max-width: none;
+  }
 }
 
 .sp-card {
@@ -426,7 +452,14 @@ a.sp-card:hover {
 }
 
 .sp-promo__copy {
+  flex: 1 1 16rem;
+  min-width: 0;
   max-width: 40rem;
+}
+
+.sp-promo .c-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .sp-promo__copy .page-h2 {
@@ -770,7 +803,7 @@ a.sp-card:hover {
 }
 
 .sp-cta {
-  padding: clamp(28px, 4vw, 48px) 0 clamp(32px, 5vw, 56px);
+  padding: clamp(24px, 3.6vw, 40px) 0 clamp(28px, 4.2vw, 48px);
 }
 
 @media (max-width: 960px) {
@@ -855,7 +888,7 @@ a.sp-card:hover {
 
 .works-list {
   display: grid;
-  gap: clamp(36px, 5vw, 64px);
+  gap: clamp(28px, 4vw, 48px);
 }
 
 .works-item {
@@ -1192,7 +1225,7 @@ a.sp-card:hover {
 }
 
 .blog-index__featured {
-  margin-bottom: clamp(24px, 3.4vw, 40px);
+  margin-bottom: clamp(18px, 2.6vw, 32px);
 }
 
 .blog-index__featured .c-micro {

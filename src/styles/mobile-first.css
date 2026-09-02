@@ -458,7 +458,6 @@ h3,
 
 @media (max-width: 768px) {
   .home-services__inner,
-  .home-process__inner,
   .home-feat__inner,
   .home-why__inner {
     width: 100%;
@@ -473,7 +472,7 @@ h3,
   .home-services__title,
   .home-human-ai__title,
   .home-feat__title,
-  .home-process__title {
+  .process-flow__title {
     max-width: none;
     font-size: var(--heading-xl);
     line-height: 0.98;
@@ -553,12 +552,6 @@ h3,
 
   .c-foot h4 {
     margin-bottom: 8px;
-  }
-
-  .c-foot__mark {
-    font-size: clamp(3.2rem, 22vw, 5.5rem);
-    line-height: 0.8;
-    margin: 12px 0 20px;
   }
 }
 

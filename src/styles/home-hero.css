@@ -2,7 +2,7 @@
   --hero-blue: #4e92d8;
   --hero-blue-soft: rgba(78, 146, 216, 0.22);
   --ss: 1;
-  min-height: clamp(560px, 86svh, 820px);
+  min-height: clamp(480px, 68svh, 640px);
   text-align: left;
   align-items: stretch;
   padding: var(--hero-pad-top) var(--page-pad) var(--hero-pad-bottom);

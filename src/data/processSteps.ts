@@ -1,44 +1,37 @@
 export const processSteps = [
   {
     step: '01',
-    title: 'Discover',
+    title: 'Discovery',
     subtitle: 'Find the highest-leverage problem',
-    description:
-      'We map your stack (CRM, ERP, email, spreadsheets, internal tools) and pick the workflow or product milestone where engineering changes outcomes, not just screens.',
+    description: 'We map your stack and pick the workflow where engineering changes outcomes.',
+    cards: ['CRM', 'ERP', 'Email', 'Sheets', 'Ops Notes'],
   },
   {
     step: '02',
     title: 'Design',
     subtitle: 'Architecture before code',
-    description:
-      'Data flows, integrations, handoff states, and failure modes are defined upfront so you are not rebuilding the foundation three months later.',
+    description: 'Flow, states, data model, and handoff are defined before production work starts.',
+    cards: ['Flow Map', 'Architecture', 'States', 'Data Model', 'Handoff'],
   },
   {
     step: '03',
     title: 'Build',
     subtitle: 'Senior delivery on the critical path',
-    description:
-      'Engineers ship the automation, product surface, or internal system with the quality bar of production software, not a disposable prototype.',
+    description: 'Engineers ship the product surface, automation, and APIs as production software.',
+    cards: ['Backend', 'Frontend', 'Automation', 'APIs', 'Tests'],
   },
   {
     step: '04',
-    title: 'Integrate',
-    subtitle: 'Wire the systems you already run',
-    description:
-      'NetSuite, Shopify, HubSpot, AWS, WhatsApp, warehouses, and custom APIs are connected with idempotent sync, auth, and observable jobs.',
+    title: 'Integrate and Ship',
+    subtitle: 'Connect the stack, then go live',
+    description: 'Your tools are wired in, then the system ships with CI/CD, logging, and rollback.',
+    cards: ['NetSuite', 'HubSpot', 'AWS', 'Shopify', 'CI/CD'],
   },
   {
     step: '05',
-    title: 'Ship',
-    subtitle: 'Production from day one',
-    description:
-      'CI/CD, logging, alerts, and rollback paths go live with the system, not as a phase-two promise after the demo.',
-  },
-  {
-    step: '06',
     title: 'Observe',
     subtitle: 'Keep the system operable',
-    description:
-      'Your team gets documentation, access, and a clear next step. Many engagements extend into the next workflow, product module, or retainer.',
+    description: 'Your team gets metrics, alerts, a runbook, and clear ownership after launch.',
+    cards: ['Logs', 'Alerts', 'Metrics', 'Runbook', 'Ownership'],
   },
 ];

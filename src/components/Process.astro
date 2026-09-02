@@ -3,28 +3,32 @@ import { processSteps } from '../data/processSteps';
 
 interface Props {
   stepsOnly?: boolean;
+  showIntro?: boolean;
 }
 
-const { stepsOnly = false } = Astro.props;
+const {
+  stepsOnly = false,
+  showIntro = !stepsOnly,
+} = Astro.props;
 ---
 
-<section id="process" class="sp-section">
+<section
+  id="process"
+  class:list={['process-flow', stepsOnly && 'sp-section']}
+  data-process={!stepsOnly ? '' : undefined}
+>
   <div class="c-wrap">
-    <div class:list={['sp-process', !stepsOnly && 'sp-process--split']}>
-      {!stepsOnly && (
-        <div class="sp-process__intro">
-          <p class="c-micro c-red">How we work</p>
-          <h2 class="page-h2">From messy workflow to live system</h2>
-          <p class="c-lede sp-header__lede">
-            Whether it is a focused sprint or a full platform build, we follow the same delivery discipline: discover, design, build, integrate, ship, and observe.
-          </p>
-          <div class="page-hero__actions">
-            <a class="c-btn" href="/ai-systems-sprint">14 Day Sprint</a>
-            <a class="c-btn c-btn--ghost" href="/engineering-transformation">Full process</a>
-          </div>
-        </div>
-      )}
+    {showIntro && (
+      <header class="process-flow__head">
+        <p class="c-micro c-red">Process</p>
+        <h2 class="process-flow__title">How we turn one workflow into a working system</h2>
+        <p class="c-lede process-flow__lede">
+          Every engagement follows a compact production workflow, from understanding the problem to operating the shipped system.
+        </p>
+      </header>
+    )}
 
+    {stepsOnly ? (
       <ol class="sp-process__list">
         {processSteps.map((item) => (
           <li class="sp-process__item">
@@ -39,6 +43,54 @@ const { stepsOnly = false } = Astro.props;
           </li>
         ))}
       </ol>
-    </div>
+    ) : (
+      <div class="process-flow__stage">
+        <div class="process-flow__steps" role="list">
+          {processSteps.map((item, i) => (
+            <button
+              type="button"
+              class:list={['process-flow__step', i === 0 && 'is-on']}
+              data-process-step={String(i)}
+              aria-expanded={i === 0 ? 'true' : 'false'}
+            >
+              <span class="process-flow__idx">{item.step}</span>
+              <span class="process-flow__copy">
+                <span class="process-flow__name">{item.title}</span>
+                <span class="process-flow__body">{item.description}</span>
+                <span class="process-flow__mobile-cards">
+                  {item.cards.map((card) => (
+                    <span>{card}</span>
+                  ))}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+        <div class="process-flow__visual" aria-label="Active process visual">
+          {processSteps.map((item, i) => (
+            <div
+              class:list={['process-flow__scene', i === 0 && 'is-on']}
+              data-process-scene={String(i)}
+              aria-hidden={i === 0 ? 'false' : 'true'}
+            >
+              <p class="process-flow__caption">
+                <span>{item.step}</span>
+                <span>{item.title}</span>
+              </p>
+              <div class="process-flow__cards">
+                {item.cards.map((card, cardIndex) => (
+                  <span class="process-flow__card" style={`--card-i: ${cardIndex}`}>{card}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
   </div>
 </section>
+
+<script>
+  import { mountProcessMotion } from '../lib/home-motion';
+  mountProcessMotion();
+</script>

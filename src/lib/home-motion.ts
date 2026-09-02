@@ -437,51 +437,74 @@ function services() {
   }
 }
 
-function processRail() {
+function processWorkflow() {
   const root = document.querySelector<HTMLElement>('[data-process]');
-  if (!root) return;
-  const fills = [...root.querySelectorAll<SVGPathElement>('[data-process-fill]')];
-  const nodes = [...root.querySelectorAll<HTMLElement>('[data-process-node]')];
-  const core = root.querySelector<HTMLElement>('[data-process-core]');
-  if (!nodes.length) return;
+  if (!root || root.dataset.processBound === 'true') return;
+  root.dataset.processBound = 'true';
+  const steps = [...root.querySelectorAll<HTMLElement>('[data-process-step]')];
+  const scenes = [...root.querySelectorAll<HTMLElement>('[data-process-scene]')];
+  if (!steps.length) return;
 
-  const skipMotion = reduce() || window.matchMedia('(max-width: 768px)').matches;
-  if (skipMotion) {
-    root.style.setProperty('--process-p', '1');
-    fills.forEach((el) => {
-      el.style.strokeDasharray = '1';
-      el.style.strokeDashoffset = '0';
+  let activeId = steps.find((step) => step.classList.contains('is-on'))?.dataset.processStep || '0';
+  let sceneTween: gsap.core.Timeline | null = null;
+  const desktop = () => !window.matchMedia('(max-width: 768px)').matches;
+  const motionOk = () => !reduce() && desktop();
+
+  const activate = (id: string, animate = true) => {
+    const changed = id !== activeId;
+    activeId = id;
+    steps.forEach((step) => {
+      const on = step.dataset.processStep === id;
+      step.classList.toggle('is-on', on);
+      step.setAttribute('aria-expanded', on ? 'true' : 'false');
     });
-    nodes.forEach((n) => n.classList.add('is-on'));
-    core?.classList.add('is-on');
-    return;
-  }
 
-  fills.forEach((el) => {
-    el.style.strokeDasharray = '1';
-    el.style.strokeDashoffset = '1';
-  });
+    const next = scenes.find((scene) => scene.dataset.processScene === id);
+    const cards = next ? [...next.querySelectorAll<HTMLElement>('.process-flow__card')] : [];
+    sceneTween?.kill();
 
-  const update = () => {
-    const rect = root.getBoundingClientRect();
-    const view = window.innerHeight;
-    const entered = rect.top < view * 0.86;
-    const progress = entered
-      ? Math.min(1, Math.max(0, (view * 0.72 - rect.top) / (rect.height + view * 0.18)))
-      : 0;
-    root.style.setProperty('--process-p', String(progress));
-    fills.forEach((el) => {
-      el.style.strokeDashoffset = String(1 - progress);
+    scenes.forEach((scene) => {
+      const on = scene.dataset.processScene === id;
+      scene.classList.toggle('is-on', on);
+      scene.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
-    const active = entered
-      ? Math.min(nodes.length - 1, Math.max(0, Math.floor(progress * nodes.length)))
-      : 0;
-    nodes.forEach((n, i) => n.classList.toggle('is-on', i <= active));
-    if (core) core.classList.toggle('is-on', active >= 2);
+
+    if (!next) return;
+    if (!animate || !changed || !motionOk()) {
+      gsap.set(root.querySelectorAll<HTMLElement>('.process-flow__card'), { clearProps: 'opacity,visibility,transform' });
+      return;
+    }
+
+    gsap.set(cards, { autoAlpha: 0, y: 10 });
+    sceneTween = gsap.timeline({ defaults: { duration: 0.22, ease: 'power2.out' } });
+    sceneTween.to(cards, { autoAlpha: 1, y: 0, stagger: 0.045 }, 0);
   };
 
-  window.addEventListener('scroll', update, { passive: true });
-  update();
+  steps.forEach((step, i) => {
+    const id = () => step.dataset.processStep || String(i);
+    step.addEventListener('mouseenter', () => {
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) activate(id());
+    });
+    step.addEventListener('focus', () => activate(id()));
+    step.addEventListener('click', () => activate(id()));
+    step.addEventListener('keydown', (event) => {
+      const last = steps.length - 1;
+      let next = i;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = i === last ? 0 : i + 1;
+      else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = i === 0 ? last : i - 1;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = last;
+      else return;
+      event.preventDefault();
+      steps[next].focus();
+    });
+  });
+
+  activate(activeId, false);
+}
+
+export function mountProcessMotion() {
+  processWorkflow();
 }
 
 function hub() {
@@ -617,7 +640,6 @@ export function mountHomeMotion() {
   reveals();
   heroMotion();
   services();
-  processRail();
   hub();
   counters();
   ctaMove();
