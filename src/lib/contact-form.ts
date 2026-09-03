@@ -80,7 +80,13 @@ async function bindOne(form: HTMLFormElement): Promise<void> {
           action: TURNSTILE_ACTION,
           theme: 'dark',
           appearance: 'always',
+          callback: (token) => {
+            const input = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+            if (input) input.value = token;
+          },
           'expired-callback': () => {
+            const input = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+            if (input) input.value = '';
             setStatus(status, 'Verification expired. Please complete the check again.', 'error');
           },
           'error-callback': () => {

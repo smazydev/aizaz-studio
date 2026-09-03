@@ -21,6 +21,9 @@ export const CONTACT_LIMITS = {
 
 export const TURNSTILE_ACTION = 'contact_form';
 
+/** Public site key for the existing production widget. Safe to expose in HTML. */
+export const TURNSTILE_SITE_KEY = '0x4AAAAAAEl7iKzr2THxrAxj';
+
 export const CONTACT_SUCCESS_STORAGE_KEY = 'aizaz.contact.success';
 export const CONTACT_ATTRIBUTION_STORAGE_KEY = 'aizaz.contact.attribution';
 

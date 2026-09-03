@@ -1,5 +1,10 @@
 ---
-import { CONTACT_INTERESTS, CONTACT_LIMITS, TURNSTILE_DUMMY_SITE_KEY_PASS } from '../data/contact';
+import {
+  CONTACT_INTERESTS,
+  CONTACT_LIMITS,
+  TURNSTILE_DUMMY_SITE_KEY_PASS,
+  TURNSTILE_SITE_KEY,
+} from '../data/contact';
 
 interface Props {
   submitLabel?: string;
@@ -9,7 +14,7 @@ const { submitLabel = 'Submit message' } = Astro.props;
 
 const siteKey =
   import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ||
-  (import.meta.env.DEV ? TURNSTILE_DUMMY_SITE_KEY_PASS : '');
+  (import.meta.env.DEV ? TURNSTILE_DUMMY_SITE_KEY_PASS : TURNSTILE_SITE_KEY);
 ---
 
 <form
@@ -75,6 +80,7 @@ const siteKey =
   <input type="hidden" name="landing_url" value="" />
   <input type="hidden" name="referring_page" value="" />
 
+  <input type="hidden" name="cf-turnstile-response" value="" />
   <div class="c-contact-form__turnstile" data-turnstile></div>
   <p class="c-contact-form__status" data-contact-status role="status" aria-live="polite" hidden></p>
   <button class="c-btn c-btn--light" type="submit" data-contact-submit>{submitLabel}</button>
