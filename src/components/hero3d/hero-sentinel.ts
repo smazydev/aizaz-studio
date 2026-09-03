@@ -383,16 +383,28 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
   modelRoot.add(accent);
   scene.add(modelRoot);
 
-  if (import.meta.env.DEV) {
-    try {
-      const report = inspectModel(THREE, model, {
-        animations: (gltf.animations || []).map((a) => a.name || '(unnamed)'),
-        fileBytes,
-      });
-      console.info('[hero3d] inspect', JSON.stringify(report, null, 2));
-    } catch (err) {
-      console.warn('[hero3d] inspect failed', err);
-    }
+  let report: ReturnType<typeof inspectModel>;
+  try {
+    report = inspectModel(THREE, model, {
+      animations: (gltf.animations || []).map((a) => a.name || '(unnamed)'),
+      fileBytes,
+    });
+    if (import.meta.env.DEV) console.info('[hero3d] inspect', JSON.stringify(report, null, 2));
+  } catch (err) {
+    console.warn('[hero3d] inspect failed', err);
+    report = {
+      fileMB: +(fileBytes / 1024 / 1024).toFixed(2),
+      fileBytes,
+      hierarchy: [],
+      meshNames: [],
+      meshCount: 0,
+      separateParts: { head: false, visor: false, neck: false, shoulders: false, torso: false },
+      materials: [],
+      emissiveMaterials: [],
+      textureCount: 0,
+      animations: [],
+      boundingBox: { min: [], max: [], size: [], center: [] },
+    };
   }
 
   const visor: Array<{ intensity: number }> = [];
@@ -460,7 +472,6 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
   const io = new IntersectionObserver(
     (entries) => {
       visible = entries.some((e) => e.isIntersecting);
-      if (visible && !disposed && raf === 0) raf = requestAnimationFrame(tick);
     },
     { threshold: 0.04 },
   );
@@ -532,7 +543,6 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
     if (disposed) return;
     disposed = true;
     cancelAnimationFrame(raf);
-    raf = 0;
     io.disconnect();
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', resize);
@@ -546,23 +556,14 @@ export async function mountHeroSentinel(hero: HTMLElement): Promise<HeroSentinel
       if (Array.isArray(mat)) mat.forEach((item) => item.dispose());
       else if (mat) (mat as import('three').Material).dispose();
     });
-    if (scene.environment) {
-      scene.environment.dispose();
-      scene.environment = null;
-    }
     renderer.dispose();
-    renderer.forceContextLoss?.();
-    hero.classList.remove('is-webgl', 'is-loading');
   };
 
   const tick = (now: number) => {
     if (disposed) return;
-    const entering = motion.debug.elapsed < 1.8;
-    if (!visible && revealed && !entering) {
-      raf = 0;
-      return;
-    }
     raf = requestAnimationFrame(tick);
+    const entering = motion.debug.elapsed < 1.8;
+    if (!visible && revealed && !entering) return;
     const dt = last === 0 ? 1 / 60 : Math.min(0.05, Math.max(0, (now - last) / 1000));
     last = now;
     motion.update(dt);

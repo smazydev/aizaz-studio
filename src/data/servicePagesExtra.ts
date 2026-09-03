@@ -126,7 +126,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Build production AI agents that research, decide, and act inside your business tools. Connected to CRMs, email, databases, and APIs — not chat demos.',
         heroSubtitle:
-            'Deploy AI agents that complete real work inside your stack: qualifying leads, triaging support, processing documents, and triggering workflows.',
+            'Deploy AI agents that complete real work inside your stack — qualifying leads, triaging support, processing documents, and triggering workflows.',
         keywords: [
             'AI agent development',
             'custom AI agents',
@@ -362,7 +362,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Launch investor-ready SaaS MVPs in weeks with auth, payments, core workflows, and deployable architecture — senior engineers only.',
         heroSubtitle:
-            'Ship a SaaS MVP that real users can sign up for, pay for, and rely on, built with architecture that survives your first growth spike.',
+            'Ship a SaaS MVP that real users can sign up for, pay for, and rely on — built with architecture that survives your first growth spike.',
         keywords: [
             'SaaS MVP development',
             'startup MVP development',
@@ -421,7 +421,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Build B2B SaaS platforms with multi-tenant architecture, RBAC, billing, integrations, and admin tooling for growth-stage products.',
         heroSubtitle:
-            'Build B2B SaaS that enterprise buyers trust, with proper tenancy, permissions, integrations, and ops tooling from day one.',
+            'Build B2B SaaS that enterprise buyers trust — with proper tenancy, permissions, integrations, and ops tooling from day one.',
         keywords: [
             'B2B SaaS development',
             'B2B software development',
@@ -539,7 +539,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Design and build production AWS infrastructure — EC2, ECS, Lambda, RDS, S3, networking, and security your product can scale on.',
         heroSubtitle:
-            'Get AWS infrastructure designed by engineers who ship products on it daily, not generic diagrams that fall apart in production.',
+            'Get AWS infrastructure designed by engineers who ship products on it daily — not generic diagrams that fall apart in production.',
         keywords: [
             'AWS cloud engineering',
             'AWS architecture',
@@ -716,7 +716,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Build internal developer platforms and self-serve tooling so engineering ships faster with guardrails, not gatekeepers.',
         heroSubtitle:
-            'Give your developers a paved road: environments, templates, CI/CD, and observability, so product teams ship without reinventing infrastructure every sprint.',
+            'Give your developers a paved road — environments, templates, CI/CD, and observability — so product teams ship without reinventing infrastructure every sprint.',
         keywords: [
             'platform engineering',
             'internal developer platform',
@@ -775,7 +775,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Connect products to third-party APIs, webhooks, and partner systems with retries, monitoring, and documentation your team can maintain.',
         heroSubtitle:
-            'Make your product talk to everything it needs to: payment providers, CRMs, ERPs, and shipping APIs, without brittle scripts that break on every vendor update.',
+            'Make your product talk to everything it needs to — payment providers, CRMs, ERPs, shipping APIs — without brittle scripts that break on every vendor update.',
         keywords: [
             'API integration',
             'API integration services',
@@ -834,7 +834,7 @@ export const extraServicePages: SeoPage[] = [
         metaDescription:
             'Integrate HubSpot, Salesforce, Pipedrive, and custom CRMs with your product and ops tools — reliable two-way contact and deal sync.',
         heroSubtitle:
-            'Keep your CRM accurate automatically: sync leads, deals, and customer activity from every channel without manual data entry.',
+            'Keep your CRM accurate automatically — sync leads, deals, and customer activity from every channel without manual data entry.',
         keywords: [
             'CRM integration',
             'CRM integration services',

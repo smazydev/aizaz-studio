@@ -2,7 +2,7 @@ export const processSteps = [
   {
     step: '01',
     title: 'Discover',
-    subtitle: 'Find the highest leverage problem',
+    subtitle: 'Find the highest-leverage problem',
     description:
       'We map your stack (CRM, ERP, email, spreadsheets, internal tools) and pick the workflow or product milestone where engineering changes outcomes, not just screens.',
   },
@@ -32,7 +32,7 @@ export const processSteps = [
     title: 'Ship',
     subtitle: 'Production from day one',
     description:
-      'CI/CD, logging, alerts, and rollback paths go live with the system, not as a phase two promise after the demo.',
+      'CI/CD, logging, alerts, and rollback paths go live with the system, not as a phase-two promise after the demo.',
   },
   {
     step: '06',

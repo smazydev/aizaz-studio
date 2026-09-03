@@ -308,7 +308,7 @@ html.theme-dark .clone .c-cta__panel {
 
 .page-title {
   margin: 14px 0 0;
-  max-width: none;
+  max-width: 18ch;
   font-size: clamp(3rem, 6.2vw, 5.6rem);
   font-weight: 700;
   line-height: 0.9;
@@ -323,7 +323,7 @@ html.theme-dark .clone .c-cta__panel {
 
 .page-h2 {
   margin: 12px 0 0;
-  max-width: none;
+  max-width: 14ch;
   font-size: clamp(2.2rem, 4vw, 3.6rem);
   font-weight: 700;
   line-height: 0.92;
@@ -334,7 +334,7 @@ html.theme-dark .clone .c-cta__panel {
 
 .page-hero__lede {
   margin-top: 22px;
-  max-width: min(58rem, 100%);
+  max-width: 46ch;
 }
 
 .page-hero__actions {
@@ -1841,19 +1841,18 @@ html[data-theme='light'] .clone .c-team .c-member {
 }
 
 .c-dark__growth {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 28px;
+  align-items: end;
   margin-top: clamp(24px, 3.2vw, 36px);
   padding-top: clamp(22px, 3vw, 32px);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.c-dark h2.c-dark__ship-title {
+.c-dark__ship-title {
   margin: 10px 0 0;
-  max-width: none;
-  font-size: clamp(1.85rem, 2.6vw, 2.55rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.35rem);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.1;
@@ -1862,7 +1861,7 @@ html[data-theme='light'] .clone .c-team .c-member {
 
 .c-dark__ship-lede {
   margin: 0;
-  max-width: none;
+  max-width: 42ch;
 }
 
 .c-dark__metrics {
@@ -2018,7 +2017,7 @@ html[data-theme='light'] .clone .c-team .c-member {
 
 .c-proof {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-top: clamp(22px, 3vw, 32px);
   padding-top: 0;
@@ -2429,15 +2428,9 @@ html[data-theme='light'] .clone .c-team .c-member {
   padding: 0 0 clamp(100px, 12vw, 180px);
 }
 
-.c-faq h2,
-.c-faq .c-h2,
-.c-faq .page-h2,
-.c-faq__title {
-  margin: 0 0 clamp(28px, 4vw, 48px);
-  max-width: none;
-  font-size: clamp(2.05rem, 3.2vw, 3.1rem);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+.c-faq h2 {
+  margin: 0 0 clamp(36px, 5vw, 64px);
+  max-width: 12ch;
 }
 
 .c-faq details {
@@ -2483,7 +2476,7 @@ html[data-theme='light'] .clone .c-team .c-member {
 
 .c-faq details p {
   margin: 0 0 32px;
-  max-width: min(68rem, 100%);
+  max-width: 62ch;
   color: var(--muted);
   line-height: 1.65;
 }
@@ -2698,6 +2691,18 @@ html.theme-dark .c-cta select option {
   grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
   gap: 24px;
   padding-bottom: 48px;
+}
+
+.c-foot__mark {
+  font-size: clamp(10rem, 38vw, 34rem);
+  font-weight: 700;
+  letter-spacing: -0.1em;
+  line-height: 0.68;
+  color: color-mix(in srgb, var(--bg) 55%, var(--navy));
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  margin: 8px -4vw 36px;
 }
 
 .c-foot__base {
@@ -3394,6 +3399,49 @@ html.theme-dark .c-cta select option {
   opacity: 0.85;
 }
 
+/* overlay */
+.ref-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1440px, 100%);
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+}
+
+.ref-overlay img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ref-chip {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 90;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+body.ref-on .ref-chip::after {
+  content: ' on';
+}
+
+.ref-chip::after {
+  content: ' off';
+}
+
 @media (max-width: 1024px) {
   .c-nav__links {
     display: none;
@@ -3626,6 +3674,10 @@ html.theme-dark .c-cta select option {
   .c-hub {
     min-height: 0;
   }
+
+  .c-foot__mark {
+    font-size: clamp(5.6rem, 28vw, 12rem);
+  }
 }
 
 @media (max-width: 768px) {
@@ -3669,6 +3721,10 @@ html.theme-dark .c-cta select option {
   .c-hero__title {
     font-size: var(--display);
     line-height: 0.92;
+  }
+
+  .c-foot__mark {
+    font-size: clamp(3.2rem, 22vw, 5.5rem);
   }
 
   .c-rail {

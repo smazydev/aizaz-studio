@@ -37,9 +37,6 @@ const components: PortableTextComponents = {
         },
     },
     marks: {
-        strong: ({ children }) => `<strong>${children}</strong>`,
-        em: ({ children }) => `<em>${children}</em>`,
-        underline: ({ children }) => `<u>${children}</u>`,
         link: ({ children, value }) => {
             const href = (value as { href?: string })?.href?.trim() || '#';
             const safeHref = escapeHtml(href);
@@ -47,16 +44,7 @@ const components: PortableTextComponents = {
         },
         code: ({ children }) => `<code>${children}</code>`,
     },
-    list: {
-        bullet: ({ children }) => `<ul>${children}</ul>`,
-        number: ({ children }) => `<ol>${children}</ol>`,
-    },
-    listItem: {
-        bullet: ({ children }) => `<li>${children}</li>`,
-        number: ({ children }) => `<li>${children}</li>`,
-    },
     block: {
-        normal: ({ children }) => `<p>${children}</p>`,
         h2: ({ children }) => `<h2>${children}</h2>`,
         h3: ({ children }) => `<h3>${children}</h3>`,
         h4: ({ children }) => `<h4>${children}</h4>`,

@@ -1,20 +1,22 @@
 ---
 import { Image } from 'astro:assets';
-import { caseStudies, HOMEPAGE_PROOF_SLUGS } from '../../data/caseStudies';
-import CaseStudyCard from '../CaseStudyCard.astro';
+import { caseStudies } from '../../data/caseStudies';
 import Hero from './Hero.astro';
 import HomeFeatures from './HomeFeatures.astro';
 import TechLogoStrip from './TechLogoStrip.astro';
 import SiteNav from '../site/SiteNav.astro';
 import SiteFooter from '../site/SiteFooter.astro';
 import { siteFooter } from '../../data/siteChrome';
+import { leadershipProfiles } from '../../data/leadership';
 import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
 import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
+import TeamPortrait from '../TeamPortrait.astro';
 import ContactForm from '../ContactForm.astro';
 import emblemRender from '../../assets/aizaz-emblem.png';
 
 const publicCaseStudies = filterPublicCaseStudies(caseStudies);
 
+const isDev = import.meta.env.DEV;
 const services = [
   {
     n: '01',
@@ -62,16 +64,24 @@ const process = [
   { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
 ];
 
+const leaders = leadershipProfiles;
+
 const contactEmail = siteFooter.studio.email;
 const contactPhone = siteFooter.studio.phone;
 const contactPhoneHref = siteFooter.studio.phoneHref;
 
-const shippedStudies = HOMEPAGE_PROOF_SLUGS
-  .map((slug) => publicCaseStudies.find((study) => study.slug === slug))
-  .filter((study): study is (typeof publicCaseStudies)[number] => Boolean(study));
+const shippedStudies = publicCaseStudies.map((study) => {
+  return {
+    href: `/case-studies/${study.slug}`,
+    name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
+    category: (study.category.split('•')[0] || study.category).trim(),
+    summary: study.subtitle.replace(/\s+/g, ' ').trim(),
+    image: study.image,
+  };
+});
 
 const faqs = [
-  { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3 to 8 weeks depending on scope and complexity. We move from discovery to deployment with regular progress reviews.' },
+  { q: 'What’s the typical timeline from idea to v1?', a: 'Typically 3–8 weeks depending on scope and complexity. We move from discovery to deployment with regular check-ins.' },
   { q: 'What do we need to start?', a: 'A clear problem statement, success metrics, access to sample data, and a stakeholder who can make decisions. We’ll run a kickoff workshop to align scope.' },
   { q: 'Which models/stack do you use?', a: 'Modern, scalable stacks like React, Node.js, and cloud services. We choose models/APIs based on the use case, performance, and cost.' },
   { q: 'How do engagements work?', a: 'Scoped sprints and project delivery, not opaque retainers. We align on outcomes, then ship with clear ownership through launch.' },
@@ -81,6 +91,15 @@ const homeQuote = featuredFeedback;
 ---
 
 <div class="clone">
+  {isDev && (
+    <>
+      <div class="ref-overlay" data-ref-overlay hidden>
+        <img src="/dev/reference-home.jpg" alt="" />
+      </div>
+      <div class="ref-chip">Shift+R</div>
+    </>
+  )}
+
   <SiteNav />
 
   <main>
@@ -92,7 +111,7 @@ const homeQuote = featuredFeedback;
       <div class="c-wrap home-human-ai__head">
         <div class="home-human-ai__heading">
           <p class="c-micro c-red">About Us</p>
-          <h2 class="home-human-ai__title">Senior engineering,<br /> <span class="home-human-ai__phrase">built for production</span></h2>
+          <h2 class="home-human-ai__title">Senior<br />engineering,<br />built for<br />production</h2>
           <p class="c-lede home-human-ai__lede">
             AI, SaaS, integrations, and cloud systems for teams that need working software, not slide decks. Available for remote projects worldwide.
           </p>
@@ -114,9 +133,9 @@ const homeQuote = featuredFeedback;
       <div class="home-services__inner">
         <div class="home-services__head">
           <p class="c-micro c-red">Services</p>
-          <h2 class="home-services__title">Engineering services</h2>
+          <h2 class="home-services__title">Engineering<br />services</h2>
           <p class="c-lede home-services__lede">
-            AI automation, product, integrations, NetSuite, and cloud, scoped to the systems you already run, then owned through production.
+            AI automation, product, integrations, NetSuite, and cloud — scoped to the systems you already run, then owned through production.
           </p>
         </div>
         <div class="home-services__acc" role="list">
@@ -153,7 +172,7 @@ const homeQuote = featuredFeedback;
     <section class="home-process" data-process>
       <div class="home-process__inner">
         <p class="home-process__mark">03 / Process</p>
-        <h2 class="home-process__title">From Idea to Production.</h2>
+        <h2 class="home-process__title">From Idea<br />to Production.</h2>
         <div class="home-process__board">
           <svg class="home-process__rail home-process__rail--map" viewBox="0 0 1440 640" preserveAspectRatio="none" aria-hidden="true">
             <g class="home-process__grid">
@@ -228,22 +247,78 @@ const homeQuote = featuredFeedback;
     <!-- 13–15 DARK / METRIC / TESTIMONIAL -->
     <section class="c-dark">
       <div class="c-wrap">
+        <div class="c-team" id="team">
+          <div class="c-dark__intro">
+            <div>
+              <p class="c-micro">Meet the team</p>
+              <h2 class="c-h1">A studio built<br />to ship systems</h2>
+            </div>
+            <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
+          </div>
+
+          <div class="c-roster" aria-label="Leadership">
+            {leaders.map((p) => (
+              <article class="c-member">
+                <div class="c-member__media">
+                  <TeamPortrait
+                    person={p}
+                    class="c-member__photo"
+                    objectPosition="center center"
+                    widths={[176, 240, 360, 480]}
+                    sizes="(max-width: 699px) 96px, (max-width: 1199px) 28vw, 18vw"
+                    width={480}
+                    height={480}
+                  />
+                </div>
+                <div class="c-member__body">
+                  <h3 class="c-member__name">{p.name}</h3>
+                  <p class="c-member__role">{p.role}</p>
+                  <p class="c-member__tags">{p.focus.slice(0, 3).join(' · ')}</p>
+                  <div class="c-member__links">
+                    {p.linkedin && (
+                      <a href={p.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    )}
+                    {p.githubUrl && (
+                      <a href={p.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
         <div class="c-dark__growth">
           <div>
-            <p class="c-micro">Proof</p>
-            <h2 class="c-dark__ship-title">Real systems in production</h2>
+            <p class="c-micro">Case studies</p>
+            <h2 class="c-dark__ship-title">Systems that ship</h2>
           </div>
-          <p class="c-lede c-dark__ship-lede">Each case study shows the problem, the system delivered, and the engineering behind it.</p>
+          <p class="c-lede c-dark__ship-lede">Public work across compliance, SaaS, developer tooling, and sales platforms. Every card opens the full case study.</p>
         </div>
 
         <div class="c-proof">
-          {shippedStudies.map((study, index) => (
-            <CaseStudyCard
-              study={study}
-              tone="dark"
-              priority={index === 0}
-              sizes="(min-width: 1100px) 30vw, (min-width: 769px) 46vw, 92vw"
-            />
+          {shippedStudies.map((study) => (
+            <a class="c-proof__card" href={study.href}>
+              <div class="c-proof__media sp-media-frame sp-media-frame--43">
+                <Image
+                  class="c-proof__shot"
+                  src={study.image}
+                  alt={study.name}
+                  width={720}
+                  widths={[360, 720, 960]}
+                  sizes="(min-width: 900px) 22vw, 90vw"
+                  quality={72}
+                />
+              </div>
+              <div class="c-proof__body">
+                <p class="c-micro">{study.category}</p>
+                <h3>{study.name}</h3>
+                <p class="c-proof__summary">{study.summary}</p>
+                <span class="c-proof__go">
+                  View case study <span aria-hidden="true">↗</span>
+                </span>
+              </div>
+            </a>
           ))}
         </div>
 
@@ -365,12 +440,12 @@ const homeQuote = featuredFeedback;
           <article class="c-plan">
             <p class="c-micro">Sprint: focused delivery</p>
             <p class="c-plan__amount" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Scoped sprint</p>
-            <p class="c-lede" style="margin-top: 18px">Prove value quickly with a working slice, a clear go or no go decision, and a path to production.</p>
+            <p class="c-lede" style="margin-top: 18px">Prove value quickly with a working slice, clear go/no-go, and a path to production.</p>
             <ul>
               <li>Discovery workshop</li>
               <li>Opportunity brief</li>
               <li>Working prototype or spike</li>
-              <li>Defined next step roadmap</li>
+              <li>Defined next-step roadmap</li>
             </ul>
             <a class="c-btn" href="/ai-systems-sprint" style="margin-top: 32px">AI Systems Sprint</a>
           </article>
@@ -384,7 +459,7 @@ const homeQuote = featuredFeedback;
               <li>Architecture and delivery plan</li>
               <li>CI/CD, tracing, alerts</li>
               <li>Integrations and data flows</li>
-              <li>Production ready ownership</li>
+              <li>Production-ready ownership</li>
             </ul>
             <a class="c-btn" href="/engagement-models" style="margin-top: 32px">Engagement models</a>
           </article>
@@ -396,7 +471,7 @@ const homeQuote = featuredFeedback;
     <section class="c-faq">
       <div class="c-wrap">
         <p class="c-micro c-red">FAQs</p>
-        <h2 class="c-h2 c-faq__title">Frequently Asked Questions</h2>
+        <h2 class="c-h2">Frequently Asked Questions</h2>
         {faqs.map((f) => (
           <details>
             <summary>{f.q}<span>+</span></summary>
@@ -413,7 +488,7 @@ const homeQuote = featuredFeedback;
           <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
           <div class="c-cta__copy">
             <p class="c-micro">Contact</p>
-            <h2 class="c-h1">Let’s build<br />the next system</h2>
+            <h2 class="c-h1">Let’s build<br />the next<br />system</h2>
             <p class="c-cta__lede">
               Tell us what you need to ship.
               <a href={`mailto:${contactEmail}`}>{contactEmail}</a>

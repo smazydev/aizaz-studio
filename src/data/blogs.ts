@@ -24,7 +24,7 @@ export const blogs: BlogPost[] = [
         slug: 'ai-automation-workflows-for-operations-teams',
         title: 'AI Automation Workflow Examples for Operations Teams',
         excerpt:
-            'Four workflow patterns ops teams usually automate first, and what has to be true before any of them is worth building.',
+            'Four workflow patterns ops teams usually automate first — and what has to be true before any of them is worth building.',
         date: 'January 8, 2026',
         updatedAt: '2026-08-29T00:00:00.000Z',
         authorKey: 'ali',
@@ -95,7 +95,7 @@ Do not ask which AI tool to buy. Ask which daily workflow costs the most time �
         slug: 'netsuite-shopify-integration-pitfalls',
         title: 'NetSuite + Shopify Sync: 5 Failures We See (and How to Fix Them)',
         excerpt:
-            'Order sync errors, inventory drift, and silent failures are usually architecture problems, not "NetSuite being NetSuite."',
+            'Order sync errors, inventory drift, and silent failures are usually architecture problems — not "NetSuite being NetSuite."',
         date: 'December 20, 2025',
         updatedAt: '2026-08-29T00:00:00.000Z',
         authorKey: 'nasir',
@@ -172,7 +172,7 @@ If your team manually fixes sync errors every week, you do not have a NetSuite p
         slug: 'building-production-ready-saas-mvp',
         title: 'From MVP to Production: What Founders Skip (and Regret Later)',
         excerpt:
-            'Shipping fast matters. Shipping on a foundation that survives real users matters more: auth, data model, deploys, and observability are not "later" problems.',
+            'Shipping fast matters. Shipping on a foundation that survives real users matters more — auth, data model, deploys, and observability are not "later" problems.',
         date: 'November 15, 2025',
         authorKey: 'ali',
         readTime: '6 min read',
@@ -235,7 +235,7 @@ Speed and quality are not opposites when you scope ruthlessly and engineer delib
         slug: 'identify-workflows-worth-automating-with-ai',
         title: 'How to Identify Workflows Worth Automating with AI',
         excerpt:
-            'A practical filter for founders and ops leaders: which manual workflows deserve automation now, and which should stay human.',
+            'A practical filter for founders and ops leaders: which manual workflows deserve automation now — and which should stay human.',
         date: 'February 2, 2026',
         authorKey: 'ayaz',
         readTime: '7 min read',
@@ -292,7 +292,7 @@ Pick one workflow with daily volume, clear systems, and measurable pain. That is
         slug: 'ai-agent-vs-chatbot-for-business',
         title: 'AI Agent vs Chatbot: What Should Your Business Build?',
         excerpt:
-            'Chatbots answer and route. Agents take action across your systems. Here is how to choose, and when to build both in sequence.',
+            'Chatbots answer and route. Agents take action across your systems. Here is how to choose — and when to build both in sequence.',
         date: 'February 10, 2026',
         updatedAt: '2026-08-29T00:00:00.000Z',
         authorKey: 'ali',
@@ -354,7 +354,7 @@ If users need answers, start with a chatbot. If your team needs work done across
         slug: 'how-much-does-ai-automation-cost',
         title: 'How Much Does AI Automation Cost?',
         excerpt:
-            'What actually drives pricing: scope, integrations, failure handling, and why fixed sprints beat open-ended hourly work for a first workflow.',
+            'What actually drives pricing — scope, integrations, failure handling, and why fixed sprints beat open-ended hourly work for a first workflow.',
         date: 'February 18, 2026',
         updatedAt: '2026-08-29T00:00:00.000Z',
         authorKey: 'ayaz',
@@ -406,7 +406,7 @@ Get a fixed scope for the first workflow. Measure what changed. Expand with data
         slug: 'rescue-a-half-built-saas-product',
         title: 'How to Rescue a Half Built SaaS Product',
         excerpt:
-            'When your MVP stalled, deploys fail, or the codebase is a black box: a senior-led path that starts with audit and stabilization, not a rewrite pitch.',
+            'When your MVP stalled, deploys fail, or the codebase is a black box — a senior-led path that starts with audit and stabilization, not a rewrite pitch.',
         date: 'March 1, 2026',
         authorKey: 'ali',
         readTime: '8 min read',
@@ -485,7 +485,7 @@ Stay on Vercel until backend and ops requirements clearly exceed the platform. T
         slug: 'cicd-checklist-early-stage-saas',
         title: 'CI/CD Checklist for Early Stage SaaS',
         excerpt:
-            'The minimum pipeline serious SaaS teams need before customer count scales: environments, deploys, secrets, monitoring, and rollback.',
+            'The minimum pipeline serious SaaS teams need before customer count scales — environments, deploys, secrets, monitoring, and rollback.',
         date: 'March 15, 2026',
         authorKey: 'ali',
         readTime: '5 min read',
