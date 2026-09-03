@@ -73,6 +73,13 @@ const articleSchema = {
   mainEntityOfPage: `${SITE_URL}${canonicalPath}`,
   ...(ogImage ? { image: ogImage } : {}),
 };
+const projectFacts = [
+  { label: 'Client', value: study.client },
+  { label: 'Location', value: study.location },
+  { label: 'Industry', value: study.industry },
+  { label: 'Engagement', value: study.projectValue },
+  { label: 'Delivery', value: study.deliveryDuration },
+].filter((fact): fact is { label: string; value: string } => Boolean(fact.value));
 ---
 
 <SiteShell
@@ -87,138 +94,168 @@ const articleSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <article class="works-detail">
-    <header class="page-hero">
+    <header class="works-detail__intro">
       <div class="c-wrap">
-        <p class="c-micro c-red">{study.category}</p>
-        <h1 class="page-title">{study.subtitle}</h1>
-        <p class="c-lede page-hero__lede">{study.description}</p>
-        {study.author && (
-          <div class="works-detail__author">
-            <AuthorCard author={study.author} wrapperClass="text-left" />
+        <div class="works-detail__intro-grid">
+          <div class="works-detail__heading">
+            <p class="c-micro c-red">Case study <span aria-hidden="true">/</span> {study.category}</p>
+            <h1>{study.title}</h1>
+            <p class="works-detail__subtitle">{study.subtitle}</p>
           </div>
-        )}
-        {study.deliveredBy && <p class="c-lede works-detail__note">Delivered by {study.deliveredBy}</p>}
-        {study.engagementNote && <p class="c-lede works-detail__note">{study.engagementNote}</p>}
+          <div class="works-detail__summary">
+            <p>{study.description}</p>
+            {study.author && (
+              <div class="works-detail__author">
+                <AuthorCard author={study.author} wrapperClass="text-left" />
+              </div>
+            )}
+            {(study.deliveredBy || study.engagementNote) && (
+              <div class="works-detail__provenance">
+                {study.deliveredBy && <p>Delivered by {study.deliveredBy}</p>}
+                {study.engagementNote && <p>{study.engagementNote}</p>}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </header>
 
-    {(study.client || study.location || study.industry || study.projectValue || study.deliveryDuration) && (
-      <section class="sp-section sp-section--tight">
-        <div class="c-wrap">
-          <div class="sp-grid sp-grid--3">
-            {study.client && <div class="sp-card"><p class="c-micro">Client</p><p class="sp-card__title">{study.client}</p></div>}
-            {study.location && <div class="sp-card"><p class="c-micro">Location</p><p class="sp-card__title">{study.location}</p></div>}
-            {study.industry && <div class="sp-card"><p class="c-micro">Industry</p><p class="sp-card__title">{study.industry}</p></div>}
-            {study.projectValue && <div class="sp-card"><p class="c-micro">Engagement</p><p class="sp-card__title">{study.projectValue}</p></div>}
-            {study.deliveryDuration && <div class="sp-card"><p class="c-micro">Delivery</p><p class="sp-card__title">{study.deliveryDuration}</p></div>}
-          </div>
-        </div>
-      </section>
-    )}
-
-    {study.atAGlance && study.atAGlance.length > 0 && (
-      <section class="sp-section sp-section--tight">
-        <div class="c-wrap">
-          <div class="sp-grid sp-grid--3">
-            {study.atAGlance.map((item) => (
-              <div class="sp-card" style="text-align:center">
-                <p class="sp-card__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem)">{item.value}</p>
-                <p class="c-lede sp-card__body">{item.label}</p>
-                {item.sublabel && <p class="c-micro" style="margin-top:8px">{item.sublabel}</p>}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
-
-    <section class="sp-section sp-section--tight">
+    <section class="works-detail__visual" aria-label={`${study.title} project preview`}>
       <div class="c-wrap">
-        <div class="works-detail__hero sp-media-frame sp-media-frame--43">
+        <figure class="works-detail__hero">
           {study.imageUrl ? (
-            <img src={study.imageUrl} alt={study.title} loading="eager" fetchpriority="high" width="1600" height="900" />
+            <img src={study.imageUrl} alt={study.title} loading="eager" fetchpriority="high" decoding="async" width="1600" height="900" />
           ) : (
             <LocalImage src={study.image} alt={study.title} loading="eager" fetchpriority="high" kind="hero" width={1600} />
           )}
-        </div>
+          <figcaption>
+            <span>{study.client ?? study.title}</span>
+            <span>{study.category}</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
+    {(projectFacts.length > 0 || (study.atAGlance && study.atAGlance.length > 0)) && (
+      <section class="works-detail__snapshot" aria-labelledby="project-snapshot-title">
+        <div class="c-wrap">
+          <header class="works-detail__snapshot-header">
+            <p class="c-micro c-red">Project snapshot</p>
+            <h2 id="project-snapshot-title">The work at a glance</h2>
+          </header>
+          {projectFacts.length > 0 && (
+            <dl class="works-detail__facts">
+              {projectFacts.map((fact, index) => (
+                <div>
+                  <dt><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {study.atAGlance && study.atAGlance.length > 0 && (
+            <div class="works-detail__stats">
+              {study.atAGlance.map((item) => (
+                <article>
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                  {item.sublabel && <small>{item.sublabel}</small>}
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
     <div class="c-wrap works-detail__body">
       {study.testimonial && (
-        <section class="works-detail__block">
-          <div class="sp-card">
-            {study.testimonial.rating && <p class="c-micro c-red">{study.testimonial.rating}</p>}
-            <blockquote class="works-detail__quote">“{study.testimonial.quote}”</blockquote>
-            <p class="c-lede">
+        <section class="works-detail__block works-detail__testimonial">
+          <p class="c-micro c-red">Client perspective</p>
+          {study.testimonial.rating && <p class="works-detail__rating">{study.testimonial.rating}</p>}
+          <blockquote class="works-detail__quote">“{study.testimonial.quote}”</blockquote>
+          <footer>
+            <p>
               — {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
               {study.testimonial.source ? ` · ${study.testimonial.source}` : ''}
             </p>
-            {study.testimonial.engagementMeta && <p class="c-micro" style="margin-top:12px">{study.testimonial.engagementMeta}</p>}
-          </div>
+            {study.testimonial.engagementMeta && <p>{study.testimonial.engagementMeta}</p>}
+          </footer>
         </section>
       )}
 
       {study.engagement && study.engagement.length > 0 && (
         <section class="works-detail__block">
-          <h2 class="page-h2">Project details</h2>
-          <div class="sp-grid" style="margin-top: 20px">
+          <header class="works-detail__section-heading">
+            <p class="c-micro c-red">Engagement</p>
+            <h2>Project details</h2>
+          </header>
+          <dl class="works-detail__detail-list">
             {study.engagement.map((detail) => (
-              <div class="sp-card">
-                <p class="c-micro">{detail.label}</p>
-                <p class="sp-card__title">{detail.value}</p>
+              <div>
+                <dt>{detail.label}</dt>
+                <dd>{detail.value}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
       )}
 
-      {study.detailedContent?.map((section) => (
+      {study.detailedContent?.map((section, sectionIndex) => (
         <section class="works-detail__block">
-          <h2 class="page-h2">{section.title}</h2>
-          {section.content && <p class="c-lede" style="margin-top: 16px">{section.content}</p>}
+          <header class="works-detail__section-heading">
+            <p class="works-detail__section-index" aria-hidden="true">
+              {String(sectionIndex + 1).padStart(2, '0')}
+            </p>
+            <div>
+              <h2>{section.title}</h2>
+              {section.content && <p>{section.content}</p>}
+            </div>
+          </header>
           {section.items && (
             <div class="works-detail__items">
               {section.items.map((item) => (
-                <div class="sp-card">
-                  <h3 class="sp-card__title">{item.title}</h3>
-                  {item.description && <p class="c-lede sp-card__body">{item.description}</p>}
-                  {item.points && (
-                    <ul class="sp-list" style="margin-top: 14px">
-                      {item.points.map((point) => <li>{point}</li>)}
-                    </ul>
-                  )}
-                  {item.table && (
-                    <div class="sp-table-wrap" style="margin-top: 16px">
-                      <table class="sp-table">
-                        <thead>
-                          <tr>
-                            <th>{item.tableHeaders?.left ?? 'Item'}</th>
-                            <th>{item.tableHeaders?.right ?? 'Value'}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {item.table.map((row) => (
+                <article class="works-detail__card">
+                  <div class="works-detail__card-copy">
+                    <h3>{item.title}</h3>
+                    {item.description && <p>{item.description}</p>}
+                    {item.points && (
+                      <ul>
+                        {item.points.map((point) => <li>{point}</li>)}
+                      </ul>
+                    )}
+                    {item.table && (
+                      <div class="sp-table-wrap">
+                        <table class="sp-table">
+                          <thead>
                             <tr>
-                              <td>{row.label}</td>
-                              <td>{row.value}</td>
+                              <th>{item.tableHeaders?.left ?? 'Item'}</th>
+                              <th>{item.tableHeaders?.right ?? 'Value'}</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                  {item.tableCaption && <p class="c-micro" style="margin-top:10px">{item.tableCaption}</p>}
+                          </thead>
+                          <tbody>
+                            {item.table.map((row) => (
+                              <tr>
+                                <td>{row.label}</td>
+                                <td>{row.value}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                    {item.tableCaption && <p class="works-detail__caption">{item.tableCaption}</p>}
+                  </div>
                   {item.image ? (
-                    <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
+                    <figure class="works-detail__media">
                       <LocalImage src={item.image} alt={item.title} kind="content" width={1200} />
-                    </div>
+                    </figure>
                   ) : item.imageUrl ? (
-                    <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
-                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="1200" height="800" />
-                    </div>
+                    <figure class="works-detail__media">
+                      <img src={item.imageUrl} alt={item.title} loading="lazy" decoding="async" width="1200" height="800" />
+                    </figure>
                   ) : null}
-                </div>
+                </article>
               ))}
             </div>
           )}
@@ -228,33 +265,38 @@ const articleSchema = {
       {!study.detailedContent && (
         <>
           <section class="works-detail__block">
-            <h2 class="page-h2">The challenge</h2>
-            <p class="c-lede" style="margin-top: 16px">{study.content.challenge}</p>
+            <header class="works-detail__section-heading">
+              <p class="works-detail__section-index" aria-hidden="true">01</p>
+              <div><h2>The challenge</h2><p>{study.content.challenge}</p></div>
+            </header>
           </section>
           {study.content.testimonial && (
-            <section class="works-detail__block">
-              <div class="sp-card">
-                <blockquote class="works-detail__quote">“{study.content.testimonial.quote}”</blockquote>
-                <p class="c-lede">— {study.content.testimonial.author}, {study.content.testimonial.role}</p>
-              </div>
+            <section class="works-detail__block works-detail__testimonial">
+              <p class="c-micro c-red">Client perspective</p>
+              <blockquote class="works-detail__quote">“{study.content.testimonial.quote}”</blockquote>
+              <footer><p>— {study.content.testimonial.author}, {study.content.testimonial.role}</p></footer>
             </section>
           )}
           <section class="works-detail__block">
-            <h2 class="page-h2">Our solution</h2>
-            <p class="c-lede" style="margin-top: 16px">{study.content.solution}</p>
+            <header class="works-detail__section-heading">
+              <p class="works-detail__section-index" aria-hidden="true">02</p>
+              <div><h2>Our solution</h2><p>{study.content.solution}</p></div>
+            </header>
             {study.gallery?.[0] && (
-              <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
-                <img src={study.gallery[0]} alt="Solution details" loading="lazy" />
-              </div>
+              <figure class="works-detail__media">
+                <img src={study.gallery[0]} alt="Solution details" loading="lazy" decoding="async" />
+              </figure>
             )}
           </section>
           <section class="works-detail__block">
-            <h2 class="page-h2">The outcome</h2>
-            <p class="c-lede" style="margin-top: 16px">{study.content.outcome}</p>
+            <header class="works-detail__section-heading">
+              <p class="works-detail__section-index" aria-hidden="true">03</p>
+              <div><h2>The outcome</h2><p>{study.content.outcome}</p></div>
+            </header>
             {study.gallery?.[1] && (
-              <div class="works-detail__media sp-media-frame sp-media-frame--21 sp-media-frame--contain">
-                <img src={study.gallery[1]} alt="Outcome details" loading="lazy" />
-              </div>
+              <figure class="works-detail__media">
+                <img src={study.gallery[1]} alt="Outcome details" loading="lazy" decoding="async" />
+              </figure>
             )}
           </section>
         </>
