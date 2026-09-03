@@ -1438,3 +1438,11 @@ a.sp-card:hover {
     margin-bottom: 28px;
   }
 }
+
+.page-sentinel--works .page-hero__below {
+  max-width: min(42rem, 100%);
+}
+
+.page-sentinel--works .page-hero {
+  padding-bottom: 28px;
+}

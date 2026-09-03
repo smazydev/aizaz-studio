@@ -6,11 +6,14 @@ import PageHero from '../components/PageHero.astro';
 import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
 import PageCTA from '../components/PageCTA.astro';
 import PageSentinel from '../components/PageSentinel.astro';
+import ReviewCarousel from '../components/ReviewCarousel.astro';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 import { BOOKING_URL } from '../data/siteConfig';
+import { reviewsFromCaseStudies } from '../data/homeFeedback';
 
 const caseStudies = await getAllCaseStudies();
+const reviews = reviewsFromCaseStudies(caseStudies);
 /** Independent of Homepage CMS — full public listing order from getAllCaseStudies(). */
 const showcaseItems = caseStudies.map((study) => ({
   study,
@@ -33,6 +36,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
     >
       <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
       <a class="c-btn c-btn--ghost" href="/services">Services</a>
+      <ReviewCarousel slot="below" items={reviews} />
     </PageHero>
   </PageSentinel>
 

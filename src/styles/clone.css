@@ -344,6 +344,11 @@ html.theme-dark .clone .c-cta__panel {
   margin-top: 28px;
 }
 
+.page-hero__below {
+  margin-top: 28px;
+  max-width: min(42rem, 100%);
+}
+
 .page-crumbs {
   display: flex;
   flex-wrap: wrap;

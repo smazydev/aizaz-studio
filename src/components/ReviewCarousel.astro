@@ -1,0 +1,94 @@
+---
+import '../styles/review-carousel.css';
+import type { ReviewCardItem } from '../data/homeFeedback';
+
+interface Props {
+  items: ReviewCardItem[];
+}
+
+const { items } = Astro.props;
+const columnCount = items.length >= 3 ? 3 : Math.max(items.length, 1);
+const columns = Array.from({ length: columnCount }, (_, col) => [
+  ...items.slice(col),
+  ...items.slice(0, col),
+]);
+---
+
+{items.length > 0 && (
+  <div class="review-carousel" aria-label="Client reviews">
+    <div class="review-carousel__cols" style={`--review-cols: ${columnCount}`}>
+      {columns.map((column, colIndex) => (
+        <div
+          class:list={[
+            'review-carousel__col',
+            colIndex % 2 === 1 && 'review-carousel__col--rev',
+          ]}
+          style={`--review-speed: ${28 + colIndex * 6}s`}
+        >
+          <div class="review-carousel__track">
+            {[0, 1].map((copy) => (
+              <div
+                class="review-carousel__copy"
+                aria-hidden={copy === 1 ? 'true' : undefined}
+                inert={copy === 1 ? true : undefined}
+              >
+                {column.map((item) => {
+                  const inner = (
+                    <>
+                      <header class="review-card__head">
+                        <span class="review-card__avatar" aria-hidden="true">{item.initials}</span>
+                        <span class="review-card__who">
+                          <strong>{item.author}</strong>
+                          <span>{item.meta}</span>
+                        </span>
+                        <span class="review-card__platform" title={item.sourceLabel}>
+                          {item.sourceIsUpwork ? (
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                              <path
+                                fill="currentColor"
+                                d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.43-1.235-1.856-2.056-4.082-2.522-5.968h-2.522v7.168c0 1.4-1.14 2.54-2.54 2.54s-2.54-1.14-2.54-2.54V3.48H.615v7.168c0 2.854 2.32 5.174 5.174 5.174 2.855 0 5.175-2.32 5.175-5.174v-1.21c.529 1.118 1.182 2.185 1.974 3.118l-1.668 7.873h2.633l1.204-5.692c1.048.85 2.266 1.376 3.654 1.376 3.033 0 5.491-2.475 5.491-5.508 0-3.035-2.458-5.509-5.491-5.509z"
+                              />
+                            </svg>
+                          ) : (
+                            <span>{item.sourceLabel.slice(0, 1)}</span>
+                          )}
+                        </span>
+                      </header>
+                      <p class="review-card__rating">
+                        <span class="review-card__stars" aria-label="5 out of 5 stars">
+                          {Array.from({ length: 5 }).map(() => (
+                            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                              <path
+                                fill="currentColor"
+                                d="M10 1.6l2.24 4.54 5.01.73-3.63 3.54.86 5-4.48-2.36L5.52 15.4l.86-5-3.63-3.54 5.01-.73L10 1.6z"
+                              />
+                            </svg>
+                          ))}
+                        </span>
+                        <span class="review-card__verified" title="Verified client">
+                          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                            <path
+                              fill="currentColor"
+                              d="M6.2 10.6 3.9 8.3l.9-.9 1.4 1.4 4-4 .9.9-4.9 4.9z"
+                            />
+                          </svg>
+                          <span class="visually-hidden">Verified</span>
+                        </span>
+                      </p>
+                      <p class="review-card__quote">“{item.quote}”</p>
+                    </>
+                  );
+                  return item.href ? (
+                    <a class="review-card" href={item.href}>{inner}</a>
+                  ) : (
+                    <article class="review-card">{inner}</article>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}

@@ -112,3 +112,41 @@ export const secondaryFeedback: HomeFeedbackItem[] = withTestimonials
     ...item,
     quote: excerptQuote(item.quote),
   }));
+
+export type ReviewCardItem = {
+  quote: string;
+  author: string;
+  meta: string;
+  initials: string;
+  sourceIsUpwork: boolean;
+  sourceLabel: string;
+  href?: string;
+};
+
+function initialsFromName(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'AS';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+
+export function reviewsFromCaseStudies(
+  studies: (typeof caseStudies)[number][],
+): ReviewCardItem[] {
+  return studies
+    .map(buildFeedback)
+    .filter((item): item is HomeFeedbackItem => Boolean(item))
+    .map((item) => {
+      const roleOrWork = item.role || item.work || item.project;
+      const meta = [roleOrWork, item.sourceLabel].filter(Boolean).join(' · ');
+      return {
+        quote: excerptQuote(item.quote, 180),
+        author: item.author,
+        meta,
+        initials: initialsFromName(item.author),
+        sourceIsUpwork: item.sourceIsUpwork,
+        sourceLabel: item.sourceLabel,
+        href: item.href,
+      };
+    });
+}

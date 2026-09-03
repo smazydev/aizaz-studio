@@ -33,5 +33,10 @@ const {
         <slot />
       </div>
     )}
+    {Astro.slots.has('below') && (
+      <div class="page-hero__below">
+        <slot name="below" />
+      </div>
+    )}
   </div>
 </section>
