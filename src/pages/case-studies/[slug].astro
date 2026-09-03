@@ -7,6 +7,7 @@ import { SITE_URL } from '../../data/seoPages';
 import { BOOKING_URL, isExternalHref } from '../../data/siteConfig';
 import { getCaseStudyBySlug } from '../../lib/sanity/caseStudies';
 import AuthorCard from '../../components/AuthorCard.astro';
+import { Image } from 'astro:assets';
 import LocalImage from '../../components/LocalImage.astro';
 import RelatedContent from '../../components/RelatedContent.astro';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
@@ -134,11 +135,41 @@ const articleSchema = {
 
     <section class="sp-section sp-section--tight">
       <div class="c-wrap">
-        <div class="works-detail__hero sp-media-frame sp-media-frame--43">
+        <div class:list={['works-detail__hero', 'cs-cover-frame', study.coverFit === 'contain' && 'works-detail__hero--contain']}>
           {study.imageUrl ? (
-            <img src={study.imageUrl} alt={study.title} loading="eager" fetchpriority="high" width="1600" height="900" />
+            <img
+              src={study.imageUrl}
+              alt={study.imageAlt ?? study.title}
+              loading="eager"
+              fetchpriority="high"
+              width="2048"
+              height="958"
+              decoding="async"
+            />
+          ) : study.coverFit === 'contain' ? (
+            <Image
+              src={study.image}
+              alt={study.imageAlt ?? study.title}
+              width={1536}
+              height={1024}
+              widths={[640, 960, 1280, 1536]}
+              sizes="(min-width: 1100px) min(1340px, 92vw), 92vw"
+              quality={88}
+              loading="eager"
+              fetchpriority="high"
+            />
           ) : (
-            <LocalImage src={study.image} alt={study.title} loading="eager" fetchpriority="high" kind="hero" width={1600} />
+            <Image
+              src={study.image}
+              alt={study.imageAlt ?? study.title}
+              width={2048}
+              height={958}
+              widths={[960, 1280, 1600, 2048, 3008]}
+              sizes="(min-width: 1100px) min(1340px, 92vw), 92vw"
+              quality={88}
+              loading="eager"
+              fetchpriority="high"
+            />
           )}
         </div>
       </div>
@@ -151,7 +182,7 @@ const articleSchema = {
             {study.testimonial.rating && <p class="c-micro c-red">{study.testimonial.rating}</p>}
             <blockquote class="works-detail__quote">“{study.testimonial.quote}”</blockquote>
             <p class="c-lede">
-              — {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
+              {study.testimonial.author}{study.testimonial.role ? `, ${study.testimonial.role}` : ''}
               {study.testimonial.source ? ` · ${study.testimonial.source}` : ''}
             </p>
             {study.testimonial.engagementMeta && <p class="c-micro" style="margin-top:12px">{study.testimonial.engagementMeta}</p>}
@@ -235,7 +266,7 @@ const articleSchema = {
             <section class="works-detail__block">
               <div class="sp-card">
                 <blockquote class="works-detail__quote">“{study.content.testimonial.quote}”</blockquote>
-                <p class="c-lede">— {study.content.testimonial.author}, {study.content.testimonial.role}</p>
+                <p class="c-lede">{study.content.testimonial.author}, {study.content.testimonial.role}</p>
               </div>
             </section>
           )}

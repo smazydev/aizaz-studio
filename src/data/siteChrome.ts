@@ -4,7 +4,7 @@ export const siteNav = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '/case-studies', label: 'Works' },
+  { href: '/case-studies', label: 'Case Studies' },
   { href: '/process', label: 'Process' },
   { href: '/blog', label: 'Blog' },
 ] as const;
@@ -12,7 +12,7 @@ export const siteNav = [
 export const siteFooter = {
   studio: {
     heading: 'Studio',
-    blurb: 'AI, software platforms, and integrations for operations-heavy teams.',
+    blurb: 'AI, software platforms, and integrations for operations heavy teams.',
     email: 'hello@aizaz.studio',
     phone: '+92 334 2056691',
     phoneHref: 'tel:+923342056691',

@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import type { CaseStudy } from '../data/caseStudies';
+
+interface Props {
+  study: CaseStudy;
+  headingLevel?: 2 | 3;
+  priority?: boolean;
+  tone?: 'light' | 'dark';
+  /** Layout hint for responsive srcset selection. */
+  sizes?: string;
+}
+
+const {
+  study,
+  headingLevel = 3,
+  priority = false,
+  tone = 'light',
+  // Listing is a single full-bleed column; homepage proof overrides with ~30vw.
+  sizes = '(min-width: 1100px) min(1340px, 92vw), 92vw',
+} = Astro.props;
+const href = `/case-studies/${study.slug}`;
+const alt = study.imageAlt?.trim() || `${study.title} cover illustration`;
+const category = (study.category.split('•')[0] || study.category).trim();
+const hasRemoteCover = Boolean(study.imageUrl);
+const missingCover = !study.image && !study.imageUrl;
+const letterbox = study.coverFit === 'contain';
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<article class:list={['cs-card', tone === 'dark' && 'cs-card--dark', missingCover && 'cs-card--missing']}>
+  <a class="cs-card__link" href={href}>
+    <div class:list={['cs-card__media', letterbox && 'cs-card__media--contain']}>
+      {hasRemoteCover ? (
+        <img
+          class="cs-card__shot"
+          src={study.imageUrl}
+          alt={alt}
+          width="2048"
+          height="958"
+          loading={priority ? 'eager' : 'lazy'}
+          fetchpriority={priority ? 'high' : 'low'}
+          decoding="async"
+        />
+      ) : letterbox ? (
+        <Image
+          class="cs-card__shot"
+          src={study.image}
+          alt={alt}
+          width={1536}
+          height={1024}
+          widths={[640, 960, 1280, 1536]}
+          sizes={sizes}
+          quality={88}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchpriority={priority ? 'high' : 'auto'}
+        />
+      ) : (
+        <Image
+          class="cs-card__shot"
+          src={study.image}
+          alt={alt}
+          width={2048}
+          height={958}
+          widths={[640, 960, 1280, 1600, 2048, 3008]}
+          sizes={sizes}
+          quality={88}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchpriority={priority ? 'high' : 'auto'}
+        />
+      )}
+    </div>
+    <div class="cs-card__body">
+      {category && <p class="c-micro">{category}</p>}
+      <Heading class="cs-card__title">{study.title}</Heading>
+      {study.description && <p class="cs-card__summary">{study.description}</p>}
+      <span class="cs-card__go">View Case Study</span>
+    </div>
+  </a>
+</article>

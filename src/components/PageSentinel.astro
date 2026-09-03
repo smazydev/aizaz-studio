@@ -1,10 +1,16 @@
 ---
-import HeroSentinelCanvas from './hero3d/HeroSentinelCanvas.astro';
+import PageSentinelPoster from './PageSentinelPoster.astro';
 import '../styles/home-hero.css';
+
+interface Props {
+  crop?: 'about' | 'services' | 'works' | 'process';
+}
+
+const { crop = 'about' } = Astro.props;
 ---
 
-<div class="home-hero page-sentinel" data-hero>
+<div class:list={['home-hero', 'page-sentinel', 'is-fallback', 'is-ready', 'is-settled', `page-sentinel--${crop}`]} data-hero>
   <slot />
-  <HeroSentinelCanvas />
+  <PageSentinelPoster />
   <div class="hero3d__guard" aria-hidden="true"></div>
 </div>

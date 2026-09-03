@@ -95,10 +95,10 @@ const TECH_LABELS: Record<string, string> = {
 };
 
 const CASE_LABELS: Record<string, string> = {
-  '1archiver-compliance-platform': '1Archiver — Compliance Email Archiving',
-  'propertymatchmaker-real-estate-saas': 'PropertyMatch — Real Estate SaaS MVP',
-  'modernizing-multi-language-code-checking-tool': 'Multi-Language Code Checking Tool',
-  'designing-multi-tenant-crm-architecture': 'SalesAngel — AI Sales Platform',
+  '1archiver-compliance-platform': '1Archiver: Enterprise Email Archiving',
+  'propertymatchmaker-real-estate-saas': 'PropertyMatch: Property Matching SaaS',
+  'modernizing-multi-language-code-checking-tool': 'Modernizing a Multilanguage Code Checking Tool',
+  'designing-multi-tenant-crm-architecture': 'SalesAngel: AI Sales Platform',
 };
 
 const ARTICLE_LABELS: Record<string, string> = {

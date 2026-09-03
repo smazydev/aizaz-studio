@@ -21,19 +21,20 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
   description="Practical insights on AI automation, SaaS engineering, NetSuite integrations, and building systems that help businesses scale without operational chaos."
   canonical="/blog"
 >
+  <div class="blog-index">
   <PageHero
     eyebrow="Insights"
-    title="Playbooks for"
-    highlight="smarter operations"
-    description="What we've learned building, fixing, and operating real software systems, from AI and SaaS to NetSuite, integrations, and production failures."
+    title="Playbooks for smarter operations"
+    wide
+    description="Practical lessons from building and operating AI, SaaS, NetSuite, and cloud systems."
   />
 
-  <section class="sp-section sp-section--tight">
+  <section class="sp-section sp-section--tight blog-index__promo">
     <div class="c-wrap">
-      <div class="sp-promo">
+      <div class="sp-promo blog-index__sprint">
         <div class="sp-promo__copy">
           <p class="c-micro c-red">Short version</p>
-          <p class="c-lede">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
+          <p class="c-lede">Book a call and we will map one valuable workflow you can automate in 14 days.</p>
         </div>
         <a class="c-btn" href="/ai-systems-sprint">AI Systems Sprint</a>
       </div>
@@ -72,6 +73,7 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
   </section>
 
   <PageCTA />
+  </div>
 </SiteShell>
 
 <script>

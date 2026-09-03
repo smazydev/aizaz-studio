@@ -16,7 +16,7 @@ const { faqs, heading = 'Frequently Asked Questions' } = Astro.props;
   <section class="c-faq">
     <div class="c-wrap">
       <p class="c-micro c-red">FAQs</p>
-      <h2 class="page-h2">{heading}</h2>
+      <h2 class="page-h2 c-faq__title">{heading}</h2>
       {faqs.map((faq) => (
         <details>
           <summary>{faq.question}<span>+</span></summary>

@@ -17,24 +17,25 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 
 <SiteShell
   title="About Aizaz.studio | AI, Cloud & Automation Engineering Studio"
-  description="Learn about Aizaz.studio, an engineering studio helping startups and operations-heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
+  description="Learn about Aizaz.studio, an engineering studio helping startups and operations heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
   canonical="/about"
 >
-  <PageSentinel>
+  <PageSentinel crop="about">
     <PageHero
       eyebrow="About"
       title="A senior software"
       highlight="engineering studio"
-      description="Aizaz builds production systems across AI & automation, product/SaaS engineering, ERP/NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
+      description="Aizaz builds production systems across AI and automation, product and SaaS engineering, ERP and NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
     >
       <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-      <a class="c-btn c-btn--ghost" href="/case-studies">See Works</a>
+      <a class="c-btn c-btn--ghost" href="/case-studies">See Case Studies</a>
     </PageHero>
 
     <div class="c-wrap page-sentinel__intro">
       <SectionHeader
         eyebrow="What we are"
         title="Systems thinking, senior delivery"
+        wide
         lede="We help founders and operations teams replace manual, scattered workflows with connected software, from a focused sprint to a full platform build."
       />
     </div>
@@ -45,7 +46,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
       <div class="sp-grid">
         <OutlinedCard
           eyebrow="Who we work with"
-          title="Ops-heavy teams and product builders"
+          title="Operations heavy teams and product builders"
           body="SaaS founders, ecommerce operators, clinics, trading businesses, NetSuite users, and agencies that need senior engineering, not another layer of account management."
         />
         <OutlinedCard
@@ -99,10 +100,11 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
       <SectionHeader
         eyebrow="How we work with clients"
         title="Clear ownership, production standards"
+        wide
         lede="Every engagement starts with discovery and ends with software your team can run, with documentation, monitoring, and a sensible next step."
       />
       <div class="sp-grid sp-grid--3">
-        <OutlinedCard eyebrow="01" title="Discover" body="Map the stack and pick the highest-leverage workflow or product milestone." />
+        <OutlinedCard eyebrow="01" title="Discover" body="Map the stack and pick the highest leverage workflow or product milestone." />
         <OutlinedCard eyebrow="02" title="Build & integrate" body="Senior engineers ship against real systems, not isolated demos." />
         <OutlinedCard eyebrow="03" title="Ship & observe" body="Deploy with CI/CD, logging, and handoff so operations stay quiet after launch." />
       </div>
@@ -137,6 +139,6 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 
   <PageCTA
     title="Ready to talk through a system?"
-    lede="Book a discovery call. We will map fit, scope, and a sensible first step."
+    lede="Tell us what you need to ship. We will map fit, scope, and a sensible first step."
   />
 </SiteShell>

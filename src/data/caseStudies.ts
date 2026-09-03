@@ -1,17 +1,17 @@
 import { BOOKING_URL } from './siteConfig';
 import type { ImageMetadata } from 'astro';
 import type { ContentAuthor } from '../lib/sanity/author';
-import archiverCover from '../assets/1archiver-casestudy-cover.png';
+import archiverCover from '../assets/1archiver-enterprise-email-archiving-cover.jpg';
 import archiverBg1 from '../assets/1archiver-bg-dashboard-1.png';
 import archiverBg2 from '../assets/1archiver-bg-dashboard-2.png';
 import igwCover from '../assets/igw-casestudy-cover.png';
 import igwBg1 from '../assets/igw-bg-dashboard-1.png';
 import igwBg2 from '../assets/igw-bg-dashboard-2.png';
-import propertyMatchmakerCover from '../assets/propertymatchmaker-casestudy-cover.png';
+import propertyMatchmakerCover from '../assets/propertymatch-property-matching-saas-cover.jpg';
 import propertyMatchmakerBuyer from '../assets/propertymatchmaker-bg-buyer-management.png';
 import propertyMatchmakerSearch from '../assets/propertymatchmaker-bg-property-search.png';
 import codeCheckerCover from '../assets/codechecker-casestudy-cover.png';
-import salesangelCover from '../assets/salesangel-casestudy-cover.png';
+import salesangelCover from '../assets/salesangel-ai-sales-platform-cover.jpg';
 import salesangelArchitecture from '../assets/salesangel-architecture-diagram.png';
 import salesangelDashboard from '../assets/salesangel-dashboard.png';
 import salesangelAiAgents from '../assets/salesangel-ai-agents.png';
@@ -26,6 +26,7 @@ export interface CaseStudy {
     subtitle: string;
     description: string;
     image: ImageMetadata;
+    imageAlt?: string;
     logo?: string;
     client?: string;
     location?: string;
@@ -76,6 +77,8 @@ export interface CaseStudy {
     gallery?: string[];
     backgroundImages?: ImageMetadata[];
     backgroundImageUrls?: string[];
+    /** Letterbox a non-wide source inside the 2048/958 frame instead of cropping. */
+    coverFit?: 'cover' | 'contain';
     imageUrl?: string;
     seoTitle?: string;
     seoDescription?: string;
@@ -95,19 +98,27 @@ export interface CaseStudy {
     };
 }
 
+/** Homepage proof grid only. Listing order on /case-studies stays getAllCaseStudies(). */
+export const HOMEPAGE_PROOF_SLUGS = [
+    '1archiver-compliance-platform',
+    'designing-multi-tenant-crm-architecture',
+    'propertymatchmaker-real-estate-saas',
+] as const;
+
 export const caseStudies: CaseStudy[] = [
     {
         id: '1',
         slug: '1archiver-compliance-platform',
         category: 'Compliance • eDiscovery • Data Retention',
-        title: '1Archiver — Compliance Email Archiving',
-        subtitle: 'Compliance-grade email archiving platform',
+        title: '1Archiver: Enterprise Email Archiving',
+        subtitle: 'Enterprise email archiving platform',
         description:
-            'A compliance-ready email archiving platform built for scale, security, and verification — developed as a product initiative led by Aizaz Studio technical leadership.',
-        seoTitle: '1Archiver — Compliance Email Archiving | Aizaz Studio',
+            'A scalable email archiving and search platform with ingestion, retention, legal hold, and audit workflows.',
+        seoTitle: '1Archiver: Enterprise Email Archiving | Aizaz Studio',
         seoDescription:
-            'Compliance-grade email archiving platform designed for tens of terabytes, multiple mail providers, and audit-defensible retention.',
+            'Email archiving and search with IMAP, Gmail API, Microsoft Graph, Elasticsearch, retention, legal hold, and audit workflows.',
         image: archiverCover,
+        imageAlt: '1Archiver enterprise email archiving platform cover illustration',
         backgroundImages: [
             archiverBg1,
             archiverBg2,
@@ -118,20 +129,20 @@ export const caseStudies: CaseStudy[] = [
         ],
         content: {
             challenge:
-                'Enterprises need to prove email retention is trustworthy — not just stored. Most archiving tools are fragile under real-world volume, mix ingestion with business logic, or fail audit scrutiny. 1Archiver was designed to handle tens of terabytes across IMAP, Exchange, and Gmail with zero tolerance for data loss.',
+                'Enterprises need email retention they can search, hold, and audit. Many archiving tools mix ingestion with business logic, or make it hard to prove what was kept across IMAP, Gmail, and Microsoft 365.',
             solution:
-                'The platform was engineered as a systems problem: Connectors at the edge, Workers for integrity, and a Compliance Core as the system of record. Security defaults include immutable data and tamper-evident logs, with horizontal scale via streaming ingestion and decoupled search indexes.',
+                'Ali identified the opportunity through experience around enterprise archiving and worked across product design and core development. The system uses connectors at the edge, workers for integrity, and a core as the system of record, with Apache NiFi, Apache Kafka, IMAP, Gmail API, Microsoft Graph, MIME processing, Elasticsearch, S3 and Glacier, RBAC, retention policies, legal hold, and audit workflows.',
             outcome:
-                '1Archiver is a compliance-ready platform with secure verifiable ingestion, clear separation of concerns, and scalable search across massive datasets — architecture ready for on-prem and cloud deployments and built to pass audits.',
+                '1Archiver is an email archiving and search platform with verifiable ingestion, retention, legal hold, and audit workflows, designed for cloud and on-premises deployment.',
         },
         detailedContent: [
             {
                 title: "The Problem",
-                content: "Most archiving solutions fail in one of three ways: they mix business logic with ingestion, treat security as an afterthought, or collapse under real world data volumes. 1Archiver started with a simple question: 'What if we built an email archiver the way it should actually be built — safe, secure, fast, and defensible in court?'",
+                content: "Most archiving solutions fail in one of three ways: they mix business logic with ingestion, treat security as an afterthought, or collapse under real world data volumes. 1Archiver started with a simple question: 'What if we built an email archiver the way it should actually be built: safe, secure, and searchable with retention and legal hold workflows?'",
                 items: [
                     {
                         title: "Architectural Challenges",
-                        description: "The platform needed to handle tens of terabytes of email data, multiple providers (IMAP, Exchange, Gmail), and complex legal holds with zero tolerance for data loss."
+                        description: "The platform needed to support email data across multiple providers (IMAP, Exchange, Gmail), with retention policies, legal hold, and audit workflows."
                     }
                 ]
             },
@@ -193,7 +204,7 @@ export const caseStudies: CaseStudy[] = [
                             "Clear separation of concerns",
                             "Scalable search across massive datasets",
                             "Architecture ready for on prem and cloud deployments",
-                            "Built to pass audits, not just demos"
+                            "Designed to support retention, legal hold, search, and audit workflows."
                         ]
                     }
                 ]
@@ -291,21 +302,22 @@ export const caseStudies: CaseStudy[] = [
         id: '3',
         slug: 'propertymatchmaker-real-estate-saas',
         category: 'Real Estate • SaaS • Buyer Matching',
-        title: 'PropertyMatch — Real Estate SaaS MVP',
-        subtitle: 'Real estate buyer & property matching SaaS MVP',
+        title: 'PropertyMatch: Property Matching SaaS',
+        subtitle: 'Property matching SaaS for real estate teams',
         description:
-            'How PropertyMatch moved from a validated Airtable prototype to a focused SaaS MVP while replacing per-agent SaaS licensing dependency.',
-        seoTitle: 'PropertyMatch — Real Estate SaaS MVP | Aizaz Studio',
+            'A real estate SaaS that matches buyers with properties, built from a validated Airtable prototype into a focused product.',
+        seoTitle: 'PropertyMatch: Property Matching SaaS | Aizaz Studio',
         seoDescription:
-            'How PropertyMatch moved from an Airtable prototype to a focused real estate SaaS MVP with owned infrastructure.',
+            'How PropertyMatch moved from an Airtable prototype to a focused real estate property matching SaaS.',
         image: propertyMatchmakerCover,
+        imageAlt: 'PropertyMatch property matching SaaS cover illustration',
         client: 'Oran',
         location: 'Los Angeles, California, USA',
         industry: 'Real Estate',
         projectValue: '$800 Fixed-Price',
         projectPeriod: 'March 10–26, 2026',
         deliveryDuration: '14 days',
-        deliveredBy: 'Ali Zafar — Founder & Lead Engineer, Aizaz Studio',
+        deliveredBy: 'Ali Zafar, Founder and Lead Engineer, Aizaz Studio',
         engagementNote:
             'Originally completed through Upwork by Syed Ali. Now showcased as part of the Aizaz Studio portfolio. The original Upwork contract was not signed by Aizaz Studio.',
         atAGlance: [
@@ -481,19 +493,21 @@ export const caseStudies: CaseStudy[] = [
         id: '4',
         slug: 'modernizing-multi-language-code-checking-tool',
         category: 'Developer Tooling • Code Quality • CI/CD',
-        title: 'Modernizing a Multi-Language Code Checking Tool',
+        title: 'Modernizing a Multilanguage Code Checking Tool',
         subtitle:
-            'Extending an existing developer tool with multi-language checks, observability, Azure CI/CD and npm package preparation.',
+            'Extending an existing developer tool with multilanguage checks, observability, Azure CI/CD, and npm package preparation.',
         description:
-            'How Aizaz Studio extended a multi-language code checking tool with observability, Azure CI/CD, and npm package preparation.',
+            'How Aizaz Studio extended a multilanguage code checking tool with observability, Azure CI/CD, and npm package preparation.',
         image: codeCheckerCover,
+        imageAlt: 'Multilanguage code checking tool cover',
+        coverFit: 'contain',
         client: 'Jesse Dahir-Kanehl, Kanehl Consulting LLC',
         location: 'West Salem, Oregon, USA',
         industry: 'Multi-Language Code Checking Tool',
         projectValue: 'Fixed Price · Upwork',
         projectPeriod: 'Sep 28, 2025 – Jan 8, 2026',
         deliveredBy: 'Aizaz Studio',
-        seoTitle: 'Modernizing a Multi-Language Code Checking Tool | Aizaz Studio',
+        seoTitle: 'Modernizing a Multilanguage Code Checking Tool | Aizaz Studio',
         seoDescription:
             'How Aizaz Studio extended a multi-language code checking tool with observability, Azure CI/CD, and npm package preparation.',
         atAGlance: [
@@ -666,20 +680,21 @@ export const caseStudies: CaseStudy[] = [
         id: '5',
         slug: 'designing-multi-tenant-crm-architecture',
         category: 'SaaS Architecture • CRM • Sales Enablement',
-        title: 'SalesAngel — AI Sales Platform',
-        subtitle: 'AI sales platform architecture for organizations and sales teams',
+        title: 'SalesAngel: AI Sales Platform',
+        subtitle: 'AI sales platform for organizations and sales teams',
         description:
-            'How Aizaz Studio translated detailed product epics and user stories into scalable SalesAngel architecture — multi-tenant CRM, dialer, and sales enablement designed for long-term SaaS evolution.',
+            'A multi-tenant CRM, live dialer, and sales enablement platform designed for organizations and sales teams.',
         image: salesangelCover,
+        imageAlt: 'SalesAngel AI sales platform cover illustration',
         client: 'Sanjay Khosla',
         location: 'Tracy, California, USA',
         industry: 'AI Sales Platform · CRM · Dialer',
         projectValue: 'Hourly · Upwork',
         projectPeriod: 'Oct 27, 2025 – Jan 29, 2026',
         deliveredBy: 'Aizaz Studio',
-        seoTitle: 'SalesAngel — AI Sales Platform | Aizaz Studio',
+        seoTitle: 'SalesAngel: AI Sales Platform | Aizaz Studio',
         seoDescription:
-            'How Aizaz Studio designed the SalesAngel technical foundation — multi-tenant CRM, dialer, and sales workflows built to scale.',
+            'How Aizaz Studio designed the SalesAngel technical foundation: multi-tenant CRM, dialer, and sales workflows.',
         atAGlance: [
             { value: 'Multi-tenant', label: 'Architecture focus', sublabel: 'Organizations & users' },
             { value: '9 days', label: 'Engagement length', sublabel: 'Oct 27, 2025 – Jan 29, 2026' },
@@ -687,7 +702,7 @@ export const caseStudies: CaseStudy[] = [
             { value: 'CRM + Dialer', label: 'Platform scope', sublabel: 'Sales enablement SaaS' },
         ],
         engagement: [
-            { label: 'Project', value: 'SalesAngel — AI Sales Platform' },
+            { label: 'Project', value: 'SalesAngel: AI Sales Platform' },
             { label: 'Client', value: 'Sanjay Khosla' },
             { label: 'Location', value: 'Tracy, California, USA' },
             { label: 'Duration', value: 'Oct 27, 2025 – Jan 29, 2026' },
@@ -748,27 +763,27 @@ export const caseStudies: CaseStudy[] = [
                 content: 'Our team structured the engagement around five architectural phases, from requirements through long-term product evolution.',
                 items: [
                     {
-                        title: '01 — Requirements',
+                        title: '01 Requirements',
                         description:
                             'We reviewed the product requirements, epics and user stories to understand the intended CRM, dialer and sales enablement workflows.',
                     },
                     {
-                        title: '02 — Multi-Tenant Architecture',
+                        title: '02 Multi-Tenant Architecture',
                         description:
                             'We designed the application around multiple organizations and users, with tenant-aware architecture as a core consideration.',
                     },
                     {
-                        title: '03 — Application Architecture',
+                        title: '03 Application Architecture',
                         description:
                             'We established clear boundaries between frontend, backend services and data layers.',
                     },
                     {
-                        title: '04 — Scalability',
+                        title: '04 Scalability',
                         description:
                             'We considered architectural patterns required for a SaaS platform that could grow across organizations, users and product capabilities.',
                     },
                     {
-                        title: '05 — Product Evolution',
+                        title: '05 Product Evolution',
                         description:
                             'We designed the foundation so CRM, dialer and sales enablement capabilities could evolve without requiring a complete architectural rewrite.',
                     },

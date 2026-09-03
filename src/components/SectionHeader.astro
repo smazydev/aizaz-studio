@@ -2,16 +2,30 @@
 interface Props {
   eyebrow?: string;
   title: string;
+  /** Keep this trailing phrase together when the heading wraps. */
+  keep?: string;
   lede?: string;
   /** Visual variant for dark bands */
   tone?: 'default' | 'dark';
+  /** Drop the narrow header max-width so a long heading can sit on one line. */
+  wide?: boolean;
 }
 
-const { eyebrow, title, lede, tone = 'default' } = Astro.props;
+const { eyebrow, title, keep, lede, tone = 'default', wide = false } = Astro.props;
+const keepAt = keep ? title.lastIndexOf(keep) : -1;
 ---
 
-<header class:list={['sp-header', tone === 'dark' && 'sp-header--dark']}>
+<header class:list={['sp-header', tone === 'dark' && 'sp-header--dark', wide && 'sp-header--wide']}>
   {eyebrow && <p class="c-micro c-red">{eyebrow}</p>}
-  <h2 class="page-h2">{title}</h2>
+  <h2 class="page-h2">
+    {keepAt > 0 ? (
+      <>
+        {title.slice(0, keepAt)}
+        <span class="page-h2__keep">{keep}</span>
+      </>
+    ) : (
+      title
+    )}
+  </h2>
   {lede && <p class="c-lede sp-header__lede">{lede}</p>}
 </header>

@@ -390,7 +390,7 @@ export const portfolio: PortfolioContent = {
             name: '1Archiver',
             category: 'Compliance • eDiscovery • Data Retention',
             summary:
-                'Enterprise grade email archiving and compliance platform designed for tens of terabytes, multiple mail providers, and audit defensible retention — built as systems engineering, not a simple CRUD app.',
+                'Enterprise email archiving and compliance platform for multiple mail providers, designed to support retention, legal hold, search, and audit workflows. Built as systems engineering, not a simple CRUD app.',
             outcomes: [
                 'Secure, verifiable email ingestion across IMAP, Exchange, and Gmail',
                 'Horizontal scale via streaming ingestion and decoupled search indexes',
