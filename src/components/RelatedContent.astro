@@ -11,26 +11,41 @@ const visible = groups.filter((g) => g.links.length > 0).slice(0, 3);
 ---
 
 {visible.length > 0 && (
-  <section class="sp-section">
-    <div class="c-wrap seo-measure">
-      {visible.map((group) => (
-        <div class="related-block">
-          <h2 class="page-h2">{group.title}</h2>
-          <div class="sp-grid" style="margin-top: 20px">
-            {group.links.map((link) => (
-              <a
-                class="sp-card"
-                href={link.href}
-                target={isExternalHref(link.href) ? '_blank' : undefined}
-                rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
-              >
-                <h3 class="sp-card__title">{link.label}</h3>
-                {link.description && <p class="c-lede sp-card__body">{link.description}</p>}
-              </a>
-            ))}
-          </div>
-        </div>
-      ))}
+  <section class="sp-section related-content" aria-labelledby="related-content-title">
+    <div class="c-wrap related-content__inner">
+      <header class="related-content__header">
+        <p class="c-micro c-red">Keep exploring</p>
+        <h2 id="related-content-title" class="page-h2">More useful resources</h2>
+      </header>
+
+      <div class="related-content__groups">
+        {visible.map((group, groupIndex) => (
+          <section class="related-block">
+            <header class="related-block__header">
+              <span class="related-block__index" aria-hidden="true">
+                {String(groupIndex + 1).padStart(2, '0')}
+              </span>
+              <h3>{group.title}</h3>
+            </header>
+            <div class="related-block__links">
+              {group.links.map((link) => (
+                <a
+                  class="related-link"
+                  href={link.href}
+                  target={isExternalHref(link.href) ? '_blank' : undefined}
+                  rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
+                >
+                  <span class="related-link__copy">
+                    <strong>{link.label}</strong>
+                    {link.description && <span>{link.description}</span>}
+                  </span>
+                  <span class="related-link__arrow" aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   </section>
 )}
