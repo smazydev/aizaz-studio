@@ -16,22 +16,12 @@
 
 .home-human-ai__title {
   margin: 14px 0 0;
-  max-width: none;
-  font-size: clamp(2.6rem, 4.4vw, 4.4rem);
+  max-width: 11ch;
+  font-size: clamp(3.4rem, 5.4vw, 5.4rem);
   font-weight: 700;
-  line-height: 0.92;
+  line-height: 0.86;
   letter-spacing: -0.055em;
   color: var(--ink);
-}
-
-.home-human-ai__phrase {
-  display: inline;
-}
-
-@media (min-width: 1025px) {
-  .home-human-ai__phrase {
-    white-space: nowrap;
-  }
 }
 
 .home-human-ai__heading {
@@ -39,7 +29,7 @@
 }
 
 .home-human-ai__lede {
-  max-width: 42rem;
+  max-width: 38ch;
   margin: 22px 0 0;
   padding-bottom: 0;
 }
@@ -373,7 +363,7 @@
 }
 
 .home-services__lede {
-  max-width: 42rem;
+  max-width: 38ch;
   margin: 22px 0 0;
   padding-bottom: 0;
 }

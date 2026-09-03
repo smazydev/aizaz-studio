@@ -30,7 +30,7 @@ export const serviceGroups: ServiceGroup[] = [
     id: 'product',
     n: '02',
     title: 'Product / SaaS Engineering',
-    lede: 'MVPs and production platforms: auth, APIs, billing, and the product surface users hit.',
+    lede: 'MVPs and production platforms — auth, APIs, billing, and the product surface users hit.',
     slugs: [
       'web-app-saas-development',
       'saas-mvp-development',
@@ -47,7 +47,7 @@ export const serviceGroups: ServiceGroup[] = [
     id: 'erp',
     n: '03',
     title: 'ERP & Integrations',
-    lede: 'NetSuite, CRM, and system of record work so data stops living in five places.',
+    lede: 'NetSuite, CRM, and system-of-record work so data stops living in five places.',
     slugs: [
       'netsuite-erp-automation',
       'netsuite-integration',

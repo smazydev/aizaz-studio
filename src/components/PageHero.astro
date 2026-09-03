@@ -5,8 +5,6 @@ interface Props {
   highlight?: string;
   description?: string;
   size?: 'default' | 'large';
-  /** Drop restrictive title/lede widths so a long headline can sit on one desktop line. */
-  wide?: boolean;
 }
 
 const {
@@ -14,21 +12,30 @@ const {
   title,
   highlight,
   description,
-  wide = false,
 } = Astro.props;
 ---
 
-<section class:list={['page-hero', wide && 'page-hero--wide']}>
+<section class="page-hero">
   <div class="c-wrap">
     {eyebrow && <p class="c-micro c-red">{eyebrow}</p>}
     <h1 class="page-title">
-      <span class="page-title__lead">{title}{highlight ? ' ' : ''}</span>
-      {highlight && <span class="page-title__accent">{highlight}</span>}
+      {title}
+      {highlight && (
+        <>
+          {' '}
+          <span class="page-title__accent">{highlight}</span>
+        </>
+      )}
     </h1>
     {description && <p class="c-lede page-hero__lede">{description}</p>}
     {Astro.slots.has('default') && (
       <div class="page-hero__actions">
         <slot />
+      </div>
+    )}
+    {Astro.slots.has('below') && (
+      <div class="page-hero__below">
+        <slot name="below" />
       </div>
     )}
   </div>

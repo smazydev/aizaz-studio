@@ -31,30 +31,11 @@ const png = '/images/hero/aizaz-sentinel.png';
 </div>
 
 <script>
-  import { mountHeroSentinel, type HeroSentinelHandle } from './hero-sentinel';
+  import { mountHeroSentinel } from './hero-sentinel';
 
   const hero = document.querySelector<HTMLElement>('[data-hero]');
   if (hero && !hero.dataset.hero3dMounted) {
     hero.dataset.hero3dMounted = '1';
-
-    let handle: HeroSentinelHandle | undefined;
-    const pending = mountHeroSentinel(hero).then((mounted) => {
-      handle = mounted;
-      return mounted;
-    });
-
-    const release = () => {
-      if (hero.dataset.hero3dMounted !== '1') return;
-      delete hero.dataset.hero3dMounted;
-      if (handle) {
-        handle.dispose();
-        handle = undefined;
-        return;
-      }
-      void pending.then((mounted) => mounted.dispose());
-    };
-
-    window.addEventListener('pagehide', release, { once: true });
-    document.addEventListener('astro:before-swap', release, { once: true });
+    void mountHeroSentinel(hero);
   }
 </script>

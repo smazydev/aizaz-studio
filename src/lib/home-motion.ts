@@ -1,5 +1,28 @@
 import { bindThemeToggle } from './theme';
 
+function overlay() {
+  if (!import.meta.env.DEV) return;
+  const root = document.querySelector<HTMLElement>('[data-ref-overlay]');
+  if (!root) return;
+
+  const apply = (on: boolean) => {
+    document.body.classList.toggle('ref-on', on);
+    root.hidden = !on;
+    root.setAttribute('aria-hidden', on ? 'false' : 'true');
+  };
+
+  apply(false);
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'R' && event.shiftKey && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      const target = event.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      event.preventDefault();
+      apply(!document.body.classList.contains('ref-on'));
+    }
+  });
+}
+
 function reduce() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -476,6 +499,7 @@ function meshFields() {
 
 export function mountHomeMotion() {
   bindThemeToggle();
+  overlay();
   reveals();
   heroMotion();
   services();
