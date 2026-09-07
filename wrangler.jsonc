@@ -24,20 +24,22 @@
 		}
 	],
 	"workers_dev": true,
-	// Workers Cache sits in front of the Worker. Required for Cache-Control on SSR
-	// HTML to skip Worker/Sanity on subsequent anonymous requests.
-	"cache": {
-		"enabled": true
-	},
 	"observability": {
 		"enabled": true
 	},
 	// Contact form — Cloudflare Email Service (Workers send() API).
-	// Dashboard: verify sender forms@aizaz.studio, destination hello@aizaz.studio.
+	// The binding itself only permits the fixed contact sender and inbox; the
+	// Worker must not be usable as a generic mail relay.
+	// Cloudflare Email Service must have forms@aizaz.studio onboarded and
+	// hello@aizaz.studio verified before deployment.
 	// Local wrangler simulates send() unless "remote": true is set.
 	"send_email": [
 		{
-			"name": "EMAIL"
+			"name": "EMAIL",
+			"destination_address": "hello@aizaz.studio",
+			"allowed_sender_addresses": [
+				"forms@aizaz.studio"
+			]
 		}
 	],
 	// Contact form — ~5 attempts / 60s per hashed network identity (not path-only).
