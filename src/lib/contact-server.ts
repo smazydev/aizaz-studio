@@ -268,12 +268,18 @@ export async function verifyTurnstile(options: {
       body: JSON.stringify(payload),
     });
     result = (await response.json()) as SiteverifyResult;
+    if (!response.ok) {
+      console.warn('[contact] Turnstile Siteverify HTTP error', response.status);
+      return { ok: false, code: 'TURNSTILE_FAILED' };
+    }
   } catch {
+    console.warn('[contact] Turnstile Siteverify request failed');
     return { ok: false, code: 'TURNSTILE_FAILED' };
   }
 
   const errorCodes = result['error-codes'] ?? [];
   if (!result.success) {
+    console.warn('[contact] Turnstile rejected token', JSON.stringify({ errorCodes }));
     if (errorCodes.includes('timeout-or-duplicate')) return { ok: false, code: 'TURNSTILE_EXPIRED' };
     return { ok: false, code: 'TURNSTILE_FAILED' };
   }
@@ -291,8 +297,12 @@ export async function verifyTurnstile(options: {
     return { ok: false, code: 'TURNSTILE_FAILED' };
   }
 
-  if (action !== TURNSTILE_ACTION) return { ok: false, code: 'TURNSTILE_FAILED' };
+  if (action && action !== TURNSTILE_ACTION) {
+    console.warn('[contact] Turnstile action mismatch', JSON.stringify({ action }));
+    return { ok: false, code: 'TURNSTILE_FAILED' };
+  }
   if (!isTurnstileHostnameAllowed(hostname, requestUrl, previewHost, false)) {
+    console.warn('[contact] Turnstile hostname mismatch', JSON.stringify({ hostname }));
     return { ok: false, code: 'TURNSTILE_FAILED' };
   }
 
