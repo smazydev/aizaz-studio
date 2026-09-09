@@ -6,6 +6,15 @@
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
+	// Astro sessions require a Cloudflare KV namespace bound as SESSION.
+	// This project does not have a real SESSION namespace created yet.
+	// Create it in Cloudflare, then replace the placeholder below with the namespace ID.
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "7f940579e5d54a0481aef7c7b601497a"
+		}
+	],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist",
