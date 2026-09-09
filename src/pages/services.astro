@@ -1,18 +1,28 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import PageCTA from '../components/PageCTA.astro';
 import PageSentinel from '../components/PageSentinel.astro';
-import { industryPages, servicePages, SITE_URL } from '../data/seoPages';
+import { SITE_URL } from '../data/seoPages';
 import { serviceGroups, servicesForGroup, ungroupedServices } from '../data/serviceGroups';
 import { BOOKING_URL } from '../data/siteConfig';
 import { buildListingPageSchemas } from '../lib/seoSchema';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getIndustryPages, getServicePages } from '../lib/sanity/landingPages';
+import { getServicesIndex } from '../lib/sanity/sitePages';
 
-const leftover = ungroupedServices();
-const pageTitle = 'Engineering Services for AI, SaaS & Cloud | Aizaz';
-const pageDescription =
-  'Stuck workflows, a product that needs to ship, or systems that don’t talk. Senior engineers for AI automation, SaaS, NetSuite, and AWS.';
+const [servicePages, industryPages, index] = await Promise.all([
+  getServicePages(),
+  getIndustryPages(),
+  getServicesIndex(),
+]);
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
+const leftover = ungroupedServices(servicePages);
+const pageTitle = index.metaTitle;
+const pageDescription = index.metaDescription;
 const schemas = buildListingPageSchemas({
   name: 'Engineering Services',
   description: pageDescription,
@@ -32,10 +42,10 @@ const schemas = buildListingPageSchemas({
 >
   <PageSentinel>
     <PageHero
-      eyebrow="Engineering services"
-      title="Turn operational bottlenecks"
-      highlight="into systems you can run."
-      description="Hand us a manual process, a product that needs to ship, disconnected tools, or infrastructure that cannot keep up. We own it through production."
+      eyebrow={index.heroEyebrow ?? 'Engineering services'}
+      title={index.title}
+      highlight={index.heroHighlight}
+      description={index.heroSubtitle}
     >
       <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Discuss your build</a>
       <a class="c-btn c-btn--ghost" href="/case-studies">See the work</a>
@@ -64,7 +74,7 @@ const schemas = buildListingPageSchemas({
       />
 
       {serviceGroups.map((group) => {
-        const items = servicesForGroup(group);
+        const items = servicesForGroup(group, servicePages);
         return (
           <div class="sp-group">
             <div class="sp-group__head">

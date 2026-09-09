@@ -176,7 +176,7 @@ export const extraServicePages: SeoPage[] = [
                 answer: 'Our AI Systems Sprint delivers one production agent workflow in 14 days — scoped, integrated, monitored, and ready for daily use.',
             },
         ],
-        relatedSlugs: ['ai-chatbot-development', 'ai-workflow-automation', 'llm-app-development', 'crm-integration'],
+        relatedSlugs: ['ai-integration', 'ai-workflow-automation', 'llm-app-development', 'crm-integration'],
     },
     {
         slug: 'ai-chatbot-development',
@@ -294,7 +294,71 @@ export const extraServicePages: SeoPage[] = [
                 answer: 'Yes. Most clients begin with the highest impact process, prove ROI, then roll out automation across adjacent workflows.',
             },
         ],
-        relatedSlugs: ['ai-agent-development', 'api-integration', 'crm-integration', 'business-process-automation'],
+        relatedSlugs: ['ai-integration', 'ai-agent-development', 'api-integration', 'business-process-automation'],
+    },
+    {
+        slug: 'ai-integration',
+        title: 'AI Integration Services for Production Systems',
+        metaTitle: 'AI Integration Services | Aizaz Studio',
+        metaDescription:
+            'Integrate models and AI agents into existing products and operations with secure tool access, structured outputs, evaluation, observability, and human approval.',
+        heroSubtitle:
+            'For teams moving AI beyond a prototype: connect models and agents to your product, data, APIs, and operating workflows with controls your engineers can trust.',
+        keywords: [
+            'AI integration services',
+            'AI integration company',
+            'AI integration consulting',
+            'custom AI integration',
+            'AI API integration',
+        ],
+        problem:
+            'The prototype can answer a prompt, but it cannot safely read customer data, call business APIs, respect permissions, return dependable structure, or explain why it failed. Product and operations teams need AI inside the systems they already run, not another disconnected demo.',
+        solution:
+            'Aizaz Studio integrates models and agents into existing applications and business systems. We design the data and tool boundaries, permissions, structured outputs, evaluation, observability, fallback, and human approval paths required to operate the feature in production.',
+        capabilities: [
+            'LLM and model APIs integrated into existing products and internal systems',
+            'Tool and API access with explicit permissions and action boundaries',
+            'Retrieval and data access scoped to the user, tenant, or workflow',
+            'Structured outputs with schema validation and repair paths',
+            'Human approval and escalation for high-impact actions',
+            'Evaluation datasets, regression checks, and quality monitoring',
+            'Tracing, latency budgets, token and cost controls, and failure alerts',
+            'Provider abstraction and fallback where portability is worth the complexity',
+        ],
+        useCases: [
+            'Existing SaaS product → model API → tenant-scoped context → validated response',
+            'Operations request → agent tool call → approval gate → business-system update',
+            'Document or knowledge source → retrieval → cited answer → human escalation',
+            'AI prototype → evaluation set → observability → fallback → production release',
+        ],
+        faqs: [
+            {
+                question: 'How is AI integration different from AI automation?',
+                answer: 'AI automation starts with a workflow to automate. AI integration starts with an existing product or system that needs model, retrieval, or agent capabilities added safely. The work overlaps, but the architecture and buying decision are different.',
+            },
+            {
+                question: 'Can you integrate AI into an existing SaaS product?',
+                answer: 'Yes. We work within the existing authentication, tenant, data, billing, and API boundaries rather than treating the AI feature as a separate demo application.',
+            },
+            {
+                question: 'How do you control hallucinations and unreliable output?',
+                answer: 'We combine scoped retrieval, structured-output schemas, validation, evaluation datasets, explicit fallbacks, and human review for actions where an incorrect result has meaningful cost.',
+            },
+            {
+                question: 'Do we have to commit to one model provider?',
+                answer: 'No. We select providers based on quality, latency, cost, privacy, and operational requirements. We add abstraction or fallback only when the expected benefit outweighs the extra system complexity.',
+            },
+            {
+                question: 'Can an AI agent call our internal or third-party APIs?',
+                answer: 'Yes, with narrow tool definitions, least-privilege credentials, input validation, audit logs, and approval gates for actions that should not run autonomously.',
+            },
+        ],
+        relatedSlugs: ['ai-automation-systems', 'ai-agent-development', 'api-integration'],
+        primaryCta: { label: 'Map the first production AI integration', href: '/book-a-call' },
+        secondaryCta: { label: 'Send the product and integration goal', href: '/start-a-project' },
+        ctaTitle: 'Map the first production AI integration',
+        ctaLede:
+            'Share the product or workflow, the systems AI must access, and what a reliable result needs to look like. We will identify the smallest production-worthy scope.',
     },
     {
         slug: 'llm-app-development',
@@ -770,38 +834,39 @@ export const extraServicePages: SeoPage[] = [
     },
     {
         slug: 'api-integration',
-        title: 'API Integration',
-        metaTitle: 'API Integration Development Services | Aizaz.studio',
+        title: 'API Integration Services Built for Production',
+        metaTitle: 'API Integration Company & Services | Aizaz Studio',
         metaDescription:
-            'Connect products to third-party APIs, webhooks, and partner systems with retries, monitoring, and documentation your team can maintain.',
+            'Aizaz Studio builds custom API integrations with OAuth, webhooks, queues, idempotent retries, monitoring, and recovery for third-party systems.',
         heroSubtitle:
-            'Make your product talk to everything it needs to — payment providers, CRMs, ERPs, shipping APIs — without brittle scripts that break on every vendor update.',
+            'For product and operations teams whose systems already need to communicate — and whose integrations need to survive vendor downtime, retries, changing schemas, and real production load.',
         keywords: [
-            'API integration',
+            'API integration company',
             'API integration services',
+            'custom API integration',
+            'custom API integration services',
             'third party API integration',
-            'webhook integration',
-            'system integration development',
-            'API middleware development',
+            'third party API integration services',
         ],
         problem:
-            'Your product needs data from five external systems, each with different auth, rate limits, and quirks. Integrations are duct taped together, break without warning, and nobody documented the field mappings.',
+            'The systems are known, but the integration is unreliable. Requests time out, webhooks arrive twice or out of order, rate limits stall sync, field mappings drift, and teams discover missing records only after a customer or finance report exposes the gap.',
         solution:
-            'We build API integrations as maintainable software: clear data mappings, retry logic, error alerting, and versioned adapters. Senior engineers connect your core product to payment, CRM, ERP, logistics, and custom partner APIs with monitoring built in.',
+            'Aizaz Studio builds integration software around explicit contracts and failure recovery. We connect products, ERPs, CRMs, payment, logistics, and partner systems using versioned adapters, durable queues, idempotent handlers, reconciliation, and monitoring your team can operate.',
         capabilities: [
             'REST, GraphQL, and SOAP API integrations',
-            'Webhook receivers and event driven processing',
-            'OAuth and API key authentication flows',
-            'Rate limiting, retry logic, and circuit breakers',
-            'Data transformation and field mapping layers',
-            'Integration monitoring and failure dashboards',
-            'API documentation and partner onboarding guides',
+            'OAuth, signed requests, API keys, token rotation, and least-privilege access',
+            'Webhook verification, deduplication, ordering, and asynchronous processing',
+            'Rate-limit budgets, pagination, backoff, retries, and circuit breakers',
+            'Schema contracts, validation, transformations, and versioned adapters',
+            'Queues, idempotency keys, dead-letter handling, and safe replay',
+            'Reconciliation jobs, structured logs, alerts, and failure dashboards',
+            'Partner-facing APIs, webhooks, documentation, and test environments',
         ],
         useCases: [
-            'SaaS product → Stripe + HubSpot + Slack → unified customer view',
-            'Ecommerce → shipping API + inventory API → real time fulfillment',
-            'Fintech → payment gateway + KYC provider → compliant onboarding',
-            'Internal ops → legacy API wrapper → modern dashboard → alerts',
+            'Inbound webhook → verify → deduplicate → queue → process → acknowledge',
+            'Third-party outage → controlled backoff → circuit open → alert → safe replay',
+            'Source record → transform and validate → destination API → reconciliation check',
+            'Legacy or poorly documented API → test harness → adapter → monitored internal service',
         ],
         faqs: [
             {
@@ -810,7 +875,7 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'How do you handle API rate limits and downtime?',
-                answer: 'Queues, exponential backoff, circuit breakers, and alerts so temporary vendor issues do not cascade into data loss or customer impact.',
+                answer: 'We use queues, rate-limit budgets, exponential backoff, circuit breakers, and alerts so temporary vendor issues do not cascade into data loss or customer impact.',
             },
             {
                 question: 'Do you build middleware between systems?',
@@ -825,7 +890,12 @@ export const extraServicePages: SeoPage[] = [
                 answer: 'Versioned adapters and automated tests catch breaking changes early. We design integrations to absorb vendor updates with minimal downtime.',
             },
         ],
-        relatedSlugs: ['crm-integration', 'netsuite-integration', 'backend-engineering', 'ai-workflow-automation'],
+        relatedSlugs: ['netsuite-integration', 'ai-integration', 'backend-engineering'],
+        primaryCta: { label: 'Send us the APIs and failure mode', href: '/start-a-project' },
+        secondaryCta: { label: 'Talk through the integration', href: '/book-a-call' },
+        ctaTitle: 'Bring us the APIs and the failure mode',
+        ctaLede:
+            'Share the systems, authentication model, data direction, current architecture, and what breaks today. We will identify the safest first step.',
     },
     {
         slug: 'crm-integration',
@@ -888,38 +958,39 @@ export const extraServicePages: SeoPage[] = [
     },
     {
         slug: 'netsuite-integration',
-        title: 'NetSuite Integration',
-        metaTitle: 'NetSuite Integration Services | Aizaz.studio',
+        title: 'NetSuite Integration Services',
+        metaTitle: 'NetSuite Integration Services | Aizaz Studio',
         metaDescription:
-            'NetSuite integrations for ecommerce, CRM, 3PL, and custom apps — order, inventory, fulfillment, and finance sync you can trust.',
+            'Custom NetSuite integrations for ecommerce, CRM, 3PLs, and internal systems, with RESTlets, SuiteScript, retries, reconciliation, and monitoring.',
         heroSubtitle:
-            'Connect NetSuite to Shopify, CRMs, warehouses, and internal tools so orders, inventory, and finance data stay aligned across every channel.',
+            'Connect NetSuite to ecommerce, CRM, warehouse, finance, and custom systems — or stabilize the integration your team is already repairing by hand.',
         keywords: [
-            'NetSuite integration',
             'NetSuite integration services',
-            'Shopify NetSuite integration',
-            'SuiteScript development',
-            'NetSuite API integration',
-            'NetSuite ecommerce sync',
+            'custom NetSuite integration',
+            'NetSuite ecommerce integration',
+            'NetSuite API integration services',
+            'NetSuite integration developer',
+            'NetSuite integration consultant',
         ],
         problem:
-            'NetSuite is your system of record but it does not talk cleanly to Shopify, your CRM, or your 3PL. Teams export CSVs, fix sync errors by hand, and finance finds out about problems days later.',
+            'NetSuite is the system of record, but orders, customers, inventory, pricing, fulfilment, or finance data still drift across ecommerce, CRM, warehouse, and internal tools. Teams repair failed syncs manually and discover gaps after operations or customers are affected.',
         solution:
-            'Aizaz.studio builds NetSuite integrations with SuiteScript, REST APIs, and middleware that keep orders, inventory, customers, and fulfillment in sync. We add validation, retry logic, and ops dashboards so failures surface before they hit your customers.',
+            'Aizaz Studio builds and repairs NetSuite integrations using SuiteScript, RESTlets, REST APIs, SFTP pipelines, and external middleware. We define ownership and mappings first, then add validation, idempotent processing, retries, reconciliation, and monitoring so failures are visible and recoverable.',
         capabilities: [
-            'NetSuite REST and SuiteScript 2.x development',
-            'Shopify order, inventory, and customer sync',
-            'CRM and sales pipeline data into NetSuite',
-            '3PL and warehouse fulfillment integrations',
-            'Custom record and workflow automation',
-            'SFTP and CSV pipeline ingestion',
-            'Sync error dashboards and alerting workflows',
+            'SuiteScript 2.x, RESTlets, REST APIs, scheduled scripts, and custom records',
+            'BigCommerce, Shopify, CRM, 3PL, warehouse, and custom-system integration',
+            'Orders, customers, inventory, pricing, fulfilment, payments, and finance data flows',
+            'Middleware and queues for long-running or multi-system workflows',
+            'SFTP and CSV ingestion with validation and audit trails',
+            'Idempotent processing, retries, dead-letter handling, and controlled replay',
+            'Reconciliation reports, alerts, logs, and operations dashboards',
+            'Migration, recovery, and stabilization of unreliable integrations',
         ],
         useCases: [
-            'Shopify order → NetSuite sales order → 3PL fulfillment → tracking sync',
-            'Inventory update → NetSuite → ecommerce storefront → prevent oversell',
-            'Failed sync → alert → retry queue → ops dashboard → resolution',
-            'Wholesale CRM deal → NetSuite customer → pricing → invoice automation',
+            'Ecommerce order → validate → NetSuite sales order → 3PL fulfilment → tracking update',
+            'NetSuite inventory by location → availability rules → storefront quantity',
+            'Customer account → price level or contract rule → ecommerce pricing',
+            'Failed record → alert → retry or operator review → replay → reconciliation',
         ],
         faqs: [
             {
@@ -927,8 +998,8 @@ export const extraServicePages: SeoPage[] = [
                 answer: 'Yes. We build SuiteScript workflows, scheduled scripts, RESTlets, and external middleware depending on what fits your NetSuite edition and use case.',
             },
             {
-                question: 'Can you integrate NetSuite with Shopify?',
-                answer: 'Yes. Product, order, inventory, customer, and fulfillment sync between Shopify and NetSuite is one of our most common integration projects.',
+                question: 'Which systems can you connect to NetSuite?',
+                answer: 'We work with ecommerce platforms, CRMs, 3PL and warehouse systems, finance tools, SFTP feeds, databases, and custom applications. The design depends on which system owns each record and how quickly changes must move.',
             },
             {
                 question: 'What happens when sync fails at 2am?',
@@ -940,9 +1011,14 @@ export const extraServicePages: SeoPage[] = [
             },
             {
                 question: 'How is this different from native NetSuite connectors?',
-                answer: 'Native connectors cover simple cases. We build custom logic for multi channel, multi warehouse, and complex pricing rules that off the shelf tools cannot handle.',
+                answer: 'Packaged connectors are usually the right choice when your workflow matches their assumptions. Custom middleware is justified when business rules, data ownership, pricing, locations, volume, or recovery requirements cannot be represented safely in the connector.',
             },
         ],
-        relatedSlugs: ['crm-integration', 'api-integration', 'netsuite-erp-automation', 'ai-workflow-automation'],
+        relatedSlugs: ['api-integration', 'netsuite-erp-automation', 'crm-integration'],
+        primaryCta: { label: 'Diagnose your NetSuite integration', href: '/book-a-call' },
+        secondaryCta: { label: 'Send the systems and failure mode', href: '/start-a-project' },
+        ctaTitle: 'Diagnose the integration before rebuilding it',
+        ctaLede:
+            'Send the systems involved, the current connector or middleware, and the records your team is fixing manually. We will map the safest first intervention.',
     },
 ];

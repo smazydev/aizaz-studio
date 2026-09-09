@@ -1,12 +1,16 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
-import { portfolio } from '../data/commercialPages';
 import { Image } from 'astro:assets';
 import archiverCover from '../assets/1archiver-casestudy-cover.png';
 import { HIDDEN_CASE_STUDY_SLUGS } from '../lib/case-study-visibility';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getPortfolio } from '../lib/sanity/sitePages';
 
-const c = portfolio;
+const c = await getPortfolio();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 const images: Record<string, typeof archiverCover> = {
   '1archiver-compliance-platform': archiverCover,
 };

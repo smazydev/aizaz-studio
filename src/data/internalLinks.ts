@@ -56,6 +56,7 @@ const SERVICE_LABELS: Record<string, string> = {
   'devops-consulting': 'DevOps Consulting',
   'cloud-migration': 'Cloud Migration',
   'platform-engineering': 'Platform Engineering',
+  'ai-integration': 'AI Integration',
   'api-integration': 'API Integration',
   'crm-integration': 'CRM Integration',
   'netsuite-integration': 'NetSuite Integration',
@@ -156,6 +157,13 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     caseStudies: ['designing-multi-tenant-crm-architecture'],
     articles: ['ai-agent-vs-chatbot-for-business'],
   },
+  'ai-integration': {
+    caseStudies: ['designing-multi-tenant-crm-architecture'],
+    pages: [
+      { href: '/services/ai-automation-systems', label: 'AI Automation Systems' },
+      { href: '/services/api-integration', label: 'API Integration Services' },
+    ],
+  },
   'ai-chatbot-development': {
     industries: ['b2b-saas', 'healthtech'],
     technologies: ['openai', 'twilio'],
@@ -229,10 +237,16 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     industries: ['netsuite-users', 'ecommerce-wholesale'],
     services: ['api-integration', 'crm-integration'],
     articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite Integration' }],
+  },
+  'netsuite-bigcommerce': {
+    industries: ['ecommerce-wholesale', 'ecommerce-operations'],
+    articles: ['bigcommerce-netsuite-integration-production-problems'],
   },
   'api-integration': {
     industries: ['ecommerce-operations', 'operations-teams', 'logistics'],
     technologies: ['nodejs-development', 'python-development'],
+    caseStudies: ['1archiver-compliance-platform'],
     articles: ['netsuite-shopify-integration-pitfalls'],
   },
   'crm-integration': {
@@ -381,7 +395,7 @@ export const technologyClusterExtras: Record<string, PageRelations> = {
 
 export const caseStudyCluster: Record<string, PageRelations> = {
   '1archiver-compliance-platform': {
-    services: ['aws-devops', 'backend-engineering', 'platform-engineering'],
+    services: ['api-integration', 'backend-engineering', 'aws-devops', 'platform-engineering'],
     industries: ['professional-services'],
     technologies: ['aws', 'nodejs-development'],
   },
@@ -396,7 +410,7 @@ export const caseStudyCluster: Record<string, PageRelations> = {
     technologies: ['nodejs-development', 'aws'],
   },
   'designing-multi-tenant-crm-architecture': {
-    services: ['b2b-saas-development', 'crm-integration', 'ai-agent-development'],
+    services: ['ai-integration', 'ai-agent-development', 'crm-integration', 'b2b-saas-development'],
     industries: ['b2b-saas', 'saas-startups'],
     technologies: ['nestjs-development', 'postgresql', 'react-development'],
   },
@@ -412,6 +426,7 @@ export const articleCluster: Record<string, PageRelations> = {
     services: ['netsuite-integration', 'api-integration'],
     industries: ['netsuite-users', 'ecommerce-operations'],
     articles: ['netsuite-shopify-integration-pitfalls'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite Integration Services' }],
   },
   'automate-manual-business-workflow-with-ai': {
     services: ['ai-workflow-automation', 'ai-automation-systems'],

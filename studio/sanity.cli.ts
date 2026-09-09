@@ -6,4 +6,7 @@ const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
 export default defineCliConfig({
     api: { projectId, dataset },
     studioHost: 'aizaz-studio',
+    deployment: {
+        appId: 'vb8dlho18i8inqost1kz7je9',
+    },
 });

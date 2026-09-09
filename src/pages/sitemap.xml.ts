@@ -1,7 +1,10 @@
 import type { APIRoute } from 'astro';
-import { getAllSeoPaths } from '../data/seoPages';
+import { getAllSeoPaths } from '../data/seoPaths';
 import { getPublishedPosts, isNonIndexableContentSlug } from '../lib/blog';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { getComparePages } from '../lib/sanity/comparePages';
+import { getIndustryPages, getIntegrationPages, getServicePages } from '../lib/sanity/landingPages';
+import { getTechnologyPages } from '../lib/sanity/technologyPages';
 import { isPublicCaseStudy } from '../lib/case-study-visibility';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 import { isIndexablePath, toCanonicalPath, toCanonicalUrl } from '../lib/seo-url';
@@ -15,7 +18,21 @@ function toLastmod(iso?: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const staticPaths = getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog');
+  const [cmsServices, cmsIndustries, cmsIntegrations, cmsTechnologies, cmsCompare] = await Promise.all([
+    getServicePages(),
+    getIndustryPages(),
+    getIntegrationPages(),
+    getTechnologyPages(),
+    getComparePages(),
+  ]);
+  const staticPaths = [
+    ...getAllSeoPaths().filter((path) => !path.startsWith('/blog/') || path === '/blog'),
+    ...cmsServices.map((page) => `/services/${page.slug}`),
+    ...cmsIndustries.map((page) => `/for/${page.slug}`),
+    ...cmsIntegrations.map((page) => `/integrations/${page.slug}`),
+    ...cmsTechnologies.map((page) => `/technologies/${page.slug}`),
+    ...cmsCompare.map((page) => `/compare/${page.slug}`),
+  ];
   const published = await getPublishedPosts();
   const cmsPaths = published
     .filter((post) => !post.noindex && !isNonIndexableContentSlug(post.slug))
@@ -43,7 +60,7 @@ export const GET: APIRoute = async () => {
       (path) => `  <url>
     <loc>${toCanonicalUrl(path)}</loc>${toLastmod(lastmodByPath.get(path))}
     <changefreq>${path === '/' ? 'weekly' : path.startsWith('/blog') || path.startsWith('/case-studies') ? 'daily' : 'monthly'}</changefreq>
-    <priority>${path === '/' ? '1.0' : path.startsWith('/services') || path === '/ai-systems-sprint' ? '0.9' : path.startsWith('/blog/') ? '0.8' : '0.7'}</priority>
+    <priority>${path === '/' ? '1.0' : path.startsWith('/services') || path.startsWith('/integrations') || path === '/ai-systems-sprint' ? '0.9' : path.startsWith('/blog/') ? '0.8' : '0.7'}</priority>
   </url>`,
     )
     .join('\n');

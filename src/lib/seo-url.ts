@@ -31,7 +31,9 @@ export function isIndexablePath(path: string): boolean {
         return false;
     }
     if (canonicalPath.startsWith('/api/')) return false;
-    if (canonicalPath === '/thank-you') return false;
+    if (canonicalPath === '/thank-you' || canonicalPath === '/book-a-call' || canonicalPath === '/start-a-project') {
+        return false;
+    }
     if (canonicalPath === '/') return true;
     const slug = canonicalPath.split('/').filter(Boolean).pop() ?? '';
     if (isNonIndexableContentSlug(slug)) return false;

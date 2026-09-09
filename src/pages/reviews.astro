@@ -1,12 +1,15 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
-import { reviews } from '../data/commercialPages';
-import { caseStudies } from '../data/caseStudies';
-import { filterPublicCaseStudies } from '../lib/case-study-visibility';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { getReviews } from '../lib/sanity/sitePages';
 
-const c = reviews;
-const realQuotes = filterPublicCaseStudies(caseStudies)
+const c = await getReviews();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
+const realQuotes = (await getAllCaseStudies())
   .filter((study) => study.testimonial?.quote)
   .map((study) => ({
     quote: study.testimonial!.quote,

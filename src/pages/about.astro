@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
@@ -6,26 +8,33 @@ import OutlinedCard from '../components/OutlinedCard.astro';
 import PageCTA from '../components/PageCTA.astro';
 import TeamPortrait from '../components/TeamPortrait.astro';
 import PageSentinel from '../components/PageSentinel.astro';
-import { leadershipProfiles } from '../data/leadership';
-import { caseStudies } from '../data/caseStudies';
-import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 import { BOOKING_URL } from '../data/siteConfig';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getAllCaseStudies } from '../lib/sanity/caseStudies';
+import { getLeadershipProfiles } from '../lib/sanity/leadership';
+import { getAboutPage } from '../lib/sanity/sitePages';
 
-const leaders = leadershipProfiles;
-const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
+const [page, leaders, studies] = await Promise.all([
+  getAboutPage(),
+  getLeadershipProfiles(),
+  getAllCaseStudies(),
+]);
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
+const proof = studies.slice(0, 3);
+const cards = page.cards ?? [];
 ---
 
 <SiteShell
-  title="About Aizaz Studio | Senior Systems Team"
-  description="A senior systems team for stuck workflows, stalled products, and systems that don’t talk. AI automation, SaaS, NetSuite, and AWS — owned through production."
+  title={page.metaTitle}
+  description={page.metaDescription}
   canonical="/about"
 >
   <PageSentinel>
     <PageHero
-      eyebrow="About"
-      title="A senior systems"
-      highlight="team on demand"
-      description="You shouldn’t have to manage the people building the system. Hand us the operational problem — we diagnose, build, and ship."
+      eyebrow={page.heroEyebrow ?? 'About'}
+      title={page.title}
+      highlight={page.heroHighlight}
+      description={page.heroSubtitle}
     >
       <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
       <a class="c-btn c-btn--ghost" href="/case-studies">See the work</a>
@@ -33,9 +42,9 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 
     <div class="c-wrap page-sentinel__intro">
       <SectionHeader
-        eyebrow="What we are"
-        title="Systems thinking, senior delivery"
-        lede="We help founders and operations teams replace manual, scattered workflows with connected software, from a focused sprint to a full platform build."
+        eyebrow={page.sectionEyebrow ?? 'What we are'}
+        title={page.sectionTitle ?? 'Systems thinking, senior delivery'}
+        lede={page.sectionLede ?? page.intro}
       />
     </div>
   </PageSentinel>
@@ -43,16 +52,13 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
   <section class="sp-section sp-section--tight">
     <div class="c-wrap">
       <div class="sp-grid">
-        <OutlinedCard
-          eyebrow="Who we work with"
-          title="Ops-heavy teams and product builders"
-          body="SaaS founders, ecommerce operators, clinics, trading businesses, NetSuite users, and agencies that need senior engineering, not another layer of account management."
-        />
-        <OutlinedCard
-          eyebrow="How we think"
-          title="Across architecture, automation, and handoff"
-          body="Isolated vendors create gaps. We design the technical layer so CRM, ERP, product, and cloud stay coherent, and your team can operate what we ship."
-        />
+        {cards.map((card) => (
+          <OutlinedCard
+            eyebrow={card.eyebrow}
+            title={card.heading}
+            body={card.body}
+          />
+        ))}
       </div>
     </div>
   </section>
@@ -102,9 +108,9 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
         lede="Every engagement starts with discovery and ends with software your team can run, with documentation, monitoring, and a sensible next step."
       />
       <div class="sp-grid sp-grid--3">
-        <OutlinedCard eyebrow="01" title="Discover" body="Map the stack and pick the highest-leverage workflow or product milestone." />
-        <OutlinedCard eyebrow="02" title="Build & integrate" body="Senior engineers ship against real systems, not isolated demos." />
-        <OutlinedCard eyebrow="03" title="Ship & observe" body="Deploy with CI/CD, logging, and handoff so operations stay quiet after launch." />
+        {page.howSteps.map((step) => (
+          <OutlinedCard eyebrow={step.eyebrow} title={step.title} body={step.body} />
+        ))}
       </div>
       <div class="page-hero__actions" style="margin-top: 28px">
         <a class="c-btn c-btn--ghost" href="/process">Full process</a>
@@ -136,7 +142,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
   </section>
 
   <PageCTA
-    title="Ready to talk through a system?"
-    lede="Tell us what needs fixing. We’ll map fit, scope, and a sensible first step."
+    title={page.ctaTitle ?? 'Ready to talk through a system?'}
+    lede={page.ctaLede ?? 'Tell us what needs fixing. We’ll map fit, scope, and a sensible first step.'}
   />
 </SiteShell>

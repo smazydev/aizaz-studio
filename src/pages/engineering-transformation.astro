@@ -1,21 +1,31 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import Process from '../components/Process.astro';
 import PageHero from '../components/PageHero.astro';
 import PageCTA from '../components/PageCTA.astro';
 import { BOOKING_URL } from '../data/siteConfig';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getEngineeringTransformationPage, getProcessPage } from '../lib/sanity/sitePages';
+
+const [page, process] = await Promise.all([
+  getEngineeringTransformationPage(),
+  getProcessPage(),
+]);
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 ---
 
 <SiteShell
-  title="How We Work | Aizaz.studio"
-  description="Our process for discovery, architecture, build, deployment, and handoff, designed to ship reliable AI, automation, and software systems."
+  title={page.metaTitle}
+  description={page.metaDescription}
   canonical="/engineering-transformation"
 >
   <PageHero
-    eyebrow="How we work"
-    title="From manual workflow"
-    highlight="to production system"
-    description="Discover, design, build, integrate, ship, and observe: the same disciplined process whether you start with a 14-day sprint or a full platform engagement."
+    eyebrow={page.heroEyebrow ?? 'How we work'}
+    title={page.title}
+    highlight={page.heroHighlight}
+    description={page.heroSubtitle}
   >
     <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
     <a class="c-btn c-btn--ghost" href="/process">Process summary</a>
@@ -24,11 +34,11 @@ import { BOOKING_URL } from '../data/siteConfig';
   <section class="sp-section sp-section--tight">
     <div class="c-wrap seo-measure" style="text-align:center">
       <p class="c-lede">
-        We do not assign random freelancers or disappear after a demo. One senior team maps your workflow, connects your tools, deploys to production, and documents everything your ops team needs to run it.
+        {page.intro ?? 'We do not assign random freelancers or disappear after a demo. One senior team maps your workflow, connects your tools, deploys to production, and documents everything your ops team needs to run it.'}
       </p>
     </div>
   </section>
 
-  <Process stepsOnly />
+  <Process stepsOnly steps={process.steps} />
   <PageCTA />
 </SiteShell>

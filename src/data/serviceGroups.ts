@@ -19,6 +19,7 @@ export const serviceGroups: ServiceGroup[] = [
     lede: 'Reduce repetitive work and response times with AI systems that use your data, follow your rules, and connect to the tools your team already relies on.',
     slugs: [
       'ai-automation-systems',
+      'ai-integration',
       'ai-agent-development',
       'ai-chatbot-development',
       'ai-workflow-automation',
@@ -69,15 +70,14 @@ export const serviceGroups: ServiceGroup[] = [
   },
 ];
 
-const bySlug = new Map(servicePages.map((page) => [page.slug, page]));
-
-export function servicesForGroup(group: ServiceGroup): SeoPage[] {
+export function servicesForGroup(group: ServiceGroup, pages: SeoPage[] = servicePages): SeoPage[] {
+  const bySlug = new Map(pages.map((page) => [page.slug, page]));
   return group.slugs
     .map((slug) => bySlug.get(slug))
     .filter((page): page is SeoPage => Boolean(page));
 }
 
-export function ungroupedServices(): SeoPage[] {
+export function ungroupedServices(pages: SeoPage[] = servicePages): SeoPage[] {
   const grouped = new Set(serviceGroups.flatMap((g) => g.slugs));
-  return servicePages.filter((page) => !grouped.has(page.slug));
+  return pages.filter((page) => !grouped.has(page.slug));
 }

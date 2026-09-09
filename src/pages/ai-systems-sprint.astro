@@ -1,13 +1,17 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import PageCTA from '../components/PageCTA.astro';
 import FaqSection from '../components/FaqSection.astro';
-import { aiSystemsSprintPage } from '../data/seoPages';
 import { deliverySteps } from '../data/siteContent';
 import { BOOKING_URL } from '../data/siteConfig';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getSprintPage } from '../lib/sanity/landingPages';
 
-const page = aiSystemsSprintPage;
+const page = await getSprintPage();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages', 'landing:ai-systems-sprint']);
 ---
 
 <SiteShell

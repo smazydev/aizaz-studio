@@ -392,6 +392,254 @@ export const bodyImage = defineType({
     },
 });
 
+export const titledText = defineType({
+    name: 'titledText',
+    title: 'Titled text',
+    type: 'object',
+    fields: [
+        defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+        defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+        defineField({ name: 'body', title: 'Body', type: 'text', rows: 3 }),
+    ],
+    preview: {
+        select: { title: 'heading', subtitle: 'eyebrow' },
+    },
+});
+
+export const benefitItem = defineType({
+    name: 'benefitItem',
+    title: 'Benefit',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'text',
+            rows: 2,
+            validation: (rule) => rule.required(),
+        }),
+    ],
+    preview: {
+        select: { title: 'title', subtitle: 'description' },
+    },
+});
+
+export const richSection = defineType({
+    name: 'richSection',
+    title: 'Content section',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'heading',
+            title: 'Heading',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'paragraphs',
+            title: 'Paragraphs',
+            type: 'array',
+            of: [{ type: 'text' }],
+        }),
+        defineField({
+            name: 'bullets',
+            title: 'Bullets',
+            type: 'array',
+            of: [{ type: 'string' }],
+        }),
+    ],
+    preview: {
+        select: { title: 'heading' },
+    },
+});
+
+export const processStepItem = defineType({
+    name: 'processStepItem',
+    title: 'Process step',
+    type: 'object',
+    fields: [
+        defineField({ name: 'step', title: 'Step number', type: 'string' }),
+        defineField({
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+            validation: (rule) => rule.required(),
+        }),
+        defineField({ name: 'subtitle', title: 'Subtitle', type: 'string' }),
+        defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }),
+    ],
+    preview: {
+        select: { title: 'title', subtitle: 'step' },
+    },
+});
+
+export const proofBlock = defineType({
+    name: 'proofBlock',
+    title: 'Proof block',
+    type: 'object',
+    fields: [
+        defineField({ name: 'eyebrow', title: 'Eyebrow', type: 'string' }),
+        defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+        defineField({ name: 'body', title: 'Body', type: 'text', rows: 3 }),
+        defineField({ name: 'links', title: 'Links', type: 'array', of: [{ type: 'link' }] }),
+    ],
+});
+
+export const comparisonRow = defineType({
+    name: 'comparisonRow',
+    title: 'Comparison row',
+    type: 'object',
+    fields: [
+        defineField({ name: 'label', title: 'Label', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'optionA', title: 'Option A', type: 'string' }),
+        defineField({ name: 'optionB', title: 'Option B', type: 'string' }),
+    ],
+    preview: {
+        select: { title: 'label' },
+    },
+});
+
+export const engagementModel = defineType({
+    name: 'engagementModel',
+    title: 'Engagement model',
+    type: 'object',
+    fields: [
+        defineField({ name: 'id', title: 'ID', type: 'string' }),
+        defineField({ name: 'name', title: 'Name', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'summary', title: 'Summary', type: 'text', rows: 3 }),
+        defineField({ name: 'duration', title: 'Duration', type: 'string' }),
+        defineField({ name: 'bestFor', title: 'Best for', type: 'array', of: [{ type: 'string' }] }),
+        defineField({ name: 'deliverables', title: 'Deliverables', type: 'array', of: [{ type: 'string' }] }),
+        defineField({ name: 'startingFrom', title: 'Starting from', type: 'string' }),
+    ],
+    preview: {
+        select: { title: 'name', subtitle: 'duration' },
+    },
+});
+
+export const comparisonTableRow = defineType({
+    name: 'comparisonTableRow',
+    title: 'Comparison table row',
+    type: 'object',
+    fields: [
+        defineField({ name: 'feature', title: 'Feature', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'sprint', title: 'Sprint', type: 'string' }),
+        defineField({ name: 'project', title: 'Project', type: 'string' }),
+        defineField({ name: 'dedicated', title: 'Dedicated', type: 'string' }),
+        defineField({ name: 'retainer', title: 'Retainer', type: 'string' }),
+    ],
+    preview: {
+        select: { title: 'feature' },
+    },
+});
+
+export const titledList = defineType({
+    name: 'titledList',
+    title: 'Titled list',
+    type: 'object',
+    fields: [
+        defineField({
+            name: 'key',
+            title: 'Key',
+            type: 'string',
+            description: 'Internal key used by the site (e.g. whoFor, whatWeCover).',
+        }),
+        defineField({ name: 'heading', title: 'Heading', type: 'string' }),
+        defineField({ name: 'items', title: 'Items', type: 'array', of: [{ type: 'string' }] }),
+    ],
+    preview: {
+        select: { title: 'heading', subtitle: 'key' },
+    },
+});
+
+export const portfolioProject = defineType({
+    name: 'portfolioProject',
+    title: 'Portfolio project',
+    type: 'object',
+    fields: [
+        defineField({ name: 'slug', title: 'Slug', type: 'string' }),
+        defineField({ name: 'name', title: 'Name', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'category', title: 'Category', type: 'string' }),
+        defineField({ name: 'summary', title: 'Summary', type: 'text', rows: 3 }),
+        defineField({ name: 'outcomes', title: 'Outcomes', type: 'array', of: [{ type: 'string' }] }),
+        defineField({ name: 'stack', title: 'Stack', type: 'array', of: [{ type: 'string' }] }),
+        defineField({ name: 'href', title: 'Link', type: 'string' }),
+    ],
+    preview: {
+        select: { title: 'name', subtitle: 'category' },
+    },
+});
+
+export const jobListing = defineType({
+    name: 'jobListing',
+    title: 'Job listing',
+    type: 'object',
+    fields: [
+        defineField({ name: 'title', title: 'Title', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'department', title: 'Department', type: 'string' }),
+        defineField({ name: 'location', title: 'Location', type: 'string' }),
+        defineField({ name: 'type', title: 'Type', type: 'string' }),
+        defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }),
+    ],
+    preview: {
+        select: { title: 'title', subtitle: 'department' },
+    },
+});
+
+export const homepageService = defineType({
+    name: 'homepageService',
+    title: 'Homepage service',
+    type: 'object',
+    fields: [
+        defineField({ name: 'n', title: 'Number', type: 'string' }),
+        defineField({ name: 'title', title: 'Title', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'body', title: 'Body', type: 'text', rows: 2 }),
+        defineField({ name: 'items', title: 'Tags', type: 'array', of: [{ type: 'string' }] }),
+        defineField({ name: 'href', title: 'Link', type: 'string' }),
+        defineField({ name: 'enabled', title: 'Enabled', type: 'boolean', initialValue: true }),
+    ],
+    preview: {
+        select: { title: 'title', subtitle: 'n' },
+    },
+});
+
+export const homepageProcessStep = defineType({
+    name: 'homepageProcessStep',
+    title: 'Homepage process step',
+    type: 'object',
+    fields: [
+        defineField({ name: 'n', title: 'Number', type: 'string' }),
+        defineField({ name: 'title', title: 'Title', type: 'string', validation: (rule) => rule.required() }),
+        defineField({ name: 'body', title: 'Body', type: 'text', rows: 2 }),
+        defineField({ name: 'meta', title: 'Meta', type: 'string' }),
+        defineField({
+            name: 'art',
+            title: 'Artifact',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Nodes', value: 'nodes' },
+                    { title: 'Wire', value: 'wire' },
+                    { title: 'Blocks', value: 'blocks' },
+                    { title: 'Join', value: 'join' },
+                    { title: 'Ship', value: 'ship' },
+                    { title: 'Wave', value: 'wave' },
+                ],
+            },
+        }),
+        defineField({ name: 'enabled', title: 'Enabled', type: 'boolean', initialValue: true }),
+    ],
+    preview: {
+        select: { title: 'title', subtitle: 'n' },
+    },
+});
+
 /** Portable Text body for blog posts — paragraphs, headings, lists, links, code, images. */
 export const blockContent = defineType({
     name: 'blockContent',

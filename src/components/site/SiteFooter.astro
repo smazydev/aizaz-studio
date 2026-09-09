@@ -1,7 +1,8 @@
 ---
 import { isExternalHref } from '../../data/siteConfig';
-import { siteFooter } from '../../data/siteChrome';
+import { getSiteSettings } from '../../lib/sanity/siteSettings';
 
+const siteFooter = await getSiteSettings();
 const year = new Date().getFullYear();
 ---
 
@@ -10,7 +11,7 @@ const year = new Date().getFullYear();
   <div class="c-wrap">
     <div class="c-foot__cols">
       <div>
-        <h4>{siteFooter.studio.heading}</h4>
+        <p class="c-foot__heading">{siteFooter.studio.heading}</p>
         <a class="c-foot__brand" href="/">
           <img src="/aizaz-logo-white.png" alt="" width="40" height="40" />
           Aizaz Studio
@@ -21,7 +22,7 @@ const year = new Date().getFullYear();
       </div>
       {siteFooter.columns.map((col) => (
         <div>
-          <h4>{col.heading}</h4>
+          <p class="c-foot__heading">{col.heading}</p>
           {col.links.map((link) => (
             <a
               href={link.href}

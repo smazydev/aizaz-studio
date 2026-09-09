@@ -122,3 +122,124 @@ export const caseStudiesQuery = groq`
     coverImage
   }
 `;
+
+export const landingPagesQuery = groq`
+  *[_type == "landingPage" && !(_id in path("drafts.**")) && defined(slug.current)] | order(title asc) {
+    _id,
+    category,
+    title,
+    "slug": slug.current,
+    audienceLabel,
+    heroSubtitle,
+    keywords,
+    problem,
+    solution,
+    capabilities,
+    useCases,
+    faqs[]{ question, answer, enabled },
+    relatedSlugs,
+    primaryCta{ label, href },
+    secondaryCta{ label, href },
+    ctaTitle,
+    ctaLede,
+    benefits[]{ title, description },
+    seoSections[]{ heading, paragraphs, bullets },
+    processSteps[]{ step, title, subtitle, description },
+    proof{ eyebrow, heading, body, links[]{ label, href } },
+    ${seoProjection}
+  }
+`;
+
+export const technologyPagesQuery = groq`
+  *[_type == "technologyPage" && !(_id in path("drafts.**")) && defined(slug.current)] | order(title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    heroSubtitle,
+    outcomes,
+    useCases,
+    stackNotes,
+    relatedServices[]{ label, href },
+    faqs[]{ question, answer, enabled },
+    ${seoProjection}
+  }
+`;
+
+export const comparePagesQuery = groq`
+  *[_type == "comparePage" && !(_id in path("drafts.**")) && defined(slug.current)] | order(title asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    heroSubtitle,
+    intro,
+    comparisonRows[]{ label, optionA, optionB },
+    sections[]{ heading, paragraphs },
+    faqs[]{ question, answer, enabled },
+    ctaText,
+    relatedLinks[]{ label, href },
+    ${seoProjection}
+  }
+`;
+
+export const sitePagesQuery = groq`
+  *[_type == "sitePage" && !(_id in path("drafts.**")) && defined(pageKey)] {
+    _id,
+    pageKey,
+    title,
+    heroEyebrow,
+    heroHighlight,
+    heroSubtitle,
+    intro,
+    faqs[]{ question, answer, enabled },
+    relatedLinks[]{ label, href },
+    cards[]{ eyebrow, heading, body },
+    models[]{ id, name, summary, duration, bestFor, deliverables, startingFrom },
+    comparisonHeaders,
+    comparisonRows[]{ feature, sprint, project, dedicated, retainer },
+    included,
+    notIncluded,
+    selectorGuide[]{ heading, body },
+    listSections[]{ key, heading, items },
+    projects[]{ slug, name, category, summary, outcomes, stack, href },
+    quotes[]{ quote, author, role, company },
+    contentSections[]{ heading, paragraphs, bullets },
+    processSteps[]{ step, title, subtitle, description },
+    values[]{ heading, body },
+    jobs[]{ title, department, location, type, description },
+    sectionEyebrow,
+    sectionTitle,
+    sectionLede,
+    ctaTitle,
+    ctaLede,
+    ${seoProjection}
+  }
+`;
+
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings" && _id == "siteSettings"][0]{
+    navLinks[]{ label, href },
+    navCtaLabel,
+    navCtaHref,
+    studioHeading,
+    studioBlurb,
+    email,
+    phone,
+    phoneHref,
+    footerColumns[]{ heading, links[]{ label, href } }
+  }
+`;
+
+export const personsQuery = groq`
+  *[_type == "person" && !(_id in path("drafts.**"))]{
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    bio,
+    focus,
+    linkedin,
+    githubUrl,
+    photo
+  }
+`;
+

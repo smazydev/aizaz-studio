@@ -1,19 +1,26 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../../components/SiteShell.astro';
 import PageHero from '../../components/PageHero.astro';
-import { comparePages } from '../../data/comparePages';
 import { BOOKING_URL } from '../../data/siteConfig';
+import { applyCmsCacheHeaders } from '../../lib/cms-cache';
+import { getComparePages } from '../../lib/sanity/comparePages';
+import { getCompareIndex } from '../../lib/sanity/sitePages';
+
+const [comparePages, index] = await Promise.all([getComparePages(), getCompareIndex()]);
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 ---
 
 <SiteShell
-  title="Compare Engagement Options | Aizaz Studio"
-  description="Compare product engineering with staff augmentation, agencies vs freelancers, and AI Systems Sprint vs traditional automation projects."
+  title={index.metaTitle}
+  description={index.metaDescription}
   canonical="/compare"
 >
   <PageHero
-    eyebrow="Resources"
-    title="Compare your options"
-    description="Honest comparisons to help you choose the right model for AI, SaaS, cloud, and automation work."
+    eyebrow={index.heroEyebrow ?? 'Resources'}
+    title={index.title}
+    description={index.heroSubtitle}
   >
     <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
     <a class="c-btn c-btn--ghost" href="/start-a-project">Tell us what needs fixing</a>

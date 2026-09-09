@@ -578,8 +578,10 @@ h3,
     align-items: center;
   }
 
-  .c-foot h4 {
+  .c-foot .c-foot__heading {
     margin-bottom: 8px;
+    min-height: 0;
+    padding: 0;
   }
 
   .c-foot__mark {

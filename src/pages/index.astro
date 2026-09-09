@@ -1,7 +1,16 @@
 ---
+export const prerender = false;
+
 import Layout from '../layouts/Layout.astro';
 import '../styles/home-local.css';
 import ClonePage from '../components/home/ClonePage.astro';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getHomepageContent } from '../lib/sanity/homepage';
+import { getLeadershipProfiles } from '../lib/sanity/leadership';
+
+const homepage = await getHomepageContent();
+const leaders = await getLeadershipProfiles();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'homepage']);
 ---
 
 <Layout
@@ -9,7 +18,7 @@ import ClonePage from '../components/home/ClonePage.astro';
   description="Give us a stuck workflow or a product that needs to ship. We build AI automation, SaaS, NetSuite, and AWS systems — one live in 14 days."
   canonical="/"
 >
-  <ClonePage />
+  <ClonePage homepage={homepage} leaders={leaders} />
 </Layout>
 
 <script>

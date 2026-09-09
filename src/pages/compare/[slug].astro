@@ -1,17 +1,18 @@
 ---
-export const prerender = true;
+export const prerender = false;
+
 import SiteShell from '../../components/SiteShell.astro';
 import CompareLanding from '../../components/CompareLanding.astro';
-import { comparePages } from '../../data/comparePages';
+import { applyCmsCacheHeaders } from '../../lib/cms-cache';
+import { getCompareBySlug } from '../../lib/sanity/comparePages';
 
-export function getStaticPaths() {
-  return comparePages.map((page) => ({
-    params: { slug: page.slug },
-    props: { page },
-  }));
+const slug = Astro.params.slug;
+const page = slug ? await getCompareBySlug(slug) : undefined;
+if (!page) {
+  return new Response(null, { status: 404 });
 }
 
-const { page } = Astro.props;
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages', `compare:${page.slug}`]);
 ---
 
 <SiteShell title={page.metaTitle} description={page.metaDescription} canonical={`/compare/${page.slug}`}>

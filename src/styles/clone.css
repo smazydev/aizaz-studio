@@ -2667,12 +2667,13 @@ html.theme-dark .c-cta select option {
   padding-bottom: 28px;
 }
 
-.c-foot h4 {
+.c-foot .c-foot__heading {
   font-size: var(--micro);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 14px;
+  padding: 0;
 }
 
 .c-foot a,

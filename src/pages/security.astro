@@ -1,10 +1,14 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import PageCTA from '../components/PageCTA.astro';
-import { security } from '../data/commercialPages';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getSecurity } from '../lib/sanity/sitePages';
 
-const c = security;
+const c = await getSecurity();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/security">

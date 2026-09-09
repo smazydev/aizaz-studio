@@ -1,14 +1,18 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
 import FaqSection from '../components/FaqSection.astro';
 import PageCTA from '../components/PageCTA.astro';
-import { engagementModels } from '../data/commercialPages';
 import { BOOKING_URL } from '../data/siteConfig';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getEngagementModels } from '../lib/sanity/sitePages';
 
-const c = engagementModels;
+const c = await getEngagementModels();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 ---
 
 <SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/engagement-models">

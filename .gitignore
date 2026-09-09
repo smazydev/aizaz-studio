@@ -35,6 +35,7 @@ studio/.env
 studio/node_modules/
 studio/dist/
 studio/.sanity/
+studio/scripts/generated/
 
 # Editor directories and files
 .vscode/*

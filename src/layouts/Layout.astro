@@ -122,7 +122,7 @@ const pageStructuredData =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{resolvedTitle}</title>
     <meta name="description" content={resolvedDescription} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
     {!noindex && <meta name="robots" content="index, follow" />}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/aizaz-logo-white.png" />

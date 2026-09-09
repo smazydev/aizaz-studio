@@ -1,11 +1,5 @@
-import { blogs } from './blogs';
 import { extraServicePages } from './servicePagesExtra';
 import { extraIndustryPages } from './industryPagesExtra';
-import { comparePages } from './comparePages';
-import { technologyPages } from './technologyPages';
-import { caseStudies } from './caseStudies';
-import { isNonIndexableContentSlug } from '../lib/blog-utils';
-import { filterPublicCaseStudies } from '../lib/case-study-visibility';
 
 export interface SeoPage {
     slug: string;
@@ -20,6 +14,10 @@ export interface SeoPage {
     useCases: string[];
     faqs: { question: string; answer: string }[];
     relatedSlugs?: string[];
+    primaryCta?: { label: string; href: string };
+    secondaryCta?: { label: string; href: string };
+    ctaTitle?: string;
+    ctaLede?: string;
 }
 
 export interface IndustryPage extends SeoPage {
@@ -77,7 +75,7 @@ export const servicePages: SeoPage[] = [
                 answer: 'Our AI Systems Sprint delivers one working workflow in 14 days — scoped, built, deployed, and ready for your team to use.',
             },
         ],
-        relatedSlugs: ['business-process-automation', 'web-app-saas-development'],
+        relatedSlugs: ['ai-integration', 'business-process-automation', 'api-integration'],
     },
     {
         slug: 'web-app-saas-development',
@@ -700,35 +698,3 @@ export function getIndustryBySlug(slug: string): IndustryPage | undefined {
     return industryPages.find((page) => page.slug === slug);
 }
 
-export function getAllSeoPaths(): string[] {
-    const paths = [
-        '/',
-        '/services',
-        '/ai-systems-sprint',
-        '/about',
-        '/case-studies',
-        '/engineering-transformation',
-        '/process',
-        '/blog',
-        '/careers',
-        '/engagement-models',
-        '/book-a-call',
-        '/start-a-project',
-        '/portfolio',
-        '/reviews',
-        '/security',
-        '/technologies',
-        '/compare',
-        ...servicePages.map((p) => `/services/${p.slug}`),
-        ...industryPages.map((p) => `/for/${p.slug}`),
-        ...comparePages.map((p) => `/compare/${p.slug}`),
-        ...technologyPages.map((p) => `/technologies/${p.slug}`),
-        ...blogs.filter((b) => !isNonIndexableContentSlug(b.slug)).map((b) => `/blog/${b.slug}`),
-        ...caseStudySlugs(),
-    ];
-    return paths;
-}
-
-function caseStudySlugs(): string[] {
-    return filterPublicCaseStudies(caseStudies).map((study) => `/case-studies/${study.slug}`);
-}

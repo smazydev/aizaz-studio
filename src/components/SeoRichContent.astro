@@ -42,6 +42,25 @@ const steps = extras.processSteps ?? deliverySteps.slice(0, 3);
   </section>
 )}
 
+{extras.proof && (
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap seo-measure">
+      <div class="sp-promo">
+        <div class="sp-promo__copy">
+          <p class="c-micro c-red">{extras.proof.eyebrow ?? 'Relevant proof'}</p>
+          <h2 class="page-h2">{extras.proof.heading}</h2>
+          <p class="c-lede">{extras.proof.body}</p>
+        </div>
+        <div class="page-hero__actions" style="margin:0">
+          {extras.proof.links.map((link, index) => (
+            <a class:list={['c-btn', index > 0 && 'c-btn--ghost']} href={link.href}>{link.label}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
 <section class="sp-section">
   <div class="c-wrap seo-measure">
     <h2 class="page-h2">How we deliver</h2>

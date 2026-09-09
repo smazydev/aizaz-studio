@@ -1,23 +1,29 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
 import FaqSection from '../components/FaqSection.astro';
 import CalendarEmbed from '../components/CalendarEmbed.astro';
-import { bookACall } from '../data/commercialPages';
-import { siteFooter } from '../data/siteChrome';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getBookACall } from '../lib/sanity/sitePages';
+import { getSiteSettings } from '../lib/sanity/siteSettings';
 
-const c = bookACall;
+const c = await getBookACall();
+const settings = await getSiteSettings();
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 const s = c.sections;
-const contact = siteFooter.studio;
+const contact = settings.studio;
 ---
 
-<SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/book-a-call">
+<SiteShell title={c.metaTitle} description={c.metaDescription} canonical="/book-a-call" noindex={true}>
   <PageHero eyebrow="Contact" title={c.title} description={c.heroSubtitle} />
 
   <section class="sp-section sp-section--tight">
     <div class="c-wrap">
+      <h2 class="visually-hidden">Who the call is for and what we will cover</h2>
       <div class="sp-grid">
         <OutlinedCard eyebrow="01" title={s.whoFor.heading}>
           <ul class="sp-list" style="margin-top: 14px">
@@ -50,6 +56,7 @@ const contact = siteFooter.studio;
 
   <section class="sp-section sp-section--tight">
     <div class="c-wrap">
+      <h2 class="visually-hidden">Engagement fit</h2>
       <div class="sp-grid">
         <OutlinedCard title={s.goodFit.heading}>
           <ul class="sp-list" style="margin-top: 14px">

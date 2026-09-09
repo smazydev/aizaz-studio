@@ -1,66 +1,35 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import OutlinedCard from '../components/OutlinedCard.astro';
-import { siteFooter } from '../data/siteChrome';
+import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { getCareersPage } from '../lib/sanity/sitePages';
+import { getSiteSettings } from '../lib/sanity/siteSettings';
 
-const values = [
-  {
-    title: 'Systems over slides',
-    description: 'We measure success by working software in production, not decks and wireframes that never ship.',
-  },
-  {
-    title: 'Ownership mentality',
-    description: 'We think like architects and build like engineers. Every project gets proper deployment, docs, and handoff.',
-  },
-  {
-    title: 'Remote-first, delivery-focused',
-    description: 'Distributed team, clear communication, and async-friendly workflows that keep projects moving.',
-  },
-];
-
-const jobs = [
-  {
-    title: 'Senior Full Stack Engineer',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'full time',
-    description: 'Build production web apps, APIs, and automations for clients across SaaS, ecommerce, and fintech.',
-  },
-  {
-    title: 'Backend / Integration Engineer',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'full time',
-    description: 'NetSuite, ERP middleware, AWS backends, and high reliability data sync systems.',
-  },
-  {
-    title: 'AI Automation Engineer',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'Contract / full time',
-    description: 'Design and ship AI assisted workflows, agents, and internal tools connected to business systems.',
-  },
-];
+const [page, settings] = await Promise.all([getCareersPage(), getSiteSettings()]);
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages']);
 ---
 
 <SiteShell
-  title="Careers | Aizaz.studio"
-  description="Join a small senior team that builds AI automation, SaaS, NetSuite, and AWS systems. Exceptional engineers welcome even when roles are paused."
+  title={page.metaTitle}
+  description={page.metaDescription}
   canonical="/careers"
 >
   <PageHero
-    eyebrow="Careers"
-    title="Build systems that"
-    highlight="businesses depend on"
-    description="A small senior team. Direct ownership. AI automation, SaaS, NetSuite, and cloud. Exceptional engineers welcome even when we are not hiring."
+    eyebrow={page.heroEyebrow ?? 'Careers'}
+    title={page.title}
+    highlight={page.heroHighlight}
+    description={page.heroSubtitle}
   />
 
   <section class="sp-section sp-section--tight">
     <div class="c-wrap">
+      <h2 class="visually-hidden">How we work</h2>
       <div class="sp-grid sp-grid--3">
-        {values.map((value) => (
+        {page.values.map((value) => (
           <OutlinedCard title={value.title} body={value.description} />
         ))}
       </div>
@@ -70,12 +39,12 @@ const jobs = [
   <section class="sp-section">
     <div class="c-wrap seo-measure">
       <SectionHeader
-        eyebrow="Roles"
-        title="Open roles"
-        lede="We review applications continuously — reach out even if a role is marked paused."
+        eyebrow={page.sectionEyebrow ?? 'Roles'}
+        title={page.sectionTitle ?? 'Open roles'}
+        lede={page.sectionLede}
       />
       <div class="sp-grid sp-grid--1" style="gap: 12px">
-        {jobs.map((job) => (
+        {page.jobs.map((job) => (
           <article class="sp-card">
             <div class="sp-card__top">
               <p class="c-micro c-red">{job.department}</p>
@@ -91,7 +60,7 @@ const jobs = [
         <div class="sp-promo__copy">
           <p class="c-lede">
             Send your portfolio or GitHub to{' '}
-            <a href={`mailto:${siteFooter.studio.email}`}>{siteFooter.studio.email}</a>
+            <a href={`mailto:${settings.studio.email}`}>{settings.studio.email}</a>
             — tell us what systems you have shipped and what you want to build next.
           </p>
         </div>

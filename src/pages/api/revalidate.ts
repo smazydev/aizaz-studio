@@ -14,6 +14,8 @@ type RuntimeLocals = {
 type RevalidateBody = {
     _type?: string;
     slug?: { current?: string } | string;
+    category?: string;
+    pageKey?: string;
     paths?: string[];
 };
 
@@ -41,8 +43,36 @@ function extractBearer(header: string | null): string | null {
     return match?.[1]?.trim() || null;
 }
 
+function landingPath(category: string | undefined, slug: string): string | undefined {
+    if (category === 'service') return `/services/${slug}`;
+    if (category === 'industry') return `/for/${slug}`;
+    if (category === 'integration') return `/integrations/${slug}`;
+    if (category === 'sprint') return '/ai-systems-sprint';
+    return undefined;
+}
+
+function sitePagePath(pageKey: string | undefined): string | undefined {
+    if (!pageKey) return undefined;
+    const map: Record<string, string> = {
+        'engagement-models': '/engagement-models',
+        'book-a-call': '/book-a-call',
+        portfolio: '/portfolio',
+        reviews: '/reviews',
+        security: '/security',
+        process: '/process',
+        careers: '/careers',
+        about: '/about',
+        'services-index': '/services',
+        'technologies-index': '/technologies',
+        'compare-index': '/compare',
+        'start-a-project': '/start-a-project',
+        'engineering-transformation': '/engineering-transformation',
+    };
+    return map[pageKey];
+}
+
 function pathsFromSanityPayload(body: RevalidateBody): string[] {
-    const paths = new Set<string>(['/blog', '/case-studies', '/sitemap.xml']);
+    const paths = new Set<string>(['/sitemap.xml']);
 
     if (Array.isArray(body.paths)) {
         for (const path of body.paths) {
@@ -51,14 +81,41 @@ function pathsFromSanityPayload(body: RevalidateBody): string[] {
     }
 
     const slugValue = typeof body.slug === 'string' ? body.slug : body.slug?.current;
-    if (slugValue && body._type === 'post') {
-        const cleanSlug = normalizeBlogSlug(slugValue);
-        if (cleanSlug && !isNonIndexableContentSlug(cleanSlug)) {
-            paths.add(`/blog/${cleanSlug}`);
+    if (body._type === 'post') {
+        paths.add('/blog');
+        if (slugValue) {
+            const cleanSlug = normalizeBlogSlug(slugValue);
+            if (cleanSlug && !isNonIndexableContentSlug(cleanSlug)) {
+                paths.add(`/blog/${cleanSlug}`);
+            }
         }
     }
-    if (slugValue && body._type === 'caseStudy') {
-        paths.add(`/case-studies/${slugValue}`);
+    if (body._type === 'caseStudy') {
+        paths.add('/case-studies');
+        paths.add('/');
+        if (slugValue) paths.add(`/case-studies/${slugValue}`);
+    }
+    if (body._type === 'homepage' || body._type === 'person' || body._type === 'siteSettings') {
+        paths.add('/');
+    }
+    if (body._type === 'landingPage') {
+        paths.add('/services');
+        if (slugValue) {
+            const path = landingPath(body.category, slugValue);
+            if (path) paths.add(path);
+        }
+    }
+    if (body._type === 'technologyPage') {
+        paths.add('/technologies');
+        if (slugValue) paths.add(`/technologies/${slugValue}`);
+    }
+    if (body._type === 'comparePage') {
+        paths.add('/compare');
+        if (slugValue) paths.add(`/compare/${slugValue}`);
+    }
+    if (body._type === 'sitePage') {
+        const path = sitePagePath(body.pageKey);
+        if (path) paths.add(path);
     }
 
     return Array.from(paths);
@@ -77,7 +134,29 @@ function tagsFromSanityPayload(body: RevalidateBody): string[] {
     if (slugValue && body._type === 'caseStudy') {
         tags.add(`case-study:${slugValue}`);
         tags.add('case-studies');
+        tags.add('homepage');
         tags.add('cms');
+    }
+    if (body._type === 'homepage') {
+        tags.add('homepage');
+        tags.add('cms');
+    }
+    if (body._type === 'person' || body._type === 'siteSettings') {
+        tags.add('homepage');
+        tags.add('pages');
+        tags.add('cms');
+    }
+    if (
+        body._type === 'landingPage' ||
+        body._type === 'technologyPage' ||
+        body._type === 'comparePage' ||
+        body._type === 'sitePage'
+    ) {
+        tags.add('pages');
+        tags.add('cms');
+        if (slugValue && body._type === 'landingPage') tags.add(`landing:${slugValue}`);
+        if (slugValue && body._type === 'technologyPage') tags.add(`tech:${slugValue}`);
+        if (slugValue && body._type === 'comparePage') tags.add(`compare:${slugValue}`);
     }
     tags.add('sitemap');
     return Array.from(tags);
@@ -94,6 +173,19 @@ function pathPrefixesFromSanityPayload(body: RevalidateBody): string[] {
     if (slugValue && body._type === 'caseStudy') {
         prefixes.add(`/case-studies/${slugValue}`);
     }
+    if (slugValue && body._type === 'landingPage') {
+        const path = landingPath(body.category, slugValue);
+        if (path) prefixes.add(path);
+    }
+    if (slugValue && body._type === 'technologyPage') {
+        prefixes.add(`/technologies/${slugValue}`);
+    }
+    if (slugValue && body._type === 'comparePage') {
+        prefixes.add(`/compare/${slugValue}`);
+    }
+    const sitePath = sitePagePath(body.pageKey);
+    if (sitePath) prefixes.add(sitePath);
+    if (body._type === 'homepage') prefixes.add('/');
     return Array.from(prefixes);
 }
 

@@ -1,5 +1,8 @@
 /** Shared slug validation for Sanity Studio document types. */
-export function validateContentSlug(value: string | undefined, context: 'blog' | 'author'): string | true {
+export function validateContentSlug(
+    value: string | undefined,
+    context: 'blog' | 'author' | 'page',
+): string | true {
     if (!value?.trim()) return 'Slug is required';
     const slug = value.trim();
 
@@ -15,7 +18,7 @@ export function validateContentSlug(value: string | undefined, context: 'blog' |
     if (slug.includes('/blog/') || slug.startsWith('blog/')) {
         return context === 'blog'
             ? 'Enter only the post slug — not the full /blog/… path.'
-            : 'Enter only the author slug segment.';
+            : 'Enter only the slug segment, not a full path.';
     }
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
         return 'Use lowercase letters, numbers, and hyphens only.';

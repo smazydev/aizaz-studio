@@ -1,0 +1,41 @@
+---
+export const prerender = false;
+
+import SiteShell from '../../components/SiteShell.astro';
+import SeoLanding from '../../components/SeoLanding.astro';
+import { buildSeoPageSchemas } from '../../lib/seoSchema';
+import { getServiceRelatedGroups } from '../../data/internalLinks';
+import { applyCmsCacheHeaders } from '../../lib/cms-cache';
+import { extrasForPage, getIntegrationBySlug } from '../../lib/sanity/landingPages';
+
+const slug = Astro.params.slug;
+const page = slug ? await getIntegrationBySlug(slug) : undefined;
+if (!page) {
+  return new Response(null, { status: 404 });
+}
+
+applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages', `landing:${page.slug}`]);
+
+const canonicalPath = `/integrations/${page.slug}`;
+const breadcrumb = [
+  { label: 'Home', href: '/' },
+  { label: 'NetSuite Integration', href: '/services/netsuite-integration' },
+];
+const relatedGroups = getServiceRelatedGroups(page.slug, page.relatedSlugs ?? []);
+const schemas = buildSeoPageSchemas(page, breadcrumb, canonicalPath);
+---
+
+<SiteShell
+  title={page.metaTitle}
+  description={page.metaDescription}
+  canonical={canonicalPath}
+  schemas={schemas}
+>
+  <SeoLanding
+    page={page}
+    extras={extrasForPage(page)}
+    breadcrumb={breadcrumb}
+    badge="Integration"
+    relatedGroups={relatedGroups}
+  />
+</SiteShell>

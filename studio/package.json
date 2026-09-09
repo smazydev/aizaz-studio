@@ -10,10 +10,12 @@
     "deploy:studio": "sanity deploy --yes --schema-required",
     "start": "sanity start",
     "verify:author-schema": "npx --yes tsx scripts/verify-author-schema.ts",
-    "migrate:authors": "sanity exec scripts/migrate-author-strings.ts --with-user-token",
-    "seed:authors": "sanity exec scripts/seed-authors.ts --with-user-token",
-    "seed:homepage": "sanity exec scripts/seed-homepage.ts --with-user-token",
-    "seed:ayaz-blog-faqs": "sanity exec scripts/seed-ayaz-blog-faqs.ts --with-user-token"
+    "migrate:authors": "npx sanity exec scripts/migrate-author-strings.ts --with-user-token",
+    "seed:authors": "npx sanity exec scripts/seed-authors.ts --with-user-token",
+    "seed:homepage": "npx sanity exec scripts/seed-homepage.ts --with-user-token",
+    "seed:pages": "npx sanity exec scripts/seed-site-pages.ts --with-user-token",
+    "seed:live-copy": "npx sanity exec scripts/seed-live-copy.ts --with-user-token",
+    "seed:ayaz-blog-faqs": "npx sanity exec scripts/seed-ayaz-blog-faqs.ts --with-user-token"
   },
   "dependencies": {
     "@sanity/vision": "^6.9.1",

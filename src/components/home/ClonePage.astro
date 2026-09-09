@@ -1,93 +1,47 @@
 ---
 import { Image } from 'astro:assets';
-import { caseStudies } from '../../data/caseStudies';
 import Hero from './Hero.astro';
 import HomeFeatures from './HomeFeatures.astro';
 import TechLogoStrip from './TechLogoStrip.astro';
 import SiteNav from '../site/SiteNav.astro';
 import SiteFooter from '../site/SiteFooter.astro';
-import { siteFooter } from '../../data/siteChrome';
-import { leadershipProfiles } from '../../data/leadership';
 import { featuredFeedback, secondaryFeedback } from '../../data/homeFeedback';
-import { filterPublicCaseStudies } from '../../lib/case-study-visibility';
+import type { LeadershipProfile } from '../../data/leadership';
+import type { HomepageContent } from '../../lib/sanity/homepage';
+import { getSiteSettings } from '../../lib/sanity/siteSettings';
 import TeamPortrait from '../TeamPortrait.astro';
 import ContactForm from '../ContactForm.astro';
 import emblemRender from '../../assets/aizaz-emblem.png';
 
-const publicCaseStudies = filterPublicCaseStudies(caseStudies);
+interface Props {
+  homepage: HomepageContent;
+  leaders: LeadershipProfile[];
+}
 
+const { homepage, leaders } = Astro.props;
+const settings = await getSiteSettings();
 const isDev = import.meta.env.DEV;
-const services = [
-  {
-    n: '01',
-    title: 'AI Automation',
-    body: 'Agents and workflows that take work off your team, from intake to action, with evals and a human handoff.',
-    items: ['Workflow mapping', 'Tool use & guardrails', 'Production evals'],
-    href: '/services/ai-automation-systems',
-  },
-  {
-    n: '02',
-    title: 'Product Engineering',
-    body: 'Web apps and SaaS products built to ship: architecture, UI, and the backend your users actually hit.',
-    items: ['MVP to production', 'React / Node', 'Auth, billing, APIs'],
-    href: '/services/web-app-saas-development',
-  },
-  {
-    n: '03',
-    title: 'Systems Integration',
-    body: 'CRM, helpdesk, warehouse, and internal tools connected so data stops living in five places.',
-    items: ['API connectors', 'Event buses', 'Idempotent sync'],
-    href: '/services/api-integration',
-  },
-  {
-    n: '04',
-    title: 'ERP / NetSuite',
-    body: 'NetSuite and operations systems wired to the rest of the stack: orders, inventory, and finance in one flow.',
-    items: ['NetSuite REST / SuiteQL', 'Order sync', 'Custom records'],
-    href: '/services/netsuite-erp-automation',
-  },
-  {
-    n: '05',
-    title: 'Cloud Infrastructure',
-    body: 'AWS environments that stay up: CI/CD, observability, and the reliability work that makes shipping safe.',
-    items: ['AWS landing zone', 'Pipelines & canaries', 'Logs, traces, alerts'],
-    href: '/services/aws-devops',
-  },
-];
+const services = homepage.services;
+const process = homepage.process;
+const faqs = homepage.faqs;
 
-const process = [
-  { n: '01', title: 'Discover', body: 'Understand the workflow, constraints and systems.', meta: 'INPUT / OPS / USERS', art: 'nodes' },
-  { n: '02', title: 'Design', body: 'Map the experience, prompts, and handoff states.', meta: 'UX / PROMPTS / GUARDS', art: 'wire' },
-  { n: '03', title: 'Build', body: 'Assemble the agent, pipeline, or product.', meta: 'APP / MODEL / API', art: 'blocks' },
-  { n: '04', title: 'Integrate', body: 'Join CRM, ERP, warehouse, and internal tools.', meta: 'BUS / SYNC / AUTH', art: 'join' },
-  { n: '05', title: 'Ship', body: 'Deploy with tracing, canaries, and rollback.', meta: 'CI / CANARY / PROD', art: 'ship' },
-  { n: '06', title: 'Observe', body: 'Keep evals, cost, latency, and safety visible.', meta: 'EVAL / COST / P95', art: 'wave' },
-];
+const contactEmail = settings.studio.email;
+const contactPhone = settings.studio.phone;
+const contactPhoneHref = settings.studio.phoneHref;
 
-const leaders = leadershipProfiles;
-
-const contactEmail = siteFooter.studio.email;
-const contactPhone = siteFooter.studio.phone;
-const contactPhoneHref = siteFooter.studio.phoneHref;
-
-const shippedStudies = publicCaseStudies.map((study) => {
-  return {
-    href: `/case-studies/${study.slug}`,
-    name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
-    category: (study.category.split('•')[0] || study.category).trim(),
-    summary: study.subtitle.replace(/\s+/g, ' ').trim(),
-    image: study.image,
-  };
-});
-
-const faqs = [
-  { q: 'How is this different from an agency or a freelancer?', a: 'You talk to the people who build. No account layer, no staff-aug bench, no slide-deck phase. We take a defined operational problem and own it through production.' },
-  { q: 'What do we need to start?', a: 'A clear problem, a decision-maker, and access to the systems involved. We run discovery as part of the work — not as a separate theater.' },
-  { q: 'What’s the typical timeline?', a: 'A focused AI Systems Sprint is 14 days for one workflow. Broader product, integration, or infrastructure work is typically 3–8 weeks, scoped before we start.' },
-  { q: 'How do engagements work?', a: 'Scoped sprints and project delivery, not opaque retainers. We align on the outcome, then ship with clear ownership through launch.' },
-];
+const shippedStudies = homepage.featuredCaseStudies.map(({ study }) => ({
+  href: `/case-studies/${study.slug}`,
+  name: study.title.split('—')[0]?.split(':')[0]?.trim() || study.title,
+  category: (study.category.split('•')[0] || study.category).trim(),
+  summary: study.subtitle.replace(/\s+/g, ' ').trim(),
+  image: study.image,
+}));
 
 const homeQuote = featuredFeedback;
+
+function lines(value: string) {
+  return value.split('\n').filter(Boolean);
+}
 ---
 
 <div class="clone">
@@ -110,11 +64,13 @@ const homeQuote = featuredFeedback;
     <section class="home-human-ai">
       <div class="c-wrap home-human-ai__head">
         <div class="home-human-ai__heading">
-          <p class="c-micro c-red">The work</p>
-          <h2 class="home-human-ai__title">Give us the<br />problem.<br />We ship the<br />system.</h2>
-          <p class="c-lede home-human-ai__lede">
-            You shouldn’t have to manage the people building it. Hand us the stuck workflow or the stalled product — we own it through production.
-          </p>
+          <p class="c-micro c-red">{homepage.workEyebrow}</p>
+          <h2 class="home-human-ai__title">
+            {lines(homepage.workTitle).map((line, i) => (
+              <>{i > 0 && <br />}{line}</>
+            ))}
+          </h2>
+          <p class="c-lede home-human-ai__lede">{homepage.workLede}</p>
         </div>
         <div class="home-human-ai__emblem">
           <Image
@@ -132,11 +88,13 @@ const homeQuote = featuredFeedback;
     <section class="home-services" id="services" data-services>
       <div class="home-services__inner">
         <div class="home-services__head">
-          <p class="c-micro c-red">Services</p>
-          <h2 class="home-services__title">What we<br />take on</h2>
-          <p class="c-lede home-services__lede">
-            AI automation, product, integrations, NetSuite, and cloud — scoped to the systems you already run, then owned through production.
-          </p>
+          <p class="c-micro c-red">{homepage.servicesEyebrow}</p>
+          <h2 class="home-services__title">
+            {lines(homepage.servicesTitle).map((line, i) => (
+              <>{i > 0 && <br />}{line}</>
+            ))}
+          </h2>
+          <p class="c-lede home-services__lede">{homepage.servicesLede}</p>
         </div>
         <div class="home-services__acc" role="list">
           {services.map((s, i) => (
@@ -171,8 +129,12 @@ const homeQuote = featuredFeedback;
     <!-- 09 FROM IDEA -->
     <section class="home-process" data-process>
       <div class="home-process__inner">
-        <p class="home-process__mark">03 / Process</p>
-        <h2 class="home-process__title">From the problem<br />to production.</h2>
+        <p class="home-process__mark">{homepage.processMark}</p>
+        <h2 class="home-process__title">
+          {lines(homepage.processTitle).map((line, i) => (
+            <>{i > 0 && <br />}{line}</>
+          ))}
+        </h2>
         <div class="home-process__board">
           <svg class="home-process__rail home-process__rail--map" viewBox="0 0 1440 640" preserveAspectRatio="none" aria-hidden="true">
             <g class="home-process__grid">
@@ -250,10 +212,14 @@ const homeQuote = featuredFeedback;
         <div class="c-team" id="team">
           <div class="c-dark__intro">
             <div>
-              <p class="c-micro">Meet the team</p>
-              <h2 class="c-h1">A studio built<br />to ship systems</h2>
+              <p class="c-micro">{homepage.teamEyebrow}</p>
+              <h2 class="c-h1">
+                {lines(homepage.teamTitle).map((line, i) => (
+                  <>{i > 0 && <br />}{line}</>
+                ))}
+              </h2>
             </div>
-            <p class="c-lede">Senior software engineering across AI &amp; automation, product/SaaS, ERP/NetSuite, and cloud production. A small founding team, direct ownership, no agency layer.</p>
+            <p class="c-lede">{homepage.teamLede}</p>
           </div>
 
           <div class="c-roster" aria-label="Leadership">
@@ -290,10 +256,10 @@ const homeQuote = featuredFeedback;
 
         <div class="c-dark__growth">
           <div>
-            <p class="c-micro">Case studies</p>
-            <h2 class="c-dark__ship-title">Systems that ship</h2>
+            <p class="c-micro">{homepage.shipEyebrow}</p>
+            <h2 class="c-dark__ship-title">{homepage.shipTitle}</h2>
           </div>
-          <p class="c-lede c-dark__ship-lede">PropertyMatch shipped as a SaaS MVP in 14 days. 1Archiver was designed for tens of terabytes. Every card opens the full case study.</p>
+          <p class="c-lede c-dark__ship-lede">{homepage.shipLede}</p>
         </div>
 
         <div class="c-proof">

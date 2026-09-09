@@ -2,6 +2,11 @@ import { person } from './person';
 import { post } from './post';
 import { caseStudy } from './caseStudy';
 import { homepage } from './homepage';
+import { landingPage } from './landingPage';
+import { technologyPage } from './technologyPage';
+import { comparePage } from './comparePage';
+import { sitePage } from './sitePage';
+import { siteSettings } from './siteSettings';
 import {
     seoFields,
     link,
@@ -14,10 +19,22 @@ import {
     caseStudySection,
     bodyImage,
     blockContent,
+    titledText,
+    benefitItem,
+    richSection,
+    processStepItem,
+    proofBlock,
+    comparisonRow,
+    engagementModel,
+    comparisonTableRow,
+    titledList,
+    portfolioProject,
+    jobListing,
+    homepageService,
+    homepageProcessStep,
 } from './objects';
 
 export const schemaTypes = [
-    // Shared objects
     seoFields,
     link,
     cta,
@@ -29,9 +46,26 @@ export const schemaTypes = [
     caseStudySection,
     bodyImage,
     blockContent,
-    // Documents
+    titledText,
+    benefitItem,
+    richSection,
+    processStepItem,
+    proofBlock,
+    comparisonRow,
+    engagementModel,
+    comparisonTableRow,
+    titledList,
+    portfolioProject,
+    jobListing,
+    homepageService,
+    homepageProcessStep,
     person,
     post,
     caseStudy,
     homepage,
+    landingPage,
+    technologyPage,
+    comparePage,
+    sitePage,
+    siteSettings,
 ];

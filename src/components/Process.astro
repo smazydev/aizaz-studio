@@ -3,14 +3,16 @@ import { processSteps } from '../data/processSteps';
 
 interface Props {
   stepsOnly?: boolean;
+  steps?: { step: string; title: string; subtitle: string; description: string }[];
 }
 
-const { stepsOnly = false } = Astro.props;
+const { stepsOnly = false, steps = processSteps } = Astro.props;
 ---
 
 <section id="process" class="sp-section">
   <div class="c-wrap">
     <div class:list={['sp-process', !stepsOnly && 'sp-process--split']}>
+      {stepsOnly && <h2 class="visually-hidden">Delivery stages</h2>}
       {!stepsOnly && (
         <div class="sp-process__intro">
           <p class="c-micro c-red">How we work</p>
@@ -26,7 +28,7 @@ const { stepsOnly = false } = Astro.props;
       )}
 
       <ol class="sp-process__list">
-        {processSteps.map((item) => (
+        {steps.map((item) => (
           <li class="sp-process__item">
             <span class="sp-process__n" aria-hidden="true">{item.step}</span>
             <div class="sp-process__body">
