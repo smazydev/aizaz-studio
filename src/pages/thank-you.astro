@@ -1,9 +1,76 @@
 ---
+export const prerender = false;
+
 import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import OutlinedCard from '../components/OutlinedCard.astro';
+import FaqSection from '../components/FaqSection.astro';
 import { BOOKING_URL } from '../data/siteConfig';
+import { getSiteSettings } from '../lib/sanity/siteSettings';
 
 Astro.response.headers.set('Cache-Control', 'no-store');
+
+const settings = await getSiteSettings();
+const contact = settings.studio;
+
+const nextSteps = [
+  {
+    eyebrow: '01',
+    title: 'We read the brief',
+    body: 'Someone on the studio team reviews what you sent — the problem, tools, and any constraints — before we reply.',
+  },
+  {
+    eyebrow: '02',
+    title: 'We follow up by email',
+    body: 'Expect a note on the address you used. If there is a fit, we send a written scope outline, timeline, and pricing within a few business days.',
+  },
+  {
+    eyebrow: '03',
+    title: 'We agree the first move',
+    body: 'That might be a sprint, a fuller build, or a short call if the brief still has open questions. No hard sell either way.',
+  },
+];
+
+const whileYouWait = [
+  {
+    href: '/case-studies',
+    title: 'See the work',
+    body: 'Shipped systems, integrations, and recoveries — what we actually delivered, not a capability list.',
+  },
+  {
+    href: '/process',
+    title: 'How we work',
+    body: 'Discover → observe, then a scoped build. Read the steps before we map them onto your stack.',
+  },
+  {
+    href: '/engagement-models',
+    title: 'Engagement models',
+    body: 'Sprint, product build, or rescue. Useful if you want to know how we price and staff before the reply.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Did the message go through?',
+    answer:
+      'Yes. This page only loads after a successful submission. We have the brief and will reply to the email you entered.',
+  },
+  {
+    question: 'When will I hear back?',
+    answer:
+      'We review inbound briefs as they arrive. If there is a clear fit, a written scope outline, timeline, and pricing usually follow within a few business days — often the same week for sprint candidates.',
+  },
+  {
+    question: 'I need to add details. What should I do?',
+    answer: `Reply is not open yet, so email ${contact.email} with the same name and a short addendum — access notes, deadlines, or a Loom. We will attach it to the brief.`,
+  },
+  {
+    question: 'Can I talk to someone sooner?',
+    answer:
+      'Yes. Book a fit call if you would rather walk through the system live. Bring a decision maker if you have one — it shortens discovery.',
+  },
+];
 ---
 
 <SiteShell
@@ -15,11 +82,47 @@ Astro.response.headers.set('Cache-Control', 'no-store');
   <PageHero
     eyebrow="Received"
     title="Project received."
-    description="Thanks for sharing what you’re working on. Our team will review the details and follow up using the email address you provided."
+    description="Thanks for sharing what you’re working on. We have the brief and will follow up on the email you provided. If you would rather talk it through live, book a time — otherwise sit tight."
   >
-    <a class="c-btn" href="/case-studies">See the work</a>
-    <a class="c-btn c-btn--ghost" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
+    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
+    <a class="c-btn c-btn--ghost" href="/case-studies">See the work</a>
   </PageHero>
+
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Next"
+        title="What happens now"
+        lede="You do not need to send the form again. This is the path from here."
+      />
+      <div class="sp-grid sp-grid--3">
+        {nextSteps.map((step) => (
+          <OutlinedCard eyebrow={step.eyebrow} title={step.title} body={step.body} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-section">
+    <div class="c-wrap">
+      <SectionHeader
+        eyebrow="Optional"
+        title="If you want to keep going"
+        lede="A short problem note, the tools you use today, and any hard deadlines help. A Loom or bullet list is enough. You can also read while you wait."
+      />
+      <div class="sp-grid sp-grid--3">
+        {whileYouWait.map((item) => (
+          <OutlinedCard href={item.href} title={item.title} body={item.body} />
+        ))}
+      </div>
+      <div class="sp-contact">
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <a href={contact.phoneHref}>{contact.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <FaqSection faqs={faqs} heading="Quick answers" />
 </SiteShell>
 
 <script>

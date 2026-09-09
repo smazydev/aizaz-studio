@@ -75,7 +75,13 @@ export function isAutoPassDummySiteKey(siteKey: string): boolean {
 export function resolveTurnstileSiteKey(fromEnv?: string, dev = false): string {
   const envKey = fromEnv?.trim() || '';
   if (dev) {
-    if (envKey && !isAutoPassDummySiteKey(envKey)) return envKey;
+    // Never use the production site key (or the auto-pass dummy) in dev.
+    // platformProxy can inject PUBLIC_TURNSTILE_SITE_KEY from Cloudflare,
+    // and that Managed/Non-Interactive widget auto-checkmarks instead of
+    // asking for a click.
+    if (envKey && isDummyTurnstileSiteKey(envKey) && !isAutoPassDummySiteKey(envKey)) {
+      return envKey;
+    }
     return TURNSTILE_DUMMY_SITE_KEY_INTERACTIVE;
   }
   if (envKey && !isDummyTurnstileSiteKey(envKey)) return envKey;
