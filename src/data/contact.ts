@@ -8,6 +8,15 @@ export const CONTACT_INTERESTS = [
 
 export type ContactInterest = (typeof CONTACT_INTERESTS)[number];
 
+export const CONTACT_BUDGETS = [
+  '$3,000 – $5,000',
+  '$5,000 – $10,000',
+  '$15,000 – $30,000',
+  '$30,000+',
+] as const;
+
+export type ContactBudget = (typeof CONTACT_BUDGETS)[number];
+
 export const CONTACT_LIMITS = {
   nameMin: 2,
   nameMax: 100,

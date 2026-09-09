@@ -1,10 +1,12 @@
 import {
+  CONTACT_BUDGETS,
   CONTACT_INTERESTS,
   CONTACT_LIMITS,
   TURNSTILE_ACTION,
   TURNSTILE_DUMMY_SECRET_PASS,
   TURNSTILE_DUMMY_SECRETS,
   isDummyTurnstileSiteKey,
+  type ContactBudget,
   type ContactInterest,
 } from '../data/contact';
 
@@ -15,6 +17,7 @@ export type ContactFailureCode =
   | 'INVALID_NAME'
   | 'INVALID_EMAIL'
   | 'INVALID_INTEREST'
+  | 'INVALID_BUDGET'
   | 'INVALID_MESSAGE'
   | 'INVALID_INPUT'
   | 'TURNSTILE_FAILED'
@@ -36,6 +39,7 @@ export type ContactFields = {
   name: string;
   email: string;
   interest: ContactInterest;
+  budget: ContactBudget;
   message: string;
   utm_source: string;
   utm_medium: string;
@@ -84,6 +88,7 @@ const USER_MESSAGES: Record<ContactFailureCode, string> = {
   INVALID_NAME: 'Please enter your name.',
   INVALID_EMAIL: 'Please enter a valid email address.',
   INVALID_INTEREST: 'Please choose a valid interest.',
+  INVALID_BUDGET: 'Please choose a budget range.',
   INVALID_MESSAGE: 'Please add a bit more detail about the project.',
   INVALID_INPUT: 'Please check the form and try again.',
   TURNSTILE_FAILED: 'Verification failed. Please try again.',
@@ -205,6 +210,9 @@ export function parseContactPayload(raw: Record<string, unknown>):
   const interest = stripHeaderUnsafe(readString(raw.interest));
   if (!isContactInterest(interest)) return { ok: false, code: 'INVALID_INTEREST' };
 
+  const budget = stripHeaderUnsafe(readString(raw.budget));
+  if (!isContactBudget(budget)) return { ok: false, code: 'INVALID_BUDGET' };
+
   const message = readString(raw.message).trim();
   if (message.length < CONTACT_LIMITS.messageMin) return { ok: false, code: 'INVALID_MESSAGE' };
   if (message.length > CONTACT_LIMITS.messageMax) return { ok: false, code: 'INVALID_MESSAGE' };
@@ -223,6 +231,7 @@ export function parseContactPayload(raw: Record<string, unknown>):
       name,
       email,
       interest,
+      budget,
       message,
       utm_source: clampAttr(raw.utm_source),
       utm_medium: clampAttr(raw.utm_medium),
@@ -349,7 +358,7 @@ export async function sendContactEmail(
   requestId: string,
   submittedAt: string,
 ): Promise<void> {
-  const subject = stripHeaderUnsafe(`New project inquiry — ${fields.interest}`);
+  const subject = stripHeaderUnsafe(`New project inquiry — ${fields.interest} — ${fields.budget}`);
   const text = buildTextEmail(fields, requestId, submittedAt);
   const html = buildHtmlEmail(fields, requestId, submittedAt);
   await email.send({
@@ -396,6 +405,10 @@ function isContactInterest(value: string): value is ContactInterest {
   return (CONTACT_INTERESTS as readonly string[]).includes(value);
 }
 
+function isContactBudget(value: string): value is ContactBudget {
+  return (CONTACT_BUDGETS as readonly string[]).includes(value);
+}
+
 function readString(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
@@ -428,6 +441,7 @@ function buildTextEmail(fields: ContactFields, requestId: string, submittedAt: s
     `Name: ${fields.name}`,
     `Email: ${fields.email}`,
     `Interest: ${fields.interest}`,
+    `Budget: ${fields.budget}`,
     '',
     'Project details:',
     fields.message,
@@ -459,6 +473,7 @@ ${row('Submitted', submittedAt)}
 ${row('Name', fields.name)}
 ${row('Email', fields.email)}
 ${row('Interest', fields.interest)}
+${row('Budget', fields.budget)}
 </table>
 <p style="margin:20px 0 8px;font-weight:600">Project details</p>
 <p style="white-space:pre-wrap">${escapeHtml(fields.message)}</p>

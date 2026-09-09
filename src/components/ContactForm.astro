@@ -1,5 +1,10 @@
 ---
-import { CONTACT_INTERESTS, CONTACT_LIMITS, resolveTurnstileSiteKey } from '../data/contact';
+import {
+  CONTACT_BUDGETS,
+  CONTACT_INTERESTS,
+  CONTACT_LIMITS,
+  resolveTurnstileSiteKey,
+} from '../data/contact';
 
 interface Props {
   submitLabel?: string;
@@ -53,6 +58,13 @@ const siteKey = resolveTurnstileSiteKey(
     <select name="interest" required>
       <option value="" disabled selected>What are you interested in</option>
       {CONTACT_INTERESTS.map((interest) => <option value={interest}>{interest}</option>)}
+    </select>
+  </label>
+  <label class="c-cta__field">
+    <span class="visually-hidden">Budget</span>
+    <select name="budget" required>
+      <option value="" disabled selected>Budget</option>
+      {CONTACT_BUDGETS.map((budget) => <option value={budget}>{budget}</option>)}
     </select>
   </label>
   <label class="c-cta__field">
