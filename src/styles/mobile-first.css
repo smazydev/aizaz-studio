@@ -583,9 +583,9 @@ h3,
   }
 
   .c-foot__mark {
-    font-size: clamp(3.2rem, 22vw, 5.5rem);
-    line-height: 0.8;
-    margin: 12px 0 20px;
+    width: min(70vw, 240px);
+    bottom: -6%;
+    opacity: 0.06;
   }
 }
 
