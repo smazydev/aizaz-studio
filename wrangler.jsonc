@@ -36,11 +36,8 @@
 	"observability": {
 		"enabled": true
 	},
-	// Contact form — Cloudflare Email Service (Workers send() API).
-	// The binding itself only permits the fixed contact sender and inbox; the
-	// Worker must not be usable as a generic mail relay.
-	// Cloudflare Email Service must have forms@aizaz.studio onboarded and
-	// hello@aizaz.studio verified before deployment.
+	// Contact form — Email Sending (Workers Paid) to hello@; Routing fans it out.
+	// Onboard aizaz.studio for Email Sending. From forms@, to hello@ only.
 	// Local wrangler simulates send() unless "remote": true is set.
 	"send_email": [
 		{

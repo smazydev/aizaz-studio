@@ -2505,6 +2505,7 @@ html[data-theme='light'] .clone .c-team .c-member {
 .c-cta__art {
   position: absolute;
   inset: 0;
+  pointer-events: none;
 }
 
 .c-cta__copy,

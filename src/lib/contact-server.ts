@@ -4,6 +4,7 @@ import {
   TURNSTILE_ACTION,
   TURNSTILE_DUMMY_SECRET_PASS,
   TURNSTILE_DUMMY_SECRETS,
+  isDummyTurnstileSiteKey,
   type ContactInterest,
 } from '../data/contact';
 
@@ -123,6 +124,14 @@ export function getContactEnv(locals: RuntimeLocals): ContactRuntimeEnv {
 }
 
 export function getTurnstileSecret(env: ContactRuntimeEnv): string | undefined {
+  // platformProxy can inject the production secret while the form still uses a
+  // dummy site key. Dummy tokens are always rejected by a real secret.
+  if (import.meta.env.DEV) {
+    const publicSiteKey = firstString(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) || '';
+    if (!publicSiteKey || isDummyTurnstileSiteKey(publicSiteKey)) {
+      return TURNSTILE_DUMMY_SECRET_PASS;
+    }
+  }
   if (env.TURNSTILE_SECRET_KEY) return env.TURNSTILE_SECRET_KEY;
   if (import.meta.env.DEV) return TURNSTILE_DUMMY_SECRET_PASS;
   return undefined;
@@ -249,29 +258,32 @@ export async function verifyTurnstile(options: {
   token: string;
   secret: string;
   requestUrl: URL;
-  remoteip?: string;
   previewHost?: string;
+  idempotencyKey?: string;
 }): Promise<{ ok: true } | { ok: false; code: 'TURNSTILE_FAILED' | 'TURNSTILE_EXPIRED' }> {
-  const { token, secret, requestUrl, remoteip, previewHost } = options;
+  const { token, secret, requestUrl, previewHost, idempotencyKey } = options;
   if (!token || token.length > CONTACT_LIMITS.tokenMax) {
     return { ok: false, code: 'TURNSTILE_FAILED' };
   }
 
   const payload: Record<string, string> = { secret, response: token };
-  if (remoteip) payload.remoteip = remoteip;
+  // Omit remoteip — a mismatch with the solver IP (IPv6, privacy relay, preview)
+  // makes Siteverify fail after the widget already showed a success checkmark.
+  if (idempotencyKey) payload.idempotency_key = idempotencyKey;
 
   let result: SiteverifyResult;
   try {
     const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(payload),
+      signal: AbortSignal.timeout(10_000),
     });
-    result = (await response.json()) as SiteverifyResult;
     if (!response.ok) {
       console.warn('[contact] Turnstile Siteverify HTTP error', response.status);
       return { ok: false, code: 'TURNSTILE_FAILED' };
     }
+    result = (await response.json()) as SiteverifyResult;
   } catch {
     console.warn('[contact] Turnstile Siteverify request failed');
     return { ok: false, code: 'TURNSTILE_FAILED' };
@@ -284,19 +296,11 @@ export async function verifyTurnstile(options: {
     return { ok: false, code: 'TURNSTILE_FAILED' };
   }
 
-  const dummy = TURNSTILE_DUMMY_SECRETS.has(secret);
+  if (TURNSTILE_DUMMY_SECRETS.has(secret)) return { ok: true };
+
   const hostname = (result.hostname || '').toLowerCase();
   const action = result.action || '';
-  // Official dummy Siteverify currently returns hostname "example.com", omits action,
-  // and sets metadata.result_with_testing_key. Do not treat that as production success.
-  if (dummy) {
-    const testingKey = result.metadata?.result_with_testing_key === true;
-    const dummyHost = hostname === 'example.com' || hostname === 'localhost' || hostname === '127.0.0.1';
-    const dummyAction = !action || action === TURNSTILE_ACTION || action === 'test';
-    if (testingKey || (dummyHost && dummyAction)) return { ok: true };
-    return { ok: false, code: 'TURNSTILE_FAILED' };
-  }
-
+  // Siteverify sometimes omits action. Only reject a concrete mismatch.
   if (action && action !== TURNSTILE_ACTION) {
     console.warn('[contact] Turnstile action mismatch', JSON.stringify({ action }));
     return { ok: false, code: 'TURNSTILE_FAILED' };

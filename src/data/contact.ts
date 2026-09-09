@@ -32,9 +32,43 @@ export const CONTACT_THANK_YOU_PATH = '/thank-you';
 
 /** Official Cloudflare dummy keys — local/dev only. https://developers.cloudflare.com/turnstile/troubleshooting/testing/ */
 export const TURNSTILE_DUMMY_SITE_KEY_PASS = '1x00000000000000000000AA';
+/** Forces a clickable challenge. Pair with TURNSTILE_DUMMY_SECRET_PASS. */
+export const TURNSTILE_DUMMY_SITE_KEY_INTERACTIVE = '3x00000000000000000000FF';
 export const TURNSTILE_DUMMY_SECRET_PASS = '1x0000000000000000000000000000000AA';
 export const TURNSTILE_DUMMY_SECRETS = new Set([
   '1x0000000000000000000000000000000AA',
   '2x0000000000000000000000000000000AA',
   '3x0000000000000000000000000000000AA',
 ]);
+
+const DUMMY_SITE_KEYS = new Set([
+  TURNSTILE_DUMMY_SITE_KEY_PASS,
+  TURNSTILE_DUMMY_SITE_KEY_INTERACTIVE,
+  '2x00000000000000000000AB',
+  '1x00000000000000000000BB',
+  '2x00000000000000000000BB',
+]);
+
+const AUTO_PASS_DUMMY_SITE_KEYS = new Set([
+  TURNSTILE_DUMMY_SITE_KEY_PASS,
+  '1x00000000000000000000BB',
+]);
+
+export function isDummyTurnstileSiteKey(siteKey: string): boolean {
+  return DUMMY_SITE_KEYS.has(siteKey);
+}
+
+/** Visible dummy key that auto-checkmarks and cannot be clicked. */
+export function isAutoPassDummySiteKey(siteKey: string): boolean {
+  return AUTO_PASS_DUMMY_SITE_KEYS.has(siteKey);
+}
+
+export function resolveTurnstileSiteKey(fromEnv?: string, dev = false): string {
+  const envKey = fromEnv?.trim() || '';
+  if (dev) {
+    if (envKey && !isAutoPassDummySiteKey(envKey)) return envKey;
+    return TURNSTILE_DUMMY_SITE_KEY_INTERACTIVE;
+  }
+  if (envKey && !isDummyTurnstileSiteKey(envKey)) return envKey;
+  return TURNSTILE_SITE_KEY;
+}

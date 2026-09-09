@@ -81,13 +81,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return fail(500, 'CONFIG_ERROR');
   }
 
-  const remoteip = request.headers.get('CF-Connecting-IP')?.trim() || undefined;
   const turnstile = await verifyTurnstile({
     token: parsed.fields.turnstileToken,
     secret,
     requestUrl,
-    remoteip,
     previewHost: env.TURNSTILE_PREVIEW_HOST,
+    idempotencyKey: requestId,
   });
   if (!turnstile.ok) {
     logContactEvent({ requestId, outcome: 'rejected', category: turnstile.code });

@@ -14,6 +14,8 @@ type TurnstileApi = {
       action?: string;
       theme?: 'light' | 'dark' | 'auto';
       appearance?: 'always' | 'execute' | 'interaction-only';
+      retry?: 'auto' | 'never';
+      'refresh-expired'?: 'auto' | 'manual' | 'never';
       callback?: (token: string) => void;
       'expired-callback'?: () => void;
       'error-callback'?: () => void;
@@ -80,16 +82,18 @@ async function bindOne(form: HTMLFormElement): Promise<void> {
           action: TURNSTILE_ACTION,
           theme: 'dark',
           appearance: 'always',
+          retry: 'auto',
+          'refresh-expired': 'auto',
           callback: (token) => {
-            const input = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
-            if (input) input.value = token;
+            writeTurnstileInput(form, token);
+            setStatus(status, '', 'idle');
           },
           'expired-callback': () => {
-            const input = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
-            if (input) input.value = '';
+            writeTurnstileInput(form, '');
             setStatus(status, 'Verification expired. Please complete the check again.', 'error');
           },
           'error-callback': () => {
+            writeTurnstileInput(form, '');
             setStatus(status, 'Verification failed to load. Please refresh and try again.', 'error');
           },
         });
@@ -111,7 +115,7 @@ async function bindOne(form: HTMLFormElement): Promise<void> {
     const token = readTurnstileToken(form, widgetId);
     if (!token) {
       setStatus(status, 'Please complete the verification check.', 'error');
-      resetTurnstile(widgetId);
+      resetTurnstile(form, widgetId);
       return;
     }
 
@@ -143,10 +147,10 @@ async function bindOne(form: HTMLFormElement): Promise<void> {
           ? data.message
           : 'We could not send your message. Please try again.';
       setStatus(status, message, 'error');
-      if (needsTurnstileReset(response.status, data)) resetTurnstile(widgetId);
+      if (needsTurnstileReset(response.status, data)) resetTurnstile(form, widgetId);
     } catch {
       setStatus(status, 'We could not send your message. Please try again.', 'error');
-      resetTurnstile(widgetId);
+      resetTurnstile(form, widgetId);
     } finally {
       inFlight = false;
       if (submit) {
@@ -181,7 +185,13 @@ function readTurnstileToken(form: HTMLFormElement, widgetId: string | null): str
   return '';
 }
 
-function resetTurnstile(widgetId: string | null): void {
+function writeTurnstileInput(form: HTMLFormElement, token: string): void {
+  const input = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+  if (input) input.value = token;
+}
+
+function resetTurnstile(form: HTMLFormElement, widgetId: string | null): void {
+  writeTurnstileInput(form, '');
   if (!widgetId || !window.turnstile) return;
   try {
     window.turnstile.reset(widgetId);

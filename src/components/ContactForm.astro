@@ -1,10 +1,5 @@
 ---
-import {
-  CONTACT_INTERESTS,
-  CONTACT_LIMITS,
-  TURNSTILE_DUMMY_SITE_KEY_PASS,
-  TURNSTILE_SITE_KEY,
-} from '../data/contact';
+import { CONTACT_INTERESTS, CONTACT_LIMITS, resolveTurnstileSiteKey } from '../data/contact';
 
 interface Props {
   submitLabel?: string;
@@ -12,9 +7,10 @@ interface Props {
 
 const { submitLabel = 'Submit message' } = Astro.props;
 
-const siteKey =
-  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ||
-  (import.meta.env.DEV ? TURNSTILE_DUMMY_SITE_KEY_PASS : TURNSTILE_SITE_KEY);
+const siteKey = resolveTurnstileSiteKey(
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
+  import.meta.env.DEV,
+);
 ---
 
 <form
@@ -104,9 +100,11 @@ const siteKey =
   }
 
   .c-contact-form__turnstile {
+    position: relative;
+    z-index: 2;
     min-height: 66px;
     max-width: 100%;
-    overflow-x: auto;
+    overflow: visible;
   }
 
   .c-contact-form__status {
