@@ -493,7 +493,7 @@ export const caseStudies: CaseStudy[] = [
         projectValue: 'Fixed Price · Upwork',
         projectPeriod: 'Sep 28, 2025 – Jan 8, 2026',
         deliveredBy: 'Aizaz Studio',
-        seoTitle: 'Modernizing a Multi-Language Code Checking Tool | Aizaz Studio',
+        seoTitle: 'Modernizing a Multi-Language Code Checking Tool',
         seoDescription:
             'How Aizaz Studio extended a multi-language code checking tool with observability, Azure CI/CD, and npm package preparation.',
         atAGlance: [
@@ -529,7 +529,7 @@ export const caseStudies: CaseStudy[] = [
         },
         cta: {
             headline: 'Have an existing developer tool that needs to be extended, stabilized or taken to production?',
-            buttonText: 'Talk to Aizaz Studio',
+            buttonText: 'Talk to an engineer',
             buttonHref: BOOKING_URL,
         },
         detailedContent: [
@@ -714,7 +714,7 @@ export const caseStudies: CaseStudy[] = [
         },
         cta: {
             headline: 'Building a complex SaaS product? Turn your product requirements into an architecture built for scale.',
-            buttonText: 'Talk to Aizaz Studio',
+            buttonText: 'Talk to an engineer',
             buttonHref: BOOKING_URL,
         },
         detailedContent: [

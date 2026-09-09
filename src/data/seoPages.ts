@@ -82,7 +82,7 @@ export const servicePages: SeoPage[] = [
     {
         slug: 'web-app-saas-development',
         title: 'Web App & SaaS Development',
-        metaTitle: 'Web App & SaaS Development Studio | Aizaz.studio',
+        metaTitle: 'Web App & SaaS Development | Aizaz.studio',
         metaDescription:
             'Production ready web apps, dashboards, admin portals, customer portals, and SaaS platforms with auth, payments, APIs, and scalable architecture.',
         heroSubtitle:
@@ -389,9 +389,9 @@ export const industryPages: IndustryPage[] = [
         title: 'AI, Cloud & Automation for SaaS Startups',
         metaTitle: 'Software Development for SaaS Startups | Aizaz.studio',
         metaDescription:
-            'Aizaz.studio helps SaaS startups build MVPs, scale cloud infrastructure, automate operations, and ship reliable products faster.',
+            'Stuck between a prototype and a product customers can pay for. We build the MVP, the AWS path, and the ops automations — then own them through launch.',
         heroSubtitle:
-            'From MVP to scale — web apps, AI features, AWS infrastructure, and automations built for startup velocity.',
+            'From a working MVP to the systems around it: web app, AI features, AWS, and the automations that keep the team shipping.',
         keywords: ['SaaS startup development', 'startup MVP', 'SaaS engineering partner'],
         problem:
             'SaaS founders need to ship fast without building on fragile foundations. Every sprint adds tech debt, deployments are scary, and operational work steals time from product.',
@@ -647,7 +647,7 @@ export const industryPages: IndustryPage[] = [
 export const aiSystemsSprintPage = {
     slug: 'ai-systems-sprint',
     title: 'AI Systems Sprint',
-    metaTitle: 'AI Systems Sprint — Working Automation in 14 Days | Aizaz.studio',
+    metaTitle: 'AI Systems Sprint — Live Automation in 14 Days',
     metaDescription:
         'A 14-day engagement that turns one manual workflow into a working AI system, automation, or internal tool your team can use.',
     heroSubtitle:

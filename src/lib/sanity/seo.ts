@@ -1,3 +1,4 @@
+import { toCanonicalPath } from '../seo-url';
 import { urlForImage } from './client';
 
 export interface PageSeo {
@@ -45,7 +46,8 @@ export function mapSanitySeo(
     const metaTitle = seo?.metaTitle || legacy?.seoTitle || fallbacks?.title;
     const metaDescription =
         seo?.metaDescription || legacy?.metaDescription || legacy?.seoDescription || fallbacks?.description;
-    const canonicalPath = seo?.canonicalPath || legacy?.canonicalPath || fallbacks?.canonicalPath;
+    const rawCanonical = seo?.canonicalPath || legacy?.canonicalPath || fallbacks?.canonicalPath;
+    const canonicalPath = rawCanonical ? toCanonicalPath(rawCanonical) : undefined;
     const ogImageUrl =
         urlForImage(seo?.ogImage) || urlForImage(legacy?.ogImage) || fallbacks?.ogImageUrl;
 

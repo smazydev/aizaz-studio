@@ -16,7 +16,7 @@ export const serviceGroups: ServiceGroup[] = [
     id: 'ai',
     n: '01',
     title: 'AI & Automation',
-    lede: 'Agents, workflows, and decision systems wired to the tools your team already uses.',
+    lede: 'Reduce repetitive work and response times with AI systems that use your data, follow your rules, and connect to the tools your team already relies on.',
     slugs: [
       'ai-automation-systems',
       'ai-agent-development',
@@ -30,7 +30,7 @@ export const serviceGroups: ServiceGroup[] = [
     id: 'product',
     n: '02',
     title: 'Product / SaaS Engineering',
-    lede: 'MVPs and production platforms — auth, APIs, billing, and the product surface users hit.',
+    lede: 'Launch a new product or strengthen an existing one with senior engineers who own the architecture, user experience, backend, and path to production.',
     slugs: [
       'web-app-saas-development',
       'saas-mvp-development',
@@ -47,7 +47,7 @@ export const serviceGroups: ServiceGroup[] = [
     id: 'erp',
     n: '03',
     title: 'ERP & Integrations',
-    lede: 'NetSuite, CRM, and system-of-record work so data stops living in five places.',
+    lede: 'Keep orders, inventory, customers, and finance in sync by connecting NetSuite, CRMs, commerce platforms, warehouses, and custom software.',
     slugs: [
       'netsuite-erp-automation',
       'netsuite-integration',
@@ -59,7 +59,7 @@ export const serviceGroups: ServiceGroup[] = [
     id: 'cloud',
     n: '04',
     title: 'Cloud & Production Engineering',
-    lede: 'AWS environments, CI/CD, and observability so shipping stays safe after launch.',
+    lede: 'Replace fragile deployments and production guesswork with secure cloud infrastructure, reliable delivery pipelines, and visibility when something goes wrong.',
     slugs: [
       'aws-devops',
       'aws-cloud-engineering',

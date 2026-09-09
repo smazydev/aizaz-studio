@@ -2,6 +2,7 @@
 import SiteShell from '../../components/SiteShell.astro';
 import PageHero from '../../components/PageHero.astro';
 import { technologyPages } from '../../data/technologyPages';
+import { BOOKING_URL } from '../../data/siteConfig';
 ---
 
 <SiteShell
@@ -13,7 +14,10 @@ import { technologyPages } from '../../data/technologyPages';
     eyebrow="Stack"
     title="Technologies tied to business outcomes"
     description="We choose tools based on reliability, maintainability, and fit for your product, not resume-driven hype."
-  />
+  >
+    <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
+    <a class="c-btn c-btn--ghost" href="/start-a-project">Tell us what needs fixing</a>
+  </PageHero>
 
   <section class="sp-section">
     <div class="c-wrap">

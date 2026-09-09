@@ -10,7 +10,7 @@ interface Props {
   submitLabel?: string;
 }
 
-const { submitLabel = 'Submit message' } = Astro.props;
+const { submitLabel = 'Tell us what needs fixing' } = Astro.props;
 
 const siteKey = resolveTurnstileSiteKey(
   import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,

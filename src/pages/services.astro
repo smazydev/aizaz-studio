@@ -4,39 +4,53 @@ import PageHero from '../components/PageHero.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import PageCTA from '../components/PageCTA.astro';
 import PageSentinel from '../components/PageSentinel.astro';
-import { industryPages } from '../data/seoPages';
+import { industryPages, servicePages, SITE_URL } from '../data/seoPages';
 import { serviceGroups, servicesForGroup, ungroupedServices } from '../data/serviceGroups';
 import { BOOKING_URL } from '../data/siteConfig';
+import { buildListingPageSchemas } from '../lib/seoSchema';
 
 const leftover = ungroupedServices();
+const pageTitle = 'Engineering Services for AI, SaaS & Cloud | Aizaz';
+const pageDescription =
+  'Stuck workflows, a product that needs to ship, or systems that don’t talk. Senior engineers for AI automation, SaaS, NetSuite, and AWS.';
+const schemas = buildListingPageSchemas({
+  name: 'Engineering Services',
+  description: pageDescription,
+  canonicalPath: '/services',
+  items: servicePages.map((page) => ({
+    name: page.title,
+    url: `${SITE_URL}/services/${page.slug}`,
+  })),
+});
 ---
 
 <SiteShell
-  title="Services | AI, Cloud & Automation Engineering | Aizaz.studio"
-  description="AI automation, web app development, AWS DevOps, NetSuite integrations, business process automation, trading technology, and product enablement for growing businesses."
+  title={pageTitle}
+  description={pageDescription}
   canonical="/services"
+  schemas={schemas}
 >
   <PageSentinel>
     <PageHero
-      eyebrow="Services"
-      title="Build smarter systems."
-      highlight="Scale cleaner operations."
-      description="Senior engineering across AI & automation, product/SaaS, ERP integrations, and cloud, so manual workflows become reliable software."
+      eyebrow="Engineering services"
+      title="Turn operational bottlenecks"
+      highlight="into systems you can run."
+      description="Hand us a manual process, a product that needs to ship, disconnected tools, or infrastructure that cannot keep up. We own it through production."
     >
-      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-      <a class="c-btn c-btn--ghost" href="/ai-systems-sprint">AI Systems Sprint</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Discuss your build</a>
+      <a class="c-btn c-btn--ghost" href="/case-studies">See the work</a>
     </PageHero>
 
     <aside class="c-wrap page-sentinel__offer">
       <div class="sp-promo sp-promo--offer">
         <div class="sp-promo__copy">
-          <p class="c-micro c-red">Focused sprint</p>
-          <h2 class="page-h2">AI Systems Sprint</h2>
+          <p class="c-micro c-red">Start small. Prove value fast.</p>
+          <h2 class="page-h2">Ship one high-value AI workflow in 14 days.</h2>
           <p class="c-lede">
-            In 14 days, we turn one manual workflow into a working AI-assisted system, automation, dashboard, or internal tool connected to your real stack.
+            Our AI Systems Sprint turns a costly manual process into a working system connected to your real tools, data, and team—before you commit to a larger build.
           </p>
         </div>
-        <a class="c-btn" href="/ai-systems-sprint">View the Sprint Offer</a>
+        <a class="c-btn" href="/ai-systems-sprint">Discuss a 14-day sprint</a>
       </div>
     </aside>
   </PageSentinel>
@@ -44,9 +58,9 @@ const leftover = ungroupedServices();
   <section class="sp-section">
     <div class="c-wrap">
       <SectionHeader
-        eyebrow="Capabilities"
-        title="Four groups. Full depth underneath."
-        lede="Use this page to orient. Each link opens a dedicated service page that keeps its SEO intent and technical detail."
+        eyebrow="How we help"
+        title="Senior engineering for the systems your business depends on"
+        lede="Bring us a manual process, a product that needs to ship, disconnected business systems, or infrastructure that cannot keep up. We take ownership from technical direction through production."
       />
 
       {serviceGroups.map((group) => {
@@ -92,9 +106,9 @@ const leftover = ungroupedServices();
   <section class="sp-section sp-section--tight">
     <div class="c-wrap">
       <SectionHeader
-        eyebrow="Industries"
-        title="Built for operations-heavy contexts"
-        lede="Industry pages keep audience-specific framing. Same engineering standards."
+        eyebrow="Where we work"
+        title="Built for businesses where software meets real operations"
+        lede="We understand the constraints behind complex workflows, sensitive data, legacy systems, and teams that cannot pause while new software is introduced."
       />
       <div class="sp-group__links">
         {industryPages.map((industry) => (
@@ -107,5 +121,9 @@ const leftover = ungroupedServices();
     </div>
   </section>
 
-  <PageCTA />
+  <PageCTA
+    eyebrow="Start a conversation"
+    title="What is slowing your business down?"
+    lede="Bring us the bottleneck, the broken integration, or the product that isn’t shipping. We’ll tell you the right first step."
+  />
 </SiteShell>

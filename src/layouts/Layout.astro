@@ -5,6 +5,8 @@ import '../styles/clone.css';
 import '../styles/site-pages.css';
 import '../styles/mobile-first.css';
 import { SITE_URL } from '../data/seoPages';
+import { DEFAULT_OG_IMAGE_HEIGHT, DEFAULT_OG_IMAGE_PATH, DEFAULT_OG_IMAGE_WIDTH, formatSeoDescription, formatSeoTitle } from '../lib/seo-meta';
+import { toCanonicalPath, toCanonicalUrl } from '../lib/seo-url';
 
 interface Props {
   title?: string;
@@ -30,23 +32,17 @@ const {
   schemas = [],
 } = Astro.props;
 
-/** Sitewide policy: trailingSlash never — strip slash/.html so canonicals always 200. */
-function toCanonicalPath(path: string): string {
-  const trimmed = path.trim();
-  if (!trimmed || trimmed === '/') return '/';
-  const withoutHtml = trimmed.replace(/\.html$/i, '');
-  const withoutSlash = withoutHtml.replace(/\/+$/, '');
-  return withoutSlash.startsWith('/') ? withoutSlash || '/' : `/${withoutSlash}`;
-}
-
 const fallbackPath = Astro.url.pathname || '/';
 const canonicalPath = toCanonicalPath(canonical ?? fallbackPath);
-const canonicalUrl = canonicalPath === '/' ? `${SITE_URL}/` : `${SITE_URL}${canonicalPath}`;
-const resolvedOgTitle = ogTitle || title;
-const resolvedOgDescription = ogDescription || description;
-const resolvedOgImage = ogImage ?? `${SITE_URL}/aizaz-logo-white.png`;
+const canonicalUrl = toCanonicalUrl(canonicalPath);
+const resolvedTitle = formatSeoTitle(title);
+const resolvedDescription = formatSeoDescription(description);
+const resolvedOgTitle = formatSeoTitle(ogTitle || title);
+const resolvedOgDescription = formatSeoDescription(ogDescription || description);
+const isDefaultOgImage = !ogImage;
+const resolvedOgImage = ogImage ?? `${SITE_URL}${DEFAULT_OG_IMAGE_PATH}`;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? 'G-KHTXT6863D';
-const isHome = canonicalPath === '/' || Astro.url.pathname === '/';
+const isHome = canonicalPath === '/' || toCanonicalPath(Astro.url.pathname || '/') === '/';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -75,6 +71,17 @@ const websiteSchema = {
   name: 'Aizaz Studio',
   url: SITE_URL,
   publisher: { '@id': `${SITE_URL}/#organization` },
+};
+
+const professionalServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE_URL}/#professionalService`,
+  name: 'Aizaz Studio',
+  url: SITE_URL,
+  image: `${SITE_URL}${DEFAULT_OG_IMAGE_PATH}`,
+  parentOrganization: { '@id': `${SITE_URL}/#organization` },
+  areaServed: { '@type': 'Place', name: 'Worldwide' },
 };
 
 const pageStructuredData =
@@ -113,8 +120,8 @@ const pageStructuredData =
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{resolvedTitle}</title>
+    <meta name="description" content={resolvedDescription} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     {!noindex && <meta name="robots" content="index, follow" />}
     <link rel="canonical" href={canonicalUrl} />
@@ -127,6 +134,11 @@ const pageStructuredData =
     <meta property="og:description" content={resolvedOgDescription} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={resolvedOgImage} />
+    {isDefaultOgImage && <meta property="og:image:width" content={String(DEFAULT_OG_IMAGE_WIDTH)} />}
+    {isDefaultOgImage && <meta property="og:image:height" content={String(DEFAULT_OG_IMAGE_HEIGHT)} />}
+    {isDefaultOgImage && (
+      <meta property="og:image:alt" content="Aizaz Studio — AI, Cloud and Automation Engineering" />
+    )}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={resolvedOgTitle} />
@@ -141,6 +153,7 @@ const pageStructuredData =
       <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     )}
     {isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />}
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(professionalServiceSchema)} />}
     {pageStructuredData && (
       <script type="application/ld+json" set:html={JSON.stringify(pageStructuredData)} />
     )}

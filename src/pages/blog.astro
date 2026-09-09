@@ -5,27 +5,42 @@ import SiteShell from '../components/SiteShell.astro';
 import PageHero from '../components/PageHero.astro';
 import BlogCard from '../components/BlogCard.astro';
 import PageCTA from '../components/PageCTA.astro';
+import { SITE_URL } from '../data/seoPages';
 import { getLinkablePosts, getPublishedPosts } from '../lib/blog';
 import { getBlogFilterCategories } from '../lib/blog-categories';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
+import { buildListingPageSchemas } from '../lib/seoSchema';
 
 const blogs = getLinkablePosts(await getPublishedPosts());
 const [featured, ...rest] = blogs;
 const categories = getBlogFilterCategories();
+const pageTitle = 'Blog | AI, Automation & Systems Notes | Aizaz';
+const pageDescription =
+  'Notes from shipping AI automation, SaaS, NetSuite integrations, and production systems — what broke, what we fixed, and what we would do again.';
+const schemas = buildListingPageSchemas({
+  name: 'Engineering Insights',
+  description: pageDescription,
+  canonicalPath: '/blog',
+  items: blogs.map((post) => ({
+    name: post.title,
+    url: `${SITE_URL}/blog/${post.slug}`,
+  })),
+});
 
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
 ---
 
 <SiteShell
-  title="Blog | AI, Automation & Engineering Insights | Aizaz.studio"
-  description="Practical insights on AI automation, SaaS engineering, NetSuite integrations, and building systems that help businesses scale without operational chaos."
+  title={pageTitle}
+  description={pageDescription}
   canonical="/blog"
+  schemas={schemas}
 >
   <PageHero
     eyebrow="Insights"
-    title="Playbooks for"
-    highlight="smarter operations"
-    description="What we've learned building, fixing, and operating real software systems, from AI and SaaS to NetSuite, integrations, and production failures."
+    title="Notes from"
+    highlight="shipping systems"
+    description="What we’ve learned building, fixing, and operating real software — AI, SaaS, NetSuite, integrations, and production failures."
   />
 
   <section class="sp-section sp-section--tight">
@@ -33,9 +48,9 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog']);
       <div class="sp-promo">
         <div class="sp-promo__copy">
           <p class="c-micro c-red">Short version</p>
-          <p class="c-lede">Book a call and we will map one high-impact workflow you can automate in 14 days.</p>
+          <p class="c-lede">If one workflow is eating the week, we can map whether a 14-day sprint is the right first step.</p>
         </div>
-        <a class="c-btn" href="/ai-systems-sprint">AI Systems Sprint</a>
+        <a class="c-btn" href="/ai-systems-sprint">Discuss a 14-day sprint</a>
       </div>
     </div>
   </section>

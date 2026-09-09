@@ -398,7 +398,7 @@ export const extraIndustryPages: IndustryPage[] = [
         problem:
             'Professional services firms sell expertise but lose margin to manual proposals, disjointed client communication, and delivery tracking spread across email, docs, and spreadsheets.',
         solution:
-            'We build systems that streamline client onboarding, project delivery, and internal ops — so your team spends time on high value work, not administrative reconstruction.',
+            'We build systems for client onboarding, project delivery, and internal ops — so your team spends time on high-value work, not administrative reconstruction.',
         capabilities: [
             'Client portals and secure document sharing',
             'Proposal and onboarding workflow automation',

@@ -26,6 +26,13 @@ const ctaHref =
     ? BOOKING_URL
     : study.cta.buttonHref;
 const ctaExternal = isExternalHref(ctaHref);
+const ctaLabel = (() => {
+  const raw = study.cta?.buttonText?.trim() || '';
+  if (/^(learn more|get started|contact us|book a call|submit)$/i.test(raw)) {
+    return 'Talk through your system';
+  }
+  return raw || 'Talk to an engineer';
+})();
 const pageTitle = study.seoTitle ?? `${study.title} | Aizaz Studio`;
 const pageDescription = study.seoDescription ?? study.description;
 const canonicalPath = study.canonicalPath ?? `/case-studies/${study.slug}`;
@@ -317,7 +324,7 @@ const projectFacts = [
               href={ctaHref}
               target={ctaExternal ? '_blank' : undefined}
               rel={ctaExternal ? 'noopener noreferrer' : undefined}
-            >{study.cta.buttonText}</a>
+            >{ctaLabel}</a>
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 import { SITE_URL } from '../data/seoPages';
-import { isNonIndexableContentSlug } from './blog-utils';
 import { isHiddenCaseStudySlug } from './case-study-visibility';
+import { isIndexablePath, toCanonicalPath, toCanonicalUrl } from './seo-url';
 
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 
@@ -12,19 +12,16 @@ function getIndexNowKey(env?: Record<string, string | undefined>): string | unde
     );
 }
 
-function toCanonicalUrl(path: string): string | null {
-    const trimmed = path.trim();
-    if (!trimmed.startsWith('/')) return null;
-    if (trimmed.startsWith('/api/')) return null;
-    if (trimmed.includes('/optimized/') || trimmed.includes('/_astro/')) return null;
-    const slug = trimmed.split('/').pop() ?? '';
-    if (isNonIndexableContentSlug(slug)) return null;
-    if (trimmed.startsWith('/case-studies/')) {
-        const caseSlug = trimmed.slice('/case-studies/'.length);
+function toIndexNowUrl(path: string): string | null {
+    const canonicalPath = toCanonicalPath(path);
+    if (!canonicalPath.startsWith('/')) return null;
+    if (canonicalPath.includes('/_astro/')) return null;
+    if (!isIndexablePath(canonicalPath)) return null;
+    if (canonicalPath.startsWith('/case-studies/')) {
+        const caseSlug = canonicalPath.slice('/case-studies/'.length);
         if (isHiddenCaseStudySlug(caseSlug)) return null;
     }
-    const normalized = trimmed.replace(/\/+$/, '') || '/';
-    return `${SITE_URL}${normalized === '/' ? '' : normalized}`;
+    return toCanonicalUrl(canonicalPath);
 }
 
 /** Notify Bing/Yandex IndexNow about changed canonical apex URLs. */
@@ -40,7 +37,7 @@ export async function notifyIndexNow(
     const urls = Array.from(
         new Set(
             paths
-                .map(toCanonicalUrl)
+                .map(toIndexNowUrl)
                 .filter((url): url is string => Boolean(url)),
         ),
     );

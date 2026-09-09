@@ -16,7 +16,7 @@ export const comparePages: ComparePage[] = [
     {
         slug: 'aizaz-vs-staff-augmentation',
         title: 'Product Engineering Agency vs Staff Augmentation',
-        metaTitle: 'Product Engineering Agency vs Staff Augmentation | Aizaz Studio',
+        metaTitle: 'Agency vs Staff Augmentation | Aizaz Studio',
         metaDescription:
             'Compare a product engineering agency focused on shipped outcomes with staff augmentation that rents developers by the hour.',
         heroSubtitle:

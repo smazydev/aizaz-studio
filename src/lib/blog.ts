@@ -49,9 +49,13 @@ export function getLinkablePosts(posts: PublicBlogPost[]): PublicBlogPost[] {
 
 const LEGACY_SEO_TITLES: Record<string, string> = {
     'identify-workflows-worth-automating-with-ai':
-        'How to Identify Workflows Worth Automating with AI | Aizaz Studio',
+        'How to Identify Workflows Worth Automating with AI',
     'ai-automation-workflows-for-operations-teams':
-        'AI Automation Workflow Examples for Operations Teams | Aizaz Studio',
+        'AI Automation Workflow Examples for Operations Teams',
+    'netsuite-shopify-integration-pitfalls':
+        'NetSuite + Shopify Sync: 5 Failures We See',
+    'building-production-ready-saas-mvp':
+        'From MVP to Production: What Founders Skip',
 };
 
 function legacyDisplayDateToIso(display: string): string {

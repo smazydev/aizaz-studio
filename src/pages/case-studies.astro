@@ -7,10 +7,12 @@ import CaseStudyShowcase from '../components/CaseStudyShowcase.astro';
 import PageCTA from '../components/PageCTA.astro';
 import PageSentinel from '../components/PageSentinel.astro';
 import ReviewCarousel from '../components/ReviewCarousel.astro';
+import { SITE_URL } from '../data/seoPages';
 import { getAllCaseStudies } from '../lib/sanity/caseStudies';
 import { applyCmsCacheHeaders } from '../lib/cms-cache';
 import { BOOKING_URL } from '../data/siteConfig';
 import { reviewsFromCaseStudies } from '../data/homeFeedback';
+import { buildListingPageSchemas } from '../lib/seoSchema';
 
 const caseStudies = await getAllCaseStudies();
 const reviews = reviewsFromCaseStudies(caseStudies);
@@ -20,26 +22,39 @@ const showcaseItems = caseStudies.map((study) => ({
   tabLabel: study.category || study.title,
 }));
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'case-studies']);
+const pageTitle = 'Case Studies | Aizaz.studio';
+const pageDescription =
+  'Public work you can inspect. PropertyMatch shipped as a SaaS MVP in 14 days. 1Archiver was designed for tens of terabytes of email.';
+const schemas = buildListingPageSchemas({
+  name: 'Case Studies',
+  description: pageDescription,
+  canonicalPath: '/case-studies',
+  items: caseStudies.map((study) => ({
+    name: study.title,
+    url: `${SITE_URL}/case-studies/${study.slug}`,
+  })),
+});
 ---
 
 <SiteShell
-  title="Case Studies | Aizaz.studio"
-  description="See how Aizaz.studio builds compliance platforms, investment intelligence systems, and production-grade software for scaling businesses."
+  title={pageTitle}
+  description={pageDescription}
   canonical="/case-studies"
+  schemas={schemas}
 >
   <PageSentinel>
     <PageHero
       eyebrow="Works"
-      title="Systems built for"
-      highlight="real-world scale"
-      description="Compliance platforms, SaaS products, and operational systems designed for security, scale, and teams that cannot afford fragile software."
+      title="Systems we shipped"
+      highlight="for real operations"
+      description="Compliance platforms, SaaS products, and operational systems. Every card opens the full case study — no invented metrics."
     >
-      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-      <a class="c-btn c-btn--ghost" href="/services">Services</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
+      <a class="c-btn c-btn--ghost" href="/services">What we take on</a>
       <ReviewCarousel slot="below" items={reviews} />
     </PageHero>
   </PageSentinel>
 
   <CaseStudyShowcase items={showcaseItems} showHeader={false} />
-  <PageCTA title="Building something similar?" lede="Book a call to talk through scope, stack, and a sensible first step." />
+  <PageCTA title="Building something similar?" lede="Tell us what needs fixing. We’ll map scope, stack, and a sensible first step." />
 </SiteShell>

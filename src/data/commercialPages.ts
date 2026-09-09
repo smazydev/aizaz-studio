@@ -94,12 +94,12 @@ export interface ProcessPageContent {
 }
 
 export const engagementModels: EngagementModelsContent = {
-    metaTitle: 'Engagement Models for AI, SaaS & Cloud Engineering | Aizaz Studio',
+    metaTitle: 'Engagement Models for AI & SaaS Builds | Aizaz',
     metaDescription:
-        'Flexible engineering engagement models for AI automation, SaaS MVPs, cloud infrastructure, project rescue, and ongoing product development.',
-    title: 'Flexible Engineering Engagements for AI, SaaS & Automation Projects',
+        'Choose a 14-day sprint, a scoped product build, dedicated capacity, or a retainer. Senior engineers, clear ownership, no fictional price cards.',
+    title: 'Sprints, builds, retainers, rescue, and audits',
     heroSubtitle:
-        'Whether you need one workflow live in two weeks or a senior team embedded for a platform build. Every model follows the same discovery to deploy discipline.',
+        'Whether you need one workflow live in two weeks or a senior team for a platform build. Every model follows the same discovery-to-deploy discipline.',
     models: [
         {
             id: 'ai-systems-sprint',
@@ -298,15 +298,15 @@ export const engagementModels: EngagementModelsContent = {
         { label: 'DevOps Consulting', href: '/services/devops-consulting' },
         { label: 'Project Rescue', href: '/services/project-rescue' },
         { label: 'Technical Audit', href: '/services/technical-audit' },
-        { label: 'Book a Call', href: BOOKING_URL },
+        { label: 'Talk through your system', href: BOOKING_URL },
     ],
 };
 
 export const bookACall: BookACallContent = {
-    metaTitle: 'Book a Technical Discovery Call | Aizaz Studio',
+    metaTitle: 'Talk Through Your System | Aizaz Studio',
     metaDescription:
-        'Book a technical discovery call with Aizaz Studio to discuss your AI, SaaS, automation, cloud, or software project.',
-    title: 'Book a Technical Discovery Call',
+        'A 30-minute call to map the stuck workflow, stalled product, or systems that don’t talk. No pitch deck. You leave knowing if we can help and what to do first.',
+    title: 'Talk through your system',
     heroSubtitle:
         'A 30 minute conversation to map your workflow, stack, and timeline. No pitch deck, no pressure. You leave knowing whether we can help and what a sensible first step looks like.',
     sections: {
@@ -378,9 +378,9 @@ export const bookACall: BookACallContent = {
 };
 
 export const portfolio: PortfolioContent = {
-    metaTitle: 'Portfolio — SaaS, Compliance & FinTech Builds | Aizaz.studio',
+    metaTitle: 'Portfolio — Compliance & Production Systems | Aizaz',
     metaDescription:
-        'Selected portfolio work from Aizaz.studio: compliance platforms, SaaS products, and production systems built for scale and real business outcomes.',
+        'Selected production systems from Aizaz Studio. 1Archiver was designed for tens of terabytes — not concept work, not a slide deck.',
     title: 'Portfolio',
     intro:
         'These projects represent production systems — not concept work. Each started with a hard operational or compliance problem and shipped as software teams could run, audit, and extend.',
@@ -406,10 +406,10 @@ export const portfolio: PortfolioContent = {
 export const reviews: ReviewsContent = {
     metaTitle: 'Client Reviews | Aizaz.studio',
     metaDescription:
-        'Client feedback on Aizaz.studio delivery for SaaS development, AI automation, and integration projects.',
+        'Client feedback from real engagements — SaaS builds, automation, and integrations. Quotes appear here only when the client cleared them for publication.',
     title: 'Client Reviews',
     intro:
-        'We measure success in production deployments and hours recovered — not slide decks. Approved client quotes will appear here as they are cleared for publication.',
+        'We measure success in software your team can run — not slide decks. Quotes appear here only when the client cleared them for publication.',
     placeholderQuotes: [
         {
             quote: 'Approved client testimonial coming soon.',

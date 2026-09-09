@@ -9,16 +9,16 @@ const contact = siteFooter.studio;
 ---
 
 <SiteShell
-  title="Start a Project | Aizaz.studio"
-  description="Share what you need to ship. Aizaz Studio will review your project details and follow up by email."
+  title="Tell Us What Needs Fixing | Aizaz.studio"
+  description="Send a short brief about the workflow, product, or system that needs fixing. Aizaz Studio reviews it and follows up by email — or talk to an engineer live."
   canonical="/start-a-project"
 >
   <PageHero
     eyebrow="Start a project"
-    title="Tell us what you need to ship"
-    description="Share a short brief. Our team will review the details and follow up using the email address you provide. Prefer a live conversation? Book a call instead."
+    title="Tell us what needs fixing"
+    description="Share a short brief. We’ll review it and follow up on the email you provide. Prefer a live conversation? Talk through your system instead."
   >
-    <a class="c-btn c-btn--ghost" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
+    <a class="c-btn c-btn--ghost" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
   </PageHero>
 
   <section class="c-cta sp-section" aria-labelledby="start-project-heading">
@@ -26,16 +26,16 @@ const contact = siteFooter.studio;
         <div class="c-cta__panel">
           <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
         <div class="c-cta__copy">
-          <p class="c-micro">Contact</p>
-          <h2 class="c-h1" id="start-project-heading">Let’s build<br />the next<br />system</h2>
+          <p class="c-micro">Next step</p>
+          <h2 class="c-h1" id="start-project-heading">Talk through<br />your<br />system</h2>
           <p class="c-cta__lede">
-            Tell us what you need to ship.
+            Tell us what needs fixing.
             <a href={`mailto:${contact.email}`}>{contact.email}</a>
             <span aria-hidden="true"> · </span>
             <a href={contact.phoneHref}>{contact.phone}</a>
           </p>
         </div>
-        <ContactForm />
+        <ContactForm submitLabel="Tell us what needs fixing" />
       </div>
     </div>
   </section>

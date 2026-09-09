@@ -16,19 +16,19 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 ---
 
 <SiteShell
-  title="About Aizaz.studio | AI, Cloud & Automation Engineering Studio"
-  description="Learn about Aizaz.studio, an engineering studio helping startups and operations-heavy businesses build AI automation, SaaS platforms, NetSuite integrations, and AWS infrastructure."
+  title="About Aizaz Studio | Senior Systems Team"
+  description="A senior systems team for stuck workflows, stalled products, and systems that don’t talk. AI automation, SaaS, NetSuite, and AWS — owned through production."
   canonical="/about"
 >
   <PageSentinel>
     <PageHero
       eyebrow="About"
-      title="A senior software"
-      highlight="engineering studio"
-      description="Aizaz builds production systems across AI & automation, product/SaaS engineering, ERP/NetSuite integrations, and cloud infrastructure, for teams that need working software, not slide decks."
+      title="A senior systems"
+      highlight="team on demand"
+      description="You shouldn’t have to manage the people building the system. Hand us the operational problem — we diagnose, build, and ship."
     >
-      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-      <a class="c-btn c-btn--ghost" href="/case-studies">See Works</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
+      <a class="c-btn c-btn--ghost" href="/case-studies">See the work</a>
     </PageHero>
 
     <div class="c-wrap page-sentinel__intro">
@@ -118,7 +118,7 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
       <SectionHeader
         eyebrow="Proof"
         title="Real systems in production"
-        lede="Selected public work: compliance platforms, SaaS products, and operational software."
+        lede="Selected public work. PropertyMatch shipped as a SaaS MVP in 14 days. 1Archiver was designed for tens of terabytes."
       />
       <div class="sp-grid sp-grid--3">
         {proof.map((study) => (
@@ -137,6 +137,6 @@ const proof = filterPublicCaseStudies(caseStudies).slice(0, 3);
 
   <PageCTA
     title="Ready to talk through a system?"
-    lede="Book a discovery call. We will map fit, scope, and a sensible first step."
+    lede="Tell us what needs fixing. We’ll map fit, scope, and a sensible first step."
   />
 </SiteShell>

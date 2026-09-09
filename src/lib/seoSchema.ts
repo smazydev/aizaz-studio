@@ -115,6 +115,50 @@ export function buildSeoPageSchemas(
     return schemas;
 }
 
+export function buildCollectionPageSchema(opts: {
+    name: string;
+    description: string;
+    canonicalPath: string;
+    items: { name: string; url: string }[];
+}) {
+    const pageUrl = `${SITE_URL}${opts.canonicalPath}`;
+    return {
+        '@type': 'CollectionPage',
+        '@id': `${pageUrl}#collection`,
+        name: opts.name,
+        description: opts.description,
+        url: pageUrl,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: opts.items.slice(0, 30).map((item, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: item.name,
+                url: item.url,
+            })),
+        },
+    };
+}
+
+export function buildListingPageSchemas(opts: {
+    name: string;
+    description: string;
+    canonicalPath: string;
+    items: { name: string; url: string }[];
+}) {
+    return [
+        {
+            '@type': 'Organization',
+            '@id': `${SITE_URL}/#organization`,
+            name: 'Aizaz Studio',
+            url: SITE_URL,
+            logo: `${SITE_URL}/aizaz-logo-white.png`,
+        },
+        buildCollectionPageSchema(opts),
+    ];
+}
+
 export function buildStructuredDataGraph(schemas: Record<string, unknown>[]) {
     return {
         '@context': 'https://schema.org',

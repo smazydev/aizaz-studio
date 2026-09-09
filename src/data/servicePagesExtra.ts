@@ -417,7 +417,7 @@ export const extraServicePages: SeoPage[] = [
     {
         slug: 'b2b-saas-development',
         title: 'B2B SaaS Development',
-        metaTitle: 'B2B SaaS Development Studio | Aizaz.studio',
+        metaTitle: 'B2B SaaS Development | Aizaz.studio',
         metaDescription:
             'Build B2B SaaS platforms with multi-tenant architecture, RBAC, billing, integrations, and admin tooling for growth-stage products.',
         heroSubtitle:

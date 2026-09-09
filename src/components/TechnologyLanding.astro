@@ -28,8 +28,8 @@ const shortName = page.title.replace(' Development', '').replace(' Services', ''
     <h1 class="page-title">{page.title}</h1>
     <p class="c-lede page-hero__lede">{page.heroSubtitle}</p>
     <div class="page-hero__actions">
-      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
-      <a class="c-btn c-btn--ghost" href="/services">View Services</a>
+      <a class="c-btn" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Talk through your system</a>
+      <a class="c-btn c-btn--ghost" href="/start-a-project">Tell us what needs fixing</a>
     </div>
   </div>
 </section>
@@ -78,7 +78,5 @@ const shortName = page.title.replace(' Development', '').replace(' Services', ''
 <FaqSection faqs={page.faqs} />
 <PageCTA
   title="Discuss your stack"
-  lede="Book a call to map how this technology fits your product or operations system."
-  secondaryHref="/services"
-  secondaryLabel="View Services"
+  lede="Tell us what needs connecting, replacing, or shipping — we’ll map whether this technology belongs in the system."
 />
