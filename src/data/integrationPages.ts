@@ -3,12 +3,12 @@ import type { SeoPage } from './seoPages';
 export const integrationPages: SeoPage[] = [
   {
     slug: 'netsuite-bigcommerce',
-    title: 'BigCommerce + NetSuite Integration',
-    metaTitle: 'BigCommerce NetSuite Integration | Aizaz Studio',
+    title: 'Custom BigCommerce NetSuite Integration',
+    metaTitle: 'Custom BigCommerce NetSuite Integration | Aizaz Studio',
     metaDescription:
-      'Connect BigCommerce and NetSuite with reliable order, customer, inventory, pricing, fulfilment, retry, monitoring, and reconciliation workflows.',
+      'Custom BigCommerce NetSuite integration for pricing, orders, inventory, fulfilment, and recovery when production sync fails.',
     heroSubtitle:
-      'Connect BigCommerce and NetSuite around the way your operation actually handles orders, customers, inventory, pricing, fulfilment, and exceptions.',
+      'Connect BigCommerce and NetSuite around the way the business actually operates, including pricing, orders, inventory, fulfilment, and the edge cases standard connectors struggle with.',
     keywords: [
       'BigCommerce NetSuite integration',
       'NetSuite BigCommerce integration',
@@ -63,11 +63,11 @@ export const integrationPages: SeoPage[] = [
       },
     ],
     relatedSlugs: ['netsuite-integration', 'api-integration'],
-    primaryCta: { label: 'Review your integration architecture', href: '/book-a-call' },
-    secondaryCta: { label: 'Send the systems and failure mode', href: '/start-a-project' },
-    ctaTitle: 'Review your BigCommerce–NetSuite architecture',
+    primaryCta: { label: 'Review your integration', href: '#contact' },
+    secondaryCta: { label: 'See how we approach it', href: '#experience' },
+    ctaTitle: 'Already running BigCommerce and NetSuite?',
     ctaLede:
-      'Send the systems involved, the current connector or middleware, and the failure mode your team is fixing manually.',
+      'Send what currently connects them, what needs to sync, what is failing, and any custom business rules.',
   },
 ];
 

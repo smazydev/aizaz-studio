@@ -521,6 +521,133 @@ This checklist pairs with [from MVP to production](/blog/building-production-rea
 CI/CD is not luxury infrastructure. It is how early SaaS teams ship without fear — and how you avoid rebuilding the same product because deploys became too risky.
     `,
     },
+    {
+        id: '10',
+        slug: 'bigcommerce-netsuite-integration-production-problems',
+        title: 'BigCommerce + NetSuite Integration: What Actually Breaks in Production',
+        excerpt:
+            'The API usually is not the difficult part. Inventory, B2B pricing, payments, retries, and order state are where BigCommerce–NetSuite integrations fail in production.',
+        date: 'August 28, 2026',
+        updatedAt: '2026-09-11T00:00:00.000Z',
+        authorKey: 'nasir',
+        readTime: '11 min read',
+        category: 'NetSuite & ERP',
+        tags: [
+            'BigCommerce',
+            'NetSuite',
+            'Integration',
+            'Ecommerce',
+            'Production problems',
+        ],
+        content: `
+## What breaks in BigCommerce–NetSuite integrations, and why
+
+Most BigCommerce and NetSuite integrations look finished long before they are actually finished.
+
+The happy path is easy to explain: an order is created in BigCommerce, it appears in NetSuite, someone fulfills it, the shipment goes back to BigCommerce.
+
+The problems start when the business does not behave like the demo.
+
+Which NetSuite location should reduce inventory? What happens when an order is partially fulfilled? Does an authorized payment mean the order is paid? Which system owns customer pricing? What happens if the same event is processed twice? Who fixes the order when BigCommerce says one thing and NetSuite says another?
+
+A good BigCommerce NetSuite integration is about keeping an operational workflow correct across two systems that care about different things. Before mapping a field: when these systems disagree, which one is allowed to win?
+
+This article owns the troubleshooting question. The commercial engagement — custom work, connector extension, or rescue — lives on the [custom BigCommerce–NetSuite integration](/integrations/netsuite-bigcommerce) page.
+
+## The connector is not the workflow
+
+A business says they need BigCommerce connected to NetSuite. What they often need is:
+
+BigCommerce order → NetSuite sales order → invoice → fulfillment → shipment status → payment reconciliation.
+
+That is a workflow. The connector is one part of making it happen.
+
+If you only move data from A to B, you can technically complete the integration and leave operations with the same manual repair work. An order arriving in NetSuite does not answer who invoices it, when fulfillment starts, what happens to BigCommerce status, what “authorized” means, how refunds work, or what happens when part of the order is unavailable.
+
+Those are business rules disguised as integration requirements.
+
+## Sync failures: the first 95% is not the job
+
+Creating a NetSuite Sales Order from a BigCommerce order is straightforward when everything is standard. Production is the other 5%: discounts already baked into a line price, shipping as a NetSuite item, subsidiary and price level, a B2B PO number that has to survive, an order that should stay pending approval.
+
+That 5% is where people start manually repairing records. Sync “worked” and the business still disagrees.
+
+## Inventory meaning, not inventory endpoints
+
+“Sync the inventory” hides location, safety stock, committed quantity, backorders, kits, and stock that must never sell online. Pushing 100 units to the storefront can be technically accurate and operationally wrong if 30 belong to a location that cannot fulfill ecommerce.
+
+Then timing: fifteen-minute lag vs several orders; real-time updates during an API failure; a manual adjust in BigCommerce; which system is the source of truth. Multi-location inventory is a design problem, not an implementation detail.
+
+## B2B pricing and customer-specific lists
+
+The same SKU may price by customer, company, contract, quantity, catalog, or credit rules. The integration has to understand the business relationship: who owns the account, where special pricing comes from, whether an order is allowed over credit, whether BigCommerce displays NetSuite prices or its own lists, and what happens when those prices change.
+
+This is where ecommerce becomes an ERP problem. Sales, fulfillment, and finance have to act on the same version of reality.
+
+## Payment state is easy to misunderstand
+
+Authorized is not captured. Captured is not always settled. “Payment exists” does not mean NetSuite should treat the order as financially complete.
+
+A real path may be: customer → BigCommerce → gateway → NetSuite → invoice or cash sale → capture/reconciliation. If authorization succeeds and the integration fails before the transaction reference is stored — or the provider sends the same notification twice — that is a state-management problem, not a UI problem.
+
+## Retries that duplicate the problem
+
+Every integration fails: timeouts, slow providers, SuiteScript errors, dropped requests. A naive system retries. A production system asks whether the operation already completed.
+
+Updating a description twice may not matter. Creating an order, issuing a refund, or recording a payment twice is a financial problem. Idempotency and external reference IDs exist so a retry continues the original work.
+
+## Data ownership before field mapping
+
+Write an ownership map before implementing: inventory, storefront experience, fulfillment, the actual payment transaction, customer fields, pricing, order origin vs operational record. When ownership is undocumented, people correct whichever system they have open. That is how synchronization problems become permanent.
+
+## Partial state and reconciliation
+
+Partial fulfilment, cancelled lines, and refunds are states. If the integration only knows “fulfilled” or “not,” operations will reconcile by comparing both UIs. Failed records should be visible and recoverable. Scheduled reconciliation compares expected and actual state so silent gaps surface before month-end.
+
+## Connector vs custom
+
+Use the standard solution when it matches the workflow. There is no prize for custom-building what a mature connector already handles: standard orders in, inventory back, fulfillment and tracking back, standard customer/product sync.
+
+The question changes when NetSuite has years of customization: unusual B2B pricing, custom transaction forms, several stores, specialized fulfillment, custom records, non-standard payments, complex locations, approval workflows. Then the question is how much of the actual workflow fits inside the connector without forcing the business to change around it.
+
+## How you know it is finished
+
+An integration is not finished because an order synced in a screen share. It is finished when a duplicate event does not create another order, a failed job can be retried, someone can see what failed, inventory comes from the correct locations, payments do not silently move, fulfillment returns to the storefront, and operations does not need an engineer every morning.
+
+## Final thought
+
+The API is not the hardest part. Both platforms give plenty of ways to move data. The difficult part is deciding what that data means.
+
+If these failure modes describe the current integration, see [custom BigCommerce–NetSuite integration services](/integrations/netsuite-bigcommerce) and the [production readiness checklist](/resources/bigcommerce-netsuite-production-readiness). This article stays on diagnosis. That page is the engagement.
+    `,
+        faqs: [
+            {
+                question: 'What data should sync between BigCommerce and NetSuite?',
+                answer:
+                    'Typically orders, inventory, customers, products, fulfillment and selected pricing or payment information. The exact direction and ownership of each field should be defined before implementation rather than allowing both systems to modify everything.',
+            },
+            {
+                question: 'Why does BigCommerce and NetSuite inventory get out of sync?',
+                answer:
+                    'Common causes include incorrect location mapping, synchronization delays, failed jobs, item mapping problems, kit or assembly inventory, and different definitions of available inventory between BigCommerce and NetSuite.',
+            },
+            {
+                question: 'Should I use a connector or build a custom BigCommerce NetSuite integration?',
+                answer:
+                    'Use a standard connector when your workflow fits its assumptions. Custom development becomes more useful when your NetSuite environment has significant customization, complex B2B pricing, unusual payment flows, specialized fulfillment rules or multiple systems that need to participate in the workflow.',
+            },
+            {
+                question: 'When should I hire a BigCommerce NetSuite integration consultant?',
+                answer:
+                    'Specialist help becomes useful when the integration goes beyond basic order and inventory synchronization, particularly when you have custom NetSuite records, B2B workflows, multiple locations, payment customization, failed syncs or production processes that cannot be handled safely by standard mappings alone.',
+            },
+            {
+                question: 'How long does a BigCommerce NetSuite integration take?',
+                answer:
+                    'It depends on the workflow and level of customization. A single well-defined order or fulfillment workflow can often be delivered much faster than a full ERP integration, while multi-store, B2B, financial and heavily customized NetSuite environments require broader implementation and testing.',
+            },
+        ],
+    },
 ];
 
 export function getBlogBySlug(slug: string): BlogPost | undefined {

@@ -1,0 +1,318 @@
+---
+import { Image } from 'astro:assets';
+import '../styles/bcns-landing.css';
+import FaqSection from './FaqSection.astro';
+import ContactForm from './ContactForm.astro';
+import { siteFooter } from '../data/siteChrome';
+import type { RelatedGroup } from '../data/internalLinks';
+import heroDiagram from '../assets/bcns-hero-diagram.jpg';
+import {
+  BC_NS_ARTICLE_PATH,
+  BC_NS_CHECKLIST_PATH,
+  bcNsMeta,
+  clientVoices,
+  connectItems,
+  connectorRows,
+  deliverySteps,
+  faqs,
+  pricingFlow,
+  pricingStory,
+  proofSnippets,
+  recognitionProblems,
+  reliabilityItems,
+} from '../data/bcNsIntegration';
+
+interface Props {
+  breadcrumb: { label: string; href: string }[];
+  relatedGroups?: RelatedGroup[];
+}
+
+const { breadcrumb } = Astro.props;
+const contact = siteFooter.studio;
+---
+
+<div class="bcns">
+  <section class="bcns-hero">
+    <div class="c-wrap">
+      <nav class="page-crumbs" aria-label="Breadcrumb">
+        {breadcrumb.map((item, index) => (
+          <>
+            {index > 0 && <span>/</span>}
+            <a href={item.href}>{item.label}</a>
+          </>
+        ))}
+        <span>/</span>
+        <span>{bcNsMeta.title}</span>
+      </nav>
+
+      <div class="bcns-hero__grid">
+        <div class="bcns-hero__copy">
+          <p class="c-micro c-red">BigCommerce + NetSuite</p>
+          <h1 class="bcns-hero__title">{bcNsMeta.title}</h1>
+          <p class="c-lede bcns-hero__lede">{bcNsMeta.heroSubtitle}</p>
+          <div class="bcns-hero__actions">
+            <a class="c-btn" href={bcNsMeta.primaryCta.href}>{bcNsMeta.primaryCta.label}</a>
+            <a class="c-btn c-btn--ghost" href={bcNsMeta.secondaryCta.href}>{bcNsMeta.secondaryCta.label}</a>
+          </div>
+        </div>
+
+        <figure class="bcns-hero__visual">
+          <Image
+            src={heroDiagram}
+            alt="BigCommerce and NetSuite connected through an integration layer for orders, inventory, pricing, fulfilment, and customers"
+            widths={[640, 880, 1024, 1400]}
+            sizes="(min-width: 980px) 45vw, 94vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-section" id="recognition">
+    <div class="c-wrap">
+      <header class="bcns-section__head bcns-section__head--wide">
+        <p class="c-micro c-red">The buying problem</p>
+          <h2 class="bcns-h2">Standard connectors work<br />until your business stops being standard.</h2>
+      </header>
+      <div class="bcns-problems">
+        {recognitionProblems.map((item) => (
+          <article class="bcns-problem">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-experience" id="experience">
+    <div class="c-wrap">
+      <div class="bcns-experience__grid">
+        <div class="bcns-experience__copy">
+          <p class="c-micro">Team experience</p>
+          <h2 class="bcns-h2">Customer specific pricing is where most connectors stall.</h2>
+          <p class="bcns-experience__note">
+            Some implementation examples reflect prior work completed by members of the Aizaz Studio
+            engineering team. Client and former employer details are omitted for confidentiality.
+          </p>
+          <dl class="bcns-story">
+            <div>
+              <dt>Problem</dt>
+              <dd>{pricingStory.problem}</dd>
+            </div>
+            <div>
+              <dt>Approach</dt>
+              <dd>{pricingStory.approach}</dd>
+            </div>
+            <div>
+              <dt>Why it matters</dt>
+              <dd>{pricingStory.why}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="bcns-priceflow" aria-label="Customer-specific pricing fallback">
+          <figcaption>One working shape</figcaption>
+          <ol>
+            {pricingFlow.map((step) => (
+              <li class={`bcns-priceflow__${step.kind}`}>
+                <span aria-hidden="true"></span>
+                {step.label}
+              </li>
+            ))}
+          </ol>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-section" id="connect">
+    <div class="c-wrap">
+      <header class="bcns-section__head">
+        <p class="c-micro c-red">Scope</p>
+        <h2 class="bcns-h2">What we actually connect</h2>
+      </header>
+      <div class="bcns-connect">
+        {connectItems.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-section bcns-section--band" id="qualify">
+    <div class="c-wrap">
+      <header class="bcns-section__head bcns-section__head--split">
+        <div>
+          <p class="c-micro c-red">Qualification</p>
+          <h2 class="bcns-h2">You may not need a custom integration.</h2>
+        </div>
+        <p class="bcns-takeaway">
+          We customize the gaps rather than rebuilding what already works.
+        </p>
+      </header>
+      <div class="bcns-compare-wrap">
+        <table class="bcns-compare">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th>Packaged connector</th>
+              <th>Custom integration</th>
+            </tr>
+          </thead>
+          <tbody>
+            {connectorRows.map((row) => (
+              <tr>
+                <td>{row.situation}</td>
+                <td><span class={`bcns-badge bcns-badge--${row.connectorTone}`}>{row.connector}</span></td>
+                <td><span class={`bcns-badge bcns-badge--${row.customTone}`}>{row.custom}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-section" id="reliability">
+    <div class="c-wrap bcns-reliab">
+      <header class="bcns-reliab__head">
+        <p class="c-micro c-red">Reliability</p>
+        <h2 class="bcns-h2">A sync isn’t successful just because the API returned 200.</h2>
+      </header>
+      <ul class="bcns-reliab__list">
+        {reliabilityItems.map((item) => (
+          <li>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <span>{item.term}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="bcns-section bcns-section--tight" id="proof">
+    <div class="c-wrap">
+      <header class="bcns-section__head">
+        <p class="c-micro c-red">Proof</p>
+        <h2 class="bcns-h2">Proof from real systems</h2>
+      </header>
+      <div class="bcns-proofs">
+        {proofSnippets.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <a href={item.href}>{item.linkLabel}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-voices" id="voices">
+    <div class="c-wrap">
+      <header class="bcns-section__head">
+        <p class="c-micro c-red">Client evidence</p>
+        <h2 class="bcns-h2">Trusted when the system gets complicated</h2>
+        <p class="c-lede">
+          Published Upwork reviews from other Aizaz Studio engagements. None of these clients is a
+          named BigCommerce and NetSuite account.
+        </p>
+      </header>
+
+      <blockquote class="bcns-voices__featured">
+        <p>{clientVoices.featured.text}</p>
+        <footer>
+          <cite>{clientVoices.featured.author}</cite>
+          <span>{clientVoices.featured.meta}</span>
+          <span>{clientVoices.featured.context}</span>
+          <a href={clientVoices.featured.href}>{clientVoices.featured.project}</a>
+        </footer>
+      </blockquote>
+
+      <div class="bcns-voices__support">
+        {clientVoices.supporting.map((item) => (
+          <blockquote>
+            <p>{item.text}</p>
+            <footer>
+              <cite>{item.author}</cite>
+              <span>{item.meta}</span>
+              <a href={item.href}>{item.project}</a>
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bcns-section" id="approach">
+    <div class="c-wrap">
+      <header class="bcns-section__head">
+        <p class="c-micro c-red">Engagement</p>
+        <h2 class="bcns-h2">What working with us looks like</h2>
+      </header>
+      <ol class="bcns-steps">
+        {deliverySteps.map((step) => (
+          <li>
+            <span>{step.step}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="bcns-handoff" id="problems">
+    <div class="c-wrap">
+      <div class="bcns-handoff__panel">
+        <p class="c-micro c-red">Already in production</p>
+        <h2 class="bcns-h2">Already dealing with a broken integration?</h2>
+        <p class="c-lede">
+          Failed syncs, duplicate orders, and records that disappear into logs belong in the
+          troubleshooting guide.
+        </p>
+        <div class="bcns-handoff__links">
+          <a class="bcns-handoff__link" href={BC_NS_ARTICLE_PATH}>
+            Read the production problems guide
+            <span aria-hidden="true">→</span>
+          </a>
+          <a class="bcns-handoff__link" href={BC_NS_CHECKLIST_PATH}>
+            Production readiness checklist
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FaqSection faqs={faqs} heading="Before you send a brief" />
+
+  <section class="c-cta bcns-cta" id="contact">
+    <div class="c-wrap">
+      <div class="c-cta__panel">
+        <div class="c-cta__art viz-ribbons" aria-hidden="true"></div>
+        <div class="c-cta__copy">
+          <p class="c-micro">Next step</p>
+          <h2 class="bcns-cta__title">Already running BigCommerce + NetSuite?</h2>
+          <div class="bcns-cta__lede">
+            <p>Show us what’s connected, what’s custom, and where it’s breaking.</p>
+            <p class="bcns-cta__voice">“{clientVoices.ctaFragment.text}” · {clientVoices.ctaFragment.author}</p>
+            <p>
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
+              <span aria-hidden="true"> · </span>
+              <a href={contact.phoneHref}>{contact.phone}</a>
+            </p>
+          </div>
+        </div>
+        <ContactForm submitLabel="Review my integration" />
+      </div>
+    </div>
+  </section>
+</div>

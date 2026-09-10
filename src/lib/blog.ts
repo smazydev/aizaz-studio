@@ -54,6 +54,8 @@ const LEGACY_SEO_TITLES: Record<string, string> = {
         'AI Automation Workflow Examples for Operations Teams',
     'netsuite-shopify-integration-pitfalls':
         'NetSuite + Shopify Sync: 5 Failures We See',
+    'bigcommerce-netsuite-integration-production-problems':
+        'BigCommerce NetSuite Integration Problems',
     'building-production-ready-saas-mvp':
         'From MVP to Production: What Founders Skip',
 };

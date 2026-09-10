@@ -24,6 +24,7 @@ export function getAllSeoPaths(): string[] {
         '/security',
         '/technologies',
         '/compare',
+        '/resources/bigcommerce-netsuite-production-readiness',
         ...servicePages.map((page) => `/services/${page.slug}`),
         ...industryPages.map((page) => `/for/${page.slug}`),
         ...comparePages.map((page) => `/compare/${page.slug}`),

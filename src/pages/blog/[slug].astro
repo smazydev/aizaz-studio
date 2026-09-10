@@ -2,6 +2,7 @@
 import SiteShell from '../../components/SiteShell.astro';
 import PageCTA from '../../components/PageCTA.astro';
 import BlogPostContent from '../../components/BlogPostContent.astro';
+import BcNsArticleSupplement from '../../components/BcNsArticleSupplement.astro';
 import { buildArticleSchema, getLinkablePosts, getPublishedPosts, getRelatedPosts } from '../../lib/blog';
 import { SITE_URL } from '../../data/seoPages';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
@@ -68,11 +69,27 @@ applyCmsCacheHeaders(Astro.response.headers, ['cms', 'blog', `blog:${blog.slug}`
     <div class="c-wrap" style="padding-top: clamp(28px, 4vw, 48px)">
       <a href="/blog" class="blog-back">← Back to Blog</a>
       <BlogPostContent blog={blog} related={related} />
+      {blog.slug === 'bigcommerce-netsuite-integration-production-problems' && (
+        <BcNsArticleSupplement />
+      )}
     </div>
 
     <PageCTA
-      title="Want help implementing this?"
-      lede="Tell us what needs fixing. We’ll map the workflow, or start with a focused sprint if that fits."
+      title={
+        blog.slug === 'bigcommerce-netsuite-integration-production-problems'
+          ? 'Already running BigCommerce and NetSuite?'
+          : 'Want help implementing this?'
+      }
+      lede={
+        blog.slug === 'bigcommerce-netsuite-integration-production-problems'
+          ? 'If these failure modes are showing up in production, send the connector, the records that fail, and any custom rules. We will say whether the next step is configuration, rescue, or a custom integration.'
+          : 'Tell us what needs fixing. We’ll map the workflow, or start with a focused sprint if that fits.'
+      }
+      submitLabel={
+        blog.slug === 'bigcommerce-netsuite-integration-production-problems'
+          ? 'Review my integration'
+          : 'Tell us what needs fixing'
+      }
     />
   </div>
 </SiteShell>

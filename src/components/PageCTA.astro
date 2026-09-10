@@ -11,12 +11,14 @@ interface Props {
   primaryLabel?: string;
   secondaryHref?: string;
   secondaryLabel?: string;
+  submitLabel?: string;
 }
 
 const {
   eyebrow = 'Next step',
   title = 'Talk through your system',
   lede = 'Tell us what needs fixing.',
+  submitLabel = 'Tell us what needs fixing',
 } = Astro.props;
 
 const contact = siteFooter.studio;
@@ -43,7 +45,7 @@ const defaultTitle = title === 'Talk through your system';
           <a href={contact.phoneHref}>{contact.phone}</a>
         </p>
       </div>
-      <ContactForm submitLabel="Tell us what needs fixing" />
+      <ContactForm submitLabel={submitLabel} />
     </div>
   </div>
 </section>

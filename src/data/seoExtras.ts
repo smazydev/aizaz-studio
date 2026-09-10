@@ -355,8 +355,9 @@ export const seoExtras: Record<string, SeoExtra> = {
             heading: 'Production problems, documented in detail',
             body: 'Our BigCommerce–NetSuite analysis covers the failure modes that appear after a basic connector demo: customer-group mapping, pricing, partial fulfilment, retries, data ownership, and reconciliation. The Wave 1 integration page turns that implementation knowledge into a scoped commercial engagement.',
             links: [
-                { href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite integration' },
+                { href: '/integrations/netsuite-bigcommerce', label: 'Custom BigCommerce–NetSuite integration' },
                 { href: '/blog/bigcommerce-netsuite-integration-production-problems', label: 'Read the production-problems analysis' },
+                { href: '/resources/bigcommerce-netsuite-production-readiness', label: 'Production readiness checklist' },
             ],
         },
     },
@@ -403,11 +404,12 @@ export const seoExtras: Record<string, SeoExtra> = {
         ],
         proof: {
             eyebrow: 'Technical proof',
-            heading: 'See what breaks after the happy path',
-            body: 'The existing technical article goes deeper on real production failure modes. This page defines the engagement; the article documents the engineering decisions behind it.',
+            heading: 'Production problems stay in the analysis. The engagement stays here.',
+            body: 'Failures, retries, reconciliation, and ownership are why this work exists — framed as reasons to review or rescue a live setup, not as a troubleshooting guide. The article owns the failure modes. The checklist is the shared definition of ready.',
             links: [
-                { href: '/blog/bigcommerce-netsuite-integration-production-problems', label: 'Read the BigCommerce–NetSuite production analysis' },
-                { href: '/services/netsuite-integration', label: 'Explore broader NetSuite integration services' },
+                { href: '/blog/bigcommerce-netsuite-integration-production-problems', label: 'BigCommerce NetSuite integration problems' },
+                { href: '/resources/bigcommerce-netsuite-production-readiness', label: 'Production readiness checklist' },
+                { href: '/services/netsuite-integration', label: 'Broader NetSuite integration services' },
             ],
         },
     },
@@ -458,6 +460,7 @@ export const seoExtras: Record<string, SeoExtra> = {
             body: 'The 1Archiver platform separates connectors, workers, storage, and the compliance system of record across multiple mail providers and tens of terabytes. That same discipline—clear boundaries, durable processing, observability, and recovery—guides our API integration work.',
             links: [
                 { href: '/case-studies/1archiver-compliance-platform', label: 'See the 1Archiver systems case study' },
+                { href: '/integrations/netsuite-bigcommerce', label: 'Custom BigCommerce–NetSuite integration' },
                 { href: '/services/netsuite-integration', label: 'See NetSuite integration services' },
             ],
         },

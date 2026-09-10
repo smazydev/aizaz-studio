@@ -1,0 +1,91 @@
+---
+export const prerender = false;
+
+import SiteShell from '../../components/SiteShell.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import PageCTA from '../../components/PageCTA.astro';
+import { SITE_URL } from '../../data/seoPages';
+import {
+  BC_NS_ARTICLE_PATH,
+  BC_NS_COMMERCIAL_PATH,
+  checklistGroups,
+} from '../../data/bcNsIntegration';
+
+const canonicalPath = '/resources/bigcommerce-netsuite-production-readiness';
+const title = 'BigCommerce–NetSuite Production Readiness Checklist | Aizaz Studio';
+const description =
+  'A crawlable checklist for BigCommerce NetSuite production readiness: data ownership, order lifecycle, pricing, retries, reconciliation, and cutover.';
+
+const schemas = [
+  {
+    '@type': 'Article',
+    headline: 'BigCommerce–NetSuite Production Readiness Checklist',
+    description,
+    url: `${SITE_URL}${canonicalPath}`,
+    author: { '@type': 'Organization', name: 'Aizaz Studio', url: SITE_URL },
+    publisher: { '@type': 'Organization', name: 'Aizaz Studio', url: SITE_URL },
+  },
+  {
+    '@type': 'ItemList',
+    name: 'BigCommerce–NetSuite production readiness areas',
+    itemListElement: checklistGroups.map((group, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: group.heading,
+    })),
+  },
+];
+
+const faqs = [
+  {
+    question: 'Who is this checklist for?',
+    answer:
+      'Operations, ecommerce, and NetSuite owners who already run BigCommerce and NetSuite — or are about to cut over — and need a shared definition of “production ready” before more field mapping.',
+  },
+  {
+    question: 'Is this a substitute for a connector demo?',
+    answer:
+      'No. A demo proves the happy path. This list is the boring cases: ownership conflicts, retries, partial fulfilment, pricing fallback, and who recovers a failed record.',
+  },
+];
+---
+
+<SiteShell title={title} description={description} canonical={canonicalPath} schemas={schemas}>
+  <PageHero
+    eyebrow="Resource"
+    title="BigCommerce–NetSuite production readiness checklist"
+    description="Use this before you call an integration finished. It is the questions we walk when reviewing a live BigCommerce and NetSuite setup — ownership, lifecycle, pricing, retries, and recovery."
+  >
+    <a class="c-btn" href={BC_NS_COMMERCIAL_PATH}>Custom BigCommerce–NetSuite integration</a>
+    <a class="c-btn c-btn--ghost" href={BC_NS_ARTICLE_PATH}>Production problems analysis</a>
+  </PageHero>
+
+  <section class="sp-section sp-section--tight">
+    <div class="c-wrap seo-measure">
+      <p class="c-lede">
+        Nothing here is gated. Print it, copy it into a ticket, or send it with a brief.
+        If a row is unclear, that is usually the gap — not a missing API field.
+      </p>
+    </div>
+  </section>
+
+  {checklistGroups.map((group) => (
+    <section class="sp-section">
+      <div class="c-wrap seo-measure">
+        <h2 class="page-h2">{group.heading}</h2>
+        <ul class="sp-list">
+          {group.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <FaqSection faqs={faqs} />
+
+  <PageCTA
+    title="Want this walked against your setup?"
+    lede="Send the connector or middleware you use, the records that fail, and any custom pricing or fulfilment rules."
+    submitLabel="Review my integration"
+  />
+</SiteShell>

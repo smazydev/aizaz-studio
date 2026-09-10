@@ -232,6 +232,7 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
     industries: ['netsuite-users', 'ecommerce-wholesale', 'ecommerce-operations'],
     technologies: ['nodejs-development', 'python-development'],
     articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite integration' }],
   },
   'netsuite-integration': {
     industries: ['netsuite-users', 'ecommerce-wholesale'],
@@ -241,13 +242,22 @@ export const serviceClusterExtras: Record<string, PageRelations> = {
   },
   'netsuite-bigcommerce': {
     industries: ['ecommerce-wholesale', 'ecommerce-operations'],
+    services: ['netsuite-integration', 'api-integration'],
     articles: ['bigcommerce-netsuite-integration-production-problems'],
+    caseStudies: ['1archiver-compliance-platform'],
+    pages: [
+      {
+        href: '/resources/bigcommerce-netsuite-production-readiness',
+        label: 'Production readiness checklist',
+      },
+    ],
   },
   'api-integration': {
     industries: ['ecommerce-operations', 'operations-teams', 'logistics'],
     technologies: ['nodejs-development', 'python-development'],
     caseStudies: ['1archiver-compliance-platform'],
-    articles: ['netsuite-shopify-integration-pitfalls'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'Custom BigCommerce–NetSuite integration' }],
   },
   'crm-integration': {
     industries: ['b2b-saas', 'operations-teams'],
@@ -298,15 +308,18 @@ export const industryClusterExtras: Record<string, PageRelations> = {
   'ecommerce-wholesale': {
     services: ['netsuite-integration', 'api-integration', 'business-process-automation'],
     industries: ['netsuite-users', 'ecommerce-operations'],
-    articles: ['netsuite-shopify-integration-pitfalls'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite integration services' }],
   },
   'ecommerce-operations': {
     services: ['business-process-automation', 'netsuite-integration', 'api-integration'],
-    articles: ['netsuite-shopify-integration-pitfalls'],
+    articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'Review a BigCommerce–NetSuite setup' }],
   },
   'netsuite-users': {
     services: ['netsuite-integration', 'netsuite-erp-automation', 'api-integration'],
     articles: ['netsuite-shopify-integration-pitfalls', 'bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce NetSuite integration' }],
   },
   'healthtech-clinics': {
     services: ['ai-automation-systems', 'business-process-automation', 'web-app-saas-development'],
@@ -421,12 +434,19 @@ export const articleCluster: Record<string, PageRelations> = {
     services: ['netsuite-integration', 'api-integration'],
     industries: ['netsuite-users', 'ecommerce-wholesale'],
     articles: ['bigcommerce-netsuite-integration-production-problems'],
+    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'Custom BigCommerce–NetSuite integration' }],
   },
   'bigcommerce-netsuite-integration-production-problems': {
     services: ['netsuite-integration', 'api-integration'],
     industries: ['netsuite-users', 'ecommerce-operations'],
     articles: ['netsuite-shopify-integration-pitfalls'],
-    pages: [{ href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite Integration Services' }],
+    pages: [
+      { href: '/integrations/netsuite-bigcommerce', label: 'BigCommerce + NetSuite Integration Services' },
+      {
+        href: '/resources/bigcommerce-netsuite-production-readiness',
+        label: 'BigCommerce–NetSuite production readiness checklist',
+      },
+    ],
   },
   'automate-manual-business-workflow-with-ai': {
     services: ['ai-workflow-automation', 'ai-automation-systems'],

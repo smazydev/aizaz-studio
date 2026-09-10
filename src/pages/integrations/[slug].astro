@@ -3,10 +3,12 @@ export const prerender = false;
 
 import SiteShell from '../../components/SiteShell.astro';
 import SeoLanding from '../../components/SeoLanding.astro';
+import BcNsIntegrationLanding from '../../components/BcNsIntegrationLanding.astro';
 import { buildSeoPageSchemas } from '../../lib/seoSchema';
 import { getServiceRelatedGroups } from '../../data/internalLinks';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
 import { extrasForPage, getIntegrationBySlug } from '../../lib/sanity/landingPages';
+import { bcNsMeta } from '../../data/bcNsIntegration';
 
 const slug = Astro.params.slug;
 const page = slug ? await getIntegrationBySlug(slug) : undefined;
@@ -22,20 +24,36 @@ const breadcrumb = [
   { label: 'NetSuite Integration', href: '/services/netsuite-integration' },
 ];
 const relatedGroups = getServiceRelatedGroups(page.slug, page.relatedSlugs ?? []);
-const schemas = buildSeoPageSchemas(page, breadcrumb, canonicalPath);
+const schemaPage =
+  page.slug === 'netsuite-bigcommerce'
+    ? {
+        ...page,
+        title: bcNsMeta.title,
+        metaTitle: bcNsMeta.metaTitle,
+        metaDescription: bcNsMeta.metaDescription,
+        heroSubtitle: bcNsMeta.heroSubtitle,
+        primaryCta: bcNsMeta.primaryCta,
+        secondaryCta: bcNsMeta.secondaryCta,
+      }
+    : page;
+const schemas = buildSeoPageSchemas(schemaPage, breadcrumb, canonicalPath);
 ---
 
 <SiteShell
-  title={page.metaTitle}
-  description={page.metaDescription}
+  title={page.slug === 'netsuite-bigcommerce' ? bcNsMeta.metaTitle : page.metaTitle}
+  description={page.slug === 'netsuite-bigcommerce' ? bcNsMeta.metaDescription : page.metaDescription}
   canonical={canonicalPath}
   schemas={schemas}
 >
-  <SeoLanding
-    page={page}
-    extras={extrasForPage(page)}
-    breadcrumb={breadcrumb}
-    badge="Integration"
-    relatedGroups={relatedGroups}
-  />
+  {page.slug === 'netsuite-bigcommerce' ? (
+    <BcNsIntegrationLanding breadcrumb={breadcrumb} relatedGroups={relatedGroups} />
+  ) : (
+    <SeoLanding
+      page={page}
+      extras={extrasForPage(page)}
+      breadcrumb={breadcrumb}
+      badge="Integration"
+      relatedGroups={relatedGroups}
+    />
+  )}
 </SiteShell>
