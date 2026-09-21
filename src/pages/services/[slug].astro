@@ -2,11 +2,11 @@
 export const prerender = false;
 
 import SiteShell from '../../components/SiteShell.astro';
-import SeoLanding from '../../components/SeoLanding.astro';
+import ServiceLanding from '../../components/ServiceLanding.astro';
 import { buildSeoPageSchemas } from '../../lib/seoSchema';
 import { getServiceRelatedGroups } from '../../data/internalLinks';
 import { applyCmsCacheHeaders } from '../../lib/cms-cache';
-import { extrasForPage, getServiceBySlug, getServicePages } from '../../lib/sanity/landingPages';
+import { extrasForPage, getServiceBySlug } from '../../lib/sanity/landingPages';
 
 const slug = Astro.params.slug;
 const page = slug ? await getServiceBySlug(slug) : undefined;
@@ -17,10 +17,6 @@ if (!page) {
 applyCmsCacheHeaders(Astro.response.headers, ['cms', 'pages', `landing:${page.slug}`]);
 
 const canonicalPath = `/services/${page.slug}`;
-const allServices = await getServicePages();
-const related = (page.relatedSlugs ?? [])
-  .map((relatedSlug) => allServices.find((item) => item.slug === relatedSlug))
-  .filter((item): item is NonNullable<typeof item> => Boolean(item));
 const relatedGroups = getServiceRelatedGroups(page.slug, page.relatedSlugs ?? []);
 const schemas = buildSeoPageSchemas(
   page,
@@ -38,14 +34,13 @@ const schemas = buildSeoPageSchemas(
   canonical={canonicalPath}
   schemas={schemas}
 >
-  <SeoLanding
+  <ServiceLanding
     page={page}
     extras={extrasForPage(page)}
     breadcrumb={[
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/services' },
     ]}
-    relatedServices={related}
     relatedGroups={relatedGroups}
   />
 </SiteShell>

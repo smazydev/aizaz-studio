@@ -1,0 +1,249 @@
+---
+import type { SeoPage } from '../data/seoPages';
+import type { SeoExtra } from '../data/seoExtras';
+import type { RelatedGroup } from '../data/internalLinks';
+import { deliverySteps } from '../data/siteContent';
+import { BOOKING_URL, isExternalHref } from '../data/siteConfig';
+import FaqSection from './FaqSection.astro';
+import PageCTA from './PageCTA.astro';
+import RelatedContent from './RelatedContent.astro';
+
+interface Props {
+  page: SeoPage;
+  extras: SeoExtra;
+  breadcrumb: { label: string; href: string }[];
+  relatedGroups?: RelatedGroup[];
+}
+
+const { page, extras, breadcrumb, relatedGroups = [] } = Astro.props;
+const steps = extras.processSteps ?? deliverySteps.slice(0, 3);
+const primaryCta = page.primaryCta ?? { label: 'Talk through your system', href: BOOKING_URL };
+const secondaryCta = page.secondaryCta ?? { label: 'Tell us what needs fixing', href: '/start-a-project' };
+const primaryCtaExternal = isExternalHref(primaryCta.href);
+const secondaryCtaExternal = isExternalHref(secondaryCta.href);
+const visualItems = page.capabilities.slice(0, 4);
+const hasLongTitle = page.title.length > 44;
+---
+
+<article class="service-detail">
+  <section class="svc-hero">
+    <div class="c-wrap">
+      <nav class="page-crumbs svc-hero__crumbs" aria-label="Breadcrumb">
+        {breadcrumb.map((item, index) => (
+          <>
+            {index > 0 && <span>/</span>}
+            <a href={item.href}>{item.label}</a>
+          </>
+        ))}
+        <span>/</span>
+        <span>{page.title}</span>
+      </nav>
+
+      <div class="svc-hero__layout">
+        <div class="svc-hero__copy">
+          <div class="svc-kicker">
+            <span class="svc-kicker__dot"></span>
+            <span>Engineering service</span>
+            <span class="svc-kicker__rule"></span>
+            <span>01</span>
+          </div>
+          <h1 class:list={[hasLongTitle && 'svc-hero__title--long']}>{page.title}</h1>
+          <p class="svc-hero__lede">{page.heroSubtitle}</p>
+          <div class="svc-hero__actions">
+            <a
+              class="c-btn svc-btn"
+              href={primaryCta.href}
+              target={primaryCtaExternal ? '_blank' : undefined}
+              rel={primaryCtaExternal ? 'noopener noreferrer' : undefined}
+            >
+              {primaryCta.label}<span aria-hidden="true">↗</span>
+            </a>
+            <a
+              class="c-btn c-btn--ghost svc-btn"
+              href={secondaryCta.href}
+              target={secondaryCtaExternal ? '_blank' : undefined}
+              rel={secondaryCtaExternal ? 'noopener noreferrer' : undefined}
+            >
+              {secondaryCta.label}
+            </a>
+          </div>
+          <ul class="svc-hero__signals" aria-label="How we work">
+            <li>Senior-led</li>
+            <li>Production-minded</li>
+            <li>Built to hand over</li>
+          </ul>
+        </div>
+
+        <div class="svc-blueprint" aria-label={`Delivery blueprint for ${page.title}`}>
+          <div class="svc-blueprint__top">
+            <span>System blueprint</span>
+            <span><i></i> Delivery ready</span>
+          </div>
+          <div class="svc-blueprint__canvas">
+            <div class="svc-blueprint__axis svc-blueprint__axis--x"></div>
+            <div class="svc-blueprint__axis svc-blueprint__axis--y"></div>
+            <div class="svc-blueprint__orbit"></div>
+            <div class="svc-blueprint__core">
+              <small>Designed for</small>
+              <strong>Production</strong>
+            </div>
+            {visualItems.map((item, index) => (
+              <div class={`svc-blueprint__node svc-blueprint__node--${index + 1}`}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+          <div class="svc-blueprint__foot">
+            <span>Strategy</span><i></i><span>Build</span><i></i><span>Operate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="svc-section svc-overview" data-reveal>
+    <div class="c-wrap">
+      <header class="svc-section__header">
+        <div><span>01</span><p class="c-micro c-red">The engagement</p></div>
+        <h2>From a real constraint to a system that works.</h2>
+      </header>
+      <div class="svc-overview__grid">
+        <article>
+          <span class="svc-overview__label">Where things break</span>
+          <h3>The problem</h3>
+          <p>{page.problem}</p>
+        </article>
+        <article class="svc-overview__answer">
+          <span class="svc-overview__label">What changes</span>
+          <h3>How we help</h3>
+          <p>{page.solution}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="svc-section svc-capabilities" data-reveal>
+    <div class="c-wrap">
+      <header class="svc-section__header">
+        <div><span>02</span><p class="c-micro c-red">What we can own</p></div>
+        <h2>Senior execution across the critical path.</h2>
+      </header>
+      <ol class="svc-capability-grid">
+        {page.capabilities.map((item, index) => (
+          <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <p>{item}</p>
+            <i aria-hidden="true">↗</i>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="svc-section svc-usecases" data-reveal>
+    <div class="c-wrap">
+      <header class="svc-section__header svc-section__header--light">
+        <div><span>03</span><p class="c-micro">Where it creates value</p></div>
+        <h2>Built around real operating scenarios.</h2>
+      </header>
+      <div class="svc-usecases__grid">
+        {page.useCases.map((item, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {extras.benefits.length > 0 && (
+    <section class="svc-section svc-benefits" data-reveal>
+      <div class="c-wrap">
+        <header class="svc-section__header">
+          <div><span>04</span><p class="c-micro c-red">Why Aizaz Studio</p></div>
+          <h2>Built for momentum without creating tomorrow’s mess.</h2>
+        </header>
+        <div class="svc-benefits__grid">
+          {extras.benefits.map((benefit, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{benefit.title}</h3>
+              <p>{benefit.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {extras.seoSections.length > 0 && (
+    <section class="svc-section svc-insights" data-reveal>
+      <div class="c-wrap svc-insights__layout">
+        <aside>
+          <p class="c-micro c-red">What good looks like</p>
+          <h2>The thinking behind the build.</h2>
+          <p>Decisions, trade-offs, and operating realities we account for before implementation.</p>
+        </aside>
+        <div class="svc-insights__content">
+          {extras.seoSections.map((section, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{section.heading}</h3>
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {extras.proof && (
+    <section class="svc-section svc-proof" data-reveal>
+      <div class="c-wrap">
+        <div class="svc-proof__panel">
+          <div class="svc-proof__mark" aria-hidden="true"><span>↗</span></div>
+          <div class="svc-proof__copy">
+            <p class="c-micro">{extras.proof.eyebrow ?? 'Relevant proof'}</p>
+            <h2>{extras.proof.heading}</h2>
+            <p>{extras.proof.body}</p>
+          </div>
+          <div class="svc-proof__links">
+            {extras.proof.links.map((link, index) => (
+              <a class:list={['c-btn svc-btn', index > 0 && 'c-btn--ghost']} href={link.href}>
+                {link.label}<span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="svc-section svc-process" data-reveal>
+    <div class="c-wrap">
+      <header class="svc-section__header">
+        <div><span>05</span><p class="c-micro c-red">How we deliver</p></div>
+        <h2>A clear path from context to production.</h2>
+      </header>
+      <ol class="svc-process__track">
+        {steps.map((step, index) => (
+          <li>
+            <span>{step.step || String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {page.faqs.length > 0 && <FaqSection faqs={page.faqs} />}
+  {relatedGroups.length > 0 && <RelatedContent groups={relatedGroups} />}
+  <PageCTA title={page.ctaTitle} lede={page.ctaLede} />
+</article>
