@@ -135,6 +135,7 @@ export const landingPagesQuery = groq`
     problem,
     solution,
     capabilities,
+    capabilityLinks[]{ label, href },
     useCases,
     faqs[]{ question, answer, enabled },
     relatedSlugs,
@@ -242,4 +243,3 @@ export const personsQuery = groq`
     photo
   }
 `;
-

@@ -12,6 +12,7 @@ import { clientLogos, siteStats } from '../src/data/siteContent';
 import { siteFooter, siteNav } from '../src/data/siteChrome';
 import { seoExtras } from '../src/data/seoExtras';
 import { aiSystemsSprintPage, industryPages, servicePages, type IndustryPage, type SeoPage } from '../src/data/seoPages';
+import { serviceCapabilityLinks } from '../src/data/serviceCapabilityLinks';
 import { technologyPages } from '../src/data/technologyPages';
 import {
     defaultAboutPage,
@@ -90,6 +91,10 @@ function landingDoc(
         problem: page.problem,
         solution: page.solution,
         capabilities: page.capabilities ?? [],
+        capabilityLinks: links(
+            category === 'service' ? serviceCapabilityLinks[page.slug] : [],
+            `${page.slug}-capability-link`,
+        ),
         useCases,
         faqs: faqs(page.faqs, `${page.slug}-faq`),
         relatedSlugs: 'relatedSlugs' in page ? (page.relatedSlugs ?? []) : [],

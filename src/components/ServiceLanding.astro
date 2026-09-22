@@ -23,6 +23,9 @@ const primaryCtaExternal = isExternalHref(primaryCta.href);
 const secondaryCtaExternal = isExternalHref(secondaryCta.href);
 const visualItems = page.capabilities.slice(0, 4);
 const hasLongTitle = page.title.length > 44;
+const capabilityLinkMap = new Map(
+  (page.capabilityLinks ?? []).map((link) => [link.label.trim().toLocaleLowerCase(), link.href]),
+);
 ---
 
 <article class="service-detail">
@@ -130,13 +133,26 @@ const hasLongTitle = page.title.length > 44;
         <h2>Senior execution across the critical path.</h2>
       </header>
       <ol class="svc-capability-grid">
-        {page.capabilities.map((item, index) => (
-          <li>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <p>{item}</p>
-            <i aria-hidden="true">↗</i>
-          </li>
-        ))}
+        {page.capabilities.map((item, index) => {
+          const href = capabilityLinkMap.get(item.trim().toLocaleLowerCase());
+          const number = String(index + 1).padStart(2, '0');
+          return (
+            <li class:list={[href && 'is-linked']}>
+              {href ? (
+                <a class="svc-capability-card" href={href} aria-label={`${item} — explore related service`}>
+                  <span>{number}</span>
+                  <p>{item}</p>
+                  <i aria-hidden="true">↗</i>
+                </a>
+              ) : (
+                <div class="svc-capability-card">
+                  <span>{number}</span>
+                  <p>{item}</p>
+                </div>
+              )}
+            </li>
+          );
+        })}
       </ol>
     </div>
   </section>

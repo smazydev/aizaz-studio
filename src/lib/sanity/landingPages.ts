@@ -2,10 +2,11 @@ import type { IndustryPage, SeoPage } from '../../data/seoPages';
 import { aiSystemsSprintPage, industryPages, servicePages } from '../../data/seoPages';
 import { integrationPages } from '../../data/integrationPages';
 import { getSeoExtras, type SeoExtra } from '../../data/seoExtras';
+import { serviceCapabilityLinks } from '../../data/serviceCapabilityLinks';
 import { cachedSanityFetch, getSanityClient } from './client';
 import { landingPagesQuery } from './queries';
 import { mapSanitySeo } from './seo';
-import { pickFaqs, pickLink, pickOptionalString, pickString, pickStringArray } from './overlay';
+import { pickFaqs, pickLink, pickLinks, pickOptionalString, pickString, pickStringArray } from './overlay';
 
 export type LandingCategory = 'service' | 'industry' | 'integration' | 'sprint';
 
@@ -32,6 +33,7 @@ type SanityLandingDoc = {
     problem?: string | null;
     solution?: string | null;
     capabilities?: Array<string | null> | null;
+    capabilityLinks?: Array<{ label?: string | null; href?: string | null }> | null;
     useCases?: Array<string | null> | null;
     faqs?: Array<{ question?: string | null; answer?: string | null; enabled?: boolean | null }> | null;
     relatedSlugs?: Array<string | null> | null;
@@ -128,6 +130,10 @@ function mapLandingPage(doc: SanityLandingDoc, existing?: SeoPage): CmsSeoPage |
         problem: pickString(doc.problem, existing?.problem ?? ''),
         solution: pickString(doc.solution, existing?.solution ?? ''),
         capabilities: pickStringArray(doc.capabilities, existing?.capabilities ?? []),
+        capabilityLinks: pickLinks(
+            doc.capabilityLinks,
+            existing?.capabilityLinks ?? serviceCapabilityLinks[slug] ?? [],
+        ),
         useCases: pickStringArray(doc.useCases, existing?.useCases ?? []),
         faqs: pickFaqs(doc.faqs, existing?.faqs ?? []),
         relatedSlugs: pickStringArray(doc.relatedSlugs, existing?.relatedSlugs ?? []),
@@ -195,7 +201,11 @@ function mergeBySlug<T extends SeoPage>(
 
 export async function getServicePages(): Promise<CmsSeoPage[]> {
     const docs = (await fetchLandingDocs()).filter((doc) => doc.category === 'service');
-    return mergeBySlug(servicePages, docs, mapLandingPage);
+    const staticPages = servicePages.map((page) => ({
+        ...page,
+        capabilityLinks: serviceCapabilityLinks[page.slug] ?? [],
+    }));
+    return mergeBySlug(staticPages, docs, mapLandingPage);
 }
 
 export async function getServiceBySlug(slug: string): Promise<CmsSeoPage | undefined> {

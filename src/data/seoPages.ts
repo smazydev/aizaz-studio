@@ -11,6 +11,7 @@ export interface SeoPage {
     problem: string;
     solution: string;
     capabilities: string[];
+    capabilityLinks?: { label: string; href: string }[];
     useCases: string[];
     faqs: { question: string; answer: string }[];
     relatedSlugs?: string[];

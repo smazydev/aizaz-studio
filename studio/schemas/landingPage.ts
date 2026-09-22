@@ -88,6 +88,15 @@ export const landingPage = defineType({
             group: 'content',
         }),
         defineField({
+            name: 'capabilityLinks',
+            title: 'Capability card links',
+            type: 'array',
+            of: [{ type: 'link' }],
+            group: 'content',
+            description:
+                'Optional destinations for selected capability cards. The link label must exactly match the capability text; cards without a destination remain non-interactive.',
+        }),
+        defineField({
             name: 'useCases',
             title: 'Use cases / examples',
             type: 'array',
